@@ -10,16 +10,15 @@ A return response is expected when making a request.
 Facilitated by [Backbone.Wreqr](https://github.com/marionettejs/backbone.wreqr)'s 
 RequestResponse object.
 
-## Documentation Index
+## Содержание
 
-* [Register A Request Handler](#register-a-request-handler)
-* [Request A Response](#request-a-response)
-* [Remove / Replace A Request Handler](#remove--replace-a-request-handler)
+* [Добавление обработчика запроса](#register-a-request-handler)
+* [Получение ответа на запрос](#request-a-response)
+* [Удаление / замена обработчика запроса](#remove--replace-a-request-handler)
 
-## Register A Request Handler
+## Добавление обработчика запроса
 
-To register a command, call `App.reqres.setHandler` and provide a name for
-the command to handle, and a callback method.
+Для добавления запроса использутеся метод `App.reqres.setHandler`, который имеет два параметра - имя запроса и метод-обработчик.
 
 ```js
 var App = new Marionette.Application();
@@ -29,23 +28,18 @@ App.reqres.setHandler("foo", function(bar){
 });
 ```
 
-## Request A Response
+## Получение ответа на запрос
 
-To execute a command, either call `App.reqres.request` or the more direct
-route of `App.request`, providing the name of the command to execute and
-any parameters the command needs:
+Для выполнения запроса служит метод `App.reqres.request` (или его коротка запись `App.request`), аргументами которого являются имя выполняемого запроса и набор требуемых параметров:
 
 ```js
 App.request("foo", "baz"); // => returns "baz-quux"
 ```
 
-## Remove / Replace A Request Handler
+## Удаление / замена обработчика запроса
 
-To remove a request handler, call `App.reqres.removeHandler` and provide the
-name of the request handler to remove. 
+Для удаления запроса используется метод `App.reqres.removeHandler`, параметром которого является имя удаляемого запроса.
 
-To remove all request handlers, call `App.reqres.removeAllHandlers()`.
+Метод `App.reqres.removeAllHandlers()` позволяет удалить все запросы.
 
-To replace a request handler, simply register a new handler for an existing
-request handler name. There can be only one request handler 
-for a given request name.
+Чтобы заменить запрос достаточно для его имени определить новый обработчик. Для одного имени запроса может быть определен только один обработчик.
