@@ -1,4 +1,4 @@
-# Конфигурация Marionette
+# Конфигурация Marionette (В процессе перевода)
 
 Marionette has a few globally configurable settings that will
 change how the system works. While many of these subjects are covered

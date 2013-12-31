@@ -1,4 +1,4 @@
-# Marionette.Application
+# Marionette.Application (В процессе перевода)
 
 The `Backbone.Marionette.Application` object is the hub of your composite 
 application. It organizes, initializes and coordinates the various pieces of your
