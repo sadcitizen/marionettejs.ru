@@ -2,6 +2,7 @@
   "name": "marionettejs-rudoc",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "~0.4.2"
+    "grunt": "~0.4.2",
+    "grunt-markdown": "~0.4.0"
   }
 }
