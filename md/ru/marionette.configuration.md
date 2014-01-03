@@ -1,9 +1,6 @@
 # Конфигурация Marionette (В процессе перевода)
 
-Marionette has a few globally configurable settings that will
-change how the system works. While many of these subjects are covered
-in other docs, this configuration doc should provide a list of the
-most common items to change.
+Marionette.js имеет несколько глобально настраиваемых параметров, которые влияют на то как работает приложение. Большая часть из них описана в других разделах документации. В этом разделе расскажем о наиболее изменяемых параметрах.
 
 ## Содержание
 
@@ -11,15 +8,13 @@ most common items to change.
 
 ## Marionette.$
 
-Для работы с DOM-элементами по умолчанию используется jQuery. To get a reference to jQuery, though, it assigns the `Marionette.$` attribute to `Backbone.$`. This provides consistency with Backbone in which exact version of jQuery or other DOM manipulation library is used.
+Для работы с DOM по умолчанию используется jQuery. To get a reference to jQuery, though, it assigns the `Marionette.$` attribute to `Backbone.$`. This provides consistency with Backbone in which exact version of jQuery or other DOM manipulation library is used.
 
-If you wish to change to a specific version of a DOM manipulation
-library, you can directly assign these settings:
+Если вы решили поменять библиотеку для работы с DOM на какую то иную (например, jquery.js на zepro.js), то сделать это можно следующим образом:
 
 ```js
 Backbone.$ = myDOMLib;
 Marionette.$ = myDOMLib;
 ```
 
-Note that you should change both Backbone and Marionette at the same
-time, to the same DOM manipulation library.
+Помните, что при смене библиотеки работы с DOM вы должны одновременно поменять ссылки на нее как для Backbone.js, так и для Marionette.js.

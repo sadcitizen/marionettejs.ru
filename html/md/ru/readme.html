@@ -1,0 +1,225 @@
+<!DOCTYPE  html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>doc</title>
+    <style>
+      /*github.com style (c) Vasily Polovnyov <vast@whiteants.net>*/
+      pre code {
+        display: block; padding: 0.5em;
+        color: #333;
+        background: #f8f8ff
+      }
+      pre .comment,
+      pre .template_comment,
+      pre .diff .header,
+      pre .javadoc {
+        color: #998;
+        font-style: italic
+      }
+      pre .keyword,
+      pre .css .rule .keyword,
+      pre .winutils,
+      pre .javascript .title,
+      pre .nginx .title,
+      pre .subst,
+      pre .request,
+      pre .status {
+        color: #333;
+        font-weight: bold
+      }
+      pre .number,
+      pre .hexcolor,
+      pre .ruby .constant {
+        color: #099;
+      }
+      pre .string,
+      pre .tag .value,
+      pre .phpdoc,
+      pre .tex .formula {
+        color: #d14
+      }
+      pre .title,
+      pre .id {
+        color: #900;
+        font-weight: bold
+      }
+      pre .javascript .title,
+      pre .lisp .title,
+      pre .clojure .title,
+      pre .subst {
+        font-weight: normal
+      }
+      pre .class .title,
+      pre .haskell .type,
+      pre .vhdl .literal,
+      pre .tex .command {
+        color: #458;
+        font-weight: bold
+      }
+      pre .tag,
+      pre .tag .title,
+      pre .rules .property,
+      pre .django .tag .keyword {
+        color: #000080;
+        font-weight: normal
+      }
+      pre .attribute,
+      pre .variable,
+      pre .lisp .body {
+        color: #008080
+      }
+      pre .regexp {
+        color: #009926
+      }
+      pre .class {
+        color: #458;
+        font-weight: bold
+      }
+      pre .symbol,
+      pre .ruby .symbol .string,
+      pre .lisp .keyword,
+      pre .tex .special,
+      pre .prompt {
+        color: #990073
+      }
+      pre .built_in,
+      pre .lisp .title,
+      pre .clojure .built_in {
+        color: #0086b3
+      }
+      pre .preprocessor,
+      pre .pi,
+      pre .doctype,
+      pre .shebang,
+      pre .cdata {
+        color: #999;
+        font-weight: bold
+      }
+      pre .deletion {
+        background: #fdd
+      }
+      pre .addition {
+        background: #dfd
+      }
+      pre .diff .change {
+        background: #0086b3
+      }
+      pre .chunk {
+        color: #aaa
+      }
+    </style>
+  </head>
+  <body>  
+    <h1 id="backbone-marionette">Backbone.Marionette</h1>
+<p>Заставьте ваши Backbone-приложения танцевать!</p>
+<h2 id="-marionette">О Marionette</h2>
+<p>Backbone.Marionette is a composite application library for Backbone.js that
+aims to simplify the construction of large scale JavaScript applications.
+It is a collection of common design and implementation patterns found in
+the applications that I (Derick Bailey) have been building with Backbone,
+and includes various pieces inspired by composite application architectures,
+such as Microsoft&#39;s &quot;Prism&quot; framework.</p>
+<h3 id="app-architecture-on-backbone-s-building-blocks">App Architecture On Backbone&#39;s Building Blocks</h3>
+<p>Backbone provides a great set of building blocks for our JavaScript
+applications. It gives us the core constructs that are needed to build
+small apps, organize jQuery DOM events, or create single page apps that
+support mobile devices and large scale enterprise needs. But Backbone is
+not a complete framework. It&#39;s a set of building blocks. It leaves
+much of the application design, architecture and scalability to the
+developer, including memory management, view management, and more.</p>
+<p>Marionette brings an application architecture to Backbone, along with
+built in view management and memory management. It&#39;s designed to be a
+lightweight and flexible library of tools that sits on top of Backbone,
+providing the framework for building a scalable application.</p>
+<p>Like Backbone itself, you&#39;re not required to use all of Marionette just
+because you want to use some of it. You can pick and choose which features
+you want to use. This allows you to work with other Backbone
+frameworks and plugins easily. It also means that you are not required
+to engage in an all-or-nothing migration to begin using Marionette.</p>
+<h3 id="-">Основные преимущества</h3>
+<ul>
+<li>Масштабируемость: приложения строятся на модулях и событийной архитектуре;</li>
+<li>Sensible defaults: Underscore templates are used for view rendering</li>
+<li>Легкая модифицируемость: make it work with your application&#39;s specific needs</li>
+<li>Reduce boilerplate for views, with specialized view types</li>
+<li>Build on a modular architecture with an <code>Application</code> and modules that attach to it</li>
+<li>Compose your application&#39;s visuals at runtime, with the <code>Region</code> and <code>Layout</code> objects</li>
+<li>Nested views and layouts within visual regions</li>
+<li>Встроенное управление памятью и zombie-killing in views, regions and layouts</li>
+<li>Событийная архитектура с <code>Backbone.Wreqr.EventAggregator</code>;</li>
+<li>Flexible, &quot;as-needed&quot; architecture allowing you to pick and choose what you need</li>
+<li>И многое, многое другое</li>
+</ul>
+<h2 id="-marionette-js">Из чего состоит marionette.js</h2>
+<p><strong>Представления</strong></p>
+<ul>
+<li><a href="docs/marionette.itemview.md"><strong>Marionette.ItemView</strong></a>: представление, предназначенное для рендеринга одного элемента (например, из коллекции);</li>
+<li><a href="docs/marionette.collectionview.md"><strong>Marionette.CollectionView</strong></a>: представление, которое проходит по всем моделям коллекции и рендерит для каждой модели ее собственный <code>ItemView</code> (это представление не имеет собственного шаблона);</li>
+<li><a href="docs/marionette.compositeview.md"><strong>Marionette.CompositeView</strong></a>: A collection view and item view, for rendering leaf-branch/composite model hierarchies</li>
+<li><a href="docs/marionette.layout.md"><strong>Marionette.Layout</strong></a>: A view that renders a layout and creates region managers to manage areas within it</li>
+<li><a href="docs/marionette.view.md"><strong>Marionette.View</strong></a>: The base View type that other Marionette views extend from (not intended to be used directly)</li>
+</ul>
+<p><strong>Управление представлениями</strong></p>
+<ul>
+<li><a href="docs/marionette.region.md"><strong>Marionette.Region</strong></a>: Manage visual regions of your application, including display and removal of content</li>
+<li><a href="docs/marionette.regionmanager.md"><strong>Marionette.RegionManager</strong></a>: Manage a group of related Regions</li>
+<li><a href="docs/marionette.renderer.md"><strong>Marionette.Renderer</strong></a>: Render templates with or without data, in a consistent and common manner</li>
+<li><a href="docs/marionette.templatecache.md"><strong>Marionette.TemplateCache</strong></a>: Cache templates that are stored in <code>&lt;script&gt;</code> blocks, for faster subsequent access</li>
+<li>[&rarr;] <a href="https://github.com/marionettejs/backbone.babysitter"><strong>Backbone.BabySitter</strong></a>: Manage child views for your Backbone.View (and other parents)</li>
+</ul>
+<p><strong>Инфраструктура приложения</strong></p>
+<ul>
+<li><a href="docs/marionette.application.md"><strong>Marionette.Application</strong></a>: An application object that starts your app via initializers, and more</li>
+<li><a href="docs/marionette.application.module.md"><strong>Marionette.Module</strong></a>: Create modules and sub-modules within the application</li>
+<li><a href="docs/marionette.controller.md"><strong>Marionette.Controller</strong></a>: A general purpose object for controlling modules, routers, view, and implementing a mediator pattern</li>
+</ul>
+<p><strong>Object-Messaging Infrastructure</strong></p>
+<ul>
+<li><a href="docs/marionette.commands.md"><strong>Marionette.Commands</strong></a>: An extension of Backbone.Wreqr.Commands, a simple command execution framework</li>
+<li><a href="docs/marionette.requestresponse.md"><strong>Marionette.RequestResponse</strong></a>: An extension of Backbone.Wreqr.RequestResponse, a simple request/response framework</li>
+<li>[&rarr;] <a href="https://github.com/marionettejs/backbone.wreqr"><strong>Backbone.Wreqr.EventAggregator</strong></a>: An event aggregator, to facilitate pub/sub and event architecture. Part of a suite of messaging based patterns</li>
+<li>[&rarr;] <a href="https://github.com/marionettejs/backbone.wreqr"><strong>Backbone.Wreqr.Commands</strong></a>: A simple command execution system</li>
+<li>[&rarr;] <a href="https://github.com/marionettejs/backbone.wreqr"><strong>Backbone.Wreqr.RequestResponse</strong></a>: A simple request/response system</li>
+</ul>
+<p><strong>Другое</strong></p>
+<ul>
+<li><a href="docs/marionette.approuter.md"><strong>Marionette.AppRouter</strong></a>: Reduce your routers to nothing more than configuration</li>
+<li><a href="docs/marionette.callbacks.md"><strong>Marionette.Callbacks</strong></a>: Manage a collection of callback methods, and execute them as needed</li>
+<li><a href="docs/marionette.functions.md"><strong>Marionette.functions</strong></a>: A suite of helper functions and utilities for implementing common Marionette behavior in your objects</li>
+</ul>
+<p><strong>Устаревшее</strong></p>
+<ul>
+<li>[&rarr;] <a href="https://github.com/marionettejs/backbone.eventbinder"><strong>Backbone.EventBinder</strong></a>: Deprecated w/ Backbone v0.9.9 and higher. An event binding manager for Backbone v0.9.2, to facilitate binding and unbinding of events</li>
+</ul>
+<h2 id="-">Исходный код и загрузка</h2>
+<p>Последнюю версию (в том числе и amd-сборки) вы можете скачать с <a href="http://marionettejs.com#download">официального сайта</a> или из папки <a href="https://github.com/marionettejs/backbone.marionette/tree/master/lib">lib</a> репозитория на <a href="https://github.com/marionettejs/backbone.marionette">github.com</a>.</p>
+<p>В дополнение к существующей документации исходный код marionette.js был <a href="http://marionettejs.com/docs/backbone.marionette.html">прокомментирован</a>. </p>
+<h3 id="-">Доступные пакеты</h3>
+<p>Marionette.js неофициально доступна в различных системах управления пакетами, таких как RubyGems, Node Package Manager, Nuget и других. 
+Пакеты для этих систем поддерживаются сообществом и не являются частью ядра Backbone.Marionette. Посмотреть список доступных пакетов можно <a href="https://github.com/marionettejs/backbone.marionette/wiki/Available-packages">тут</a>.</p>
+<h2 id="-">Совместимость и требования</h2>
+<p>На данный момент для работы marionette.js требуются следующие библиотеки:</p>
+<ul>
+<li><a href="http://jquery.com">jQuery</a> v1.8+</li>
+<li><a href="http://underscorejs.org">Underscore</a> v1.4.4+</li>
+<li><a href="http://backbonejs.org">Backbone</a> v1.0 </li>
+<li><a href="https://github.com/marionettejs/backbone.wreqr">Backbone.Wreqr</a></li>
+<li><a href="https://github.com/marionettejs/backbone.babysitter">Backbone.BabySitter</a></li>
+</ul>
+<p>Использовать иные версии перечисленных выше библиотек вы можете только на свой страх и риск.</p>
+<p>Не смотря на то, что существует совместимость с Zepto.js и Ender.js, официально тестирование совместимости с ними не проводилось.</p>
+<h2 id="-">Сообщество</h2>
+<ul>
+<li><a href="//github.com/marionettejs/backbone.marionette/issues">Github Issues</a>;</li>
+<li>Marionette на <a href="http://stackoverflow.com/questions/tagged/backbone.marionette">StackOverflow</a>;</li>
+<li><a href="https://groups.google.com/forum/#!forum/backbone-marionette">Google Group Mailing List</a>;</li>
+<li>сообщество на <a href="https://plus.google.com/communities/111798429561476246318">Google+</a></li>
+<li>канал <code>#marionette</code> на <a href="http://freenode.net">FreeNode.net</a>.</li>
+</ul>
+<p>Copyright (c) 2012 Derick Bailey; Muted Solutions, LLC</p>
+<p>Распространяется под лицензией <a href="http://mutedsolutions.mit-license.org/">MIT</a>.</p>
+
+  </body>
+</html>

@@ -1,4 +1,4 @@
-# Marionette.commands (В процессе перевода)
+# Marionette.Commands (В процессе перевода)
 
 An application level command execution system. This allows components in
 an application to state that some work needs to be done, but without having

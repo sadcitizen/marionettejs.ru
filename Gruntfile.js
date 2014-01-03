@@ -8,8 +8,8 @@ module.exports = function(grunt) {
             files: [
               {
                 expand: true,
-                src: 'md/en/*.md',
-                dest: 'html/en/',
+                src: 'md/ru/marionette.view.md',
+                dest: 'html/',
                 ext: '.html'
               }
             ]
