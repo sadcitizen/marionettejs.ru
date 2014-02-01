@@ -111,16 +111,16 @@ you have for retrieving an individual item that was clicked or
 otherwise interacted with, see the blog post on 
 [Getting The Model For A Clicked Element](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/).
 
-## Events and Callback Methods
+## События и коллбеки
 
 There are several events and callback methods that are called
 for an ItemView. These events and methods are triggered with the
 [Marionette.triggerMethod](./marionette.functions.md) function, which
 triggers the event and a corresponding "on{EventName}" method.
 
-### "before:render" / onBeforeRender event
+### "before:render" / onBeforeRender
 
-Triggered before an ItemView is rendered. Also triggered as
+Сработает до того как ItemView будет отрисовано. Также сработает как
 "item:before:render" / `onItemBeforeRender`.
 
 ```js
@@ -131,13 +131,14 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "render" / onRender event
+### "render" / onRender
 
-Triggered after the view has been rendered.
+Сработает после того как представление будет отрисовано. 
+
 You can implement this in your view to provide custom code for dealing
 with the view's `el` after it has been rendered.
 
-Also triggered as "item:rendered" / `onItemRender`.
+Также сработает как "item:rendered" / `onItemRender`.
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -149,10 +150,10 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "before:close" / onBeforeClose event
+### "before:close" / onBeforeClose
 
 Triggered just prior to closing the view, when the view's `close()`
-method has been called. Also triggered as "item:before:close" /
+method has been called. Также сработает как "item:before:close" /
 `onItemBeforeClose`.
 
 ```js
@@ -165,10 +166,10 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "close" / onClose event
+### "close" / onClose
 
-Triggered just after the view has been closed. Also triggered
-as "item:closed" / `onItemClose`.
+Сработает сразу после того как представление будет закрыто. Также сработает как
+"item:closed" / `onItemClose`.
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -284,4 +285,4 @@ Marionette.ItemView.extend({
 });
 ```
 
-For more information, see the [Marionette.View](./marionette.view.md) documentation.
+Для большей информации ознакомьтесь с документацией по [Marionette.View](./marionette.view.md).

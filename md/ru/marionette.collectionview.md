@@ -180,17 +180,16 @@ buildItemView: function(item, ItemViewType, itemViewOptions){
 },
 ```
 
-## Callback Methods
+## Коллбеки
 
 There are several callback methods that can be provided on a
 `CollectionView`. If they are found, they will be called by the
 view's base methods. These callback methods are intended to be
 handled within the view definition directly.
 
-### onBeforeRender callback
+### Коллбек onBeforeRender
 
-A `onBeforeRender` callback will be called just prior to rendering
-the collection view.
+Коллбек `onBeforeRender` будет вызван перед рендерингом представления коллекции.
 
 ```js
 Backbone.Marionette.CollectionView.extend({
@@ -200,7 +199,7 @@ Backbone.Marionette.CollectionView.extend({
 });
 ```
 
-### onRender callback
+### Коллбек onRender
 
 After the view has been rendered, a `onRender` method will be called.
 You can implement this in your view to provide custom code for dealing
@@ -214,9 +213,9 @@ Backbone.Marionette.CollectionView.extend({
 });
 ```
 
-### onBeforeClose callback
+### Коллбек onBeforeClose
 
-This method is called just before closing the view.
+Этот коллбек будет вызван перед тем как представление будет закрыто.
 
 ```js
 Backbone.Marionette.CollectionView.extend({
@@ -226,9 +225,9 @@ Backbone.Marionette.CollectionView.extend({
 });
 ```
 
-### onClose callback
+### Коллбек onClose
 
-This method is called just after closing the view.
+Этот коллбек будет вызван сразу после закрытия представления.
 
 ```js
 Backbone.Marionette.CollectionView.extend({
@@ -238,7 +237,7 @@ Backbone.Marionette.CollectionView.extend({
 });
 ```
 
-### onBeforeItemAdded callback
+### Коллбек onBeforeItemAdded
 
 This callback function allows you to know when an item / item view
 instance is about to be added to the collection view. It provides access to
@@ -252,7 +251,7 @@ Backbone.Marionette.CollectionView.extend({
 });
 ```
 
-### onAfterItemAdded callback
+### Коллбек onAfterItemAdded
 
 This callback function allows you to know when an item / item view
 instance has been added to the collection view. It provides access to
@@ -266,7 +265,7 @@ Backbone.Marionette.CollectionView.extend({
 });
 ```
 
-### onItemRemoved callback
+### Коллбек onItemRemoved
 
 This callback function allows you to know when an item / item view
 instance has been deleted or removed from the
@@ -280,7 +279,7 @@ Backbone.Marionette.CollectionView.extend({
 });
 ```
 
-## CollectionView Events
+## События CollectionView 
 
 There are several events that will be triggered during the life
 of a collection view. Each of these events is called with the
@@ -288,8 +287,7 @@ of a collection view. Each of these events is called with the
 which calls a corresponding "on{EventName}" method on the
 view instance (see [above](#callback-methods)).
 
-### "before:render" event
-
+### Событие "before:render"
 
 Triggers just prior to the view being rendered. Also triggered as
 "collection:before:render" / `onCollectionBeforeRender`.
@@ -306,7 +304,7 @@ myView.on("before:render", function(){
 myView.render();
 ```
 
-### "render" event
+### Событие "render"
 
 A "collection:rendered" / `onCollectionRendered` event will also be fired. This allows you to
 add more than one callback to execute after the view is rendered,
@@ -329,7 +327,7 @@ myView.on("collection:rendered", function(){
 myView.render();
 ```
 
-### "before:close" event
+### Событие "before:close"
 
 Triggered just before closing the view. A "collection:before:close" /
 `onCollectionBeforeClose` event will also be fired
@@ -346,7 +344,7 @@ myView.on("collection:before:close", function(){
 myView.close();
 ```
 
-### "closed" / "collection:closed" event
+### Событие "closed" / "collection:closed"
 
 Triggered just after closing the view, both with corresponding
 method calls.
@@ -363,7 +361,7 @@ myView.on("collection:closed", function(){
 myView.close();
 ```
 
-### "before:item:added" / "after:item:added" event
+### Событие "before:item:added" / "after:item:added"
 
 The "before:item:added" event and corresponding `onBeforeItemAdded`
 method are triggered just after creating a new itemView instance for
@@ -398,7 +396,7 @@ cv.on("after:item:added", function(viewInstance){
 });
 ```
 
-### "item:removed" event
+### Событие "item:removed"
 
 Triggered after an itemView instance has been closed and
 removed, when its item was deleted or removed from the
@@ -410,7 +408,7 @@ cv.on("item:removed", function(viewInstance){
 });
 ```
 
-### "itemview:\*" event bubbling from child views
+### "itemview:\*" всплытие событий с дочерних представлений
 
 When an item view within a collection view triggers an
 event, that event will bubble up through the parent
@@ -493,7 +491,7 @@ new MyCollectionView().render().done(function(){
 });
 ```
 
-## CollectionView: Automatic Rendering
+## CollectionView: автоматический рендеринг
 
 The collection view binds to the "add", "remove" and "reset" events of the
 collection that is specified.
@@ -507,7 +505,7 @@ one model in to the collection of item views.
 When a model is removed from a collection (or destroyed / deleted), the collection
 view will close and remove that model's item view.
 
-## CollectionView: Re-render Collection
+## CollectionView: перерисовка коллекции
 
 If you need to re-render the entire collection, you can call the
 `view.render` method. This method takes care of closing all of

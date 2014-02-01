@@ -10,7 +10,7 @@ Have your routers configured to call the method on your object, directly.
 * [Add Routes At Runtime](#add-routes-at-runtime)
 * [Specify A Controller](#specify-a-controller)
 
-## Configure Routes
+## Настройка роутов
 
 Configure an AppRouter with `appRoutes`. The route definition is passed on to Backbone's standard routing handlers. This means that you define routes like you normally would.  However, instead of providing a callback method that exists on the router, you provide a callback method that exists on the controller, which you specify for the router instance (see below.)
 
@@ -34,9 +34,10 @@ MyRouter = Backbone.Marionette.AppRouter.extend({
 
 You can also add standard routes to an AppRouter with methods on the router.
 
-## Configure Routes In Constructor
+## Настройка роутов в конструкторе
 
-Routes can be defined through the constructor function options, as well.
+Также роуты могут быть определены в качестве параметра конструктора. 
+Для этого констуктору нужно передать объект `appRoutes`.
 
 ```js
 var MyRouter = new Marionette.AppRouter({
@@ -52,7 +53,7 @@ This allows you to create router instances without having to `.extend`
 from the AppRouter. You can just create the instance with the routes defined
 in the constructor, as shown.
 
-## Add Routes At Runtime
+## Добавление роутов при выполнения приложения
 
 In addition to setting the `appRoutes` for an AppRouter, you can add app routes
 at runtime, to an instance of a router. This is done with the `appRoute()`
@@ -71,8 +72,8 @@ router.appRoute("/foo", "fooThat");
 
 ## Указание контроллера
 
-App routers can only use one `controller` object. You can either specify this
-directly in the router definition:
+Роутеры приложения могут использовать только один контроллер. Вы можете указать 
+используемый контроллер при определении роутера: 
 
 ```js
 someController = {
@@ -84,7 +85,7 @@ Backbone.Marionette.AppRouter.extend({
 });
 ```
 
-... or in a parameter to the constructor:
+... или в качестве параметра конструктора:
 
 ```js
 myObj = {
