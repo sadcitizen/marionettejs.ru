@@ -36,6 +36,7 @@ will provide features such as `onShow` callbacks, etc. Please see
   * ["item:removed" event](#itemremoved-event)
   * ["itemview:\*" event bubbling from child views](#itemview-event-bubbling-from-child-views)
 * [CollectionView's `itemViewEventPrefix`](#collectionviews-itemvieweventprefix)
+* [CollectionView's `itemEvents`](#collectionviews-itemevents)
 * [CollectionView render](#collectionview-render)
 * [CollectionView: Automatic Rendering](#collectionview-automatic-rendering)
 * [CollectionView: Re-render Collection](#collectionview-re-render-collection)
@@ -84,7 +85,7 @@ Backbone.Marionette.CollectionView.extend({
     // some logic to calculate which view to return
     return someItemSpecificView;
   }
-})
+});
 ```
 
 ## CollectionView's `itemViewOptions`
@@ -161,6 +162,18 @@ Backbone.Marionette.CollectionView.extend({
 
 This will render the `emptyView` and display the message that needs to
 be displayed when there are no items.
+
+If you want to control when the empty view is rendered, you can override
+`isEmpty`:
+
+```js
+Backbone.Marionette.CollectionView.extend({
+  isEmpty: function(collection) {
+    // some logic to calculate if the view should be rendered as empty
+    return someBoolean;
+  }
+});
+```
 
 ## CollectionView's `buildItemView`
 
@@ -452,6 +465,29 @@ that hack as a way to demonstrate the event bubbling.
 Normally, you would have your item view listening to DOM
 events or model change events, and then triggering an event
 of its own based on that.
+
+## CollectionView's `itemEvents`
+You can specify an `itemEvents` hash or method which allows you to capture all bubbling itemEvents without having to manually set bindings.
+
+```js
+itemEvents: {
+  "render": function() {
+    console.log("an itemView has been rendered");
+  }
+}
+```
+
+You can also use a method for `itemEvents` that returns a hash.
+
+```js
+itemEvents: function() {
+  return {
+    "render": function() {
+      console.log("an itemView has been rendered");
+    }
+  }
+}
+```
 
 ## CollectionView's `itemViewEventPrefix`
 
