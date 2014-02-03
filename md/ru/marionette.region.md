@@ -4,9 +4,9 @@ Regions provide consistent methods to manage, show and close
 views in your applications and layouts. They use a jQuery selector
 to show your views in the correct place.
 
-Using the `Layout` class you can create nested regions.
+Используя класс `Layout` вы можете создавать вложенные регионы.
 
-## Documentation Index
+## Содержание
 
 * [Defining An Application Region](#defining-an-application-region)
 * [Initialize A Region With An `el`](#initialize-a-region-with-an-el)
@@ -72,7 +72,7 @@ var mgr = new Backbone.Marionette.Region({
 });
 ```
 
-## Basic Use
+## Основное применение
 
 Once a region is defined, you can call its `show`
 and `close` methods to display and shut-down a view:
@@ -182,7 +182,7 @@ var myView = new MyView({
 MyApp.someRegion.attachView(myView);
 ```
 
-## Region Events And Callbacks
+## События и коллбеки
 
 A region will raise a few events when showing and
 closing views:

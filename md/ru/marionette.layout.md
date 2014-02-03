@@ -1,7 +1,8 @@
 # Marionette.Layout (В процессе перевода)
 
-A `Layout` is a hybrid of an `ItemView` and a collection of `Region` objects. They 
-are ideal for rendering application layouts with multiple sub-regions 
+*В данном разделе под термином "макет" стоит понимать термин "layout".*
+
+Класс `Layout` это гибрид класса `ItemView` и коллекции объектов класса `Region`.They are ideal for rendering application layouts with multiple sub-regions 
 managed by specified region managers.
 
 A layout can also act as a composite-view to aggregate multiple
