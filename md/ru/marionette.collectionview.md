@@ -202,7 +202,7 @@ handled within the view definition directly.
 
 ### Коллбек onBeforeRender
 
-Коллбек `onBeforeRender` будет вызван перед рендерингом представления коллекции.
+Коллбек `onBeforeRender` будет вызван перед отрисовкой представления коллекции.
 
 ```js
 Backbone.Marionette.CollectionView.extend({
@@ -214,7 +214,7 @@ Backbone.Marionette.CollectionView.extend({
 
 ### Коллбек onRender
 
-After the view has been rendered, a `onRender` method will be called.
+После того, как представление будет отрисовано, будет вызван метод `onRender`.
 You can implement this in your view to provide custom code for dealing
 with the view's `el` after it has been rendered:
 

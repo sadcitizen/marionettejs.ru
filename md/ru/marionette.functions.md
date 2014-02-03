@@ -5,7 +5,7 @@ facilitate common behaviors throughout the framework. These functions may
 be useful to those that are building on top of Marionette, as they provide
 a way to get the same behaviors and conventions from your own code.
 
-## Documentation Index
+## Содержание
 
 * [Marionette.extend](#marionetteextend)
 * [Marionette.getOption](#marionettegetoption)
@@ -63,7 +63,7 @@ new M({}, { foo: "quux" }); // => "quux"
 This is useful when building an object that can have configuration set
 in either the object definition or the object's constructor options.
 
-### Falsey values
+### Лживые значения
 
 The `getOption` function will return any falsey value from the `options`,
 other than `undefined`. If an object's options has an undefined value, it will
