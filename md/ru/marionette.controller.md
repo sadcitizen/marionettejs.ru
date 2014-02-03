@@ -1,24 +1,20 @@
 # Marionette.Controller (В процессе перевода)
 
-A multi-purpose object to use as a controller for
-modules and routers, and as a mediator for workflow
-and coordination of other objects, views, and more.
+Это многоцелевой объект, который может использоваться в качестве контроллера для модулей и роутеров, и в качестве медиатора для работы и взаимодействия других объектов, представлений и прочего.
 
-## Documentation Index
+## Содержание
 
-* [Basic Use](#basic-use)
-* [Closing A Controller](#closing-a-controller)
+* [Основное применение](#basic-use)
+* [Выключение контроллера](#closing-a-controller)
 * [On The Name 'Controller'](#on-the-name-controller)
 
-## Basic Use
+## Основное применение
 
-A `Marionette.Controller` can be extended, like other
-Backbone and Marionette objects. It supports the standard
-`initialize` method, has a built-in `EventBinder`, and
-can trigger events, itself.
+Объект `Marionette.Controller` может быть расширен так же как и объекты `Backbone` и `Marionette`. 
+Он поддерживет стандартный метод `initialize`, обладает встроенным `EventBinder` и может самостоятельно вызывать события.
 
 ```js
-// define a controller
+// объявляем контроллер
 var MyController = Marionette.Controller.extend({
 
   initialize: function(options){
@@ -31,32 +27,30 @@ var MyController = Marionette.Controller.extend({
 
 });
 
-// create an instance
+// создаем экземпляр
 var c = new MyController({
   stuff: "some stuff"
 });
 
-// use the built in EventBinder
+// используем встроенный EventBinder
 c.listenTo(c, "stuff:done", function(stuff){
   console.log(stuff);
 });
 
-// do some stuff
+// вызываем какой-то функционал
 c.doStuff();
 ```
 
-## Closing A Controller
+## Выключение контроллера
 
-Each Controller instance has a built in `close` method that handles
-unbinding all of the events that are directly attached to the controller
-instance, as well as those that are bound using the EventBinder from
-the controller.
+Каждый экземпляр контроллера имеет встроенный метод `close`, 
+который удаляет все обработчики событий, присоединенные к экземпляру контроллера, 
+а также те, которые были навешаны с помощью EventBinder.
 
-The `close` method will trigger a "close" event and corresponding
-`onClose` method call:
+Метод `close` запустит событие "close" и вызовет соответствующий метод `onClose`:
 
 ```js
-// define a controller with an onClose method
+// объявляем контроллер с методом onClose
 var MyController = Marionette.Controller.extend({
 
   onClose: function(){
@@ -65,16 +59,15 @@ var MyController = Marionette.Controller.extend({
 
 })
 
-// create a new controller instance
+// создаем новый экземпляр контроллера
 var contr = new MyController();
 
-// add some event handlers
+// добавляем несколько обработчиков событий
 contr.on("close", function(){ ... });
 contr.listenTo(something, "bar", function(){...});
 
-// close the controller: unbind all of the
-// event handlers, trigger the "close" event and 
-// call the onClose method
+// выключаем контроллер: отписываемся от всех событий, 
+// вызываем событие "close" и метод onClose
 controller.close();
 ```
 

@@ -22,9 +22,9 @@ Additionally, interactions with Marionette.Region
 will provide features such as `onShow` callbacks, etc. Please see
 [the Region documentation](marionette.region.md) for more information.
 
-## Documentation Index
+## Содержание
 
-* [Basic Usage](#basic-usage)
+* [Содержание](#basic-usage)
 * [Region Availability](#region-availability)
 * [Re-Rendering A Layout](#re-rendering-a-layout)
   * [Avoid Re-Rendering The Entire Layout](#avoid-re-rendering-the-entire-layout)
@@ -144,7 +144,7 @@ layout's template to a model and need to update portions of the layout,
 you should listen to the model's "change" events and only update the
 neccesary DOM elements.
 
-## Nested Layouts And Views
+## Вложенные макеты и представления
 
 Since the `Layout` extends directly from `ItemView`, it
 has all of the core functionality of an item view. This includes
@@ -179,7 +179,7 @@ one, the same it will close a view.
 All of this ensures that layouts and the views that they
 contain are cleaned up correctly.
 
-## Custom Region Type
+## Собственный тип региона
 
 If you have the need to replace the `Region` with a region class of
 your own implementation, you can specify an alternate class to use
@@ -212,7 +212,7 @@ AppLayout = Backbone.Marionette.Layout.extend({
 });
 ```
 
-## Adding And Removing Regions
+## Добавление и удаление регионов
 
 Regions can be added and removed as needed, in a
 Layout instance. Use the following methods:

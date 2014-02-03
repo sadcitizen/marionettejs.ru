@@ -1,5 +1,7 @@
 # Marionette.Region (В процессе перевода)
 
+*В данном разделе под термином "регион" стоит понимать термин "region".*
+
 Regions provide consistent methods to manage, show and close 
 views in your applications and layouts. They use a jQuery selector
 to show your views in the correct place.
@@ -59,7 +61,6 @@ layout.render();
 layout.menu.show(new MenuView());
 layout.content.show(new MainContentView());
 ```
-
 
 ## Initialize A Region With An `el`
 
