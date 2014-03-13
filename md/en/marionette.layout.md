@@ -1,6 +1,7 @@
 # Marionette.Layout
 
-A `Layout` is a hybrid of an `ItemView` and a collection of `Region` objects. They are ideal for rendering application layouts with multiple sub-regions 
+A `Layout` is a hybrid of an `ItemView` and a collection of `Region` objects. They 
+are ideal for rendering application layouts with multiple sub-regions 
 managed by specified region managers.
 
 A layout can also act as a composite-view to aggregate multiple
