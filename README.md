@@ -1,4 +1,3 @@
-marionettejs-docs
-=================
+# Перевод документации по Backbone.Marionette
 
-Перевод документации по marionette.js
+По окончанию перевод будет доступен на сайте [marionettejs.ru] (marionettejs.ru)
