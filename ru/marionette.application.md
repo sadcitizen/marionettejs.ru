@@ -118,7 +118,7 @@ Application instances have an instance of all three [messaging systems](http://e
 section will give a brief overview of the systems; for a more in-depth look you are encouraged to read
 the [`Backbone.Wreqr` documentation](https://github.com/marionettejs/backbone.wreqr).
 
-### Event Aggregator
+### Агрегатор событий
 
 The Event Aggregator is available through the `vent` property. `vent` is convenient for passively sharing information between
 pieces of your application as events occur.
@@ -156,7 +156,7 @@ var groceryList = MyApp.reqres.request("todoList", "groceries");
 var groceryList = MyApp.request("todoList", "groceries");
 ```
 
-### Commands
+### Команды
 
 Commands is used to make any component tell another component to perform an action without a direct reference to it. A Commands instance is available under the `commands` property of the Application.
 

@@ -5,10 +5,10 @@ Have your routers configured to call the method on your object, directly.
 
 ## Содержание
 
-* [Configure Routes](#configure-routes)
-* [Configure Routes In Constructor](#configure-routes-in-constructor)
-* [Add Routes At Runtime](#add-routes-at-runtime)
-* [Specify A Controller](#specify-a-controller)
+* [Настройка роутов](#configure-routes)
+* [Настройка роутов в конструкторе](#configure-routes-in-constructor)
+* [Добавление роутов при выполнения приложения](#add-routes-at-runtime)
+* [Указание контроллера](#specify-a-controller)
 
 ## Настройка роутов
 
@@ -97,8 +97,6 @@ new MyRouter({
 });
 ```
 
-The object that is used as the `controller` has no requirements, other than it will
-contain the methods that you specified in the `appRoutes`.
+К объекту, который используется как `controller`, не предъявляются никакие требования, за исключением того, что он должен содержать методы, которые были указаны в качестве обработчиков в `appRoutes`.
 
-It is recommended that you divide your controller objects into smaller pieces of related functionality
-and have multiple routers / controllers, instead of just one giant router and controller.
+Рекомендуется разделять ваши контроллеры на небольшие кусочки со связанной функциональностью и иметь несколько роутеров / контроллеров вместо одного большого роутера и контроллера.
