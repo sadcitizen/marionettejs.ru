@@ -50,11 +50,11 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 **Представления**
 
-* [**Marionette.ItemView**](docs/marionette.itemview.md): представление, предназначенное для рендеринга одного элемента (например, из коллекции);
-* [**Marionette.CollectionView**](docs/marionette.collectionview.md): представление, которое проходит по всем моделям коллекции и рендерит для каждой модели ее собственный `ItemView` (это представление не имеет собственного шаблона);
+* [**Marionette.ItemView**](docs/marionette.itemview.md): Представление, предназначенное для рендеринга одного элемента (например, из коллекции);
+* [**Marionette.CollectionView**](docs/marionette.collectionview.md): Представление, которое проходит по всем моделям коллекции и рендерит для каждой модели ее собственный `ItemView` (это представление не имеет собственного шаблона);
 * [**Marionette.CompositeView**](docs/marionette.compositeview.md): A collection view and item view, for rendering leaf-branch/composite model hierarchies
-* [**Marionette.Layout**](docs/marionette.layout.md): A view that renders a layout and creates region managers to manage areas within it
-* [**Marionette.View**](docs/marionette.view.md): The base View type that other Marionette views extend from (not intended to be used directly)
+* [**Marionette.Layout**](docs/marionette.layout.md): Представление, которое рендерит макет и создает для него менеджер регионов.
+* [**Marionette.View**](docs/marionette.view.md): Базовый типа представления, который наследуется остальными типами представлений. Не предназначен для непосредственного использования.
 
 **Поведения**
 
@@ -73,7 +73,7 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 * [**Marionette.Application**](docs/marionette.application.md): Объект, который запускает ваше приложение с помощью инициализаторов и прочего.
 * [**Marionette.Module**](docs/marionette.application.module.md): Объект, который создает модули и подмодули в вашем приложении.
-* [**Marionette.Controller**](docs/marionette.controller.md): Объект общего назначения, который используется для управления модулями, роутерами, представлениями. Реализован на основе паттерна **медиатор**(посредник).
+* [**Marionette.Controller**](docs/marionette.controller.md): Объект общего назначения, который используется для управления модулями, роутерами, представлениями. Реализован на основе паттерна **медиатор** (посредник).
 
 **Инфраструктура обмена сообщениям**
 
@@ -85,9 +85,9 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 **Другое**
 
-* [**Marionette.AppRouter**](docs/marionette.approuter.md): Reduce your routers to nothing more than configuration
-* [**Marionette.Callbacks**](docs/marionette.callbacks.md): Manage a collection of callback methods, and execute them as needed
-* [**Marionette.functions**](docs/marionette.functions.md): A suite of helper functions and utilities for implementing common Marionette behavior in your objects
+* [**Marionette.AppRouter**](docs/marionette.approuter.md): Объект, который позволяет убрать из роутеров логику, оставив в них только конфигурацию, задающую для каждого роута свой метод обработчик.
+* [**Marionette.Callbacks**](docs/marionette.callbacks.md): Объект, который управляет набором коллбеков и выполняет их по требованию.
+* [**Marionette.functions**](docs/marionette.functions.md): Набор хелперов и утилит, предназначенных для применения базового функционала Marionette в ваших объектах.
 
 **Устаревшее**
 
