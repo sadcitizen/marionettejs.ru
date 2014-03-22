@@ -32,18 +32,18 @@ you want to use. This allows you to work with other Backbone
 frameworks and plugins easily. It also means that you are not required
 to engage in an all-or-nothing migration to begin using Marionette.
 
-### Основные преимущества
+### Ключевые преимущества
 
 * Масштабируемость: приложения строятся на модулях и событийной архитектуре;
-* Sensible defaults: Underscore templates are used for view rendering
-* Легкая модифицируемость: make it work with your application's specific needs
-* Reduce boilerplate for views, with specialized view types
-* Build on a modular architecture with an `Application` and modules that attach to it
-* Compose your application's visuals at runtime, with the `Region` and `Layout` objects
-* Nested views and layouts within visual regions
-* Встроенное управление памятью и zombie-killing in views, regions and layouts
+* Для рендеринга представлений используются шаблоны Underscore;
+* Легкая модифицируемость: make it work with your application's specific needs;
+* Уменьшение шаблонного кода для представлений за счет введения специализированных типов представлений;
+* Построена на модульной архитектуре с объектом `Application` и модулями, которые присоединены к нему;
+* Compose your application's visuals at runtime, with the `Region` and `Layout` objects;
+* Вложенные представления и макеты внутри видимых частей приложения;
+* Встроенное управление и очистка памяти в представлениях, регионах и макетах;
 * Событийная архитектура с `Backbone.Wreqr.EventAggregator`;
-* Flexible, "as-needed" architecture allowing you to pick and choose what you need
+* Гибкая архитектура, позволяющая выбрать и использовать только то, что вам нужно;
 * И многое, многое другое
 
 ## Из чего состоит marionette.js
@@ -52,7 +52,7 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 * [**Marionette.ItemView**](docs/marionette.itemview.md): Представление, предназначенное для рендеринга одного элемента (например, из коллекции);
 * [**Marionette.CollectionView**](docs/marionette.collectionview.md): Представление, которое проходит по всем моделям коллекции и рендерит для каждой модели ее собственный `ItemView` (это представление не имеет собственного шаблона);
-* [**Marionette.CompositeView**](docs/marionette.compositeview.md): Представление, предназначенное для рендеринга составных/древовидных иерархий. По сути это `collectionView`, но со своим шаблоном.
+* [**Marionette.CompositeView**](docs/marionette.compositeview.md): Представление, предназначенное для рендеринга составных/древовидных иерархий. По сути это `collectionView`, но с собственным шаблоном.
 * [**Marionette.Layout**](docs/marionette.layout.md): Представление, которое рендерит макет и создает для него менеджер регионов.
 * [**Marionette.View**](docs/marionette.view.md): Базовый типа представления, который наследуется остальными типами представлений. Не предназначен для непосредственного использования.
 
