@@ -6,7 +6,7 @@
 
 * [Основное применение](#basic-use)
 * [Выключение контроллера](#closing-a-controller)
-* [On The Name 'Controller'](#on-the-name-controller)
+* [Термин 'Controller'](#on-the-name-controller)
 
 ## Основное применение
 
