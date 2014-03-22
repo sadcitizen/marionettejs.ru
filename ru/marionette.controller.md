@@ -1,6 +1,6 @@
-# Marionette.Controller (В процессе перевода)
+# Marionette.Controller
 
-Это многоцелевой объект, который может использоваться в качестве контроллера для модулей и роутеров, и в качестве медиатора для работы и взаимодействия других объектов, представлений и прочего.
+Это многоцелевой объект, который может использоваться в качестве контроллера для модулей и роутеров и в качестве медиатора для работы и взаимодействия других объектов, представлений и прочего.
 
 ## Содержание
 
@@ -10,8 +10,7 @@
 
 ## Основное применение
 
-Объект `Marionette.Controller` может быть расширен так же как и объекты `Backbone` и `Marionette`. 
-Он поддерживет стандартный метод `initialize`, обладает встроенным `EventBinder` и может самостоятельно вызывать события.
+Объект `Marionette.Controller` может быть расширен так же как и объекты `Backbone` и `Marionette`. Он поддерживет стандартный метод `initialize`, обладает встроенным `EventBinder` и может самостоятельно вызывать события.
 
 ```js
 // объявляем контроллер
@@ -71,18 +70,10 @@ contr.listenTo(something, "bar", function(){...});
 controller.close();
 ```
 
-## On The Name 'Controller'
+## Термин 'Controller'
 
-The name `Controller` is bound to cause a bit of confusion, which is
-rather unfortunate. There was some discussion and debate about what to
-call this object, the idea that people would confuse this with an 
-MVC style controller came up a number of times. In the end, we decided
-to call this a controller anyway--as the typical use case is to control
-the workflow and process of an application and/or module. 
+Само название `Controller` может вызвать некоторое замешательство, потому что оно довольно неудачное. Было много обсуждений и споров о том, как назвать этот объект. Мысль, что пользователи будут путать этот объект с контроллером из паттерна MVC, приходила несколько раз. В конце концов, было принято решение все-таки назвать его контроллером потому, что типичным примером его использования может служить управление работой приложения и/или его модуля.
 
-But the truth is, this is a very generic, multi-purpose object that can
-serve many different roles, in many different scenarios. We are always open
-to suggestions, with good reason and discussion, on renaming objects to
-be more descriptive and less confusing. If you would like to suggest a
-different name, please do so in either the mailing list or in the Github
-Issues list.
+Но правда в том, что в широком понимании это многоцелевой объект, который может выполнять много различных ролей при многих различных сценариях. Разработчики Marionette всегда открыты для предложений (с обоснованием и после обсуждения) о переменовании объктов с целью сделать библиотеку более понятной и менее запутанной.
+
+Если вы хотите предложить какое-то иное имя для этого объекта, то просто создайте issue в [официальном репозитории](https://github.com/marionettejs/backbone.marionette) Marionette на Github.

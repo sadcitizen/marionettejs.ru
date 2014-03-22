@@ -1,4 +1,4 @@
-# Marionette.AppRouter (В процессе перевода)
+# Marionette.AppRouter
 
 Reduce the boilerplate code of handling route events and then calling a single method on another object.
 Have your routers configured to call the method on your object, directly.
