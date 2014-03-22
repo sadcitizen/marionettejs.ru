@@ -11,26 +11,13 @@ the applications that I (Derick Bailey) have been building with Backbone,
 and includes various pieces inspired by composite application architectures,
 such as Microsoft's "Prism" framework.
 
-### App Architecture On Backbone's Building Blocks
+### Архитектура приложения на строительных блоках Backbone
 
-Backbone provides a great set of building blocks for our JavaScript
-applications. It gives us the core constructs that are needed to build
-small apps, organize jQuery DOM events, or create single page apps that
-support mobile devices and large scale enterprise needs. But Backbone is
-not a complete framework. It's a set of building blocks. It leaves
-much of the application design, architecture and scalability to the
-developer, including memory management, view management, and more.
+Backbone предоставляет отличный набор строительных блоков для ваших JavaScript-приложений. Backbone дает основные конструкции, которые необходимы для разработки небольших приложений, управления событиями DOM или создания одностраничных приложений, которые поддерживают мобильные устройства и крупные корпоративные решения. Но Backbone это не полноценный фреймворк. Это только набор строительных блоков. Backbone перекладывает на разработчика большую часть работы по архитектуре приложения и его масштабируемости, включая управление памятью, представлениями и другим. 
 
-Marionette brings an application architecture to Backbone, along with
-built in view management and memory management. It's designed to be a
-lightweight and flexible library of tools that sits on top of Backbone,
-providing the framework for building a scalable application.
+Marionette привносит в Backbone архитектуру приложения вместе с встроенным управлением представлениями и памятью. Marionette создана быть легкой и гибкой библиотекой инструментов над Backbone, предоставляющей фреймворк для разработки масштабируемого приложения.
 
-Like Backbone itself, you're not required to use all of Marionette just
-because you want to use some of it. You can pick and choose which features
-you want to use. This allows you to work with other Backbone
-frameworks and plugins easily. It also means that you are not required
-to engage in an all-or-nothing migration to begin using Marionette.
+Так же как и с Backbone, вы не обязаны использовать абсолютно все строительные блоки Marionette только потому, что вам нужна часть из них. Вы можете использовать только те части библиотеки, какие вам нужны. Это позволит вам работать с другими плагинами и фреймворками для Backbone. Это так же говорит о том, что вам нет необходимости заниматься переносом всего приложения на Marionette.
 
 ### Ключевые преимущества
 
