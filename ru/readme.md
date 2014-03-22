@@ -52,22 +52,22 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 * [**Marionette.ItemView**](docs/marionette.itemview.md): Представление, предназначенное для рендеринга одного элемента (например, из коллекции);
 * [**Marionette.CollectionView**](docs/marionette.collectionview.md): Представление, которое проходит по всем моделям коллекции и рендерит для каждой модели ее собственный `ItemView` (это представление не имеет собственного шаблона);
-* [**Marionette.CompositeView**](docs/marionette.compositeview.md): A collection view and item view, for rendering leaf-branch/composite model hierarchies
+* [**Marionette.CompositeView**](docs/marionette.compositeview.md): Представление, предназначенное для рендеринга составных/древовидных иерархий. По сути это `collectionView`, но со своим шаблоном.
 * [**Marionette.Layout**](docs/marionette.layout.md): Представление, которое рендерит макет и создает для него менеджер регионов.
 * [**Marionette.View**](docs/marionette.view.md): Базовый типа представления, который наследуется остальными типами представлений. Не предназначен для непосредственного использования.
 
 **Поведения**
 
-* [**Marionette.Behavior**](docs/marionette.behavior.md): an encapsulated `View` interaction layer that can be mixed into any `view`, helping to DRY up your view code.
-* [**Marionette.Behaviors**](docs/marionette.behaviors.md): A helper class to glue your behaviors to your views.
+* [**Marionette.Behavior**](docs/marionette.behavior.md): Изолированный слой взаимодействия представлений, который может быть использован в любом `view`. В этот слой может быть вынесен общий функционал части представлений. 
+* [**Marionette.Behaviors**](docs/marionette.behaviors.md): Вспомогательный класс, предназначенный для применения поведений в ваших представлениях.
 
 **Управление представлениями**
 
-* [**Marionette.Region**](docs/marionette.region.md): Manage visual regions of your application, including display and removal of content
-* [**Marionette.RegionManager**](docs/marionette.regionmanager.md): Manage a group of related Regions
-* [**Marionette.Renderer**](docs/marionette.renderer.md): Render templates with or without data, in a consistent and common manner
-* [**Marionette.TemplateCache**](docs/marionette.templatecache.md): Cache templates that are stored in `<script>` blocks, for faster subsequent access
-* [&rarr;] [**Backbone.BabySitter**](https://github.com/marionettejs/backbone.babysitter): Manage child views for your Backbone.View (and other parents)
+* [**Marionette.Region**](docs/marionette.region.md): Управление видимыми частями вашего приложения, включая отображение и удаление их содержимого.
+* [**Marionette.RegionManager**](docs/marionette.regionmanager.md): Управление группой связанных регионов.
+* [**Marionette.Renderer**](docs/marionette.renderer.md): Объект, который единым образом рендерит шаблоны, как с данными, так и без них.
+* [**Marionette.TemplateCache**](docs/marionette.templatecache.md): Кеширование шаблонов, которые хранятся в блоках `<script>`, для быстрого доступа к ним.
+* [&rarr;] [**Backbone.BabySitter**](https://github.com/marionettejs/backbone.babysitter): Управление представлениями-потомками для вашего `Backbone.View` (и других родителей).
 
 **Инфраструктура приложения**
 
