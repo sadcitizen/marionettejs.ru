@@ -71,17 +71,17 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 **Инфраструктура приложения**
 
-* [**Marionette.Application**](docs/marionette.application.md): An application object that starts your app via initializers, and more
-* [**Marionette.Module**](docs/marionette.application.module.md): Create modules and sub-modules within the application
-* [**Marionette.Controller**](docs/marionette.controller.md): A general purpose object for controlling modules, routers, view, and implementing a mediator pattern
+* [**Marionette.Application**](docs/marionette.application.md): Объект, который запускает ваше приложение с помощью инициализаторов и прочего.
+* [**Marionette.Module**](docs/marionette.application.module.md): Объект, который создает модули и подмодули в вашем приложении.
+* [**Marionette.Controller**](docs/marionette.controller.md): Объект общего назначения, который используется для управления модулями, роутерами, представлениями. Реализован на основе паттерна **медиатор**(посредник).
 
-**Object-Messaging Infrastructure**
+**Инфраструктура обмена сообщениям**
 
-* [**Marionette.Commands**](docs/marionette.commands.md): An extension of Backbone.Wreqr.Commands, a simple command execution framework
-* [**Marionette.RequestResponse**](docs/marionette.requestresponse.md): An extension of Backbone.Wreqr.RequestResponse, a simple request/response framework
-* [&rarr;] [**Backbone.Wreqr.EventAggregator**](https://github.com/marionettejs/backbone.wreqr): An event aggregator, to facilitate pub/sub and event architecture. Part of a suite of messaging based patterns
-* [&rarr;] [**Backbone.Wreqr.Commands**](https://github.com/marionettejs/backbone.wreqr): A simple command execution system
-* [&rarr;] [**Backbone.Wreqr.RequestResponse**](https://github.com/marionettejs/backbone.wreqr): A simple request/response system
+* [**Marionette.Commands**](docs/marionette.commands.md): Расширение Backbone.Wreqr.Commands, инструмент для выполнения команд.
+* [**Marionette.RequestResponse**](docs/marionette.requestresponse.md): Расширение Backbone.Wreqr.RequestResponse, инструмент для выполнения запросов и получения ответов на них.
+* [&rarr;] [**Backbone.Wreqr.EventAggregator**](https://github.com/marionettejs/backbone.wreqr): Агрегатор событий, предназначенный для работы событийной архитектуры. Является часть набора шаблонов обмена сообщениями.
+* [&rarr;] [**Backbone.Wreqr.Commands**](https://github.com/marionettejs/backbone.wreqr): Система выполнения команд.
+* [&rarr;] [**Backbone.Wreqr.RequestResponse**](https://github.com/marionettejs/backbone.wreqr): Система выполнения запросов и получения ответов на них.
 
 **Другое**
 
@@ -91,7 +91,7 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 **Устаревшее**
 
-* [&rarr;] [**Backbone.EventBinder**](https://github.com/marionettejs/backbone.eventbinder): Deprecated w/ Backbone v0.9.9 and higher. An event binding manager for Backbone v0.9.2, to facilitate binding and unbinding of events
+* [&rarr;] [**Backbone.EventBinder**](https://github.com/marionettejs/backbone.eventbinder): Устарел для версии Backbone v0.9.9 и выше. Инструмент для более простой работы с событиями в Backbone v0.9.2.
 
 
 ## Исходный код и загрузка
@@ -102,7 +102,7 @@ to engage in an all-or-nothing migration to begin using Marionette.
 
 ### Доступные пакеты
 
-Marionette.js неофициально доступна в различных системах управления пакетами, таких как RubyGems, Node Package Manager, Nuget и других. 
+Marionette.js неофициально доступна в различных пакетных менеджерах, таких как RubyGems, Node Package Manager, Nuget и других. 
 Пакеты для этих систем поддерживаются сообществом и не являются частью ядра Backbone.Marionette. Посмотреть список доступных пакетов можно [тут](https://github.com/marionettejs/backbone.marionette/wiki/Available-packages).
 
 ## Совместимость и требования
@@ -110,8 +110,8 @@ Marionette.js неофициально доступна в различных с
 На данный момент для работы marionette.js требуются следующие библиотеки:
 
 * [jQuery](http://jquery.com) v1.8+
-* [Underscore](http://underscorejs.org) v1.4.4+
-* [Backbone](http://backbonejs.org) v1.0 
+* [Underscore](http://underscorejs.org) v1.4.4 - 1.6.0
+* [Backbone](http://backbonejs.org) v1.0.0 - 1.1.2 (версии v0.9.9 и v0.9.10 тоже должны подойти) 
 * [Backbone.Wreqr](https://github.com/marionettejs/backbone.wreqr)
 * [Backbone.BabySitter](https://github.com/marionettejs/backbone.babysitter)
 
