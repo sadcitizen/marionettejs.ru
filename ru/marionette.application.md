@@ -1,4 +1,4 @@
-# Marionette.Application (В процессе перевода)
+# Marionette.Application
 
 The `Backbone.Marionette.Application` object is the hub of your composite 
 application. It organizes, initializes and coordinates the various pieces of your
@@ -17,17 +17,17 @@ MyApp = new Backbone.Marionette.Application();
 
 * [Adding Initializers](#adding-initializers)
 * [Application Event](#application-event)
-* [Starting An Application](#starting-an-application)
-* [Messaging Systems](#messaging-systems)
-  * [Event Aggregator](#event-aggregator)
-  * [Request Response](#request-response)
-  * [Commands](#commands)
-* [Regions And The Application Object](#regions-and-the-application-object)
-  * [jQuery Selector](#jquery-selector)
-  * [Custom Region Type](#custom-region-type)
-  * [Custom Region Type And Selector](#custom-region-type-and-selector)
-  * [Get Region By Name](#get-region-by-name)
-  * [Removing Regions](#removing-regions)
+* [Запуск приложения](#starting-an-application)
+* [Обмен сообщениями](#messaging-systems)
+  * [Агрегатор событий](#event-aggregator)
+  * [Запрос/Ответ](#request-response)
+  * [Команды](#commands)
+* [Регионы и объект приложения](#regions-and-the-application-object)
+  * [jQuery-селектор](#jquery-selector)
+  * [Собственный тип региона](#custom-region-type)
+  * [Собственный тип региона и селектор](#custom-region-type-and-selector)
+  * [Получение региона по его имени](#get-region-by-name)
+  * [Удаление регионов](#removing-regions)
 
 ## Adding Initializers
 
@@ -112,7 +112,7 @@ var options = {
 MyApp.start(options);
 ```
 
-## Messaging Systems
+## Обмен сообщениями
 
 Application instances have an instance of all three [messaging systems](http://en.wikipedia.org/wiki/Message_passing) of `Backbone.Wreqr` attached to them. This
 section will give a brief overview of the systems; for a more in-depth look you are encouraged to read
@@ -137,7 +137,7 @@ window.setInterval(function() {
 }, 1000 * 60);
 ```
 
-### Request Response
+### Запрос/Ответ
 
 Request Response is a means for any component to request information from another component without being tightly coupled. An instance of Request Response is available on the Application as the `reqres` property. 
 
@@ -187,9 +187,7 @@ MyApp.execute("fetchData", true);
 
 ### jQuery-селектор
 
-Первый способ - это определение jQuery-селектора as the value of the region
-definition. This will create an instance of a Marionette.Region directly,
-and assign it to the selector:
+Первый способ - это определение jQuery-селектора как значения для имени региона. В этом случае будет создан экземпляр `Region` и ему будет назначен jQuery-селектор:
 
 ```js
 MyApp.addRegions({
@@ -257,7 +255,6 @@ var r1Again = app.r1;
 MyApp.removeRegion('someRegion');
 ```
 
-Removing a region will properly close it before removing it from the
-application object.
+Перед тем как регион будет удален из объекта приложения, для него будет вызван метод `.close()`, который его отключит.
 
 Для более подробной информации ознакомьтесь с [документацией по регионам](./marionette.region.md).
