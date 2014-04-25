@@ -1,10 +1,9 @@
-# Marionette.Application
+﻿# Marionette.Application
 
-The `Backbone.Marionette.Application` object is the hub of your composite 
-application. It organizes, initializes and coordinates the various pieces of your
-app. It also provides a starting point for you to call into, from your HTML 
-script block or from your JavaScript files directly if you prefer to go that 
-route.
+Объект Backbone.Marionette.Application это связующее звено ваiего составного
+приложения. Он объединят, инициализирует и координирует  различные части вашего
+приложения. Он также является отправной точкой для вызово из вашего HTML-тега
+script или непосредственно JavaScript-файлов, если вы предпочитаете такой путь.
 
 The `Application` is meant to be instantiated directly, although you can extend
 it to add your own functionality.
@@ -13,7 +12,7 @@ it to add your own functionality.
 MyApp = new Backbone.Marionette.Application();
 ```
 
-## Содержание
+## Содержание / Documentation Index
 
 * [Adding Initializers](#adding-initializers)
 * [Application Event](#application-event)
@@ -29,12 +28,12 @@ MyApp = new Backbone.Marionette.Application();
   * [Получение региона по его имени](#get-region-by-name)
   * [Удаление регионов](#removing-regions)
 
-## Adding Initializers
+## Добавление инициализторов / Adding Initializers
 
-Your application needs to do useful things, like displaying content in your
-regions, starting up your routers, and more. To accomplish these tasks and
-ensure that your `Application` is fully configured, you can add initializer
-callbacks to the application.
+Ваше приложение должно выполнять полезные дейтсвия, такие как отображение контента
+в регионах, запускать роутеры и многое другое. Для того что бы достигнуть этих задач и
+убедиться в том, что ваше Приложние полностью сконфигурировано вы можете добавить к нему
+функиции обратного вызова инициализатора.
 
 ```js
 MyApp.addInitializer(function(options){
@@ -51,19 +50,18 @@ MyApp.addInitializer(function(options){
 });
 ```
 
-These callbacks will be executed when you start your application,
-and are bound to the application object as the context for
-the callback. In other words, `this` is the `MyApp` object, inside
-of the initializer function.
+Эти фунцкии обратного вызова будут исполнены когда вы запустите ваше приложение,
+и добавлены в объект приложения как контекст обратного вызова. Иначе говоря,
+внутри инициализатора `this` это объект `MyApp`.
 
-The `options` parameters is passed from the `start` method (see below).
+Параметр `options` передается из метода `start` (см. ниже).
 
-Initializer callbacks are guaranteed to run, no matter when you
-add them to the app object. If you add them before the app is
-started, they will run when the `start` method is called. If you
-add them after the app is started, they will run immediately.
+Обратные вызовы инициализаторов гарантиованно будут запущены, не важно когда вы
+добавили их в объект приложения. Если вы добавили их до запуска приложения,
+они буду запущены, когда будет вызван метод `start`. Если вы добавили их после запуска
+приложения, они будут запущены немедленно.
 
-## Application Event
+## События приложения / Application Event
 
 The `Application` object raises a few events during its lifecycle, using the
 [Marionette.triggerMethod](./marionette.functions.md) function. These events
