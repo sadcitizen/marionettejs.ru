@@ -9,6 +9,7 @@ Have your routers configured to call the method on your object, directly.
 * [Настройка роутов в конструкторе](#configure-routes-in-constructor)
 * [Добавление роутов при выполнения приложения](#add-routes-at-runtime)
 * [Указание контроллера](#specify-a-controller)
+* [onRoute](#onroute)
 
 ## Настройка роутов
 
@@ -96,3 +97,8 @@ new MyRouter({
 К объекту, который используется как `controller`, не предъявляются никакие требования, за исключением того, что он должен содержать методы, которые были указаны в качестве обработчиков в `appRoutes`.
 
 Рекомендуется разделять ваши контроллеры на небольшие кусочки со связанной функциональностью и иметь несколько роутеров / контроллеров вместо одного большого роутера и контроллера.
+
+## onRoute
+
+If it exists, AppRouters will call the `onRoute` method whenever a user navigates within your app. The
+callback receives three arguments: the name, path, and arguments of the route.
