@@ -67,7 +67,7 @@ contr.listenTo(something, "bar", function(){...});
 
 // выключаем контроллер: отписываемся от всех событий, 
 // вызываем событие "close" и метод onClose
-controller.close();
+contr.close();
 ```
 
 ## Термин 'Controller'
