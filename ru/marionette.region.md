@@ -13,13 +13,14 @@ to show your views in the correct place.
 * [Defining An Application Region](#defining-an-application-region)
 * [Initialize A Region With An `el`](#initialize-a-region-with-an-el)
 * [Basic Use](#basic-use)
+* [Showing a view](#showing-a-view)
 * [`reset` A Region](#reset-a-region)
 * [Set How View's `el` Is Attached](#set-how-views-el-is-attached)
 * [Attach Existing View](#attach-existing-view)
   * [Set `currentView` On Initialization](#set-currentview-on-initialization)
   * [Call `attachView` On Region](#call-attachview-on-region)
 * [Region Events And Callbacks](#region-events-and-callbacks)
-  * [View Callbacks And Events For Regions](#view-callbacks-and-events-for-regions)
+  * [Events raised during `show`](#events-raised-during-show)
 * [Custom Region Types](#custom-region-types)
   * [Attaching Custom Region Types](#attaching-custom-region-types)
   * [Instantiate Your Own Region](#instantiate-your-own-region)
@@ -75,6 +76,8 @@ var mgr = new Backbone.Marionette.Region({
 
 ## Основное применение
 
+### Showing a View
+
 Once a region is defined, you can call its `show`
 and `close` methods to display and shut-down a view:
 
@@ -89,7 +92,11 @@ MyApp.mainRegion.close();
 ```
 
 If you replace the current view with a new view by calling `show`,
-it will automatically close the previous view.
+by default it will automatically close the previous view.
+You can prevent this behavior by passing `{preventClose: true}` in the options
+parameter. Several events will also be triggered on the views; see
+[Region Events And Callbacks](#region-events-and-callbacks) for details.
+
 
 ```js
 // Show the first view.
@@ -100,7 +107,15 @@ MyApp.mainRegion.show(myView);
 // `close` method is called for you
 var anotherView = new AnotherView();
 MyApp.mainRegion.show(anotherView);
+
+// Replace the view with another.
+// Prevent `close` from being called
+var anotherView2 = new AnotherView();
+MyApp.mainRegion.show(anotherView2, { preventClose: true });
 ```
+
+NOTE: When using `preventClose: true` you must be careful to cleanup your old views
+manually to prevent memory leaks.
 
 ## `reset` A Region
 
@@ -116,7 +131,7 @@ myRegion.reset();
 This is useful when regions are re-used across view
 instances, and in unit testing.
 
-## Set How View's `el` Is Attached
+### Set How View's `el` Is Attached
 
 Override the region's `open` method to change how the view is attached
 to the DOM. This method receives one parameter - the view to show.
@@ -143,7 +158,7 @@ Marionette.Region.prototype.open = function(view){
 This example will cause a view to slide down from the top
 of the region, instead of just appearing in place.
 
-## Attach Existing View
+### Attach Existing View
 
 There are some scenarios where it's desirable to attach an existing
 view to a region , without rendering or showing the view, and
@@ -156,7 +171,7 @@ There are two ways to accomplish this:
 * set the `currentView` in the region's constructor
 * call `attachView` on the region instance
 
-### Set `currentView` On Initialization
+#### Set `currentView` On Initialization
 
 ```js
 var myView = new MyView({
@@ -169,7 +184,7 @@ var region = new Backbone.Marionette.Region({
 });
 ```
 
-### Call `attachView` On Region 
+#### Call `attachView` On Region
 
 ```js
 MyApp.addRegions({
@@ -185,6 +200,7 @@ MyApp.someRegion.attachView(myView);
 
 ## События и коллбеки
 
+### Events raised during `show`:
 A region will raise a few events when showing and
 closing views:
 
@@ -233,28 +249,6 @@ MyView = Marionette.ItemView.extend({
     // called when the view has been shown
   }
 });
-```
-
-### View Callbacks And Events For Regions
-
-The region will call an `onShow` method on the view
-that was displayed. It will also trigger a "show" event
-from the view:
-
-```js
-MyView = Backbone.View.extend({
-  onShow: function(){
-    // the view has been shown
-  }
-});
-
-view = new MyView();
-
-view.on("show", function(){
-  // the view has been shown.
-});
-
-MyApp.mainRegion.show(view);
 ```
 
 ## Custom Region Types
@@ -325,5 +319,3 @@ You can optionally add an `initialize` function to your Region
 definition as shown in this example. It receives the `options`
 that were passed to the constructor of the Region, similar to
 a Backbone.View.
-
-
