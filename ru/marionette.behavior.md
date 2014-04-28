@@ -1,7 +1,7 @@
 # Marionette.Behavior
 
 
-A `Behavior` is an  isolated set of DOM / user interactions interactions  that can be mixed into any `View`. `Behaviors` allow you to blackbox `View` specific interactions into portable logical chunks, keeping your `views` simple and your code DRY.
+A `Behavior` is an  isolated set of DOM / user interactions that can be mixed into any `View`. `Behaviors` allow you to blackbox `View` specific interactions into portable logical chunks, keeping your `views` simple and your code DRY.
 
 ## Documentation Index
 
@@ -9,6 +9,8 @@ A `Behavior` is an  isolated set of DOM / user interactions interactions  that c
 * [Using Behaviors](#using)
 * [API](#api)
   * [Event proxy](#the-event-proxy)
+  * [Model Events](#model-events)
+  * [Collection Events](#model-events)
   * [$](#$)
   * [$el](#$el)
   * [Defaults](#defaults)
@@ -26,24 +28,24 @@ Here is an example of a simple `itemView`. Let's take a stab at simplifying it, 
 
 ```js
 var MyView = Marionette.ItemView.extend({
-	ui: {
-        "close": ".close-btn"
-	},
+  ui: {
+    "close": ".close-btn"
+  },
 
-	events: {
-	    "click @ui.close": "warnBeforeClose"
-	},
+  events: {
+    "click @ui.close": "warnBeforeClose"
+  },
 
-	warnBeforeClose: function() {
-	    alert("you are closing all your data is now gone!");
-	    this.close();
-	},
+  warnBeforeClose: function() {
+    alert("you are closing all your data is now gone!");
+    this.close();
+  },
 
-	onShow: function() {
-	   this.$('.tooltip').tooltip({
-	     text: "what a nice mouse you have"
-	   });
-	}
+  onShow: function() {
+    this.ui.close.tooltip({
+      text: "what a nice mouse you have"
+    });
+  }
 });
 ```
 
@@ -55,14 +57,18 @@ The options for each behavior are also passed to said Behavior during initializa
 
 ```js
 var MyView = Marionette.ItemView.extend({
-	behaviors: {
-		CloseWarn: {
-			message: "you are closing all your data is now gone!"
-		},
-		ToolTip: {
-			text: "what a nice mouse you have"
-		}
-	}
+  ui: {
+    "close": ".close-btn"
+  },
+
+  behaviors: {
+    CloseWarn: {
+      message: "you are closing all your data is now gone!"
+    },
+    ToolTip: {
+      text: "what a nice mouse you have"
+    }
+  }
 });
 ```
 
@@ -70,24 +76,24 @@ Now let's create the `CloseWarn` behavior.
 
 ```js
 var CloseWarn = Marionette.Behavior.extend({
-	// you can set default options
-	// just like you can in your Backbone Models
-	// they will be overriden if you pass in an option with the same key
-	defaults: {
-		"message": "you are closing!"
-	},
+  // you can set default options
+  // just like you can in your Backbone Models
+  // they will be overriden if you pass in an option with the same key
+  defaults: {
+    "message": "you are closing!"
+  },
 
-	// behaviors have events that are bound to the views DOM
-	events: {
-		"click .close": "warnBeforeClose"
-	},
+  // behaviors have events that are bound to the views DOM
+  events: {
+    "click @ui.close": "warnBeforeClose"
+  },
 
-	warnBeforeClose: function() {
-		alert(this.options.message);
-	  	// every Behavior has a hook into the
-	  	// view that it is attached to
-	  	this.view.close();
-	}
+  warnBeforeClose: function() {
+    alert(this.options.message);
+    // every Behavior has a hook into the
+    // view that it is attached to
+    this.view.close();
+  }
 });
 ```
 
@@ -95,14 +101,15 @@ And onto the `Tooltip` behavior.
 
 ```js
 var ToolTip = Marionette.Behavior.extend({
-	onShow: function() {
-		// this.$ is another example of something
-		// that is exposed to each behavior instance
-  		// of the view
-  		this.$('.tooltip').tooltip({
-	     	text: this.options.text
-  		});
-	}
+  ui: {
+    tooltip: '.tooltip'
+  },
+
+  onShow: function() {
+    this.ui.tooltip.tooltip({
+      text: this.options.text
+    });
+  }
 });
 ```
 
@@ -140,6 +147,32 @@ Marionette.Behavior.extend({
 });
 ```
 
+### Model Events
+`modelEvents` will respond to the view's model events.
+```js
+  Marionette.Behavior.extend({
+    modelEvents: {
+      "change:doge": "onDogeChange"
+    },
+
+    onDogeChange: function() {
+      // buy more doge...
+    }
+  });
+```
+
+### Collection Events
+`collectionEvents` will respond to the view's collection events.
+```js
+  Marionette.Behavior.extend({
+    collectionEvents: {
+      add: "onCollectionAdd"
+    },
+
+    onCollectionAdd: function() {
+    }
+  });
+```
 
 ### $
 `$` is a direct proxy of the views `$` lookup method.
@@ -180,7 +213,6 @@ Marionette.Behavior.extend({
 	defaults: {
 			'dominion': 'invasion',
 			'doge': 'amaze'
-		}
 	}
 });
 ```
