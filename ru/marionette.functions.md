@@ -11,6 +11,9 @@ a way to get the same behaviors and conventions from your own code.
 * [Marionette.getOption](#marionettegetoption)
 * [Marionette.triggerMethod](#marionettetriggermethod)
 * [Marionette.bindEntityEvent](#marionettebindentityevents)
+* [Marionette.normalizeEvents](#marionettenormalizeevents)
+* [Marionette.normalizeUIKeys](#marionettenormalizeuikeys)
+* [Marionette.actAsCollection](#marionetteactascollection)
 
 ## Marionette.extend
 
@@ -112,8 +115,8 @@ callback methods will still be called, though.
 
 ## Marionette.bindEntityEvents
 
-This method is used to bind a backbone "entity" (collection/model) 
-to methods on a target object. 
+This method is used to bind a backbone "entity" (collection/model)
+to methods on a target object.
 
 ```js
 Backbone.View.extend({
@@ -134,7 +137,7 @@ Backbone.View.extend({
 });
 ```
 
-The first paremter, `target`, must have a `listenTo` method from the
+The first parameter, `target`, must have a `listenTo` method from the
 EventBinder object.
 
 The second parameter is the entity (Backbone.Model or Backbone.Collection)
@@ -142,5 +145,83 @@ to bind the events from.
 
 The third parameter is a hash of { "event:name": "eventHandler" }
 configuration. Multiple handlers can be separated by a space. A
-function can be supplied instead of a string handler name. 
+function can be supplied instead of a string handler name.
 
+## Marionette.normalizeEvents
+
+Receives a hash of event names and functions and/or function names, and returns the
+same hash with the function names replaced with the function references themselves.
+
+This function is attached to the `Marionette.View` prototype by default. To use it from non-View classes you'll need to attach it yourself.
+
+```js
+var View = Marionette.ItemView.extend({
+
+  initialize: function() {
+    this.someFn = function() {};
+    this.someOtherFn = function() {};
+    var hash = {
+      eventOne: "someFn", // This will become a reference to `this.someFn`
+      eventTwo: this.someOtherFn
+    };
+    this.normalizedHash = this.normalizeMethods(hash);
+  }
+
+});
+```
+
+## Marionette.normalizeUIKeys
+
+This method allows you to use the `@ui.` syntax within a given key for triggers and events hashes. It
+swaps the `@ui.` reference with the associated selector.
+
+```js
+var hash = {
+  'click @ui.list': 'myCb'
+};
+
+var ui = {
+  'list': 'ul'
+};
+
+// This sets 'click @ui.list' to be 'click ul' in the newHash object
+var newHash = Marionette.normalizeUIKeys(hash, ui);
+```
+
+## Marionette.actAsCollection
+
+Utility function for mixing in underscore collection behavior to an object.
+
+It works by taking an object and a property field, in this example 'list',
+and appending collection functions to the object so that it can
+delegate collection calls to its list.
+
+#### Object Literal
+```js
+obj = {
+  list: [1, 2, 3]
+}
+
+Marionette.actAsCollection(obj, 'list');
+
+var double = function(v){ return v*2};
+console.log(obj.map(double)); // [2, 4, 6]
+```
+
+#### Function Prototype
+```js
+var Func = function(list) {
+  this.list = list;
+};
+
+Marionette.actAsCollection(Func.prototype, 'list');
+var func = new Func([1,2,3]);
+
+
+var double = function(v){ return v*2};
+console.log(func.map(double)); // [2, 4, 6]
+```
+
+The first parameter is the object that will delegate underscore collection methods.
+
+The second parameter is the object field that will hold the list.
