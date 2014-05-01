@@ -9,7 +9,7 @@ Have your routers configured to call the method on your object, directly.
 * [Настройка роутов в конструкторе](#configure-routes-in-constructor)
 * [Добавление роутов при выполнения приложения](#add-routes-at-runtime)
 * [Указание контроллера](#specify-a-controller)
-* [onRoute](#onroute)
+* [Коллбэк onRoute](#onroute)
 
 ## Настройка роутов
 
@@ -26,10 +26,10 @@ MyRouter = Backbone.Marionette.AppRouter.extend({
 
   /* Так же можно задать и обычные роуты */
   routes : {
-	"some/otherRoute" : "someOtherMethod"
+    "some/otherRoute" : "someOtherMethod"
   },
   someOtherMethod : function(){
-	// тело метода
+    // тело метода
   }
 
 });
@@ -57,7 +57,7 @@ var MyRouter = new Marionette.AppRouter({
 
 В дополнение к предварительной настройке через определение `appRoutes`, вы можете добавлять роуты в момент выполнения приложения. Для этого вам нужно воспользоваться методом `appRoute()`.
 
-Этот метод работает так же, как и метод `router.route()` Backbone, но вторым параметров в него передается на обработчик роута, а имя метода обработчика из контроллера.
+Этот метод работает так же, как и метод `router.route()` Backbone, но вторым аргументом в него передается не обработчик роута, а имя метода обработчика из контроллера.
 
 ```js
 var MyRouter = Marionette.AppRouter.extend({
@@ -98,7 +98,6 @@ new MyRouter({
 
 Рекомендуется разделять ваши контроллеры на небольшие кусочки со связанной функциональностью и иметь несколько роутеров / контроллеров вместо одного большого роутера и контроллера.
 
-## onRoute
+## Коллбэк onRoute
 
-If it exists, AppRouters will call the `onRoute` method whenever a user navigates within your app. The
-callback receives three arguments: the name, path, and arguments of the route.
+Если в роутере задан коллбэк `onRoute`, то он будет вызываться каждый раз, когда пользователь совершит действие, которое сменит роут. Этот коллбэк принимает три аргумента: имя, путь и аргументы роута.
