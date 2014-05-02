@@ -1,22 +1,22 @@
 # Marionette.Callbacks
 
-Объект `Callbacks` помогает управлять коллекцией коллбеков и выполнять их асинхронным способом.
+Объект `Callbacks` помогает управлять коллекцией коллбеков и выполнять их
+асинхронно-безопасным(?) способом.
 
-Для работы с коллбеками существуют два метода: 
+Для работы с коллбэками существуют два метода:
 
 * `add`
 * `run`
 
-Метод `add` добавляет новый коллбек, который будет выполнен позже. 
+Метод `add` добавляет новый коллбэк, который будет выполнен позже.
 
-Метод The `run` выполняет все текущие коллбеки in, using the
-specified context for each of the callbacks, and supplying the
-provided options to the callbacks.
+Метод `run` выполняет все текущие коллбэки, используя указанный для каждого коллбэка
+контекст, и передает в них предоставленные опции `options`.
 
 ## Содержание
 
 * [Основное применение](#basic-usage)
-* [Определение контекста для каждого коллбека](#specify-context-per-callback)
+* [Определение контекста для каждого коллбэка](#specify-context-per-callback)
 * [Продвинутое / асинхронное использование](#advanced--async-use)
 
 ## Основное применение
@@ -31,15 +31,15 @@ callbacks.add(function(options){
 callbacks.run({value: "options"}, someContext);
 ```
 
-В этом примере выводится высплывающее окошко с текстом "I'm a callback
-with options!".
-
-The executing context for each of the callback methods has been set to the `someContext` object, which is an optional parameter that can be any valid JavaScript object.
+В этом примере выводится высплывающее окно с текстом "I'm a callback with
+options!". Контекст вызова для каждого из коллбэков был установлен на
+объект `someContext`, который является опциональным параметром и может быть
+любым валидным JavaScript-объектом.
 
 ## Указание контекста для каждого коллбека
 
-You can optionally specify the context that you want each callback to be
-executed with, when adding a callback:
+Дополнительно вы можете указать требуемый контекст для каждого из коллбэков
+в момент добавления коллбэка:
 
 ```js
 var callbacks = new Backbone.Marionette.Callbacks();
@@ -47,23 +47,22 @@ var callbacks = new Backbone.Marionette.Callbacks();
 callbacks.add(function(options){
   alert("I'm a callback with " + options.value + "!");
 
-   // specify callback context as second parameter
+  // в качестве второго параметра укажем контекст для коллбэка
 }, myContext);
 
-
-// the `someContext` context is ignored by the above callback
+// контекст `someContext` игнорируется коллбэком, добавленным выше
 callbacks.run({value: "options"}, someContext);
 ```
 
-This will run the specified callback with the `myContext` object set as
-`this` in the callback, instead of `someContext`.
+В этом случае в запущенном коллбэке `this` будет указывать на объект `myContext`,
+а не на `someContext`.
 
 ## Продвинутое / Асинхронное использование
 
-The `Callbacks` executes each callback in an async-friendly 
-manner, and can be used to facilitate async callbacks. 
-The `Marionette.Application` object uses `Callbacks`
-to manage initializers (see above). 
+`Callbacks` выполняет каждый коллбэк способом, похожим на асинхронный,
+and can be used to facilitate async callbacks.
+Объект `Marionette.Application` использует `Callbacks` для управления
+инициализаторами.
 
-It can also be used to guarantee callback execution in an event
-driven scenario, much like the application initializers.
+`Callbacks` так же может быть использован в целях гарантированного выполнения
+коллбэка в рамках какого-то событийного сценария, подобно инициализаторам приложения.
