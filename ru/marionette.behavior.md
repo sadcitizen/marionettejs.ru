@@ -1,7 +1,7 @@
 # Marionette.Behavior
 
-
-A `Behavior` is an  isolated set of DOM / user interactions that can be mixed into any `View`. `Behaviors` allow you to blackbox `View` specific interactions into portable logical chunks, keeping your `views` simple and your code DRY.
+`Behavior` это изолированный набор взаимодействий пользователя с DOM, который может быть добавлен к любому `View`.
+`Behaviors` allow you to blackbox `View` specific interactions into портативные логические куски, сохраняя ваше `views` простым, а код недублированным.
 
 ## Documentation Index
 
@@ -24,7 +24,7 @@ These interactions tend to be chunks of logic that you want to use in multiple v
 
 ## Using
 
-Here is an example of a simple `itemView`. Let's take a stab at simplifying it, and abstracting behaviors from it.
+Приведем пример простого `itemView`. Let's take a stab at simplifying it, and abstracting behaviors from it.
 
 ```js
 var MyView = Marionette.ItemView.extend({
@@ -72,7 +72,7 @@ var MyView = Marionette.ItemView.extend({
 });
 ```
 
-Now let's create the `CloseWarn` behavior.
+Теперь давайте создадим поведение `CloseWarn`.
 
 ```js
 var CloseWarn = Marionette.Behavior.extend({

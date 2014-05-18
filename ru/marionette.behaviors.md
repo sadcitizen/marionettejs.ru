@@ -19,7 +19,7 @@ This method defines where your behavior classes are stored. A simple implementat
 
 ```js
 Marionette.Behaviors.behaviorsLookup = function() {
-    return window.Behaviors;
+  return window.Behaviors;
 }
 ```
 
@@ -29,14 +29,14 @@ In this sample (using the default `getBehaviorClass` implementation) your code w
 
 ```js
 var MyView = Marionette.ItemView.extend({
-	behaviors: {
-		CloseWarn: {
-			message: "you are closing all your data is now gone!"
-		},
-		ToolTip: {
-			text: "what a nice mouse you have"
-		}
-	}
+  behaviors: {
+    CloseWarn: {
+      message: "you are closing all your data is now gone!"
+    },
+    ToolTip: {
+      text: "what a nice mouse you have"
+    }
+  }
 });
 ```
 
@@ -46,11 +46,11 @@ This method has a default implementation that is simple to override. It is respo
 
 ```js
 getBehaviorClass: function(options, key) {
-    if (options.behaviorClass) {
-        return options.behaviorClass;
-    }
+  if (options.behaviorClass) {
+    return options.behaviorClass;
+  }
 
-    return Behaviors.behaviorsLookup[key];
+  return Behaviors.behaviorsLookup[key];
 }
 ```
 
@@ -61,12 +61,12 @@ This property lets you pass a `class` in for the `behavior` to use (bypassing th
 ```js
 define(['lib/tooltip'], function(Tooltip) {
   var View = Marionette.ItemView.extend({
-     behaviors: {
-        Tooltip: {
-          behaviorClass: Tooltip,
-          message: "hello world"
-        }
-     }
+    behaviors: {
+      Tooltip: {
+        behaviorClass: Tooltip,
+        message: "hello world"
+      }
+    }
   });
 });
 ```

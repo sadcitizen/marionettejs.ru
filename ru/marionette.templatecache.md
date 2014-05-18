@@ -1,18 +1,19 @@
-# Marionette.TemplateCache (В процессе перевода)
+# Marionette.TemplateCache
 
-The `TemplateCache` provides a cache for retrieving templates
-from script blocks in your HTML. This will improve
-the speed of subsequent calls to get a template.
+Объект `TemplateCache` предоставляет кэш для извлекаемых шаблонов из блоков
+`script` в вашей HTML-разметке. Это позволяет увеличить скорость получения
+шаблона при последующих обращениях, так как шаблон будет браться не из DOM,
+а из кэша.
 
-## Documentation Index
+## Содержание
 
-* [Basic Usage](#basic-usage)
-* [Clear Items From cache](#clear-items-from-cache)
+* [Основное применение](#basic-usage)
+* [Удаление записей из кэша](#clear-items-from-cache)
 * [Customizing Template Access](#customizing-template-access)
 * [Override Template Retrieval](#override-template-retrieval)
 * [Override Template Compilation](#override-template-compilation)
 
-## Basic Usage
+## Основное применение
 
 To use the `TemplateCache`, call the `get` method on TemplateCache directly.
 Internally, instances of the TemplateCache type will be created and stored
@@ -28,34 +29,34 @@ template({param1:'value1', paramN:'valueN'});
 Making multiple calls to get the same template will retrieve the
 template from the cache on subsequence calls.
 
-### Clear Items From cache
+### Удаление записей из кэша
 
-You can clear one or more, or all items from the cache using the
-`clear` method. Clearing a template from the cache will force it
+Вы можете удалить одну, несколько или все записи из кеша с помощью метода `clear`.
+Удаление шаблона из кэша приведет к повторной загрузке шаблона из DOM
+
+Clearing a template from the cache will force it
 to re-load from the DOM (via the `loadTemplate`
 function which can be overridden, see below) the next time it is retrieved.
 
-If you do not specify any parameters, all items will be cleared
-from the cache:
+Если при вызове метода `clear` в него не переданы никакие параметры, то будут удалены все записи:
 
 ```js
 Backbone.Marionette.TemplateCache.get("#my-template");
 Backbone.Marionette.TemplateCache.get("#this-template");
 Backbone.Marionette.TemplateCache.get("#that-template");
 
-// clear all templates from the cache
+// удаление всех шаблонов из кэша
 Backbone.Marionette.TemplateCache.clear()
 ```
 
-If you specify one or more parameters, these parameters are assumed
-to be the `templateId` used for loading / caching:
+Если вы укажете один и более параметров, то они будут трактоваться как `templateId`, который используется при загрузке / кэшировании:
 
 ```js
 Backbone.Marionette.TemplateCache.get("#my-template");
 Backbone.Marionette.TemplateCache.get("#this-template");
 Backbone.Marionette.TemplateCache.get("#that-template");
 
-// clear 2 of 3 templates from the cache
+// удаление 2 из 3 шаблонов из кэша
 Backbone.Marionette.TemplateCache.clear("#my-template", "#this-template")
 ```
 

@@ -1,4 +1,4 @@
-# Marionette functions (В процессе перевода)
+# Marionette functions
 
 Marionette provides a set of utility / helper functions that are used to
 facilitate common behaviors throughout the framework. These functions may

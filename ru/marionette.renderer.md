@@ -1,33 +1,27 @@
 # Marionette.Renderer (В процессе перевода)
 
-The `Renderer` object was extracted from the `ItemView` rendering
-process, in order to create a consistent and re-usable method of
-rendering a template with or without data.
+Объект `Renderer` был извлечен из процесса рендеринга `ItemView` с целью создать консистентный и переиспользуемый способ рендеринга шаблонов с данными и без данных.
 
-## Documentation Index
+## Содержание
 
 * [Basic Usage](#basic-usage)
 * [Pre-compiled Templates](#pre-compiled-templates)
 * [Custom Template Selection And Rendering](#custom-template-selection-and-rendering)
 * [Using Pre-compiled Templates](#using-pre-compiled-templates)
 
-## Basic Usage
+## Основное применение
 
-The basic usage of the `Renderer` is to call the `render` method.
-This method returns a string containing the result of applying the 
-template using the `data` object as the context.
+Основное применение `Renderer` заключается в вызове метода `render`. Этот метод возвращает строку, содержащую результат наложения объекта данных `data` на шаблон `template`.
 
 ```js
 var template = "#some-template";
 var data = {foo: "bar"};
 var html = Backbone.Marionette.Renderer.render(template, data);
 
-// do something with the HTML here
+// какие-то манипуляции с HTML
 ```
 
-If you pass a `template` that coerces to a falsey value, the
-`render` method will throw an exception stating that there was no
-template provided.
+Если в качестве параметра `template` передать "лживое" значение, то метод `render` сгенерирует исключение о том, что шаблон не был указан.
 
 ## Pre-compiled Templates
 
