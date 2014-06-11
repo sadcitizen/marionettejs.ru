@@ -1,9 +1,10 @@
 # Site settings
 title: "Marionette.js по-русски"
-email: instanceofpro@domain.com
+email: instanceofpro@gmail.com
 username: instanceofpro
 description: "Marionette.js по-русски"
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
+highlighter: pygments
 permalink: /:title
