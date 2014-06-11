@@ -1,0 +1,9 @@
+# Site settings
+title: "Marionette.js по-русски"
+email: instanceofpro@domain.com
+username: instanceofpro
+description: "Marionette.js по-русски"
+
+# Build settings
+markdown: kramdown
+permalink: /:title
