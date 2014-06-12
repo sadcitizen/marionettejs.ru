@@ -2,12 +2,12 @@
     <div class="page-prevnext">
         {% if page.previous %}
             <div class="page-prev">
-                <span>&larr;</span><a rel="prev" href="{{ page.previous.url }}">{{ page.previous.title }}</a>
+                <span>&larr;</span><a rel="prev" href="{{ site.baseurl }}{{ page.previous.url }}">{{ page.previous.title }}</a>
             </div>
         {% endif %}
         {% if page.next %}
             <div class="page-next">
-                <a rel="next" href="{{ page.next.url }}">{{ page.next.title }}</a><span>&rarr;</span>
+                <a rel="next" href="{{ site.baseurl }}{{ page.next.url }}">{{ page.next.title }}</a><span>&rarr;</span>
             </div>
         {% endif %}
     </div>
