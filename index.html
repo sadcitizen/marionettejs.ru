@@ -5,7 +5,7 @@ layout: default
 <div class="home">
 
     <ul class="posts">
-        {% for post in site.posts %}
+        {% for post in site.posts reversed %}
         <li>
             <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
         </li>

@@ -1,0 +1,93 @@
+.highlight, pre, code {
+    @include font-family(mono, $font-mono);
+    font-size: 0.8125rem;
+}
+
+code {
+    padding: .25em .5em;
+    border-radius: 3px;
+    background-color: lighten($color-blue-light, 5%);
+    color: $color-red;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+
+pre code {
+    padding: 0;
+    color: inherit;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.highlight {
+    background-color: $color-blue-dark;
+    color: $color-body;
+    border-radius: 3px;
+
+    pre {
+        padding: 1.25rem;
+    }
+
+    .c,
+    .c1,
+    .cm,
+    .cp,
+    .cs {
+        color: #999999;
+    }
+
+    .k,
+    .kc,
+    .kd,
+    .kn,
+    .kp,
+    .kr,
+    .kt {
+        color: #cc99cc;
+    }
+
+    .m,
+    .mf,
+    .mh,
+    .mi,
+    .mo {
+        color: #f99157;
+    }
+
+    .na {
+        color: #ffcc66;
+    }
+
+    .nc,
+    .nf,
+    .nt,
+    .sr {
+        color: #f2777a;
+    }
+
+    .nb,
+    .no,
+    .nv {
+        color: #f99157;
+    }
+
+    .p {
+        color: #f99157;
+    }
+
+    .s,
+    .s1,
+    .s2 {
+        color: #99cc99;
+    }
+
+    .sx {
+        color: #6699cc;
+    }
+
+    .css {
+        .k,
+        .n {
+            color: #ffcc66;
+        }
+    }
+}

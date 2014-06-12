@@ -1,0 +1,41 @@
+/**
+ * Positioning
+ */
+@mixin position($position, $args) {
+    position: $position;
+
+    @each $o in top right bottom left {
+        $i: index($args, $o);
+
+        @if $i and $i + 1 <= length($args) and type-of(nth($args, $i + 1)) == number  {
+            #{$o}: nth($args, $i + 1);
+        }
+    }
+}
+
+/** usage
+@include absolute(top 0 left 0) => position: absolute; top: 0; left: 0;
+*/
+@mixin absolute($args) {
+    @include position(absolute, $args);
+}
+
+@mixin fixed($args) {
+    @include position(fixed, $args);
+}
+
+@mixin relative($args) {
+    @include position(relative, $args);
+}
+
+@mixin center($width, $height, $position: absolute) {
+    position: $position;
+    top: 50%;
+    left: 50%;
+    margin: round($height * -0.5) 0 0 round($width * -0.5);
+}
+
+@mixin center-block($top: 0, $bottom: 0) {
+    @include is-block();
+    margin: $top auto $bottom auto;
+}

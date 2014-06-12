@@ -1,0 +1,46 @@
+/**
+ * Box model
+ */
+@mixin blocks-list($type: block) {
+    list-style: none;
+
+    @if $type == inline {
+        @include blocks-list();
+        @include clearfix();
+
+        > li {
+            @include is-left();
+        }
+    } @else {
+        @include cancel();
+        @include is-block();
+
+        > li {
+            @include is-block();
+        }
+    }
+}
+
+@mixin is-block($type: block) {
+    @if $type == inline {
+        display: inline-block;
+        zoom: 1;
+        *display: inline;
+    } @else {
+        display: block;
+    }
+}
+
+@mixin is-hidden() {
+    display: none;
+}
+
+@mixin size($width, $height: $width) {
+    @if $width == auto or (type-of($width) == number and not unitless($width)) {
+        width: $width;
+    }
+
+    @if $height == auto or (type-of($height) == number and not unitless($height)) {
+        height: $height;
+    }
+}

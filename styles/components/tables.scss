@@ -1,0 +1,21 @@
+table {
+    margin-bottom: 1rem;
+    width: 100%;
+    border: 1px solid $color-blue-light;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    padding: .25rem .5rem;
+    border: 1px solid $color-blue-light;
+}
+
+tbody {
+    tr:nth-child(odd) {
+        td,
+        th {
+            background-color: lighten($color-blue-light, 5%);
+        }
+    }
+}

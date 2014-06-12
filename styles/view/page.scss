@@ -1,0 +1,32 @@
+.page-prevnext {
+    position: relative;
+    margin: 2rem 0;
+    @include clearfix();
+}
+
+.page-prev,
+.page-next {
+    width: 45%;
+    font-weight: bold;
+
+    span {
+        position: absolute;
+    }
+}
+
+.page-prev {
+    float: left;
+
+    span {
+        left: -1.5rem;
+    }
+}
+
+.page-next {
+    float: right;
+    text-align: right;
+
+    span {
+        right: -1.5rem;
+    }
+}

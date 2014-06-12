@@ -1,0 +1,72 @@
+/**
+ * Typography
+ */
+$font-family-sans-serif: Arial, Tahoma, sans-serif;
+$font-family-serif: Georgia, "Times New Roman", Times, serif;
+$font-family-mono: Consolas, "Courier New", monospace;
+
+@mixin is-indented($indent: -9999px) {
+    @if $indent == inherit or (type-of($indent) == number and not unitless($indent)) {
+        text-indent: $indent;
+    }
+}
+
+@mixin font($type, $font, $size: 14px, $line: 21px, $weight: normal) {
+    @if unitless($line) {
+        $line: $size * $line;
+    }
+
+    @if $type == sans {
+        font: #{$weight} #{$size}/#{$line} #{$font}, #{$font-family-sans-serif};
+    }
+
+    @if $type == serif {
+        font: #{$weight} #{$size}/#{$line} #{$font}, #{$font-family-serif};
+    }
+
+    @if $type == mono {
+        font: #{$weight} #{$size}/#{$line} #{$font}, #{$font-family-mono};
+    }
+}
+
+@mixin font-family($type, $font) {
+    @if $type == sans {
+        font-family: #{$font}, #{$font-family-sans-serif};
+    }
+
+    @if $type == serif {
+        font-family: #{$font}, #{$font-family-serif};
+    }
+
+    @if $type == mono {
+        font-family: #{$font}, #{$font-family-mono};
+    }
+}
+
+@mixin font-size($size, $line) {
+    font-size: $size;
+
+    @if unitless($line) {
+        line-height: $size * $line;
+    }
+
+    @if type-of($line) == number and not unitless($line) {
+        line-height: $line;
+    }
+}
+
+@mixin font-truncate() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin font-face($name, $path, $weight: normal, $style: normal) {
+    @font-face {
+        font-family: $name;
+        src: url('#{$path}.eot');
+        src: url('#{$path}.eot?#iefix') format('embedded-opentype'), url('#{$path}.woff') format('woff'), url('#{$path}.ttf') format('truetype');
+        font-weight: $weight;
+        font-style: $style;
+    }
+}

@@ -1,0 +1,83 @@
+a {
+    color: $color-link;
+    text-decoration: underline;
+
+    &:hover {
+        color: $color-link-hover;
+        text-decoration: none;
+    }
+}
+
+.page {
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $color-red;
+        text-rendering: optimizeLegibility;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        margin-top: 1.75rem;
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        margin-top: 1.5rem;
+        font-size: 1.25rem;
+    }
+
+    h4, h5, h6 {
+        margin-top: 1rem;
+        font-size: 1rem;
+    }
+
+    p {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    ul, ol {
+        list-style-position: outside;
+        margin-left: 1.5rem;
+    }
+
+    ul, ol, dl {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    li ul {
+        margin-bottom: 0;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-left: 2rem;
+        margin-bottom: .5rem;
+    }
+
+    blockquote {
+        padding: .5rem 1rem;
+        margin: .8rem 0;
+        color: $color-gray-81;
+        border-left: .25rem solid $color-blue-light;
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .message {
+        margin-bottom: 1rem;
+        padding: .5rem 1rem;
+        color: $color-gray-81;
+        background-color: lighten($color-blue-light, 5%);
+        box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    }
+}

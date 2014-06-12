@@ -1,0 +1,35 @@
+/**
+ * Images
+ */
+
+$base-image-url: '../../Images';
+
+@mixin background($image, $position: 0 0, $repeat: no-repeat) {
+    background: url('#{$base-image-url}/#{$image}') $position $repeat;
+}
+
+@mixin background-clip($value: padding-box) {
+    @if $value == border-box or $value = padding-box or $value = content-box or $value = inherit {
+        @include prefix(background-clip, $value);
+    }
+}
+
+@mixin background-image($image) {
+    background-image: url('#{$base-image-url}/#{$image}');
+}
+
+@mixin background-origin($value: padding-box) {
+    @if $value == border-box or $value = padding-box or $value = content-box or $value = inherit {
+        @include prefix(background-origin, $value);
+    }
+}
+
+@mixin background-size($value) {
+    @if $value == auto or $value == cover or $value == contain {
+        @include prefix(background-size, $value);
+    }
+}
+
+@mixin sprite($step, $x, $y, $offsetX: 0, $offsetY: 0) {
+    background-position: #{-$x*$step+$offsetX} #{-$y*$step+$offsetY};
+}

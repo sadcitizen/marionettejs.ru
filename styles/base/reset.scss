@@ -1,0 +1,47 @@
+/* --- missing styles --- */
+* { // http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+    &, 
+    &:after,
+    &:before {
+        box-sizing: border-box;
+    }
+}
+
+abbr[title] {
+    cursor: help;
+}
+
+ul, ol {
+    padding: 0;
+    list-style-position: inside;
+}
+
+dd {
+    margin: 0;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+blockquote, q {
+    quotes: none;
+    margin: 0;
+
+    &:after,
+    &:before {
+        content: '';
+        content: none;
+    }
+}
+
+a,
+button,
+input[type="text"],
+input[type="password"],
+input[type="reset"],
+input[type="submit"] {
+    outline: none;
+}

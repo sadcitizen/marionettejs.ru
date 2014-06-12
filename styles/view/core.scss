@@ -1,0 +1,10 @@
+html {
+    font-size: 16px;
+    line-height: 1.5;
+    @include font-family(sans, $font-sans);
+}
+
+body {
+    background-color: $color-body;
+    color: $color-text;
+}
