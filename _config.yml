@@ -3,6 +3,7 @@ title: "Marionette.js по-русски"
 email: instanceofpro@gmail.com
 username: instanceofpro
 description: "Marionette.js по-русски"
+baseurl: http://instanceofpro.github.io/marionettejs.ru/
 
 # Build settings
 markdown: redcarpet
