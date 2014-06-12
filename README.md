@@ -1,6 +1,6 @@
 ### Перевод документации по Backbone.Marionette
 
-По окончанию перевод будет доступен на сайте [marionettejs.ru](http://marionettejs.ru)
+По окончанию перевод будет доступен на сайте [marionettejs.ru](http://marionettejs.ru), черновую версию можно увидеть вот [тут](http://instanceofpro.github.io/marionettejs.ru/)
 
 Словарь:
 * layout - макет
@@ -18,7 +18,7 @@
 * [Marionette.CollectionView](ru/marionette.collectionview.md) - Перевод
 * [Marionette.CompositeView](ru/marionette.compositeview.md) - Перевод
 * [Marionette.Configuration](ru/marionette.configuration.md) - Перевод
-* [Marionette.Controller](ru/marionette.controller.md) - Вычитка
+* [Marionette.Controller](ru/marionette.controller.md) - Перевод
 * [Marionette.Functions](ru/marionette.functions.md) - Перевод
 * [Marionette.ItemView](ru/marionette.itemview.md) - Перевод
 * [Marionette.Layout](ru/marionette.layout.md) - Перевод
