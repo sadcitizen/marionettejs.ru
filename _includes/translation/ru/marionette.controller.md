@@ -1,5 +1,3 @@
-# Marionette.Controller
-
 A Controller is a white-label Marionette Object. Its name can be a cause for
 confusion, as it actually has nothing to do with the popular MVC architectural pattern.
 Instead, it's better to think of the Controller as a base object from which you can build.

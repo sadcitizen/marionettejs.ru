@@ -1,0 +1,27 @@
+.logo {
+    @include is-block();
+    margin: 1rem auto 0;
+    @include is-indented();
+    @include size(200px, 250px);
+    @include background('logo.png');
+}
+
+.sub-logo {
+    text-align: center;
+    @include is-block();
+    margin-bottom: 1em;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.version {
+    @include absolute(top 1rem left 50%);
+    margin-left: -7rem;
+    background: $color-blue;
+    color: $color-body;
+    @include size(3rem);
+    border-radius: 50%;
+    line-height: 3rem;
+    text-align: center;
+    font-weight: bold;
+}

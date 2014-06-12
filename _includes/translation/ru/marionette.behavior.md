@@ -1,5 +1,3 @@
-# Marionette.Behavior
-
 `Behavior` это изолированный набор взаимодействий пользователя с DOM, который может быть добавлен к любому `View`.
 `Behaviors` allow you to blackbox `View` specific interactions into портативные логические куски, сохраняя ваше `views` простым, а код недублированным.
 

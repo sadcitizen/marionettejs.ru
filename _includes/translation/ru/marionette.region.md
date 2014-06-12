@@ -1,5 +1,3 @@
-# Marionette.Region (В процессе перевода)
-
 *В данном разделе под термином "регион" стоит понимать термин "region".*
 
 Regions provide consistent methods to manage, show and close 

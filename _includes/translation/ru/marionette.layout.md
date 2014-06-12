@@ -1,5 +1,3 @@
-# Marionette.Layout (В процессе перевода)
-
 *В данном разделе под термином "макет" стоит понимать термин "layout".*
 
 Класс `Layout` это гибрид класса `ItemView` и коллекции объектов класса `Region`.They are ideal for rendering application layouts with multiple sub-regions 

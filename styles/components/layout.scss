@@ -1,3 +1,32 @@
+.layout {
+    @include size(100%);
+    height: auto !important;
+    min-height: 100%;
+
+    .push {
+        height: $footer-height;
+        @include clearfix();
+    }
+}
+
+
+.header {
+    position: relative;
+    background-color: $color-blue-light;
+    border-bottom: 1px solid darken($color-blue-light, 10%);
+    overflow: hidden;
+}
+
+.footer {
+    height: $footer-height;
+    margin-top: -$footer-height;
+    background-color: $color-blue-light;
+    box-shadow: 0 -1px 0 darken($color-blue-light, 10%);
+    line-height: $footer-height;
+    font-size: .875rem;
+    text-align: right;
+}
+
 .container {
     width: 100%;
     margin-left: auto;

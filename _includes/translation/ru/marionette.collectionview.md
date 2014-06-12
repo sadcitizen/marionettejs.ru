@@ -1,5 +1,3 @@
-# Marionette.CollectionView (В процессе перевода)
-
 The `CollectionView` will loop through all of the models in the
 specified collection, render each of them using a specified `itemView`,
 then append the results of the item view's `el` to the collection view's

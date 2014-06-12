@@ -1,6 +1,4 @@
-# Marionette.RegionManager (В процессе перевода)
-
-Region managers provide a consistent way to manage 
+Region managers provide a consistent way to manage
 a number of Marionette.Region objects within an
 application. The RegionManager is intended to be
 used by other objects, to facilitate the addition,

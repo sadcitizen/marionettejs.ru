@@ -2,9 +2,11 @@ html {
     font-size: 16px;
     line-height: 1.5;
     @include font-family(sans, $font-sans);
+    @include size(100%);
 }
 
 body {
     background-color: $color-body;
     color: $color-text;
+    @include size(100%);
 }

@@ -1,6 +1,4 @@
-# Marionette.ItemView (В процессе перевода)
-
-An `ItemView` is a view that represents a single item. That item may be a 
+An `ItemView` is a view that represents a single item. That item may be a
 `Backbone.Model` or may be a `Backbone.Collection`. Whichever it is though, it
 will be treated as a single item. 
 

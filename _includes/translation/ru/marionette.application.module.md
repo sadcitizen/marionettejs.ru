@@ -1,5 +1,3 @@
-# Marionette.Application.module
-
 Marionette Modules allow you to create modular encapsulated logic.
 They can be used to split apart large applications into multiple files,
 and to build individual components of your app.
