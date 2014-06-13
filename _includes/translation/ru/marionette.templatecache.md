@@ -1,42 +1,39 @@
-Объект `TemplateCache` предоставляет кэш для извлекаемых шаблонов из блоков
-`script` в вашей HTML-разметке. Это позволяет увеличить скорость получения
-шаблона при последующих обращениях, так как шаблон будет браться не из DOM,
-а из кэша.
+`TemplateCache` предоставляет кэш для шаблонов, которые хранятся внутри тегов
+`script` вашей HTML-разметке. Это позволяет увеличить скорость получения
+шаблона при последующих обращениях к нему.
 
 ## Содержание
 
 * [Основное применение](#basic-usage)
 * [Удаление записей из кэша](#clear-items-from-cache)
-* [Customizing Template Access](#customizing-template-access)
-* [Override Template Retrieval](#override-template-retrieval)
-* [Override Template Compilation](#override-template-compilation)
+* [Настройка способа доступа к шаблонам](#customizing-template-access)
+* [Переопределение способа получения шаблона](#override-template-retrieval)
+* [Переопределение способа компиляции шаблонов](#override-template-compilation)
 
-## Основное применение
+## <a name="basic-usage"></a> Основное применение
 
-To use the `TemplateCache`, call the `get` method on TemplateCache directly.
-Internally, instances of the TemplateCache type will be created and stored
-but you do not have to manually create these instances yourself. `get` will
-return a compiled template function.
+Нет необходимости самостоятельно создавать экземпляры типа `TemplateCache`,
+достаточно просто вызывать метод `get`. `TemplateCache` внутри себя создаст и будет
+хранить новый экземпляр. Метод `get` вернет скомпилированный шаблон в виде функции.
 
 ```js
 var template = Backbone.Marionette.TemplateCache.get("#my-template");
-// use the template
+// использование шаблона
 template({param1:'value1', paramN:'valueN'});
 ```
 
-Making multiple calls to get the same template will retrieve the
-template from the cache on subsequence calls.
+При первом обращении шаблон будет получен из DOM и сохранен в кэше.
+При последующих обращениях шаблон будет отдаваться уже из кэша.
 
-### Удаление записей из кэша
+### <a name="clear-items-from-cache"></a> Удаление записей из кэша
 
 Вы можете удалить одну, несколько или все записи из кеша с помощью метода `clear`.
-Удаление шаблона из кэша приведет к повторной загрузке шаблона из DOM
 
-Clearing a template from the cache will force it
-to re-load from the DOM (via the `loadTemplate`
-function which can be overridden, see below) the next time it is retrieved.
+Удаление шаблона из кэша приведет к принудительной перезагрузки его из DOM
+(с помощью метода `loadTemplate`, который можно переопределить, см. далее)
+при следующем запросе шаблона.
 
-Если при вызове метода `clear` в него не переданы никакие параметры, то будут удалены все записи:
+Если метод `clear` вызывается без параметров, то будут удалены все записи кэша шаблонов:
 
 ```js
 Backbone.Marionette.TemplateCache.get("#my-template");
@@ -47,7 +44,7 @@ Backbone.Marionette.TemplateCache.get("#that-template");
 Backbone.Marionette.TemplateCache.clear()
 ```
 
-Если вы укажете один и более параметров, то они будут трактоваться как `templateId`, который используется при загрузке / кэшировании:
+Если вы укажете один и более параметров, то они будут трактоваться как `templateId`, который используется при загрузке / кэшировании шаблонов:
 
 ```js
 Backbone.Marionette.TemplateCache.get("#my-template");
@@ -55,49 +52,46 @@ Backbone.Marionette.TemplateCache.get("#this-template");
 Backbone.Marionette.TemplateCache.get("#that-template");
 
 // удаление 2 из 3 шаблонов из кэша
-Backbone.Marionette.TemplateCache.clear("#my-template", "#this-template")
+Backbone.Marionette.TemplateCache.clear("#my-template", "#this-template");
 ```
 
-## Customizing Template Access
+## <a name="customizing-template-access"></a> Настройка способа доступа к шаблонам
 
-If you want to use an alternate template engine while
-still taking advantage of the template caching functionality, or want to customize
-how templates are stored and retrieved, you will need to customize the
-`TemplateCache object`. The default operation of `TemplateCache`, is to
-retrieve templates from the DOM based on the containing element's id
-attribute, and compile the html in that element with the underscore.js
-`template` function.
+Если есть необходимость использования альтернативного движка шаблонов, сохранив при этом
+функциональность кеширования, или настройки хранения и получения шаблонов из кэша,
+то следует настроить объект `TemplateCache`.
 
-### Override Template Retrieval
+По умолчанию `TemplateCache` запрашивает шаблоны из DOM (согласно значению атрибута id элемента,
+который содержит в себе код шаблона) и компилирует их в HTML-разметку с помощью метода `template`
+из библиотеки [underscore.js](http://underscorejs.org/#template).
 
-The default template retrieval is to select the template contents
-from the DOM using jQuery. If you wish to change the way this
-works, you can override the `loadTemplate` method on the
-`TemplateCache` object.
+### <a name="override-template-retrieval"></a> Переопределение способа получения шаблона
+
+По умолчанию для поиска шаблона в DOM и получения его разметки используется jQuery. Для изменения
+способа получения шаблона следует переопределить метод `loadTemplate` объекта `TemplateCache`:
 
 ```js
 Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
-  // load your template here, returning the data needed for the compileTemplate
-  // function. For example, you have a function that creates templates based on the
-  // value of templateId
+  // загрузка шаблона, возврат данных, которые требуются методу compileTemplate
+  // Например, ваша собственная функция которая создает шаблон на основании
+  // значения параметра templateId
   var myTemplate = myTemplateFunc(templateId);
 
-  // send the template back
+  // возврат шаблона
   return myTemplate;
 }
 ```
 
-### Override Template Compilation
+### <a name="override-template-compilation"></a> Переопределение способа компиляции шаблонов
 
-The default template compilation passes the results from
-`loadTemplate` to the `compileTemplate` function, which returns
-an underscore.js compiled template function. When overriding `compileTemplate`
-remember that it must return a function which takes an object of parameters and values
-and returns a formatted HTML string.
+При компиляции шаблона результаты работы метода `loadTemplate` передаются в метод `compileTemplate`,
+который в свою очередь возвращает скомпилированный шаблон в виде функции. При переопределении метода
+`compileTemplate` следует помнить о том, что этот метод должен возвращать функцию, которая в качестве
+параметров принимает объект с данными шаблона и возвращает HTML-разметку в виде строки.
 
 ```js
 Backbone.Marionette.TemplateCache.prototype.compileTemplate = function(rawTemplate) {
-  // use Handlebars.js to compile the template
+  // использование Handlebars.js для компиляции шаблона
   return Handlebars.compile(rawTemplate);
 }
 ```
