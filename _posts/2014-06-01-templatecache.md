@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Marionette.TemplateCache
-translated: false
+translated: true
 ---
 
 {% include translation/ru/marionette.templatecache.md %}

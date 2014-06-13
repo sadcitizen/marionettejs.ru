@@ -12,6 +12,8 @@ title: Документация
                     <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                     {% if post.translated == false %}
                         <small>(В процессе перевода)</small>
+                    {% else %}
+                        <small>(Вычитка)</small>
                     {% endif %}
                 </li>
             {% endfor %}
