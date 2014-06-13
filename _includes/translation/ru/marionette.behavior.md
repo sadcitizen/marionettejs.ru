@@ -116,7 +116,7 @@ A simple example of this would look like this:
 
 ```js
   Marionette.Behaviors.behaviorsLookup = function() {
-  	return window.Behaviors;
+    return window.Behaviors;
   }
 ```
 
@@ -139,9 +139,9 @@ You can just call from within your view `this.triggerMethod("SomeEvent", {some: 
 
 ```js
 Marionette.Behavior.extend({
-	onSomeEvent: function(data) {
-		console.log("wow such data", data);
-	}
+  onSomeEvent: function(data) {
+    console.log("wow such data", data);
+  }
 });
 ```
 
@@ -175,20 +175,20 @@ Marionette.Behavior.extend({
 ### $
 `$` is a direct proxy of the views `$` lookup method.
 ```js
-	Marionette.Behavior.extend({
-		onShow: function() {
-			this.$('.zerg')
-		}
-	});
+  Marionette.Behavior.extend({
+    onShow: function() {
+      this.$('.zerg')
+    }
+  });
 ```
 
 ### $el
 `$el` is a direct proxy of the views `el` cached as a jquery selector.
 ```js
 Marionette.Behavior.extend({
-	onShow: function() {
-		this.$el.fadeOut('slow')
-	}
+  onShow: function() {
+    this.$el.fadeOut('slow')
+  }
 });
 ```
 
@@ -198,20 +198,20 @@ The default options will be overridden depending on what you set as the options 
 
 ```js
 Marionette.Behavior.extend({
-	defaults: function() {
-		return {
-			'deepSpace': 9
-		}
-	}
+  defaults: function() {
+    return {
+      'deepSpace': 9
+    }
+  }
 });
 ```
 
 ```js
 Marionette.Behavior.extend({
-	defaults: {
-			'dominion': 'invasion',
-			'doge': 'amaze'
-	}
+  defaults: {
+    'dominion': 'invasion',
+    'doge': 'amaze'
+  }
 });
 ```
 
@@ -220,8 +220,8 @@ The `view` is a reference to the view instance that the `behavior` is on.
 
 ```js
 Marionette.Behavior.extend({
-	onShow: function() {
-		this.view.close();
-	}
+  onShow: function() {
+    this.view.close();
+  }
 });
 ```
