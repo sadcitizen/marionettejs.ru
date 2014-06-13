@@ -146,7 +146,9 @@ Marionette.Behavior.extend({
 ```
 
 ### Model Events
+
 `modelEvents` will respond to the view's model events.
+
 ```js
   Marionette.Behavior.extend({
     modelEvents: {
@@ -160,7 +162,9 @@ Marionette.Behavior.extend({
 ```
 
 ### Collection Events
+
 `collectionEvents` will respond to the view's collection events.
+
 ```js
   Marionette.Behavior.extend({
     collectionEvents: {
@@ -173,7 +177,9 @@ Marionette.Behavior.extend({
 ```
 
 ### $
+
 `$` is a direct proxy of the views `$` lookup method.
+
 ```js
   Marionette.Behavior.extend({
     onShow: function() {
@@ -183,7 +189,9 @@ Marionette.Behavior.extend({
 ```
 
 ### $el
+
 `$el` is a direct proxy of the views `el` cached as a jquery selector.
+
 ```js
 Marionette.Behavior.extend({
   onShow: function() {
@@ -193,6 +201,7 @@ Marionette.Behavior.extend({
 ```
 
 ### defaults
+
 `defaults` can be a `hash` or `function` to define the default options for your behavior.
 The default options will be overridden depending on what you set as the options per behavior (this works just like a `backbone.model`).
 
@@ -216,6 +225,7 @@ Marionette.Behavior.extend({
 ```
 
 ### view
+
 The `view` is a reference to the view instance that the `behavior` is on.
 
 ```js
