@@ -1,6 +1,5 @@
-Marionette Modules allow you to create modular encapsulated logic.
-They can be used to split apart large applications into multiple files,
-and to build individual components of your app.
+Marionette предоставляет возможность разделения больших приложений на модули,
+внутри которых инкапсулирована логика отдельных компонентов.
 
 ## Documentation Index
 
@@ -22,33 +21,31 @@ and to build individual components of your app.
 
 ## Basic Usage
 
-A module is defined directly from an Application object. To create a module all
-you need to do is give it a name.
+Модуль объявлняется напрямую из объекта `Application`. Для создания модуля достаточно просто дать ему имя.
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
 
-// Creates a new module named "MyModule"
+// Создание модуля с именем "MyModule"
 var myModule = MyApp.module("MyModule");
 
-MyApp.MyModule; // => a new Marionette.Module object
+MyApp.MyModule; // => новый объект типа Marionette.Module
 
 myModule === MyApp.MyModule; // => true
 ```
 
-Modules cannot be overwritten once they are created. Subsequent
-calls to `module` with the same name argument will not create
-a new module, but instead return the already-created instance.
+Модули не могут быть переопределены после своего создания. Последующие вызовы
+метода `module` с тем же аргументом не создадут новый модуль, а вместо этого
+вернут уже существующий.
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
 
-// Instantiates a new Marionette.Module
+// Создание нового Marionette.Module
 var myModule = MyApp.module("MyModule");
 
-// Returns the module you just created
+// theSameModule будет ссылаться на только что созданный модуль
 var theSameModule = MyApp.module("MyModule");
-
 ```
 
 ## Module Definitions

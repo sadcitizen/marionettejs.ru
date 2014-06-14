@@ -4,7 +4,7 @@ email: instanceofpro@gmail.com
 username: instanceofpro
 description: "Marionette.js по-русски."
 baseurl: /marionettejs.ru
-version: 1.8.7
+version: 1.8.8
 
 # Build settings
 markdown: redcarpet
