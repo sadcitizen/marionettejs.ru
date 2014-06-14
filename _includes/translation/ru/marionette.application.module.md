@@ -166,7 +166,7 @@ MyApp.module("MyModule", {
 One of the more useful features of the object literal definition is specifying a custom
 module class. You can make a new class using the extend function.
 
-```
+```js
 var CustomModule = Marionette.Module.extend({
   // Custom module properties
 });
