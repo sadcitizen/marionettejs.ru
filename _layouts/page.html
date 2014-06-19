@@ -2,12 +2,24 @@
 layout: default
 ---
 
-<div class="page">
-    <header class="page-header">
+<article class="p-page">
+    <header class="p-page-header">
         <h1>{{ page.title }}</h1>
     </header>
-    <article class="page-content">
-        {{ content }}
-    </article>
-    {% include prevnext.html %}
-</div>
+    {{ content }}
+
+    {% if page.previous or page.next %}
+    <div class="b-pages">
+        {% if page.previous %}
+        <div class="b-pages-previous">
+            <span>&larr;</span><a rel="prev" href="{{ page.previous.url | prepend: site.baseurl | replace: '//','/' }}">{{ page.previous.title }}</a>
+        </div>
+        {% endif %}
+        {% if page.next %}
+        <div class="b-pages-next">
+            <a rel="next" href="{{ page.next.url | prepend: site.baseurl | replace: '//','/' }}">{{ page.next.title }}</a><span>&rarr;</span>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</article>

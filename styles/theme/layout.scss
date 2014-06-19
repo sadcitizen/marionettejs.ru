@@ -1,23 +1,33 @@
-.layout {
+html,
+body {
+    @include size(100%);
+}
+
+body {
+    background-color: $color-body;
+    color: $color-text;
+}
+
+.l-layout {
     @include size(100%);
     height: auto !important;
     min-height: 100%;
+}
 
-    .push {
-        height: $footer-height;
-        @include clearfix();
-    }
+.l-push {
+    height: $footer-height;
+    @include clearfix();
 }
 
 
-.header {
+.l-header {
     position: relative;
     background-color: $color-blue-light;
     border-bottom: 1px solid darken($color-blue-light, 10%);
     overflow: hidden;
 }
 
-.footer {
+.l-footer {
     height: $footer-height;
     margin-top: -$footer-height;
     background-color: $color-blue-light;
@@ -27,7 +37,7 @@
     text-align: right;
 }
 
-.container {
+.l-container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -36,7 +46,7 @@
 }
 
 @media (min-width: 56rem) {
-    .container {
+    .l-container {
         max-width: 48rem;
         padding-left: 1rem;
         padding-right: 1rem;
@@ -44,13 +54,13 @@
 }
 
 @media (min-width: 62rem) {
-    .container {
+    .l-container {
         max-width: 56rem;
     }
 }
 
 @media (min-width: 75rem) {
-    .container {
+    .l-container {
         max-width: 62rem;
     }
 }

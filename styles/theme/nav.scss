@@ -1,11 +1,11 @@
-.nav {
+.n-nav {
     line-height: 3rem;
     text-align: center;
     background-color: lighten($color-blue-light, 5%);
     border-bottom: 1px solid darken($color-blue-light, 10%);
 
     a {
-        padding: 0 .5rem;
+        margin: 0 .5rem;
         white-space: nowrap;
     }
 }

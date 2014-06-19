@@ -3,20 +3,18 @@ layout: default
 title: Документация
 ---
 
-<div class="page">
-    <article class="page-content">
-        <h2>Документация:</h2>
-        <ol class="docs">
-            {% for post in site.posts reversed %}
-                <li>
-                    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                    {% if post.translated == false %}
-                        <small>(В процессе перевода)</small>
-                    {% else %}
-                        <small>(Вычитка)</small>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ol>
-    </article>
-</div>
+<article class="p-page">
+    <h2>Документация:</h2>
+    <ol class="b-docs-ls">
+        {% for post in site.posts reversed %}
+            <li>
+                <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                {% if post.translated == false %}
+                    <small>(В процессе перевода)</small>
+                {% else %}
+                    <small>(Вычитка)</small>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</article>

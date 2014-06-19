@@ -7,15 +7,14 @@
 @import 'components/colors';
 @import 'components/settings';
 @import 'components/typography';
-@import 'components/layout';
 @import 'components/tables';
+@import 'components/pages';
 
-/* --- view --- */
-@import 'view/core';
-@import 'view/logo';
-@import 'view/nav';
-@import 'view/page';
-@import 'view/highlight';
-@import 'view/docs';
+/* --- theme --- */
+@import 'theme/layout';
+@import 'theme/logo';
+@import 'theme/nav';
+@import 'theme/highlight';
+@import 'theme/docs';
 
 

@@ -1,20 +1,21 @@
-.logo {
-    @include is-block();
+.b-logo {
+    display: block;
     margin: 1rem auto 0;
     @include is-indented();
     @include size(200px, 250px);
     @include background('logo.png');
+    border: none;
 }
 
-.sub-logo {
+.b-logo-sub {
     text-align: center;
-    @include is-block();
+    display: block;
     margin-bottom: 1em;
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.version {
+.b-logo-version {
     @include absolute(top 1rem left 50%);
     margin-left: -7rem;
     background: $color-blue;

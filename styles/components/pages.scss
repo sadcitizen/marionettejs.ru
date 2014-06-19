@@ -1,11 +1,11 @@
-.page-prevnext {
+.b-pages {
     position: relative;
     margin: 2rem 0;
     @include clearfix();
 }
 
-.page-prev,
-.page-next {
+.b-pages-previous,
+.b-pages-next {
     width: 45%;
     font-weight: bold;
 
@@ -14,7 +14,7 @@
     }
 }
 
-.page-prev {
+.b-pages-previous {
     float: left;
 
     span {
@@ -22,7 +22,7 @@
     }
 }
 
-.page-next {
+.b-pages-next {
     float: right;
     text-align: right;
 
