@@ -1,7 +1,7 @@
 # Marionette.Behaviors
 
 'Marionette.Behaviors' is a utility class that takes care of glueing your `behavior` instances to their given `View`.
-The most important part of this class is that you **MUST** override the class level `behaviorsLookup` method for things to work properly.
+The most important part of this class is that you **MUST** override the class level `behaviorsLookup` method or set the option `behaviorClass` for things to work properly.
 
 ## Documentation Index
 * [API](#api)
@@ -59,7 +59,7 @@ getBehaviorClass: function(options, key) {
 This property lets you pass a `class` in for the `behavior` to use (bypassing the normal key based lookup). This is nice to have when the behavior is a dependency of the view in [requirejs](http://requirejs.org/). Properties passed in this way will be used in `getBehaviorClass`.
 
 ```js
-define(['lib/tooltip'], function(Tooltip) {
+define(['marionette', 'lib/tooltip'], function(Marionette, Tooltip) {
   var View = Marionette.ItemView.extend({
      behaviors: {
         Tooltip: {

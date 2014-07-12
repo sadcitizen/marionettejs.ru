@@ -22,7 +22,7 @@ will provide features such as `onShow` callbacks, etc. Please see
   * [CollectionView's `childViewEventPrefix`](#collectionviews-childvieweventprefix)
   * [CollectionView's `childEvents`](#collectionviews-childevents)
   * [CollectionView's `buildChildView`](#collectionviews-buildchildview)
-  * [CollectionView's `addChild`](#collectionviews-addchildview)
+  * [CollectionView's `addChild`](#collectionviews-addchild)
 * [CollectionView's `emptyView`](#collectionviews-emptyview)
   * [CollectionView's `getEmptyView`](#collectionviews-getemptyview)
   * [CollectionView's `emptyViewOptions`](#collectionviews-emptyviewoptions)
@@ -102,7 +102,7 @@ var BarView = Backbone.Marionette.ItemView.extend({
 });
 
 var MyCollectionView = Backbone.Marionette.CollectionView.extend({
-  getItemView: function(item) {
+  getChildView: function(item) {
     // Choose which view class to render,
     // depending on the properties of the item model
     if  (item.get('isFoo')) {
@@ -303,6 +303,8 @@ Backbone.Marionette.CollectionView.extend({
 
 Similar to `childView` and `childViewOptions`, there is an `emptyViewOptions` property that will be passed to the `emptyView` constructor. It can be provided as an object literal or as a function.
 
+If `emptyViewOptions` aren't provided the CollectionView will default to passing the `childViewOptions` to the `emptyView`.
+
 ```js
 EmptyView = Backbone.Marionette.ItemView({
   initialize: function(options){
@@ -417,6 +419,7 @@ Backbone.Marionette.CollectionView.extend({
     // work with the childView instance, here
   }
 });
+```
 
 ### onRemoveChild callback
 
@@ -626,9 +629,8 @@ children in the collection and renders them individually as an
 ```js
 MyCollectionView = Backbone.Marionette.CollectionView.extend({...});
 
-new MyCollectionView().render().done(function(){
-  // all of the children are now rendered. do stuff here.
-});
+// all of the children views will now be rendered.
+new MyCollectionView().render();
 ```
 
 ## CollectionView: Automatic Rendering
