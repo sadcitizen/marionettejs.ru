@@ -7,7 +7,7 @@ The `Application` is meant to be instantiated directly, although you can extend
 it to add your own functionality.
 
 ```js
-MyApp = new Backbone.Marionette.Application();
+var MyApp = new Backbone.Marionette.Application();
 ```
 
 ## Содержание / Documentation Index
@@ -110,8 +110,11 @@ MyApp.start(options);
 
 ## Обмен сообщениями
 
-Application instances have an instance of all three [messaging systems](http://en.wikipedia.org/wiki/Message_passing) of `Backbone.Wreqr` attached to them. This
-section will give a brief overview of the systems; for a more in-depth look you are encouraged to read
+Marionette Applications come with a [messaging system](http://en.wikipedia.org/wiki/Message_passing) to facilitate communications within your app.
+
+The messaging system on the Application is the global channel from Backbone.Wreqr, which is actually comprised of three distinct systems.
+
+This section will give a brief overview of the systems; for a more in-depth look you are encouraged to read
 the [`Backbone.Wreqr` documentation](https://github.com/marionettejs/backbone.wreqr).
 
 ### Агрегатор событий
@@ -120,7 +123,7 @@ The Event Aggregator is available through the `vent` property. `vent` is conveni
 pieces of your application as events occur.
 
 ```js
-MyApp = new Backbone.Marionette.Application();
+var MyApp = new Backbone.Marionette.Application();
 
 // Alert the user on the 'minutePassed' event
 MyApp.vent.on("minutePassed", function(someData){
@@ -138,7 +141,7 @@ window.setInterval(function() {
 Request Response is a means for any component to request information from another component without being tightly coupled. An instance of Request Response is available on the Application as the `reqres` property. 
 
 ```js
-MyApp = new Backbone.Marionette.Application();
+var MyApp = new Backbone.Marionette.Application();
 
 // Set up a handler to return a todoList based on type
 MyApp.reqres.setHandler("todoList", function(type){
@@ -159,7 +162,7 @@ Commands is used to make any component tell another component to perform an acti
 Note that the callback of a command is not meant to return a value.
 
 ```js
-MyApp = new Backbone.Marionette.Application();
+var MyApp = new Backbone.Marionette.Application();
 
 MyApp.model = new Backbone.Model();
 
@@ -175,7 +178,25 @@ MyApp.commands.execute("fetchData", true);
 MyApp.execute("fetchData", true);
 ```
 
+### Accessing the Global Channel
+
+To access this global channel from other objects within your app you are encouraged to get a handle of the systems
+through the Wreqr API instead of the Application instance itself.
+
+```js
+// Assuming that we're in some class within your app,
+// it is preferable to access the global channel like this:
+var globalCh = Backbone.Wreqr.radio.channel('global');
+globalCh.vent;
+
+// This is discouraged because it assumes the name of your application
+window.app.vent;
+```
+
 ## Регионы и объект приложения
+
+Application instances have an API that allow you to manage [Regions](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.region.md).
+These Regions are typically the means through which your views become attached to the `document`.
 
 Объект `Region` может быть добавлен в приложение вызовом метода `addRegions`. 
 
