@@ -3,13 +3,16 @@ facilitate common behaviors throughout the framework. These functions may
 be useful to those that are building on top of Marionette, as they provide
 a way to get the same behaviors and conventions from your own code.
 
-## Содержание
+## Documentation Index
 
 * [Marionette.extend](#marionetteextend)
 * [Marionette.getOption](#marionettegetoption)
+* [Marionette.proxyGetOption](#marionetteproxygetoption)
 * [Marionette.triggerMethod](#marionettetriggermethod)
 * [Marionette.bindEntityEvent](#marionettebindentityevents)
-* [Marionette.normalizeEvents](#marionettenormalizeevents)
+* [Marionette.unbindEntityEvents](#marionetteunbindentityevents)
+* [Marionette.proxyBindEntityEvent](#marionetteproxybindentityevents)
+* [Marionette.normalizeMethods](#marionettenormalizemethods)
 * [Marionette.normalizeUIKeys](#marionettenormalizeuikeys)
 * [Marionette.actAsCollection](#marionetteactascollection)
 
@@ -29,7 +32,7 @@ var Foo = function(){};
 // Backbone and Marionette objects
 Foo.extend = Marionette.extend;
 
-// Now Foo can be extended to create a new type, with methods
+// Now Foo can be extended to create a new class, with methods
 var Bar = Foo.extend({
 
   someMethod: function(){ ... }
@@ -64,7 +67,7 @@ new M({}, { foo: "quux" }); // => "quux"
 This is useful when building an object that can have configuration set
 in either the object definition or the object's constructor options.
 
-### Лживые значения
+### Falsey values
 
 The `getOption` function will return any falsey value from the `options`,
 other than `undefined`. If an object's options has an undefined value, it will
@@ -88,19 +91,37 @@ var f;
 new M({}, { foo: f }); // => "bar"
 ```
 
-In this example, "bar" is returned both times because the second 
+In this example, "bar" is returned both times because the second
 example has an undefined value for `f`.
+
+## Marionette.proxyGetOption
+
+This method proxies `Marionette.getOption` so that it can be easily added to an instance.
+
+Say you've written your own Pagination class and you always pass options to it.
+With `proxyGetOption`, you can easily give this class the `getOption` function.
+
+```js
+_.extend(Pagination.prototype, {
+
+  getFoo: function(){
+    return this.getOption("foo");
+  },
+
+  getOption: Marionette.proxyGetOption
+});
+```
 
 ## Marionette.triggerMethod
 
 Trigger an event and a corresponding method on the target object.
 
-When an event is triggered, the first letter of each section of the 
-event name is capitalized, and the word "on" is tagged on to the front 
+When an event is triggered, the first letter of each section of the
+event name is capitalized, and the word "on" is tagged on to the front
 of it. Examples:
 
 * `triggerMethod("render")` fires the "onRender" function
-* `triggerMethod("before:close")` fires the "onBeforeClose" function
+* `triggerMethod("before:destroy")` fires the "onBeforeDestroy" function
 
 All arguments that are passed to the triggerMethod call are passed along to both the event and the method, with the exception of the event name not being passed to the corresponding method.
 
@@ -145,7 +166,55 @@ The third parameter is a hash of { "event:name": "eventHandler" }
 configuration. Multiple handlers can be separated by a space. A
 function can be supplied instead of a string handler name.
 
-## Marionette.normalizeEvents
+## Marionette.unbindEntityEvents
+
+This method can be used to unbind callbacks from entities' (collection/model) events. It's
+the opposite of bindEntityEvents, described above. Consequently, the APIs are identical for each method.
+
+```js
+// Just like the above example we bind our model events.
+// This time, however, we unbind them on close.
+Backbone.View.extend({
+
+  modelEvents: {
+    "change:foo": "doSomething"
+  },
+
+  initialize: function(){
+    Marionette.bindEntityEvents(this, this.model, this.modelEvents);
+  },
+
+  doSomething: function(){
+    // the "change:foo" event was fired from the model
+    // respond to it appropriately, here.
+  },
+
+  onClose: function() {
+    Marionette.unbindEntityEvents(this, this.model, this.modelEvents);
+  }
+
+});
+```
+
+## Marionette.proxyBindEntityEvents
+This method proxies `Marionette.bindEntityEvents` so that it can easily be added to an instance.
+
+Say you've written your own Pagination class and you want to easily listen to some entities events.
+With `proxyBindEntityEvents`, you can easily give this class the `bindEntityEvents` function.
+
+```js
+_.extend(Pagination.prototype, {
+
+   bindSomething: function() {
+     this.bindEntityEvents(this.something, this.somethingEvents)
+   },
+
+   bindEntityEvents: Marionette.proxyBindEntityEvents
+
+});
+```
+
+## Marionette.normalizeMethods
 
 Receives a hash of event names and functions and/or function names, and returns the
 same hash with the function names replaced with the function references themselves.
@@ -196,7 +265,7 @@ delegate collection calls to its list.
 
 #### Object Literal
 ```js
-obj = {
+var obj = {
   list: [1, 2, 3]
 }
 
