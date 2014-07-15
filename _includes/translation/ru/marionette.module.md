@@ -1,5 +1,6 @@
-Marionette предоставляет возможность разделения больших приложений на модули,
-внутри которых инкапсулирована логика отдельных компонентов.
+Marionette Modules allow you to create modular encapsulated logic.
+They can be used to split apart large applications into multiple files,
+and to build individual components of your app.
 
 ## Documentation Index
 
@@ -21,31 +22,33 @@ Marionette предоставляет возможность разделени�
 
 ## Basic Usage
 
-Модуль объявлняется напрямую из объекта `Application`. Для создания модуля достаточно просто дать ему имя.
+A module is defined directly from an Application object. To create a module all
+you need to do is give it a name.
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
 
-// Создание модуля с именем "MyModule"
+// Creates a new module named "MyModule"
 var myModule = MyApp.module("MyModule");
 
-MyApp.MyModule; // => новый объект типа Marionette.Module
+MyApp.MyModule; // => a new Marionette.Module object
 
 myModule === MyApp.MyModule; // => true
 ```
 
-Модули не могут быть переопределены после своего создания. Последующие вызовы
-метода `module` с тем же аргументом не создадут новый модуль, а вместо этого
-вернут уже существующий.
+Modules cannot be overwritten once they are created. Subsequent
+calls to `module` with the same name argument will not create
+a new module, but instead return the already-created instance.
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
 
-// Создание нового Marionette.Module
+// Instantiates a new Marionette.Module
 var myModule = MyApp.module("MyModule");
 
-// theSameModule будет ссылаться на только что созданный модуль
+// Returns the module you just created
 var theSameModule = MyApp.module("MyModule");
+
 ```
 
 ## Module Definitions
@@ -56,7 +59,7 @@ Definitions can either be a callback function or an object literal.
 ### Callback Function Definition
 
 The callback function definition will be invoked immediately on calling
-the `module` method. 
+the `module` method.
 
 It will receive 6 parameters, in this order:
 
@@ -81,7 +84,7 @@ MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _){
   // --------------------------
 
   var myData = "this is private data";
- 
+
   var myFunction = function(){
     console.log(myData);
   }
@@ -166,7 +169,7 @@ MyApp.module("MyModule", {
 One of the more useful features of the object literal definition is specifying a custom
 module class. You can make a new class using the extend function.
 
-```js
+```
 var CustomModule = Marionette.Module.extend({
   // Custom module properties
 });
@@ -188,7 +191,7 @@ The initialize function is only available through the object literal definition 
 ```js
 MyApp.module("Foo", {
   startWithParent: false,
-  initialize: function( options, moduleName, app ) {
+  initialize: function( moduleName, app, options ) {
     this.someProperty = 'someValue';
   },
   // You can still set a define function
@@ -198,14 +201,14 @@ MyApp.module("Foo", {
 });
 ```
 
-The `initialize` function is passed three arguments.
-  * The object literal definition of the Module itself (which allows you to pass arbitrary values to your Module)
+The `initialize` function is passed the same arguments as the constructor.
   * The moduleName
-  * The app.
+  * The app
+  * The object literal definition of the Module itself (which allows you to pass arbitrary values to your Module)
 
 ```js
 MyApp.module("Foo", {
-  initialize: function( options, moduleName, app ) {
+  initialize: function( moduleName, app, options ) {
     console.log( options.someVar ); // Logs 'someString'
   },
   someVar: 'someString'
@@ -263,7 +266,7 @@ MyApp.Parent.Child; // => a valid module object
 MyApp.Parent.Child.GrandChild; // => a valid module object
 ```
 
-When defining sub-modules using the dot-notation, the 
+When defining sub-modules using the dot-notation, the
 parent modules do not need to exist; they'll be created for you. If a parent
 has already been instantiated then that instance will be used.
 
@@ -302,7 +305,7 @@ immediately started.
 
 Modules, like `Application` objects, can be configured to have initializers. And just like
 an Application's initializers, module's initializers are run anytime that
-the module is started. Further, there is no limit to the number of initializers it can have. 
+the module is started. Further, there is no limit to the number of initializers it can have.
 
 Initializers can be added in the module's definition function.
 
@@ -323,7 +326,7 @@ MyApp.module("Foo", function(Foo){
 ### Start Events
 
 When starting a module, a "before:start" event will be triggered prior
-to any of the initializers being run. A "start" event will then be 
+to any of the initializers being run. A "start" event will then be
 triggered after they have been run.
 
 ```js
@@ -340,7 +343,7 @@ mod.on("start", function(){
 
 #### Passing Data to Start Events
 
-`.start` takes a single `options` parameter that will be passed to start events and their equivalent methods (`onStart` and `onBeforeStart`.) 
+`.start` takes a single `options` parameter that will be passed to start events and their equivalent methods (`onStart` and `onBeforeStart`.)
 
 ```js
 var mod = MyApp.module("MyMod");
@@ -394,8 +397,8 @@ When splitting a module across multiple files, it is recommended that you set
 
 ### Starting Sub-Modules With Parent
 
-As you might expect, submodules default to starting with their parent module. 
- The starting of sub-modules is done in a depth-first hierarchy traversal. 
+As you might expect, submodules default to starting with their parent module.
+ The starting of sub-modules is done in a depth-first hierarchy traversal.
 That is, a hierarchy of `Foo.Bar.Baz` will start `Baz` first, then `Bar`,
 and finally `Foo`.
 
@@ -420,7 +423,7 @@ MyApp.module("Foo.Bar", function(){
   this.startWithParent = false;
 })
 
-MyApp.start(); 
+MyApp.start();
 ```
 
 Now the module "Foo" will be started, but the sub-module "Foo.Bar" will
@@ -437,7 +440,7 @@ MyApp.module("Foo.Bar").start();
 A module can be stopped, or shut down, to clear memory and resources when
 the module is no longer needed. Like the starting of modules, stopping is done
 in a depth-first hierarchy traversal. That is, a hierarchy of modules like
-`Foo.Bar.Baz` will stop `Baz` first, then `Bar`, and finally `Foo`. 
+`Foo.Bar.Baz` will stop `Baz` first, then `Bar`, and finally `Foo`.
 
 To stop a module and its children, call the `stop` method of a module.
 
@@ -445,7 +448,7 @@ To stop a module and its children, call the `stop` method of a module.
 MyApp.module("Foo").stop();
 ```
 
-Modules are not automatically stopped by the application. If you wish to 
+Modules are not automatically stopped by the application. If you wish to
 stop one you must call the `stop` method on it, or stop its parent module.
 When you stop any parent module, all of its children will be stopped as well.
 
