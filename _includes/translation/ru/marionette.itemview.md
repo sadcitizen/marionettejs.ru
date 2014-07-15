@@ -1,9 +1,9 @@
 An `ItemView` is a view that represents a single item. That item may be a
 `Backbone.Model` or may be a `Backbone.Collection`. Whichever it is though, it
-will be treated as a single item. 
+will be treated as a single item.
 
-ItemView extends directly from Marionette.View. Please see 
-[the Marionette.View documentation](marionette.view.md) 
+ItemView extends directly from Marionette.View. Please see
+[the Marionette.View documentation](marionette.view.md)
 for more information on available features and functionality.
 
 Additionally, interactions with Marionette.Region
@@ -17,8 +17,8 @@ will provide features such as `onShow` callbacks, etc. Please see
 * [Events and Callback Methods](#events-and-callback-methods)
   * ["before:render" / onBeforeRender event](#beforerender--onbeforerender-event)
   * ["render" / onRender event](#render--onrender-event)
-  * ["before:close" / onBeforeClose event](#beforeclose--onbeforeclose-event)
-  * ["close" / onClose event](#close--onclose-event)
+  * ["before:destroy" / onBeforeDestroy event](#beforedestroy--onbeforedestroy-event)
+  * ["destroy" / onDestroy event](#destroy--ondestroy-event)
 * [ItemView serializeData](#itemview-serializedata)
 * [Organizing ui elements](#organizing-ui-elements)
 * [modelEvents and collectionEvents](#modelevents-and-collectionevents)
@@ -32,7 +32,7 @@ You should provide a `template` attribute on the item view, which
 will be either a jQuery selector:
 
 ```js
-MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Backbone.Marionette.ItemView.extend({
   template: "#some-template"
 });
 
@@ -42,8 +42,8 @@ new MyView().render();
 .. or a function taking a single argument: the object returned by [ItemView.serializeData](#itemview-serializedata):
 
 ```js
-my_template_html = '<div><%= args.name %></div>'
-MyView = Backbone.Marionette.ItemView.extend({
+var my_template_html = '<div><%= args.name %></div>'
+var MyView = Backbone.Marionette.ItemView.extend({
   template : function(serialized_model) {
     var name = serialized_model.name;
     return _.template(my_template_html, {
@@ -66,8 +66,8 @@ also requires you to read data arguments from an object, as demonstrated in the 
 ## Rendering A Collection In An ItemView
 
 While the most common way to render a Backbone.Collection is to use
-a `CollectionView` or `CompositeView`, if you just need to render a 
-simple list that does not need a lot of interaction, it does not 
+a `CollectionView` or `CompositeView`, if you just need to render a
+simple list that does not need a lot of interaction, it does not
 always make sense to use these. A Backbone.Collection can be
 rendered with a simple ItemView, using the templates to iterate
 over an `items` array.
@@ -101,25 +101,24 @@ var view = new MyItemsView({
 // show the view via a region or calling the .render method directly
 ```
 
-Rendering this view will convert the `someCollection` collection in to 
+Rendering this view will convert the `someCollection` collection in to
 the `items` array for your template to use.
 
 For more information on when you would want to do this, and what options
-you have for retrieving an individual item that was clicked or 
-otherwise interacted with, see the blog post on 
+you have for retrieving an individual item that was clicked or
+otherwise interacted with, see the blog post on
 [Getting The Model For A Clicked Element](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/).
 
-## События и коллбеки
+## Events and Callback Methods
 
 There are several events and callback methods that are called
 for an ItemView. These events and methods are triggered with the
 [Marionette.triggerMethod](./marionette.functions.md) function, which
 triggers the event and a corresponding "on{EventName}" method.
 
-### "before:render" / onBeforeRender
+### "before:render" / onBeforeRender event
 
-Сработает до того как ItemView будет отрисовано. Также сработает как
-"item:before:render" / `onItemBeforeRender`.
+Triggered before an ItemView is rendered.
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -129,14 +128,11 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "render" / onRender
+### "render" / onRender event
 
-Сработает после того как представление будет отрисовано. 
-
+Triggered after the view has been rendered.
 You can implement this in your view to provide custom code for dealing
 with the view's `el` after it has been rendered.
-
-Также сработает как "item:rendered" / `onItemRender`.
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -148,15 +144,14 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "before:close" / onBeforeClose
+### "before:destroy" / onBeforeDestroy event
 
-Triggered just prior to closing the view, when the view's `close()`
-method has been called. Также сработает как "item:before:close" /
-`onItemBeforeClose`.
+Triggered just prior to destroying the view, when the view's `destroy()`
+method has been called.
 
 ```js
 Backbone.Marionette.ItemView.extend({
-  onBeforeClose: function(){
+  onBeforeDestroy: function(){
     // manipulate the `el` here. it's already
     // been rendered, and is full of the view's
     // HTML, ready to go.
@@ -164,15 +159,14 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "close" / onClose
+### "destroy" / onDestroy event
 
-Сработает сразу после того как представление будет закрыто. Также сработает как
-"item:closed" / `onItemClose`.
+Triggered just after the view has been destroyed.
 
 ```js
 Backbone.Marionette.ItemView.extend({
-  onClose: function(){
-    // custom closing and cleanup goes here
+  onDestroy: function(){
+    // custom destroying and cleanup goes here
   }
 });
 ```
@@ -183,7 +177,7 @@ Item views will serialize a model or collection, by default, by
 calling `.toJSON` on either the model or collection. If both a model
 and collection are attached to an item view, the model will be used
 as the data source. The results of the data serialization will be passed to the template
-that is rendered. 
+that is rendered.
 
 If the serialization is a model, the results are passed in directly:
 
@@ -204,7 +198,7 @@ MyItemView.render();
 </script>
 ```
 
-If the serialization is a collection, the results are passed in as an 
+If the serialization is a collection, the results are passed in as an
 `items` array:
 
 ```js
@@ -283,4 +277,4 @@ Marionette.ItemView.extend({
 });
 ```
 
-Для большей информации ознакомьтесь с документацией по [Marionette.View](./marionette.view.md).
+For more information, see the [Marionette.View](./marionette.view.md) documentation.
