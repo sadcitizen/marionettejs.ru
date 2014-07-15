@@ -1,18 +1,35 @@
-Marionette.js имеет несколько глобально настраиваемых параметров, которые влияют на работу приложение. Большая часть из них описана в других разделах документации. В этом разделе расскажем о наиболее часто изменяемых параметрах.
+Marionette.js имеет несколько глобально настраиваемых параметров,
+которые влияют на работу приложение. Большая часть из них описана в других
+разделах документации. В этот раздел документации будет помещаться информация
+о наиболее общих параметрах, которые можно настроить.
 
 ## Содержание
 
-* [Marionette.$](#marionette_)
+* [Marionette.Deferred](#deferred)
 
-## Marionette.$
+## Marionette.Deferred <a name="deferred"></a>
 
-Для работы с DOM по умолчанию используется jQuery. To get a reference to jQuery, though, it assigns the `Marionette.$` attribute to `Backbone.$`. This provides consistency with Backbone in which exact version of jQuery or other DOM manipulation library is used.
+By default, Marionette makes use of `Backbone.$.Deferred` to create
+thenable objects. All that is needed is a Deferred that has the
+following properties:
 
-Если вы решили поменять библиотеку для работы с DOM на какую-то иную (например, jquery.js на zepro.js), то сделать это можно следующим образом:
+1. `promise`: a Promises/A+ thenable, or a function that returns one
+2. `resolve`: a function that resolves the provided promise with a value
+
+For example:
 
 ```js
-Backbone.$ = myDOMLib;
-Marionette.$ = myDOMLib;
+var deferred = Marionette.Deferred();
+
+_.result(deferred, 'promise').then(function (target) {
+    console.log("Hello, " + target + "!");
+});
+
+deferred.resolve("world"); // asynchronous "Hello, world!"
 ```
 
-Обратите внимание, что при смене библиотеки для работы с DOM вы должны одновременно поменять ссылки на нее как для Backbone, так и для Marionette.
+If you wish to use a specific promise library, you can override the default via:
+
+```js
+Marionette.Deferred = myDeferredLib;
+```
