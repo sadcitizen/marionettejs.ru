@@ -8,12 +8,13 @@
 ## Содержание
 
 * [Основное применение](#basic-use)
-* [Выключение контроллера](#closing-a-controller)
+* [Выключение контроллера](#destroying-a-controller)
+* [getOption](#getoption)
 * [Термин 'Controller'](#on-the-name-controller)
 
 ## <a name="basic-use"></a> Основное применение
 
-Объект `Marionette.Controller` может быть расширен так же как и объекты `Backbone` и `Marionette`.
+Объект `Marionette.Controller` может быть унаследован так же как и объекты `Backbone` и `Marionette`.
 Он поддерживет стандартный метод `initialize`, обладает встроенным `EventBinder`
 и может самостоятельно вызывать события.
 
@@ -42,34 +43,47 @@ c.listenTo(c, "stuff:done", function(stuff){
 c.doStuff();
 ```
 
+## getOption
+Retrieve an object's attribute either directly from the object, or from the object's
+this.options, with this.options taking precedence.
+
+More information [getOption](./marionette.functions.md)
+
 ## <a name="closing-a-controller"></a> Выключение контроллера
 
-Каждый экземпляр контроллера имеет встроенный метод `close`, 
+Каждый экземпляр контроллера имеет встроенный метод `destroy`,
 который удаляет все обработчики событий, присоединенные к экземпляру контроллера, 
 а также те, которые были навешаны с помощью `EventBinder`.
 
-Метод `close` запустит событие "close" и вызовет соответствующий метод `onClose`:
+Вызов метода `destroy` запустит события "before:destroy" и "destroy" и вызовет
+соответствующие методы `onBeforeDestroy` и `onDestroy`. В эти методы будут переданы
+аргументы, с которыми был вызван метод `destroy`:
 
 ```js
-// объявление контроллера с методом onClose
+// объявление контроллера с методом onDestroy
 var MyController = Marionette.Controller.extend({
 
-  onClose: function(){
-    // put custom code here, to close this controller
+  onBeforeDestroy: function(arg1, arg2){
+    // код в этом месте будет выполнен до выключения контроллера
   }
 
-})
+  onDestroy: function(arg1, arg2){
+    // код в этом месте будет обрабатывать выключение контроллера
+  }
+
+});
 
 // создание нового экземпляра контроллера
 var contr = new MyController();
 
 // добавление нескольких обработчиков событий
-contr.on("close", function(){ ... });
+contr.on("before:destroy", function(arg1, arg2){ ... });
+contr.on("destroy", function(arg1, arg2){ ... });
 contr.listenTo(something, "bar", function(){...});
 
 // выключение контроллера: отписываемся от всех событий,
-// вызов события "close" и метода onClose
-contr.close();
+// вызов события "destroy" и метода onDestroy
+contr.destroy(arg1, arg2);
 ```
 
 ## <a name="on-the-name-controller"></a> Термин 'Controller'
