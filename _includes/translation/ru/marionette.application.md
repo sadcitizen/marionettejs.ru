@@ -59,27 +59,26 @@ MyApp.addInitializer(function(options){
 они буду запущены, когда будет вызван метод `start`. Если вы добавили их после запуска
 приложения, они будут запущены немедленно.
 
-## События приложения / Application Event
+## События
 
 The `Application` object raises a few events during its lifecycle, using the
 [Marionette.triggerMethod](./marionette.functions.md) function. These events
 can be used to do additional processing of your application. For example, you
 may want to pre-process some data just before initialization happens. Or you may
-want to wait until your entire application is initialized to start the
+want to wait until your entire application is initialized to start
 `Backbone.history`.
 
 The events that are currently triggered, are:
 
-* **"initialize:before" / `onInitializeBefore`**: fired just before the initializers kick off
-* **"initialize:after" / `onInitializeAfter`**: fires just after the initializers have finished
-* **"start" / `onStart`**: fires after all initializers and after the initializer events
+* **"before:start" / `onBeforeStart`**: fired just before the `Application` starts and before the initializers are executed.
+* **"start" / `onStart`**: fires after the `Application` has started and after the initializers have been executed.
 
 ```js
-MyApp.on("initialize:before", function(options){
+MyApp.on("before:start", function(options){
   options.moreData = "Yo dawg, I heard you like options so I put some options in your options!"
 });
 
-MyApp.on("initialize:after", function(options){
+MyApp.on("start", function(options){
   if (Backbone.history){
     Backbone.history.start();
   }
