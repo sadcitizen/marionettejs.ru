@@ -17,7 +17,7 @@ Have your routers configured to call the method on your object, directly.
 Однако, в отличие от Backbone, где роуту назначается один из методов самого роутера, в Marionette роуту назначается один из методов контроллера, указанного при создании роутера.  
 
 ```js
-MyRouter = Backbone.Marionette.AppRouter.extend({
+var MyRouter = Backbone.Marionette.AppRouter.extend({
   // "someMethod" должен существовать как controller.someMethod
   appRoutes: {
     "some/route": "someMethod"
