@@ -10,3 +10,4 @@ version: 2.0.2
 markdown: redcarpet
 highlighter: pygments
 permalink: /:title
+encoding: utf-8
