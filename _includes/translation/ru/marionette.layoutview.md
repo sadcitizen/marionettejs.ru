@@ -300,9 +300,19 @@ var layoutView = new MyLayoutView();
 
 // ...
 
+
+// Object literal
 layoutView.addRegions({
   foo: "#foo",
   bar: "#bar"
+});
+
+// Or, function that returns an object literal
+layoutView.addRegions(function() {
+  return {
+    baz: "#baz",
+    quux: "#quux"
+  };
 });
 ```
 
