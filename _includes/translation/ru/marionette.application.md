@@ -15,16 +15,20 @@ var MyApp = new Backbone.Marionette.Application();
 * [Adding Initializers](#adding-initializers)
 * [Application Event](#application-event)
 * [Запуск приложения](#starting-an-application)
-* [Обмен сообщениями](#messaging-systems)
+* [The Application Channel](#the-application-channel)
   * [Агрегатор событий](#event-aggregator)
   * [Запрос/Ответ](#request-response)
   * [Команды](#commands)
+  * [Accessing the Application Channel](#accessing-the-application-channel)
 * [Регионы и объект приложения](#regions-and-the-application-object)
   * [jQuery-селектор](#jquery-selector)
   * [Собственный тип региона](#custom-region-type)
   * [Собственный тип региона и селектор](#custom-region-type-and-selector)
+  * [Region Options](#region-options)
+  * [Overriding the default RegionManager](#overriding-the-default-regionmanager)
   * [Получение региона по его имени](#get-region-by-name)
   * [Удаление регионов](#removing-regions)
+* [Application.getOption](#applicationgetoption)
 
 ## <a name="adding-initializers"></a> Добавление инициализаторов / Adding Initializers
 
@@ -107,11 +111,17 @@ var options = {
 MyApp.start(options);
 ```
 
-## Обмен сообщениями
+## The Application Channel
 
 Marionette Applications come with a [messaging system](http://en.wikipedia.org/wiki/Message_passing) to facilitate communications within your app.
 
-The messaging system on the Application is the global channel from Backbone.Wreqr, which is actually comprised of three distinct systems.
+The messaging system on the Application is the radio channel from Backbone.Wreqr, which is actually comprised of three distinct systems.
+
+Marionette Applications default to the 'global' channel, but the channel can be configured.
+
+```js
+var MyApp = new Marionette.Application({ channelName: 'appChannel' });
+```
 
 This section will give a brief overview of the systems; for a more in-depth look you are encouraged to read
 the [`Backbone.Wreqr` documentation](https://github.com/marionettejs/backbone.wreqr).
@@ -177,14 +187,15 @@ MyApp.commands.execute("fetchData", true);
 MyApp.execute("fetchData", true);
 ```
 
-### Accessing the Global Channel
+### Accessing the Application Channel
 
-To access this global channel from other objects within your app you are encouraged to get a handle of the systems
+To access this application channel from other objects within your app you are encouraged to get a handle of the systems
 through the Wreqr API instead of the Application instance itself.
 
 ```js
 // Assuming that we're in some class within your app,
-// it is preferable to access the global channel like this:
+// and that we are using the default 'global' channel
+// it is preferable to access the channel like this:
 var globalCh = Backbone.Wreqr.radio.channel('global');
 globalCh.vent;
 
@@ -197,7 +208,8 @@ window.app.vent;
 Application instances have an API that allow you to manage [Regions](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.region.md).
 These Regions are typically the means through which your views become attached to the `document`.
 
-Объект `Region` может быть добавлен в приложение вызовом метода `addRegions`. 
+Объект `Region` может быть добавлен в приложение вызовом метода `addRegions` by passing in an object
+literal or a function that returns an object literal. 
 
 Существуют три способа добавления региона в объект приложения.
 
@@ -217,12 +229,14 @@ MyApp.addRegions({
 Второй способ - это определение собственного типа региона, которому задан селектор:
 
 ```js
-MyCustomRegion = Marionette.Region.extend({
+var MyCustomRegion = Marionette.Region.extend({
   el: "#foo"
 });
 
-MyApp.addRegions({
-  someRegion: MyCustomRegion
+MyApp.addRegions(function() {
+  return {
+    someRegion: MyCustomRegion
+  };
 });
 ```
 
@@ -231,7 +245,7 @@ MyApp.addRegions({
 Третий способ - это определение собственного типа региона и jQuery-селектора для него с помощью литерала объекта: 
 
 ```js
-MyCustomRegion = Marionette.Region.extend({});
+var MyCustomRegion = Marionette.Region.extend({});
 
 MyApp.addRegions({
 
@@ -247,6 +261,34 @@ MyApp.addRegions({
 
 });
 ```
+
+### Region Options
+
+You can also specify regions per `Application` instance.
+
+```js
+new Marionette.Application({
+  regions: {
+    fooRegion: '#foo-region'
+  }
+});
+```
+
+### Overriding the default `RegionManager`
+
+If you need the `RegionManager`'s class chosen dynamically, specify `getRegionManager`:
+
+```js
+Marionette.Application.extend({
+  // ...
+
+  getRegionManager: function() {
+    // custom logic
+    return new MyRegionManager();
+  }
+```
+
+This can be useful if you want to attach `Application`'s regions to your own instance of `RegionManager`.
 
 ### Получение региона по его имени
 
@@ -273,4 +315,10 @@ MyApp.removeRegion('someRegion');
 
 Перед тем как регион будет удален из объекта приложения, для него будет вызван метод `.close()`, который его отключит.
 
-Для более подробной информации ознакомьтесь с [документацией по регионам](./marionette.region.md).
+Для более подробной информации ознакомьтесь с [документацией по регионам](./marionette.region.md). Also, the API that Applications use to
+manage regions comes from the RegionManager Class, which is documented [over here](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.regionmanager.md).
+
+### Application.getOption
+Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
+
+More information [getOption](./marionette.functions.md)
