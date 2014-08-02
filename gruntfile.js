@@ -1,4 +1,6 @@
+/* globals require, module */
 module.exports = function(grunt) {
+    'use strict';
 
     var banner = '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd hh:MM:ss TT Z") %> */\n\n' +
         '/*\n' +
@@ -6,6 +8,9 @@ module.exports = function(grunt) {
         '|m|a|r|i|o|n|e|t|t|e|j|s|.|r|u|\n' +
         '+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n' +
         '*/\n\n';
+
+    require('time-grunt')(grunt);
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
 
@@ -60,13 +65,6 @@ module.exports = function(grunt) {
             }
         }
     });
-
-
-    grunt.loadNpmTasks('grunt-sass');
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-clean');
 
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('styles', [
