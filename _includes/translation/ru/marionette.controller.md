@@ -9,7 +9,7 @@
 
 * [Основное применение](#basic-use)
 * [Выключение контроллера](#destroying-a-controller)
-* [getOption](#getoption)
+* [Метод `getOption`](#get-option)
 * [Термин 'Controller'](#on-the-name-controller)
 
 ## <a name="basic-use"></a> Основное применение
@@ -43,7 +43,7 @@ c.listenTo(c, "stuff:done", function(stuff){
 c.doStuff();
 ```
 
-## getOption
+## <a name="get-option"></a> Метод `getOption`
 
 Метод позволяет получить значение свойства контроллера. Это свойство может принадлежать как самому контроллеру непосредственно, так и 
 быть вложенным в свойстве `this.options` контроллера. Если запрашиваемое свойство сущестует и в контроллере и в `this.options`, то метод вернет значение из `this.options`.
