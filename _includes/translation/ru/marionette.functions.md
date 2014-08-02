@@ -46,8 +46,8 @@ var b = new Bar();
 
 ## Marionette.getOption
 
-Retrieve an object's attribute either directly from the object, or from
-the object's `this.options`, with `this.options` taking precedence.
+Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и 
+быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
 
 ```js
 var M = Backbone.Model.extend({
@@ -64,8 +64,7 @@ new M(); // => "bar"
 new M({}, { foo: "quux" }); // => "quux"
 ```
 
-This is useful when building an object that can have configuration set
-in either the object definition or the object's constructor options.
+Этот метод удобно применять при создании объекта, имеющего набор конфигурируемых параметров, которые могут принадлежать как самому объекту, так и быть параметрами конструктора объекта.
 
 ### Falsey values
 
