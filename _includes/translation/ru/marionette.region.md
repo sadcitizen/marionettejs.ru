@@ -2,7 +2,7 @@ Regions provide consistent methods to manage, show and destroy
 views in your applications and layouts. They use a jQuery selector
 to show your views in the correct place.
 
-Using the `LayoutView` class you can create nested regions.
+С помощью класса `LayoutView` вы можете создавать вложенные регионы.
 
 ## Documentation Index
 
