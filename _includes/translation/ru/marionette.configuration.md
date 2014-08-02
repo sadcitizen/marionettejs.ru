@@ -7,7 +7,7 @@ Marionette.js имеет несколько глобально настраив�
 
 * [Marionette.Deferred](#deferred)
 
-## Marionette.Deferred <a name="deferred"></a>
+## <a name="deferred"></a> Marionette.Deferred
 
 By default, Marionette makes use of `Backbone.$.Deferred` to create
 thenable objects. All that is needed is a Deferred that has the
@@ -16,7 +16,7 @@ following properties:
 1. `promise`: a Promises/A+ thenable, or a function that returns one
 2. `resolve`: a function that resolves the provided promise with a value
 
-For example:
+Например:
 
 ```js
 var deferred = Marionette.Deferred();
@@ -28,7 +28,7 @@ _.result(deferred, 'promise').then(function (target) {
 deferred.resolve("world"); // asynchronous "Hello, world!"
 ```
 
-If you wish to use a specific promise library, you can override the default via:
+Если вы хотите использовать иную библиотеку для промисов, то переопределите значение по умолчанию::
 
 ```js
 Marionette.Deferred = myDeferredLib;
