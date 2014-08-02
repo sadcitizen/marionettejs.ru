@@ -50,9 +50,9 @@ john.graduate();
 
 ### getOption
 
-Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
-
-More information [getOption](./marionette.functions.md).
+Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и 
+быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
+Для более полной информации ознакомьтесь с [getOption](../functions/).
 
 ### bindEntityEvents
 
