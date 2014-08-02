@@ -6,7 +6,7 @@
 * [Метод `initialize`](#initialize)
 * [События](#events)
 * [Destroying An Object](#destroying-a-object)
-* [getOption](#getoption)
+* [Метод `getOption`](#getoption)
 * [bindEntityEvents](#bindentityevents)
 * [Основное применение](#basic-use)
 
@@ -48,7 +48,7 @@ john.on('announce', function(message) {
 john.graduate();
 ```
 
-### getOption
+### Метод `getOption`
 
 Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и 
 быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
