@@ -10,7 +10,7 @@ it to add your own functionality.
 var MyApp = new Backbone.Marionette.Application();
 ```
 
-## Содержание / Documentation Index
+## Содержание
 
 * [Adding Initializers](#adding-initializers)
 * [Application Event](#application-event)
@@ -30,7 +30,7 @@ var MyApp = new Backbone.Marionette.Application();
   * [Удаление регионов](#removing-regions)
 * [Application.getOption](#applicationgetoption)
 
-## <a name="adding-initializers"></a> Добавление инициализаторов / Adding Initializers
+## <a name="adding-initializers"></a> Добавление инициализаторов
 
 Ваше приложение должно выполнять полезные дейтсвия, такие как отображение контента
 в регионах, запускать роутеры и многое другое. Для того что бы достигнуть этих задач и
@@ -63,7 +63,7 @@ MyApp.addInitializer(function(options){
 они буду запущены, когда будет вызван метод `start`. Если вы добавили их после запуска
 приложения, они будут запущены немедленно.
 
-## События
+## Application Event
 
 The `Application` object raises a few events during its lifecycle, using the
 [Marionette.triggerMethod](./marionette.functions.md) function. These events
