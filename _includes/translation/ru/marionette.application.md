@@ -1,10 +1,10 @@
-﻿Объект `Marionette.Application` это связующее звено вашего составного
+Объект `Marionette.Application` это связующее звено вашего составного
 приложения. Он объединяет, инициализирует и координирует различные части вашего
-приложения. Он также является отправной точкой для вызово из вашего HTML-тега
+приложения. Он также является отправной точкой для вызова из вашего HTML-тега
 script или непосредственно JavaScript-файлов, если вы предпочитаете такой путь.
 
-The `Application` is meant to be instantiated directly, although you can extend
-it to add your own functionality.
+Экземпляр объекта `Application` может быть создан напрямую, также вы можете расширить его, 
+добавив свою собственную функциональность.
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
@@ -32,7 +32,7 @@ var MyApp = new Backbone.Marionette.Application();
 
 ## <a name="adding-initializers"></a> Добавление инициализаторов
 
-Ваше приложение должно выполнять полезные дейтсвия, такие как отображение контента
+Ваше приложение должно выполнять полезные действия, такие как отображение контента
 в регионах, запускать роутеры и многое другое. Для того что бы достигнуть этих задач и
 убедиться в том, что ваше Приложение полностью сконфигурировано вы можете добавить к нему
 функиции обратного вызова инициализатора.
@@ -63,19 +63,19 @@ MyApp.addInitializer(function(options){
 они буду запущены, когда будет вызван метод `start`. Если вы добавили их после запуска
 приложения, они будут запущены немедленно.
 
-## Application Event
+## События иницализации приложения
 
-The `Application` object raises a few events during its lifecycle, using the
-[Marionette.triggerMethod](./marionette.functions.md) function. These events
-can be used to do additional processing of your application. For example, you
-may want to pre-process some data just before initialization happens. Or you may
-want to wait until your entire application is initialized to start
-`Backbone.history`.
+Объект `Application` вызывает несколько событий в течение своего жизненного цикла, 
+для этого используется функция [Marionette.triggerMethod](./marionette.functions.md).
+Эти события могут использоваться для того, чтобы сделать дополнительную обработку в 
+вашем приложении. Например, вы хотите предварительно обработать некоторые данные перед 
+процессом инициализации приложения. Или вы хотите дождаться завершения инициализации 
+приложения и запустить `Backbone.history`.
 
-The events that are currently triggered, are:
+Список событий, которые вызываются:
 
-* **"before:start" / `onBeforeStart`**: fired just before the `Application` starts and before the initializers are executed.
-* **"start" / `onStart`**: fires after the `Application` has started and after the initializers have been executed.
+* **"before:start" / `onBeforeStart`**: вызывается перед запуском `Application` и перед началом исполнения инициализаторов.
+* **"start" / `onStart`**: вызывается после запуска `Application` и после исполнения инициализаторов.
 
 ```js
 MyApp.on("before:start", function(options){
@@ -89,18 +89,17 @@ MyApp.on("start", function(options){
 });
 ```
 
-The `options` parameter is passed through the `start` method of the application
-object (see below).
+Параметр `options` передается из метода `start` экземпляра объекта `Application` (см. ниже).
 
 ## Запуск приложения
 
-Once you have your application configured, you can kick everything off by 
-calling: `MyApp.start(options)`.
+После того, как вы сконфигурировали ваше приложение, вы можете запустить его вызвав: `MyApp.start(options)`.
 
-This function takes a single optional parameter. This parameter will be passed
-to each of your initializer functions, as well as the initialize events. This
-allows you to provide extra configuration for various parts of your app, at
-initialization/start of the app, instead of just at definition.
+Эта функция принимает один необязательный параметр `options`. Этот параметр будет 
+передаваться в каждую определенную вами функцию инициализатора, а также в функции 
+обработчика событий инициализации. Это позволяет вам производить дополнительное 
+конфигурирование в различных частях вашего приложения, в таких как инициализация/запуск 
+приложения, а не только при определении.
 
 ```js
 var options = {
