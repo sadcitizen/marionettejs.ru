@@ -12,10 +12,10 @@ var MyApp = new Backbone.Marionette.Application();
 
 ## Содержание
 
-* [Adding Initializers](#adding-initializers)
-* [Application Event](#application-event)
+* [Добавление инициализаторов](#adding-initializers)
+* [События иницализации приложения](#application-event)
 * [Запуск приложения](#starting-an-application)
-* [The Application Channel](#the-application-channel)
+* [Система обмена сообщениями](#the-application-channel)
   * [Агрегатор событий](#event-aggregator)
   * [Запрос/Ответ](#request-response)
   * [Команды](#commands)
@@ -110,35 +110,40 @@ var options = {
 MyApp.start(options);
 ```
 
-## The Application Channel
+## Система обмена сообщениями
 
-Marionette Applications come with a [messaging system](http://en.wikipedia.org/wiki/Message_passing) to facilitate communications within your app.
+Объект `Marionette Applications` включает в себя [систему обмена сообщениями](http://en.wikipedia.org/wiki/Message_passing), 
+которая позволяет упростить коммуникации в вашем приложении.
 
-The messaging system on the Application is the radio channel from Backbone.Wreqr, which is actually comprised of three distinct systems.
+Система обмена сообщениями в `Application` является `Radio` каналом из `Backbone.Wreqr`.
+`Backbone.Wreqr` на самом деле состоит из трех отдельных систем.
 
-Marionette Applications default to the 'global' channel, but the channel can be configured.
+`Marionette Applications` по умолчанию назначает для канала имя 'global', но канал может
+быть сконфигурирован.
 
 ```js
 var MyApp = new Marionette.Application({ channelName: 'appChannel' });
 ```
 
-This section will give a brief overview of the systems; for a more in-depth look you are encouraged to read
-the [`Backbone.Wreqr` documentation](https://github.com/marionettejs/backbone.wreqr).
+Здесь будет дан только краткий обзор системы обмена сообщениями, более подробное описание вы можете
+прочитать в [документации `Backbone.Wreqr`](https://github.com/marionettejs/backbone.wreqr).
 
 ### Агрегатор событий
 
-The Event Aggregator is available through the `vent` property. `vent` is convenient for passively sharing information between
-pieces of your application as events occur.
+Агрегатор событий доступен через свойство `vent`. `vent` удобен для пассивного обмена информацией
+между различными частями вашего приложения, используя генерацию событий.
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
 
-// Alert the user on the 'minutePassed' event
+// Предупреждает пользователя (вызывается функция alert) 
+// при наступлении события  'minutePassed'
 MyApp.vent.on("minutePassed", function(someData){
   alert("Received", someData);
 });
 
-// This will emit an event with the value of window.someData every minute
+// Здесь будет генерироваться событие и 
+// передаваться значение window.someData каждую минуту
 window.setInterval(function() {
   MyApp.vent.trigger("minutePassed", window.someData);
 }, 1000 * 60);
