@@ -93,13 +93,13 @@ MyApp.on("start", function(options){
 
 ## Запуск приложения
 
-Once you have your application configured, you can kick everything off by 
-calling: `MyApp.start(options)`.
+После того, как вы сконфигурировали ваше приложение, вы можете запустить его вызвав: `MyApp.start(options)`.
 
-This function takes a single optional parameter. This parameter will be passed
-to each of your initializer functions, as well as the initialize events. This
-allows you to provide extra configuration for various parts of your app, at
-initialization/start of the app, instead of just at definition.
+Эта функция принимает один необязательный параметр `options`. Этот параметр будет 
+передаваться в каждую определенную вами функцию инициализатора, а также в функции 
+обработчика событий инициализации. Это позволяет вам производить дополнительное 
+конфигурирование в различных частях вашего приложения, в таких как инициализация/запуск 
+приложения, а не только при определении.
 
 ```js
 var options = {
