@@ -253,13 +253,12 @@ var newHash = Marionette.normalizeUIKeys(hash, ui);
 
 ## Marionette.actAsCollection
 
-Utility function for mixing in underscore collection behavior to an object.
+Это утилита предназначена для добавления поведения коллекций из Underscore к объекту.
 
-It works by taking an object and a property field, in this example 'list',
-and appending collection functions to the object so that it can
-delegate collection calls to its list.
+Утилита принимает объект и свойство объекта, в примере - `list`, и добавляет к объекту фукнции коллекций таким образом, что 
+объект может делегировать вызовы коллекции к своему свойству `list`.  
 
-#### Object Literal
+#### Литерал объекта
 ```js
 var obj = {
   list: [1, 2, 3]
@@ -271,7 +270,7 @@ var double = function(v){ return v*2};
 console.log(obj.map(double)); // [2, 4, 6]
 ```
 
-#### Function Prototype
+#### Прототип функции
 ```js
 var Func = function(list) {
   this.list = list;
@@ -280,11 +279,9 @@ var Func = function(list) {
 Marionette.actAsCollection(Func.prototype, 'list');
 var func = new Func([1,2,3]);
 
-
 var double = function(v){ return v*2};
 console.log(func.map(double)); // [2, 4, 6]
 ```
 
-The first parameter is the object that will delegate underscore collection methods.
-
-The second parameter is the object field that will hold the list.
+Первый параметр это объект, который будет делегировать методы коллекций из Underscore. Второй параметр это свойство 
+объекта, которое будет хранить `list`.
