@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Marionette.Callbacks
-translated: false
+translated: true
 ---
 
 {% include translation/ru/marionette.callbacks.md %}
