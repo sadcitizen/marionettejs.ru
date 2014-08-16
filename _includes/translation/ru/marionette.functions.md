@@ -1,7 +1,7 @@
-Marionette provides a set of utility / helper functions that are used to
-facilitate common behaviors throughout the framework. These functions may
-be useful to those that are building on top of Marionette, as they provide
-a way to get the same behaviors and conventions from your own code.
+Marionette содержит набор утилит / функций-хелперов, которые используются для упрощения
+работы с общими сценариями в рамках всего фреймворка. Эти функции могут быть полезны тем, 
+кто разрабатывает приложения на основе Marionette, так как они позволяют получить  
+те же поведения и конвенции (соглашения) в вашем собственном коде.
 
 ## Documentation Index
 
