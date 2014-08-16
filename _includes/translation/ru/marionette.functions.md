@@ -156,7 +156,7 @@ Backbone.View.extend({
 ```
 
 Первый параметр `target` должен иметь метод `listenTo` из объекта EventBinder. Второй параметр это сущность (Backbone.Model 
-или Backbone.Collection), к событиям кототорой будет сделана привязка. Третий параметр это хэш { "event:name": "eventHandler" }. 
+или Backbone.Collection), к событиям кототорой будет сделана привязка. Третий параметр это хэш `{ "event:name": "eventHandler" }`. 
 В хэше имена нескольких обработчиков следует отделять пробелами. Также, вместо имени обработчика можно использовать функцию.
 
 ## Marionette.unbindEntityEvents
