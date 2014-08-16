@@ -97,7 +97,7 @@ new M({}, { foo: f }); // => "bar"
 Этот метод замещает `Marionette.getOption` таким образом, что `Marionette.getOption` может быть легко добавлен к объекту.
 
 Предположим, что вы написали свой собственный класс Pagination и всегда передаете параметры в него.
-С помощью `proxyGetOption` вы легко можете дать этому классу функцию `getOption`.
+С помощью `proxyGetOption` вы легко можете предоставить этому классу функцию `getOption`.
 
 ```js
 _.extend(Pagination.prototype, {
@@ -161,12 +161,12 @@ Backbone.View.extend({
 
 ## Marionette.unbindEntityEvents
 
-This method can be used to unbind callbacks from entities' (collection/model) events. It's
-the opposite of bindEntityEvents, described above. Consequently, the APIs are identical for each method.
+Этот метод используется для отвязки обработчиков событий от сущностей backbone (например, collection или model). Этот метод
+протиположен методу `bindEntityEvents`, описанному выше. Следовательно, API обоих методов идентичны.
 
 ```js
-// Just like the above example we bind our model events.
-// This time, however, we unbind them on close.
+// Точно так же, как и в примере выше, мы привязываем события к модели.
+// Одноко, в этом случае, мы отвяжем их при закрытии.
 Backbone.View.extend({
 
   modelEvents: {
@@ -178,8 +178,10 @@ Backbone.View.extend({
   },
 
   doSomething: function(){
-    // the "change:foo" event was fired from the model
-    // respond to it appropriately, here.
+    // Событие "change:foo" было поймано от model
+        
+    // Сюда можно поместить код, который будет реагировать 
+    // на это событие соответствующим образом
   },
 
   onClose: function() {
@@ -190,10 +192,11 @@ Backbone.View.extend({
 ```
 
 ## Marionette.proxyBindEntityEvents
-This method proxies `Marionette.bindEntityEvents` so that it can easily be added to an instance.
 
-Say you've written your own Pagination class and you want to easily listen to some entities events.
-With `proxyBindEntityEvents`, you can easily give this class the `bindEntityEvents` function.
+Этот метод замещает `Marionette.bindEntityEvents` таким образом, что `Marionette.bindEntityEvents` может быть легко добавлен к объекту.
+
+Предположим, что вы написали свой собственный класс Pagination и хотите следить за некоторыми событиями.
+С помощью `proxyBindEntityEvents` вы легко можете предоставить этому классу функцию `bindEntityEvents`.
 
 ```js
 _.extend(Pagination.prototype, {
