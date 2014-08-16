@@ -213,7 +213,7 @@ _.extend(Pagination.prototype, {
 заменены ссылками на сами функции.   
 
 Эта функция по умолчанию добавлена в протитип `Marionette.View`. Для использования ее в классах, которые не являются 
-view-классами (`ItemView`, `LayoutView` и др., так как они наследуют `Marionette.View`), необходимо самостоятельно ее добавить в прототип.
+view-классами, то есть `ItemView`, `LayoutView` и др. (так как они наследуют `Marionette.View`), необходимо самостоятельно ее добавить в прототип.
 
 ```js
 var View = Marionette.ItemView.extend({
