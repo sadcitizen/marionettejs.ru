@@ -132,8 +132,7 @@ callback methods will still be called, though.
 
 ## Marionette.bindEntityEvents
 
-This method is used to bind a backbone "entity" (collection/model)
-to methods on a target object.
+Этот метод используется для привязки сущностей backbone (например, collection или model) к методам целевого объекта.
 
 ```js
 Backbone.View.extend({
@@ -147,22 +146,18 @@ Backbone.View.extend({
   },
 
   doSomething: function(){
-    // the "change:foo" event was fired from the model
-    // respond to it appropriately, here.
+    // Событие "change:foo" было поймано от model
+    
+    // Сюда можно поместить код, который будет реагировать 
+    // на это событие соответствующим образом
   }
 
 });
 ```
 
-The first parameter, `target`, must have a `listenTo` method from the
-EventBinder object.
-
-The second parameter is the entity (Backbone.Model or Backbone.Collection)
-to bind the events from.
-
-The third parameter is a hash of { "event:name": "eventHandler" }
-configuration. Multiple handlers can be separated by a space. A
-function can be supplied instead of a string handler name.
+Первый параметр `target` должен иметь метод `listenTo` из объекта EventBinder. Второй параметр это сущность (Backbone.Model 
+или Backbone.Collection), к событиям кототорой будет сделана привязка. Третий параметр это хэш { "event:name": "eventHandler" }. 
+В хэше имена нескольких обработчиков следует отделять пробелами. Также, вместо имени обработчика можно использовать функцию.
 
 ## Marionette.unbindEntityEvents
 
