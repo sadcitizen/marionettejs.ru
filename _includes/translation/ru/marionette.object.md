@@ -5,10 +5,10 @@
 
 * [Метод `initialize`](#initialize)
 * [События](#events)
-* [Destroying An Object](#destroying-a-object)
+* [Уничтожение объекта](#destroying-a-object)
 * [Метод `getOption`](#getoption)
 * [bindEntityEvents](#bindentityevents)
-* [Основное применение](#basic-use)
+* [Пример использования](#basic-use)
 
 
 ### Метод `initialize`
@@ -56,39 +56,39 @@ john.graduate();
 
 ### bindEntityEvents
 
-Helps bind a backbone "entity" to methods on a target object. More information [bindEntityEvents](./marionette.functions.md).
+Помогает привязать одну из сущностей Backbone к методам целевого объекта. Для более полной информации ознакомьтесь с [bindEntityEvents](../functions/).
 
-### Destroying A Object
+### Уничтожение объекта
 
-У объектов есть метод `destroy`, который unbind the events that are directly attached to the instance.
+У объектов есть метод `destroy`, который отвязывает все события, которые были привязаны непосредственно к экземпляру объекта.
 
 Вызов метода `destroy` запустит событие "before:destroy" и вызовет соответствующий метод `onBeforeDestroy`. 
 В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`.
 
 ```js
-// define a object with an onDestroy method
+// Объявляем объект с методом onDestroy
 var MyObject = Marionette.Object.extend({
 
   onBeforeDestroy: function(arg1, arg2){
-    // put custom code here, to destroy this object
+    // Сюда можно поместить собственный 
+    // код, который уничтожит этот объект
   }
 
 });
 
-// create a new object instance
+// Создаем экземпляр объекта
 var obj = new MyObject();
 
-// add some event handlers
+// Добавляем несколько обработчиков событий
 obj.on("before:destroy", function(arg1, arg2){ ... });
 obj.listenTo(something, "bar", function(){...});
 
-// destroy the object: unbind all of the
-// event handlers, trigger the "destroy" event and
-// call the onDestroy method
+// Уничтожение объекта: отвязываение всех обработчиков событий,
+// запуск события "destroy" и вызов метода onDestroy
 obj.destroy(arg1, arg2);
 ```
 
-### Основное применение
+### Пример использования
 
 `Selections` - это простой объект, предназначенный для управления выбором вещей.
 Так как этот объект наследует `Object`, то он обладает методом `initialize` и умеет 
