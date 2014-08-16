@@ -19,7 +19,7 @@ var MyApp = new Backbone.Marionette.Application();
   * [Агрегатор событий](#event-aggregator)
   * [Запрос/Ответ](#request-response)
   * [Команды](#commands)
-  * [Accessing the Application Channel](#accessing-the-application-channel)
+  * [Доступ к системе обмена сообщениями](#accessing-the-application-channel)
 * [Регионы и объект приложения](#regions-and-the-application-object)
   * [jQuery-селектор](#jquery-selector)
   * [Собственный тип региона](#custom-region-type)
@@ -151,59 +151,65 @@ window.setInterval(function() {
 
 ### Запрос/Ответ
 
-Request Response is a means for any component to request information from another component without being tightly coupled. An instance of Request Response is available on the Application as the `reqres` property. 
+Запрос/Ответ позволяет любому компоненту запросить информацию у другого компонента, 
+не имея при этом явной связи между собой. Экземпляр объекта запрос/ответ (`Request Response`) 
+доступен у экземпляра объекта `Application` через свойство `reqres`. 
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
 
-// Set up a handler to return a todoList based on type
+// Устанавливаем обработчик, который возвращает todoList в зависимости от значения type
 MyApp.reqres.setHandler("todoList", function(type){
   return this.todoLists[type];
 });
 
-// Make the request to get the grocery list
+// Делаем запрос для получения списка покупок
 var groceryList = MyApp.reqres.request("todoList", "groceries");
 
-// The request method can also be accessed directly from the application object
+// Метод запроса можно также получить непосредственно из экземпляра объекта Application
 var groceryList = MyApp.request("todoList", "groceries");
 ```
 
 ### Команды
 
-Commands is used to make any component tell another component to perform an action without a direct reference to it. A Commands instance is available under the `commands` property of the Application.
+Команды используются для того, чтобы любой компонент мог сказать другому компоненту 
+выполнить действие, при этом не используя явного обращения к этому компоненту. 
+Экземпляр `Commands` доступен через своиство `commands` у экземпляра объекта `Application`.
 
-Note that the callback of a command is not meant to return a value.
+Следует обратить внимание, что функция обратного вызова команды не предназначена для возврата значения.
 
 ```js
 var MyApp = new Backbone.Marionette.Application();
 
 MyApp.model = new Backbone.Model();
 
-// Set up the handler to call fetch on the model
+// Устанавливаем обработчик, который вызывает считывание модели с сервера
 MyApp.commands.setHandler("fetchData", function(reset){
   MyApp.model.fetch({reset: reset});
 });
 
-// Order that the data be fetched
+// Исполнение запроса на считывание данных
 MyApp.commands.execute("fetchData", true);
 
-// The execute function is also available directly from the application
+// Метод исполнения запроса можно также получить непосредственно из экземпляра объекта Application
 MyApp.execute("fetchData", true);
 ```
 
-### Accessing the Application Channel
+### Доступ к системе обмена сообщениями
 
-To access this application channel from other objects within your app you are encouraged to get a handle of the systems
-through the Wreqr API instead of the Application instance itself.
+Для того, чтобы получить доступ к системе обмена сообщениями из других объектов, 
+в пределах вашего приложения, вам предлагается получить эту систему через API `Wreqr`, 
+а не через свойство экземпляра объекта `Application`.
 
 ```js
-// Assuming that we're in some class within your app,
-// and that we are using the default 'global' channel
-// it is preferable to access the channel like this:
+// Предположим, что мы в некотором классе вашего приложения,
+// и мы хотим использовать систему обмена сообщениями по умолчанию, 
+// т.е. систему обмена сообщениями с именем 'global', то,
+// предпочтительно, получить доступ к этой системе обмена сообщениями следующим образом:
 var globalCh = Backbone.Wreqr.radio.channel('global');
 globalCh.vent;
 
-// This is discouraged because it assumes the name of your application
+// Этот способ не рекомендуется, поскольку он предполагает использование имени вашего приложения
 window.app.vent;
 ```
 
