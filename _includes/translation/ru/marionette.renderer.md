@@ -5,7 +5,7 @@
 
 * [Основное применение](#basic-usage)
 * [Предварительно скомпилированные шаблоны](#pre-compiled-templates)
-* [Custom Template Selection And Rendering](#custom-template-selection-and-rendering)
+* [Собственная выборка шаблона и рендеринг](#custom-template-selection-and-rendering)
 * [Использование предварительно скомпилированных шаблонов](#using-pre-compiled-templates)
 
 ## Основное применение
@@ -36,22 +36,17 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-Это функция не должна иметь какой-либо движок шаблонов. Она должна быть просто функцией, которая возвращает валидный HTML в виде строки
+Это функция не должна иметь какой-либо шаблонизатор. Она должна быть просто функцией, которая возвращает валидный HTML в виде строки
 согласно значению аргумента `data`, которое было передано в функцию.
 
-## Custom Template Selection And Rendering
+## Собственная выборка шаблона и рендеринг
 
-By default, the renderer will take a jQuery selector object as
-the first parameter, and a JSON data object as the optional
-second parameter. It then uses the `TemplateCache` to load the
-template by the specified selector, and renders the template with
-the data provided (if any) using Underscore.js templates.
+По умолчанию `Renderer` примет jQuery-селектор в качестве первого параметра и JSON-объект с данными в качестве опционального 
+второго параметра. Затем `Renderer` использует объект `TemplateCache` для загрузки шаблона по указанному селектору и 
+рендерит шаблон с предоставленными данными, используя шаблонизатор Underscore.js.
 
-If you wish to override the way the template is loaded, see
-the `TemplateCache` object. 
-
-If you wish to override the template engine used, change the 
-`render` method to work however you want:
+Если вы хотите переопределить способ загрузки шаблона, то ознакомьтесь с объектом `TemplateCache`. Если вы хотите 
+переопределить используемый шаблонизатор, то измените метод `render` по своему усмотрению:
 
 ```js
 Backbone.Marionette.Renderer.render = function(template, data){
