@@ -46,8 +46,8 @@ var b = new Bar();
 
 ## Marionette.getOption
 
-Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и 
-быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
+Метод позволяет получить значение параметра объекта. Этот параметр может принадлежать как самому объекту непосредственно, так и 
+быть вложенным в свойстве `options` объекта. Если запрашиваемый параметр существует и в объекте и в `options`, то метод вернет значение из `options`.
 
 ```js
 var M = Backbone.Model.extend({
@@ -66,13 +66,13 @@ new M({}, { foo: "quux" }); // => "quux"
 
 Этот метод удобно применять при создании объекта, имеющего набор конфигурируемых параметров, которые могут принадлежать как самому объекту, так и быть параметрами конструктора объекта.
 
-### Falsey values
+### Лживые значения
 
-The `getOption` function will return any falsey value from the `options`,
-other than `undefined`. If an object's options has an undefined value, it will
-attempt to read the value from the object directly.
+Функция `getOption` вернет из `options` любое отличное от `undefined` лживое значение запрашиваемого параметра. 
+Если `options` объекта имеет неопределенное значение (`undefined`) запрашиваемого параметра, то функция 
+попытается прочитать его значение из объекта напрямую.
 
-For example:
+Например:
 
 ```js
 var M = Backbone.Model.extend({
@@ -90,8 +90,7 @@ var f;
 new M({}, { foo: f }); // => "bar"
 ```
 
-In this example, "bar" is returned both times because the second
-example has an undefined value for `f`.
+В этом примере, оба раза будет получена строка "bar", так как во втором случае значение переменной `f` будет неопределено, то есть `undefined`.
 
 ## Marionette.proxyGetOption
 
