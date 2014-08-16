@@ -209,10 +209,11 @@ _.extend(Pagination.prototype, {
 
 ## Marionette.normalizeMethods
 
-Receives a hash of event names and functions and/or function names, and returns the
-same hash with the function names replaced with the function references themselves.
+Получает хэш, состоящий из имен событий и функций и/или имен функций, и возвращает тот же хэш, в котором имена функций 
+заменены ссылками на сами функции.   
 
-This function is attached to the `Marionette.View` prototype by default. To use it from non-View classes you'll need to attach it yourself.
+Эта функция по умолчанию добавлена в протитип `Marionette.View`. Для использования ее в классах, которые не являются 
+view-классами (`ItemView`, `LayoutView` и др., так как они наследуют `Marionette.View`), необходимо самостоятельно ее добавить в прототип.
 
 ```js
 var View = Marionette.ItemView.extend({
@@ -221,7 +222,7 @@ var View = Marionette.ItemView.extend({
     this.someFn = function() {};
     this.someOtherFn = function() {};
     var hash = {
-      eventOne: "someFn", // This will become a reference to `this.someFn`
+      eventOne: "someFn", // Станет ссылкой на `this.someFn`
       eventTwo: this.someOtherFn
     };
     this.normalizedHash = this.normalizeMethods(hash);
@@ -232,8 +233,8 @@ var View = Marionette.ItemView.extend({
 
 ## Marionette.normalizeUIKeys
 
-This method allows you to use the `@ui.` syntax within a given key for triggers and events hashes. It
-swaps the `@ui.` reference with the associated selector.
+Этот метод позволяет использовать синтаксис `@ui.` внутри указанного ключа для хэшей триггеров и событий.  
+Метод меняет местами ссылку `@ui.` и соответствующий селектор.
 
 ```js
 var hash = {
@@ -244,7 +245,7 @@ var ui = {
   'list': 'ul'
 };
 
-// This sets 'click @ui.list' to be 'click ul' in the newHash object
+// В результате ключ 'click @ui.list' станет 'click ul' в объекте newHash
 var newHash = Marionette.normalizeUIKeys(hash, ui);
 ```
 

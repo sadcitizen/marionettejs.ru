@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Marionette.Functions
-translated: false
+translated: true
 ---
 
 {% include translation/ru/marionette.functions.md %}
