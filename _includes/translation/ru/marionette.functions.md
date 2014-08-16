@@ -94,10 +94,10 @@ new M({}, { foo: f }); // => "bar"
 
 ## Marionette.proxyGetOption
 
-This method proxies `Marionette.getOption` so that it can be easily added to an instance.
+Этот метод замещает `Marionette.getOption` таким образом, что `Marionette.getOption` может быть легко добавлен к объекту.
 
-Say you've written your own Pagination class and you always pass options to it.
-With `proxyGetOption`, you can easily give this class the `getOption` function.
+Предположим, что вы написали свой собственный класс Pagination и всегда передаете параметры в него.
+С помощью `proxyGetOption` вы легко можете дать этому классу функцию `getOption`.
 
 ```js
 _.extend(Pagination.prototype, {
