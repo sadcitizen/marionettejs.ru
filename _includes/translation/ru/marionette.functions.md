@@ -112,23 +112,20 @@ _.extend(Pagination.prototype, {
 
 ## Marionette.triggerMethod
 
-Trigger an event and a corresponding method on the target object.
+Инициирует событие и запускает соотвествующий метод целевого объекта.
 
-When an event is triggered, the first letter of each section of the
-event name is capitalized, and the word "on" is tagged on to the front
-of it. Examples:
+Когда метод инициирован, первая буква каждой секции из названия события становится прописной, к в начало полученного имени 
+добавляется предлог "on". Например:
 
-* `triggerMethod("render")` fires the "onRender" function
-* `triggerMethod("before:destroy")` fires the "onBeforeDestroy" function
+* `triggerMethod("render")` запускает функцию "onRender"
+* `triggerMethod("before:destroy")` запускает функцию "onBeforeDestroy"
 
-All arguments that are passed to the triggerMethod call are passed along to both the event and the method, with the exception of the event name not being passed to the corresponding method.
+Все аргументы, которые были переданы в вызов triggerMethod, будут переданы и в событие и в метод, за исключением имени 
+события. Например, `triggerMethod("foo", bar)` вызовет `onFoo: function(bar){...})`.
 
-`triggerMethod("foo", bar)` will call `onFoo: function(bar){...})`
-
-Note that `triggerMethod` can be called on objects that do not have
-`Backbone.Events` mixed in to them. These objects will not have a `trigger`
-method, and no attempt to call `.trigger()` will be made. The `on{Name}`
-callback methods will still be called, though.
+Обратите внимание, что `triggerMethod` может быть вызван на объектах, к которым не был примешан объект `Backbone.Events`.
+Эти объекты не будут иметь метода `trigger` и не будет никакой попытки вызова `.trigger()`. При этом все методы `on{Name}` 
+будут вызываться по-прежнему.
 
 ## Marionette.bindEntityEvents
 
