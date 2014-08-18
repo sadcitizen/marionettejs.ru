@@ -25,7 +25,7 @@ var MyApp = new Backbone.Marionette.Application();
   * [Собственный тип региона](#custom-region-type)
   * [Собственный тип региона и селектор](#custom-region-type-and-selector)
   * [Region Options](#region-options)
-  * [Overriding the default RegionManager](#overriding-the-default-regionmanager)
+  * [Переопределение стандартного RegionManager-а](#overriding-the-default-regionmanager)
   * [Получение региона по его имени](#get-region-by-name)
   * [Удаление регионов](#removing-regions)
 * [Application.getOption](#applicationgetoption)
@@ -215,11 +215,11 @@ window.app.vent;
 
 ## Регионы и объект приложения
 
-Application instances have an API that allow you to manage [Regions](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.region.md).
-These Regions are typically the means through which your views become attached to the `document`.
+Экземпляры объекта `Application` имеют API, который позволяет вам управлять [Регионами](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.region.md).
+Регионы являются стандартным средством, с помощью которых ваши представления (views) добавляются в `document`.
 
-Объект `Region` может быть добавлен в приложение вызовом метода `addRegions` by passing in an object
-literal or a function that returns an object literal. 
+Объект `Region` может быть добавлен в приложение вызовом метода `addRegions` и передачей в функцию 
+литерала объекта или функции, которая возвращает литерал объекта. 
 
 Существуют три способа добавления региона в объект приложения.
 
@@ -272,9 +272,9 @@ MyApp.addRegions({
 });
 ```
 
-### Region Options
+### Регионы как параметры
 
-You can also specify regions per `Application` instance.
+Вы также можете указать регионы при создании экземпляра объекта `Application`.
 
 ```js
 new Marionette.Application({
@@ -284,21 +284,23 @@ new Marionette.Application({
 });
 ```
 
-### Overriding the default `RegionManager`
+### Переопределение стандартного `RegionManager`-а
 
-If you need the `RegionManager`'s class chosen dynamically, specify `getRegionManager`:
+Если вы хотите использовать класс отличный от класса `RegionManager`, 
+вы можете указать его в `getRegionManager`:
 
 ```js
 Marionette.Application.extend({
   // ...
 
   getRegionManager: function() {
-    // custom logic
+    // своя логика
     return new MyRegionManager();
   }
 ```
 
-This can be useful if you want to attach `Application`'s regions to your own instance of `RegionManager`.
+Это может быть полезно, если вы хотите связать регионы из `Application`
+с вашим собственным экземпляром объекта `RegionManager`.
 
 ### Получение региона по его имени
 
