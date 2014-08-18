@@ -1,15 +1,17 @@
-Объект `Renderer` был извлечен из процесса рендеринга `ItemView` с целью создать консистентный и переиспользуемый способ рендеринга шаблонов с данными и без данных.
+Объект `Renderer` был извлечен из процесса рендеринга `ItemView` с целью создать консистентный и переиспользуемый 
+способ рендеринга шаблонов с данными и без.
 
 ## Содержание
 
-* [Basic Usage](#basic-usage)
-* [Pre-compiled Templates](#pre-compiled-templates)
-* [Custom Template Selection And Rendering](#custom-template-selection-and-rendering)
-* [Using Pre-compiled Templates](#using-pre-compiled-templates)
+* [Основное применение](#basic-usage)
+* [Предварительно скомпилированные шаблоны](#pre-compiled-templates)
+* [Собственная выборка шаблона и рендеринг](#custom-template-selection-and-rendering)
+* [Использование предварительно скомпилированных шаблонов](#using-pre-compiled-templates)
 
 ## Основное применение
 
-Основное применение `Renderer` заключается в вызове метода `render`. Этот метод возвращает строку, содержащую результат наложения объекта данных `data` на шаблон `template`.
+Основное применение `Renderer` заключается в вызове метода `render`. Этот метод возвращает строку, содержащую результат 
+наложения объекта данных `data` на шаблон `template`.
 
 ```js
 var template = "#some-template";
@@ -21,12 +23,11 @@ var html = Backbone.Marionette.Renderer.render(template, data);
 
 Если в качестве параметра `template` передать "лживое" значение, то метод `render` сгенерирует исключение о том, что шаблон не был указан.
 
-## Pre-compiled Templates
+## Предварительно скомпилированные шаблоны
 
-If the `template` parameter of the `render` function is itself a function,
-the renderer treats this as a pre-compiled template and does not try to
-compile it again. This allows any view that supports a `template` parameter
-to specify a pre-compiled template function as the `template` setting.
+Если параметр `template` функции `render` сам является функцией, то `Renderer` рассматривает его как предварительно скомпилированный
+шаблон и не пытается его скомпилировать снова. Это позволяет любому представлению, которое поддерживает параметр `template`, задавать 
+функцию предварительно скомпилированного шаблона в качестве значения для параметра `template`.
 
 ```js
 var myTemplate = _.template("<div>foo</div>");
@@ -35,23 +36,17 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-The template function does not have to be any specific template engine. It
-only needs to be a function that returns valid HTML as a string from the
-`data` parameter passed to the function.
+Это функция не должна иметь какой-либо шаблонизатор. Она должна быть просто функцией, которая возвращает валидный HTML в виде строки
+согласно значению аргумента `data`, которое было передано в функцию.
 
-## Custom Template Selection And Rendering
+## Собственная выборка шаблона и рендеринг
 
-By default, the renderer will take a jQuery selector object as
-the first parameter, and a JSON data object as the optional
-second parameter. It then uses the `TemplateCache` to load the
-template by the specified selector, and renders the template with
-the data provided (if any) using Underscore.js templates.
+По умолчанию `Renderer` примет jQuery-селектор в качестве первого параметра и JSON-объект с данными в качестве опционального 
+второго параметра. Затем `Renderer` использует объект `TemplateCache` для загрузки шаблона по указанному селектору и 
+рендерит шаблон с предоставленными данными, используя шаблонизатор Underscore.js.
 
-If you wish to override the way the template is loaded, see
-the `TemplateCache` object. 
-
-If you wish to override the template engine used, change the 
-`render` method to work however you want:
+Если вы хотите переопределить способ загрузки шаблона, то ознакомьтесь с объектом `TemplateCache`. Если вы хотите 
+переопределить используемый шаблонизатор, то измените метод `render` по своему усмотрению:
 
 ```js
 Backbone.Marionette.Renderer.render = function(template, data){
@@ -59,28 +54,25 @@ Backbone.Marionette.Renderer.render = function(template, data){
 });
 ```
 
-This implementation will replace the default Underscore.js 
-rendering with jQuery templates rendering.
+Эта реализация заменит используемый по умолчанию рендеринг с помощью Underscore.js 
+на рендеринг с помощью шаблонов jQuery.
 
-If you override the `render` method and wish to use the 
-`TemplateCache` mechanism, remember to include the code necessary to 
-fetch the template from the cache in your `render` method:
+Если вы переопределите метод `render` и захотите использовать механизм `TemplateCache`, то не забудьте включить код, 
+необходимый для получения шаблона из кэша: 
 
 ```js
 Backbone.Marionette.Renderer.render = function(template, data){
   var template = Marionette.TemplateCache.get(template);
-  // Do something with the template here
+  // Какие-то действия с шаблоном
 };
 ```
 
-## Using Pre-compiled Templates
+## Использование предварительно скомпилированных шаблонов
 
-You can easily replace the standard template rendering functionality
-with a pre-compiled template, such as those provided by the JST or TPL
-plugins for AMD/RequireJS. 
+Вы легко можете заменить стандартный рендеринг шаблонов на предварительно скомпилированные шаблоны, 
+например, те, которые предусмотрены плагинами JST или TPL для AMD/RequireJS.
 
-To do this, just override the `render` method to return your executed 
-template with the data.
+Чтобы сделать это, просто переопределите метод `render` на метод, который вернет исполняемый шаблон с данными.
 
 ```js
 Backbone.Marionette.Renderer.render = function(template, data){
@@ -88,8 +80,8 @@ Backbone.Marionette.Renderer.render = function(template, data){
 };
 ```
 
-Then you can specify the pre-compiled template function as your view's
-`template` attribute:
+Затем вы можете указать функцию предварительно скомпилированного шаблона как значение атрибута `template` вашего 
+представления:
 
 ```js
 var myPrecompiledTemplate = _.template("<div>some template</div>");
@@ -98,5 +90,3 @@ Backbone.Marionette.ItemView.extend({
   template: myPrecompiledTemplate
 });
 ```
-
-

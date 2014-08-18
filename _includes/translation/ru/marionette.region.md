@@ -61,13 +61,13 @@ layoutView.menu.show(new MenuView());
 layoutView.content.show(new MainContentView());
 ```
 
-### Region Configuration Types
+### Типы конфигурирования регионов
 
-Marionette supports multiple ways to define regions on your `Application` or `LayoutView`.
+Marionette поддреживает несколько способов определения регионов в вашем `Application` или `LayoutView`.
 
-#### String Selector
+#### Селектор в виде строки
 
-You can use a jQuery string selector to define regions.
+Для определения региона вы можете использовать jQuery-селектор в виде строки.
 
 ```js
 App.addRegions({
@@ -75,13 +75,11 @@ App.addRegions({
 });
 ```
 
-#### Region Class
+#### Класс региона
 
-If you've created a custom region class, you can use it to
-define your region.
+Если у вас есть собственный класс региона, вы можете использовать его для определения региона.
 
-**NOTE:** Make sure the region class has an `el`
-property set or it won't work!
+**Внимание:** Убедитесь, что класс региона имеет свойство `el`, в противном случае регион создать не получится.
 
 ```js
 var MyRegion = Marionette.Region.extend({
@@ -93,7 +91,7 @@ App.addRegions({
 });
 ```
 
-#### Object Literal
+#### Литерал объекта
 
 Finally, you can define regions with an object literal. Object
 literal definitions normally expect a `selector` or `el`
@@ -207,18 +205,17 @@ var mgr = new Backbone.Marionette.Region({
 
 ## Basic Use
 
-### Showing a View
+### Отображение представления
 
-Once a region is defined, you can call its `show`
-and `empty` methods to display and shut-down a view:
+Как только регион объявлен, вы можете вызвать его методы `show` и `empty` для отображения или выключения представления:
 
 ```js
 var myView = new MyView();
 
-// render and display the view
+// Рендеринг и отобрабражение представления
 MyApp.mainRegion.show(myView);
 
-// empties the current view
+// Удаление текущего представления
 MyApp.mainRegion.empty();
 ```
 
@@ -306,8 +303,29 @@ Marionette.Region.prototype.attachHtml = function(view){
 }
 ```
 
-This example will cause a view to slide down from the top
-of the region, instead of just appearing in place.
+It is also possible to define a custom render method for a single region by
+extending from the Region class and including a custom attachHtml method.
+
+This example will make a view slide down from the top of the screen instead of just
+appearing in place:
+
+```js
+var ModalRegion = Marionette.Region.extend({
+  attachHtml: function(view){
+    // Some effect to show the view:
+    this.$el.empty().append(view.el);
+    this.$el.hide().slideDown('fast');
+  }
+})
+
+MyApp.addRegions({
+  mainRegion: '#main-region',
+  modalRegion: {
+    regionClass: ModalRegion,
+    selector: '#modal-region'
+  }
+})
+```
 
 ### Attach Existing View
 
@@ -335,7 +353,7 @@ var region = new Backbone.Marionette.Region({
 });
 ```
 
-#### Call `attachView` On Region
+#### Вызов `attachView` в регионе
 
 ```js
 MyApp.addRegions({
@@ -349,11 +367,11 @@ var myView = new MyView({
 MyApp.someRegion.attachView(myView);
 ```
 
-## Region Events And Callbacks
+## События и коллбэки региона
 
 ### Events raised during `show`:
-A region will raise a few events when showing
-and destroying views:
+
+A region will raise a few events when showing and destroying views:
 
 * "before:show" / `onBeforeShow` - Called on the view instance after the view has been rendered, but before its been displayed.
 * "before:show" / `onBeforeShow` - Called on the region instance after the view has been rendered, but before its been displayed.
@@ -427,7 +445,7 @@ var MyRegion = Backbone.Marionette.Region.extend({
 });
 ```
 
-## Custom Region Classes
+## Собственные классы регионов
 
 You can define a custom region by extending from
 `Region`. This allows you to create new functionality,

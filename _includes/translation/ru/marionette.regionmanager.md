@@ -4,7 +4,7 @@ application. The RegionManager is intended to be
 used by other objects, to facilitate the addition,
 storage, retrieval, and removal of regions from
 that object. For examples of how it can be used,
-see the [Marionette.Application](./marionette.application.md) and [Marionette.LayoutView](./marionette.layoutview.md)
+see the [Marionette.Application](../application/) and [Marionette.LayoutView](../layoutview/)
 objects.
 
 ## Documentation Index
