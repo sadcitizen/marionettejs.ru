@@ -325,12 +325,15 @@ var r1Again = app.r1;
 MyApp.removeRegion('someRegion');
 ```
 
-Перед тем как регион будет удален из объекта приложения, для него будет вызван метод `.close()`, который его отключит.
+Перед тем как регион будет удален из объекта приложения, для него будут вызваны специальные методы, 
+которые очистят его правильным образом.
 
-Для более подробной информации ознакомьтесь с [документацией по регионам](../region/). Also, the API that Applications use to
-manage regions comes from the RegionManager Class, which is documented [over here](../regionmanager/).
+Для более подробной информации ознакомьтесь с [документацией по регионам](../region/). 
+API, которое объект `Applications` использует для управления регионами, приходит от класса `RegionManager`,
+[документация доступна здесь](../regionmanager/).
 
 ### Application.getOption
-Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
+Получить атрибут объекта можно либо напрямую от объекта, либо через `this.options`, 
+использование `this.options` является предпочтительней.
 
-More information [getOption](../functions/).
+Больше информации про [getOption](../functions/).
