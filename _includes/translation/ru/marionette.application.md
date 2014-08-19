@@ -66,7 +66,7 @@ MyApp.addInitializer(function(options){
 ## События иницализации приложения
 
 Объект `Application` вызывает несколько событий в течение своего жизненного цикла, 
-для этого используется функция [Marionette.triggerMethod](./marionette.functions.md).
+для этого используется функция [Marionette.triggerMethod](../functions/).
 Эти события могут использоваться для того, чтобы сделать дополнительную обработку в 
 вашем приложении. Например, вы хотите предварительно обработать некоторые данные перед 
 процессом инициализации приложения. Или вы хотите дождаться завершения инициализации 
@@ -215,7 +215,7 @@ window.app.vent;
 
 ## Регионы и объект приложения
 
-Экземпляры объекта `Application` имеют API, который позволяет вам управлять [Регионами](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.region.md).
+Экземпляры объекта `Application` имеют API, который позволяет вам управлять [Регионами](../region/).
 Регионы являются стандартным средством, с помощью которых ваши представления (views) добавляются в `document`.
 
 Объект `Region` может быть добавлен в приложение вызовом метода `addRegions` и передачей в функцию 
@@ -327,10 +327,10 @@ MyApp.removeRegion('someRegion');
 
 Перед тем как регион будет удален из объекта приложения, для него будет вызван метод `.close()`, который его отключит.
 
-Для более подробной информации ознакомьтесь с [документацией по регионам](./marionette.region.md). Also, the API that Applications use to
-manage regions comes from the RegionManager Class, which is documented [over here](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.regionmanager.md).
+Для более подробной информации ознакомьтесь с [документацией по регионам](../region/). Also, the API that Applications use to
+manage regions comes from the RegionManager Class, which is documented [over here](../regionmanager/).
 
 ### Application.getOption
 Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
 
-More information [getOption](./marionette.functions.md)
+More information [getOption](../functions/).
