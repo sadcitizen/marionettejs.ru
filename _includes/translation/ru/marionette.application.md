@@ -24,7 +24,7 @@ var MyApp = new Backbone.Marionette.Application();
   * [jQuery-селектор](#jquery-selector)
   * [Собственный тип региона](#custom-region-type)
   * [Собственный тип региона и селектор](#custom-region-type-and-selector)
-  * [Region Options](#region-options)
+  * [Регионы как параметры](#region-options)
   * [Переопределение стандартного RegionManager-а](#overriding-the-default-regionmanager)
   * [Получение региона по его имени](#get-region-by-name)
   * [Удаление регионов](#removing-regions)
