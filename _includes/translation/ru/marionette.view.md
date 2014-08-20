@@ -1,15 +1,16 @@
-Marionette has a base `Marionette.View` class that other views extend from.
-This base view provides some common and core functionality for
-other views to take advantage of.
+Marionette имеет базовый класс `Marionette.View`, 
+другие представления расширяют его (наследуются от него).
+Это базовое представление предоставляет некоторую общую и базовую (core) функциональность,
+которой могут воспользоваться другие представления.
 
-**Note:** The `Marionette.View` class is not intended to be
-used directly. It exists as a base view for other view classes
-to be extended from, and to provide a common location for
-behaviors that are shared across all views.
+**Замечание:** Класс `Marionette.View` не предназначен для непосредственного использования.
+Он существует как базовое представление для других классов представлений, 
+они должны расширять его. Задача класса `Marionette.View` обеспечить общее место для расположения поведении,
+которые являются общими для всех представлений.
 
-## Documentation Index
+## Содержание
 
-* [Binding To View Events](#binding-to-view-events)
+* [Привязка событий к представлению](#binding-to-view-events)
 * [View onShow](#view-onshow)
 * [View destroy](#view-destroy)
 * [View onBeforeDestroy](#view-onbeforedestroy)
@@ -27,11 +28,10 @@ behaviors that are shared across all views.
   * [Object Or Function As `templateHelpers`](#object-or-function-as-templatehelpers)
 * [Change Which Template Is Rendered For A View](#change-which-template-is-rendered-for-a-view)
 
-## Binding To View Events
+## Привязка событий к представлению
 
-Marionette.View extends `Backbone.View`. It is recommended that you use
-the `listenTo` method to bind model, collection, or other events from Backbone
-and Marionette objects.
+`Marionette.View` расширяет `Backbone.View`. Рекомендуется использовать метод `listenTo` для 
+прослушивания событий (привязки к событиям) модели, коллекции или других событий от объектов Backbone и Marionette.
 
 ```js
 var MyView = Backbone.Marionette.ItemView.extend({
@@ -48,13 +48,13 @@ var MyView = Backbone.Marionette.ItemView.extend({
 });
 ```
 
-The context (`this`) will automatically be set to the view. You can
-optionally set the context by using `_.bind`.
+Контекст (`this`) будет автоматически установлен на объект представления.
+При желании вы можете сами установить контекст с помошью `_.bind`.
 
 ```js
-// Force the context of the "reconcileCollection" callback method to be the collection
-// itself, for this event handler only (does not affect any other use of the
-// "reconcileCollection" method)
+// Мы принудительно устанавливаем контекст функции обратного вызова "reconcileCollection"
+// на объект самой collection, этот контекст только для этого обработчика события
+// (не влияет на любое другое использование метода "reconcileCollection")
 this.listenTo(this.collection, "add", _.bind(this.reconcileCollection, this.collection));
 ```
 

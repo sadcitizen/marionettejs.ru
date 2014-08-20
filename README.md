@@ -6,3 +6,4 @@
 * layout - макет
 * template - шаблон
 * view - представление
+* binding - привязка
