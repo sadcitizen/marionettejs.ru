@@ -11,8 +11,8 @@ Marionette имеет базовый класс `Marionette.View`,
 ## Содержание
 
 * [Привязка событий к представлению](#binding-to-view-events)
-* [View onShow](#view-onshow)
-* [View destroy](#view-destroy)
+* [Метод onShow](#view-onshow)
+* [Метод destroy](#view-destroy)
 * [View onBeforeDestroy](#view-onbeforedestroy)
 * [View "dom:refresh" / onDomRefresh event](#view-domrefresh--ondomrefresh-event)
 * [View.triggers](#viewtriggers)
@@ -58,22 +58,23 @@ var MyView = Backbone.Marionette.ItemView.extend({
 this.listenTo(this.collection, "add", _.bind(this.reconcileCollection, this.collection));
 ```
 
-## View onShow
+## Метод onShow
 
-* "show" / `onShow` - Called on the view instance when the view has been rendered and displayed.
+* "show" / `onShow` - Вызывается у экземпляра представления после того, как представление было сформировано (rendered) и отображено.
 
-This event can be used to react to when a view has been shown via a [region](marionette.region.md).
-All `views` that inherit from the base `Marionette.View` class have this functionality, notably `ItemView`, `CollectionView`, `CompositeView`, and `LayoutView`.
+Это событие можно использовать для реагирования на отображение представления через [регион](marionette.region.md).
+Все `представления`, которые наследованы от базового класса `Marionette.View` имеют эту функциональность,
+в частности `ItemView`, `CollectionView`, `CompositeView`, и `LayoutView`.
 
 ```js
 Backbone.Marionette.ItemView.extend({
   onShow: function(){
-    // react to when a view has been shown
+    // вызывается, когда представление было отображено
   }
 });
 ```
 
-A common use case for the `onShow` method is to use it to add children views.
+Часто используемая ситуация для метода `onShow` это его использование для добавления дочерних представлений.
 
 ```js
 var LayoutView = Backbone.Marionette.LayoutView.extend({
@@ -88,29 +89,29 @@ var LayoutView = Backbone.Marionette.LayoutView.extend({
 });
 ```
 
-## View destroy
+## Метод destroy
 
-View implements a `destroy` method, which is called by the region
-managers automatically. As part of the implementation, the following
-are performed:
+Представление реализует метод `destroy`, который вызывается системой управления регионами 
+(менеджерами регионов) автоматически. Как часть реализации, метод `destroy` выполняет
+следующие операции:
 
-* call an `onBeforeDestroy` event on the view, if one is provided
-* call an `onDestroy` event on the view, if one is provided
-* unbind all custom view events
-* unbind all DOM events
-* remove `this.el` from the DOM
-* unbind all `listenTo` events
+* вызывает событие `onBeforeDestroy` у представления, если таковое имеется
+* вызывает событие `onDestroy` у представления, если таковое имеется
+* прекращает прослушивание всех пользовательских событий представления
+* прекращает прослушивание всех DOM-событий
+* удаляет `this.el` из DOM
+* прекращает прослушивание всех `listenTo` событий
 
-By providing an `onDestroy` method in your view definition, you can
-run custom code for your view that is fired after your view has been
-destroyd and cleaned up. The `onDestroy` method will be passed any arguments
-that `destroy` was invoked with. This lets you handle any additional clean
-up code without having to override the `destroy` method.
+Реализовывая метод `onDestroy` в определении вашего представления, позволяет вам 
+запускать пользовательский код для вашего представления, который будет выполнен
+после того как ваше представление будет уничтожено и очищено. Метод `onDestroy` будет
+вызван с параметрами, с которыми был вызван метод `destroy`. Это позволяет вам выполнить любой
+дополнительный код по очистке без необходимости переопределения метода `destroy`.
 
 ```js
 var MyView = Backbone.Marionette.ItemView.extend({
   onDestroy: function(arg1, arg2){
-    // custom cleanup or destroying code, here
+    // свой код очистки или уничтожения, должен быть здесь
   }
 });
 
