@@ -13,10 +13,10 @@ Marionette имеет базовый класс `Marionette.View`,
 * [Привязка событий к представлению](#binding-to-view-events)
 * [Метод onShow](#view-onshow)
 * [Метод destroy](#view-destroy)
-* [View onBeforeDestroy](#view-onbeforedestroy)
-* [View "dom:refresh" / onDomRefresh event](#view-domrefresh--ondomrefresh-event)
+* [Метод onBeforeDestroy](#view-onbeforedestroy)
+* [Событие "dom:refresh" / метод onDomRefresh](#view-domrefresh--ondomrefresh-event)
+* [События представления](#viewevents)
 * [View.triggers](#viewtriggers)
-* [View.events](#viewevents)
 * [View.modelEvents and View.collectionEvents](#viewmodelevents-and-viewcollectionevents)
 * [View.serializeData](#viewserializedata)
 * [View.bindUIElements](#viewbinduielements)
@@ -105,7 +105,7 @@ var LayoutView = Backbone.Marionette.LayoutView.extend({
 Реализовывая метод `onDestroy` в определении вашего представления, позволяет вам 
 запускать пользовательский код для вашего представления, который будет выполнен
 после того как ваше представление будет уничтожено и очищено. Метод `onDestroy` будет
-вызван с параметрами, с которыми был вызван метод `destroy`. Это позволяет вам выполнить любой
+вызван с аргументами, с которыми был вызван метод `destroy`. Это позволяет вам выполнить любой
 дополнительный код по очистке без необходимости переопределения метода `destroy`.
 
 ```js
@@ -119,38 +119,37 @@ var v = new MyView();
 v.destroy(arg1, arg2);
 ```
 
-## View onBeforeDestroy
+## Метод onBeforeDestroy
 
-When destroying a view, an `onBeforeDestroy` method will be called, if it
-has been provided, just before the view destroys. It will be passed any arguments
-that `destroy` was invoked with.
+Когда запускается процесс уничтожения представления, то вызывается метод `onBeforeDestroy`, если этот
+метод представлен. Метод `onBeforeDestroy` вызывается перед уничтожением представления. Он будет вызван
+с аргументами, с которыми был вызван метод `destroy`.
 
-### View "dom:refresh" / onDomRefresh event
+### Событие "dom:refresh" / метод onDomRefresh
 
-Triggered after the view has been rendered, has been shown in the DOM via a Marionette.Region, and has been
-re-rendered.
+Вызывается после того, как представление было сформировано (rendered) и отображено в DOM через `Marionette.Region`, или было пере-сформировано (re-rendered).
 
-This event / callback is useful for
-[DOM-dependent UI plugins](http://lostechies.com/derickbailey/2012/02/20/using-jquery-plugins-and-ui-controls-with-backbone/) such as
-[jQueryUI](http://jqueryui.com/) or [KendoUI](http://kendoui.com).
+Это событие / функция обратного вызова используется
+[DOM-зависимыми UI плагинами](http://lostechies.com/derickbailey/2012/02/20/using-jquery-plugins-and-ui-controls-with-backbone/) таких как [jQueryUI](http://jqueryui.com/) или [KendoUI](http://kendoui.com).
 
 ```js
 Backbone.Marionette.ItemView.extend({
   onDomRefresh: function(){
-    // manipulate the `el` here. it's already
-    // been rendered, and is full of the view's
-    // HTML, ready to go.
+    // Манипуляции с `el` нужно делать здесь. Оно (`el`) уже было
+    // сформировано, и HTML представления готов для использования.
   }
 });
 ```
 
-For more information about integration Marionette w/ KendoUI (also applicable to jQueryUI and other UI
-widget suites), see [this blog post on KendoUI + Backbone](http://www.kendoui.com/blogs/teamblog/posts/12-11-26/backbone_and_kendo_ui_a_beautiful_combination.aspx).
+Чтобы узнать больше об интеграции Marionette с KendoUI (также применимо к jQueryUI и другим UI
+виджетам), читайте [эту статью в блоге KendoUI + Backbone](http://www.kendoui.com/blogs/teamblog/posts/12-11-26/backbone_and_kendo_ui_a_beautiful_combination.aspx).
 
-## View.events
-Since Views extend from backbone`s view class, you gain the benefits of the [events hash](http://backbonejs.org/#View-delegateEvents).
+## События представления
 
-Some preprocessing sugar is added on top to add the ability to cross utilize the ```ui``` hash.
+Поскольку класс `Marionette.View` расширяет (наследуется от) backbone-ий класс представления, 
+вы получаете преимущества от использования [хеша events](http://backbonejs.org/#View-delegateEvents).
+
+Некоторый синтаксический сахар добавляется от возможности использования хеша `ui`.
 
 ```js
 var MyView = Backbone.Marionette.ItemView.extend({
@@ -161,7 +160,7 @@ var MyView = Backbone.Marionette.ItemView.extend({
   },
 
   events: {
-    "click @ui.cat": "bark" //is the same as "click .dog":
+    "click @ui.cat": "bark" // это эквивалентно "click .dog":
   }
 });
 ```
