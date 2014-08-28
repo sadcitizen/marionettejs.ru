@@ -16,7 +16,7 @@ Marionette имеет базовый класс `Marionette.View`,
 * [Метод onBeforeDestroy](#view-onbeforedestroy)
 * [Событие "dom:refresh" / метод onDomRefresh](#view-domrefresh--ondomrefresh-event)
 * [События представления](#viewevents)
-* [View.triggers](#viewtriggers)
+* [Триггеры представления](#viewtriggers)
 * [View.modelEvents and View.collectionEvents](#viewmodelevents-and-viewcollectionevents)
 * [View.serializeData](#viewserializedata)
 * [View.bindUIElements](#viewbinduielements)
@@ -165,14 +165,13 @@ var MyView = Backbone.Marionette.ItemView.extend({
 });
 ```
 
-## View.triggers
+## Триггеры представления
 
-Views can define a set of `triggers` as a hash, which will
-convert a DOM event into a `view.triggerMethod` call.
+В представлениях можно определять набор `triggers` в виде хеша, который будет 
+преобразовывать DOM-события в вызов метода `view.triggerMethod`.
 
-The left side of the hash is a standard Backbone.View DOM
-event configuration, while the right side of the hash is the
-view event that you want to trigger from the view.
+В хеше `triggers` слева указываются стандартые DOM-события Backbone.View ("событие селектор"),
+справой же стороны хеша определяются события представления, которые вы хотите вызвать у представления.
 
 ```js
 var MyView = Backbone.Marionette.ItemView.extend({
@@ -190,29 +189,31 @@ view.on("something:do:it", function(args){
   alert("I DID IT!");
 });
 
-// "click" the 'do-something' DOM element to
-// demonstrate the DOM event conversion
+// нажатие ("click") на 'do-something' DOM-элемент
+// демонстрирует преобразование DOM-события
 view.$(".do-something").trigger("click");
 ```
 
-The result of this is an alert box that says, "I DID IT!"
+В результате выполнения этого кода, появится окно предупрежедения с текстом "I DID IT!".
 
-By default all triggers are stopped with `preventDefault` and `stopPropagation` methods. But you can manually configure the triggers using hash instead of event name. Example below triggers an event and prevents default browser behaviour using `preventDefault` method.
+По умолчанию все триггеры (triggers) будут остановлены методами `preventDefault` и `stopPropagation`. 
+По желанию вы можете вручную настроить триггеры, используя хэш вместо имени события представления. 
+Пример тригера ниже демонстрирует определение события и предотвращение поведения браузера по умолчанию 
+с помощью только метода `preventDefault`.
 
 ```js
 Backbone.Marionette.CompositeView.extend({
   triggers: {
     "click .do-something": {
       event: "something:do:it",
-      preventDefault: true, // this param is optional and will default to true
+      preventDefault: true, // этот параметр не является обязательным, по умолчанию его значение true
       stopPropagation: false
     }
   }
 });
 ```
 
-You can also specify the `triggers` as a function that
-returns a hash of trigger configurations
+Вы также можете указать `triggers` как функцию, которая возвращает хеш сконфигурированных тригеров.
 
 ```js
 Backbone.Marionette.CompositeView.extend({
@@ -224,7 +225,7 @@ Backbone.Marionette.CompositeView.extend({
 });
 ```
 
-Trigger keys can be configured to cross utilize the ```ui``` hash.
+Селекторы в триггере могут быть указаны через ситнаксический сахар от использования хеша ```ui```.
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -232,13 +233,12 @@ Backbone.Marionette.ItemView.extend({
      'monkey': '.guybrush'
   },
   triggers: {
-    'click @ui.monkey': 'see:LeChuck' // equivalent of "click .guybrush"
+    'click @ui.monkey': 'see:LeChuck' // эквивалентно конструкции "click .guybrush"
   }
 });
 ```
 
-Triggers work with all View classes that extend from the base
-Marionette.View.
+Триггеры работают во всех классах представлений (`View`), которые наследованы от базового класса `Marionette.View`.
 
 ### Trigger Handler Arguments
 
