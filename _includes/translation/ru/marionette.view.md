@@ -17,7 +17,7 @@ Marionette имеет базовый класс `Marionette.View`,
 * [Событие "dom:refresh" / метод onDomRefresh](#view-domrefresh--ondomrefresh-event)
 * [События представления](#viewevents)
 * [Триггеры представления](#viewtriggers)
-* [View.modelEvents and View.collectionEvents](#viewmodelevents-and-viewcollectionevents)
+* [События модели в modelEvents и событий коллекции в collectionEvents](#viewmodelevents-and-viewcollectionevents)
 * [View.serializeData](#viewserializedata)
 * [View.bindUIElements](#viewbinduielements)
 * [View.getOption](#viewgetoption)
@@ -240,16 +240,17 @@ Backbone.Marionette.ItemView.extend({
 
 Триггеры работают во всех классах представлений (`View`), которые наследованы от базового класса `Marionette.View`.
 
-### Trigger Handler Arguments
+### Аргументы функции обработчика тригера
 
-A `trigger` event handler will receive a single argument that
-includes the following:
+Функция обработчика события в `тригере`-е получает один аргумент, который 
+включает в себя следующее:
 
-* view
-* model
-* collection
+* представление
+* модель
+* коллекция
 
-These properties match the `view`, `model`, and `collection` properties of the view that triggered the event.
+Эти свойства соответствуют свойствам `view`, `model`, и `collection` из представления, 
+которое вызвало событие.
 
 ```js
 var MyView = Backbone.Marionette.ItemView.extend({
@@ -263,56 +264,54 @@ var MyView = Backbone.Marionette.ItemView.extend({
 var view = new MyView();
 
 view.on("some:event", function(args){
-  args.view; // => the view instance that triggered the event
-  args.model; // => the view.model, if one was set on the view
-  args.collection; // => the view.collection, if one was set on the view
+  args.view; // => экземпляр представления, которое вызвало событие
+  args.model; // => модель из представления - view.model, если модель была установлена в прдедставлении
+  args.collection; // => коллекция из представления - view.collection, если коллекция была установлена в прдедставлении
 });
 ```
 
-Having access to these allows more flexibility in handling events from
-multiple views. For example, a tab control or expand/collapse widget such
-as a panel bar could trigger the same event from many different views
-and be handled with a single function.
+Имея доступ к этим своиствам, позволяет обеспечить большую гибкость 
+при обработке событий от множества представлений. Для примера, компонент управления вкладками или виджет для развернуть/свернуть бар-панель могут обрабытывать одинаковое событие от многих разных представлений 
+и обработка этого события будет описана в одной функции.
 
-## View.modelEvents and View.collectionEvents
+## События модели в modelEvents и событий коллекции в collectionEvents
 
-Similar to the `events` hash, views can specify a configuration
-hash for collections and models. The left side is the event on
-the model or collection, and the right side is the name of the
-method on the view.
+Подобно хешу `events`, в представлениях можно указывать хеши для коллекций и моделей.
+С левой стороны указывается событие модели или коллекции, а с правой стороны имя метода из представления, 
+который будет методом обратного вызова.
 
 ```js
 Backbone.Marionette.CompositeView.extend({
 
   modelEvents: {
-    "change:name": "nameChanged" // equivalent to view.listenTo(view.model, "change:name", view.nameChanged, view)
+    "change:name": "nameChanged" // эквивалентно - view.listenTo(view.model, "change:name", view.nameChanged, view)
   },
 
   collectionEvents: {
-    "add": "itemAdded" // equivalent to view.listenTo(view.collection, "add", view.itemAdded, view)
+    "add": "itemAdded" // эквивалентно - view.listenTo(view.collection, "add", view.itemAdded, view)
   },
 
-  // ... event handler methods
+  // ... методы обработчики событий
   nameChanged: function(){ /* ... */ },
   itemAdded: function(){ /* ... */ },
 
 })
 ```
 
-These will use the memory safe `listenTo`, and will set the context
-(the value of `this`) in the handler to be the view. Events are
-bound at the time of instantiation, and an exception will be thrown
-if the handlers on the view do not exist.
+Эти конструкции используют памяти-безопасный `listenTo` и будет установлен контекст (значение `this`)
+в обработчике события, равный текущему представлению. События связываются во время создания экзепляра
+представления и будет сгенерировано исключение, если функции обработчики событий будут отсутствовать
+в представлении.
 
-The `modelEvents` and `collectionEvents` will be bound and
-unbound with the Backbone.View `delegateEvents` and `undelegateEvents`
-method calls. This allows the view to be re-used and have
-the model and collection events re-bound.
+События из `modelEvents` и `collectionEvents` будут подключены и отключены от прослушивания
+при помощи вызова методов из `Backbone.View`: `delegateEvents` и `undelegateEvents`.
+Это позволяет представлению повторно использовать события для модели и коллекции при 
+переподключении прослушивания событий.
 
-### Multiple Callbacks
+### Несколько функций обратного вызова
 
-Multiple callback functions can be specified by separating them with a
-space.
+Для определения нескольких функций обратного вызова для события можно указать их друг за другом,
+разделяя их между собой пробелом.
 
 ```js
 Backbone.Marionette.CompositeView.extend({
@@ -327,31 +326,31 @@ Backbone.Marionette.CompositeView.extend({
 });
 ```
 
-This works in both `modelEvents` and `collectionEvents`.
+Это работает для обоих `modelEvents` и `collectionEvents`.
 
-### Callbacks As Function
+### Определение функций обратного вызова через функции
 
-A single function can be declared directly in-line instead of specifying a
-callback via a string method name.
+Функция может быть объявлена напрямую в строчке, где указывается имя функции обратного вызова
+в виде строкового название метода.
 
 ```js
 Backbone.Marionette.CompositeView.extend({
 
   modelEvents: {
     "change:name": function(){
-      // handle the name changed event here
+      // обработка события изменеия имени будет здесь
     }
   }
 
 });
 ```
 
-This works for both `modelEvents` and `collectionEvents`.
+Это работает для обоих `modelEvents` и `collectionEvents`.
 
-### Event Configuration As Function
+### Определение событий через функцию
 
-A function can be used to declare the event configuration as long as
-that function returns a hash that fits the above configuration options.
+Функция может быть использована для определения назначаемых событий. Эта функция должна возвращать хеш,
+который должен соответствовать виду указанному выше, т.е. иметь корректные вышеуказаные параметры.
 
 ```js
 Backbone.Marionette.CompositeView.extend({
@@ -363,7 +362,7 @@ Backbone.Marionette.CompositeView.extend({
 });
 ```
 
-This works for both `modelEvents` and `collectionEvents`.
+Это работает для обоих  `modelEvents` и `collectionEvents`.
 
 ## View.serializeData
 
