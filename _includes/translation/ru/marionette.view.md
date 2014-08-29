@@ -17,7 +17,7 @@ Marionette имеет базовый класс `Marionette.View`,
 * [Событие "dom:refresh" / метод onDomRefresh](#view-domrefresh--ondomrefresh-event)
 * [События представления](#viewevents)
 * [Триггеры представления](#viewtriggers)
-* [События модели в modelEvents и событий коллекции в collectionEvents](#viewmodelevents-and-viewcollectionevents)
+* [События модели в modelEvents и события коллекции в collectionEvents](#viewmodelevents-and-viewcollectionevents)
 * [View.serializeData](#viewserializedata)
 * [View.bindUIElements](#viewbinduielements)
 * [View.getOption](#viewgetoption)
@@ -274,7 +274,7 @@ view.on("some:event", function(args){
 при обработке событий от множества представлений. Для примера, компонент управления вкладками или виджет для развернуть/свернуть бар-панель могут обрабытывать одинаковое событие от многих разных представлений 
 и обработка этого события будет описана в одной функции.
 
-## События модели в modelEvents и событий коллекции в collectionEvents
+## События модели в modelEvents и события коллекции в collectionEvents
 
 Подобно хешу `events`, в представлениях можно указывать хеши для коллекций и моделей.
 С левой стороны указывается событие модели или коллекции, а с правой стороны имя метода из представления, 
