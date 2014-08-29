@@ -338,7 +338,7 @@ Backbone.Marionette.CompositeView.extend({
 
   modelEvents: {
     "change:name": function(){
-      // обработка события изменеия имени будет здесь
+      // обработка события изменения имени будет здесь
     }
   }
 
