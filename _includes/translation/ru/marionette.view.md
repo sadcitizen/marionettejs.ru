@@ -18,10 +18,10 @@ Marionette имеет базовый класс `Marionette.View`,
 * [События представления](#viewevents)
 * [Триггеры представления](#viewtriggers)
 * [События модели в modelEvents и события коллекции в collectionEvents](#viewmodelevents-and-viewcollectionevents)
-* [View.serializeData](#viewserializedata)
-* [View.bindUIElements](#viewbinduielements)
-* [View.getOption](#viewgetoption)
-* [View.bindEntityEvents](#viewbindentityevents)
+* [Метод serializeData](#viewserializedata)
+* [Метод bindUIElements](#viewbinduielements)
+* [Метод getOption](#viewgetoption)
+* [Метод bindEntityEvents](#viewbindentityevents)
 * [View.templateHelpers](#viewtemplatehelpers)
   * [Basic Example](#basic-example)
   * [Accessing Data Within The Helpers](#accessing-data-within-the-helpers)
@@ -364,40 +364,41 @@ Backbone.Marionette.CompositeView.extend({
 
 Это работает для обоих  `modelEvents` и `collectionEvents`.
 
-## View.serializeData
+## Метод serializeData
 
-The `serializeData` method will serialize a view's model or
-collection - with precedence given to collections. That is,
-if you have both a collection and a model in a view, calling
-the `serializeData` method will return the serialized
-collection.
+Метод `serializeData` сериализует модель или коллекцию представления - 
+приоритет отдается коллекциям. То есть, если у вас в представлении используются
+коллекция и модель, то вызов метода `serializeData` вернет сериализованную коллекцию. 
 
-## View.bindUIElements
+## Метод bindUIElements
 
-In several cases you need to access ui elements inside the view
-to retrieve their data or manipulate them. For example you have a
-certain div element you need to show/hide based on some state,
-or other ui element that you wish to set a css class to it.
-Instead of having jQuery selectors hanging around in the view's code
-you can define a `ui` hash that contains a mapping between the
-ui element's name and its jQuery selector. Afterwards you can simply
-access it via `this.ui.elementName`.
-See ItemView documentation for examples.
+В некоторых случаях возникает задача получить доступ к ui элементам внутри представления
+для того, чтобы получить у них данные или для манипуляции над ними. Для примера, у вас есть
+div элемент и вы хотите показывать/скрывать его, основываясь на некотором состоянии или
+на состоянии другого ui элемента, которому вы хотите устанавливать css-класс.
+Вместо того, чтобы использовать jQuery-селекторы, описываемые везде в коде представления,
+вы можете определить `ui` хэш, который сопоставляет название ui элемента с его
+jQuery-селектором. После этого вы можете получить доступ к ui элементу через `this.ui.elementName`.
+Для примера можно посмотреть документацию для `ItemView`
 
-This functionality is provided via the `bindUIElements` method.
-Since View doesn't implement the render method, then if you directly extend
-from View you will need to invoke this method from your render method.
-In ItemView and CompositeView this is already taken care of.
+Эта функциональность для `ui` хэша обеспечивается через метод `bindUIElements`.
+Поскольку `View` не реализует метод `render`, то если вы напрямую наследуетесь
+от `View`, вам необходимо вызвать этот метод из вашего `render` метода.
+В `ItemView` и `CompositeView` об этом уже позаботились.
 
-## View.getOption
-Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
+## Метод getOption
 
-More information [getOption](./marionette.functions.md)
+Получает атрибут объекта напрямую у объекта или через `this.options` объекта, 
+значение в `this.options` приоритетнее.
 
-## View.bindEntityEvents
-Helps bind a backbone "entity" to methods on a target object. bindEntityEvents is used to support `modelEvents` and `collectionEvents`.
+Больше информации о [getOption](./marionette.functions.md)
 
-More information [bindEntityEvents](./marionette.functions.md)
+## Метод bindEntityEvents
+
+Помогает привязать backbone-скую сущьность к методам целевого объекта.
+Метод `bindEntityEvents` используется для поддержки `modelEvents` и `collectionEvents`.
+
+Больше информации о [bindEntityEvents](./marionette.functions.md)
 
 ## View.templateHelpers
 
