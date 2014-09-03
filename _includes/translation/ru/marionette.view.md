@@ -22,11 +22,11 @@ Marionette имеет базовый класс `Marionette.View`,
 * [Метод bindUIElements](#viewbinduielements)
 * [Метод getOption](#viewgetoption)
 * [Метод bindEntityEvents](#viewbindentityevents)
-* [View.templateHelpers](#viewtemplatehelpers)
-  * [Basic Example](#basic-example)
-  * [Accessing Data Within The Helpers](#accessing-data-within-the-helpers)
-  * [Object Or Function As `templateHelpers`](#object-or-function-as-templatehelpers)
-* [Change Which Template Is Rendered For A View](#change-which-template-is-rendered-for-a-view)
+* [Помощники в templateHelpers](#viewtemplatehelpers)
+  * [Типичный пример](#basic-example)
+  * [Доступ к данным в помощниках](#accessing-data-within-the-helpers)
+  * [Определение `templateHelpers` через объект или функцию](#object-or-function-as-templatehelpers)
+* [Изменение шаблона, который отображается в представления](#change-which-template-is-rendered-for-a-view)
 
 ## Привязка событий к представлению
 
@@ -49,7 +49,7 @@ var MyView = Backbone.Marionette.ItemView.extend({
 ```
 
 Контекст (`this`) будет автоматически установлен на объект представления.
-При желании вы можете сами установить контекст с помошью `_.bind`.
+При желании вы можете сами установить контекст с помощью `_.bind`.
 
 ```js
 // Мы принудительно устанавливаем контекст функции обратного вызова "reconcileCollection"
@@ -400,22 +400,20 @@ jQuery-селектором. После этого вы можете получ�
 
 Больше информации о [bindEntityEvents](./marionette.functions.md)
 
-## View.templateHelpers
+## Помощники в templateHelpers
 
-There are times when a view's template needs to have some
-logic in it and the view engine itself will not provide an
-easy way to accomplish this. For example, Underscore templates
-do not provide a helper method mechanism while Handlebars
-templates do.
+Иногда, шаблону представления требуется некоторая логика при отрисовки данных, но сами
+движки генерации HTML могут не предоставлять простого пути для добавления этой специальной логики.
+Например, шаблоны Underscore не предоставляют механизма методов помощников, 
+а шаблоны Handlebars предоставляют.
 
-A `templateHelpers` attribute can be applied to any View object that
-renders a template. When this attribute is present its contents
-will be mixed in to the data object that comes back from the
-`serializeData` method. This will allow you to create helper methods
-that can be called from within your templates. This is also a good place
-to add data not returned from `serializeData`, such as calculated values.
+Атрибут `templateHelpers` может быть применен в любом объекте `View`, который отображает шаблон.
+Когда этот атрибут присутствует, его содержимое будет подмешано к данным, которые приходят от
+метода `serializeData`. Это позволяет вам создать методы помощники, которые можно вызывать
+внутри шаблона. Также это хорошее место для добавления данных, которые не возвращаются методом `serializeData`,
+например, рассчитываемые значения.
 
-### Basic Example
+### Типичный пример
 
 ```html
 <script id="my-template" type="text/html">
@@ -449,8 +447,8 @@ var view = new MyView({
 view.render(); //=> "I 100% think that Backbone.Marionette is the coolest!";
 ```
 
-The `templateHelpers` can also be provided as a constructor parameter
-for any Marionette view class that supports the helpers.
+Атрибут `templateHelpers` может быть передан как параметр в конструктор любого Marionette-класса,
+который поддерживает помощников.
 
 ```js
 var MyView = Marionette.ItemView.extend({
@@ -464,12 +462,12 @@ new MyView({
 });
 ```
 
-### Accessing Data Within The Helpers
+### Доступ к данным в помощниках
 
-In order to access data from within the helper methods, you
-need to prefix the data you need with `this`. Doing that will
-give you all of the methods and attributes of the serialized
-data object, including the other helper methods.
+В методах помощниках вы можете получить доступ к данным,
+для этого нужные данные вызываются с префиксом `this`.
+Через `this` вам доступны все методы и атрибуты сериализованного объекта данных,
+а также и другие методы помощники.
 
 ```js
 templateHelpers: {
@@ -479,15 +477,14 @@ templateHelpers: {
 }
 ```
 
-### Object Or Function As `templateHelpers`
+### Определение `templateHelpers` через объект или функцию
 
-You can specify an object literal (as shown above), a reference
-to an object literal, or a function as the `templateHelpers`.
+В качестве `templateHelpers` вы можете указать литерал объект (как показано выше), 
+ссылку на литерал объект или функцию.
 
-If you specify a function, the function will be invoked
-with the current view instance as the context of the
-function. The function must return an object that can be
-mixed in to the data for the view.
+Если указать функцию, то функция будет вызываться с текущим экземпляром представления 
+в качестве контекста функции. Функция должна возвращать объект, который можно подмешать
+к данным представления.
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -499,13 +496,13 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-## Change Which Template Is Rendered For A View
+## Изменение шаблона (Template), который отображается (Rendered) в представления (View)
 
-There may be some cases where you need to change the template that is
-used for a view, based on some simple logic such as the value of a
-specific attribute in the view's model. To do this, you can provide
-a `getTemplate` function on your views and use this to return the
-template that you need.
+Иногда возникают случаи, когда вам нужно изменить шаблон (template),
+который используется в представлении, основываясь на некоторой простой логике,
+такой как некоторое значение определенного атрибута у модели представления.
+Для того, что бы это сделать, вы можете воспользоваться функцией `getTemplate` у
+вашего представления и использовать ее для возвращения нужного вам шаблона.
 
 ```js
 var MyView = Backbone.Marionette.ItemView.extend({
@@ -519,4 +516,4 @@ var MyView = Backbone.Marionette.ItemView.extend({
 });
 ```
 
-This applies to all view classes.
+Все описанное в этом документе, относится ко всем классам представлений.
