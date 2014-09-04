@@ -1,7 +1,6 @@
-Reduce the boilerplate code of handling route events and then calling a
-single method on another object.
-
-Have your routers configured to call the method on your object, directly.
+Собирает повторяющийся код (boilerplate code) для обработки событий роутинга и
+вызывает нужный метод у другого объекта. Содержит роуты, которые вызывают
+методы у вашего объекта непосредственно. 
 
 ## Содержание
 
