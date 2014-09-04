@@ -6,7 +6,7 @@
 ## Documentation Index
 
 * [Причина появления](#the-motivation)
-* [Using Behaviors](#using)
+* [Использование Behaviors](#using)
 * [API](#api)
   * [Event proxy](#the-event-proxy)
   * [Model Events](#model-events)
@@ -25,9 +25,9 @@
 Эти взаимодействия, как правило, представляются отдельными кусками логики, которую вы, скорее всего,
 захотите использовать в других представлениях.
 
-## Using
+## Использование
 
-Приведем пример простого `itemView`. Let's take a stab at simplifying it, and abstracting behaviors from it.
+Приведем пример простого `itemView`. Давайте попробуем упростить его и абстрагируем поведение от него.
 
 ```js
 var MyView = Marionette.ItemView.extend({
@@ -52,11 +52,15 @@ var MyView = Marionette.ItemView.extend({
 });
 ```
 
-Interaction points, such as tooltips and warning messages, are generic concepts. There is no need to recode them within your views. They are prime for abstraction into a higher level non-coupled concept, which is exactly what Behaviors provide you with.
+Имеются следующие точки взаимодействия: всплывающие подсказки, предупреждающие сообщения. Они являются
+общими способами взаимодействия для многих представлений. Нет необходимости писать повторно один и тот же код в
+ваших представлениях. Их просто абстрагировать на более высоком уровне, несвязанном с текущим концептом использования.
+Именно этот более высокий уровень и предоставляет для вас `Behaviors`.
 
-Here is the syntax for declaring which behaviors get used within a view.
-The keys in the hash are passed to `getBehaviorClass` to lookup the correct `Behavior` class.
-The options for each behavior are also passed to said Behavior during initialization. The options are then stored within each behavior under `options`.
+Вот пример синтаксиса для объявления этих поведений (behaviors) для использования в представлении.
+Ключи из хэша передаются в метод `getBehaviorClass` для поиска нужного класса `Behavior`.
+Опции для каждого поведения также передаются в указанный `Behavior` во время инициализации.
+Переданные опции сохраняются в каждом поведении в `options`. 
 
 ```js
 var MyView = Marionette.ItemView.extend({
@@ -79,28 +83,27 @@ var MyView = Marionette.ItemView.extend({
 
 ```js
 var DestroyWarn = Marionette.Behavior.extend({
-  // you can set default options
-  // just like you can in your Backbone Models
-  // they will be overriden if you pass in an option with the same key
+  // вы можете задать значения по умолчанию для опций
+  // это похоже на значения по умолчанию в Backbone Models
+  // значения опции будут переопределены, если вы передадите опции с тем же именами
   defaults: {
     "message": "you are destroying!"
   },
 
-  // behaviors have events that are bound to the views DOM
+  // в поведениях можно указать прослушивание DOM-событий представлений
   events: {
     "click @ui.destroy": "warnBeforeDestroy"
   },
 
   warnBeforeDestroy: function() {
     alert(this.options.message);
-    // every Behavior has a hook into the
-    // view that it is attached to
+    // каждый Behavior имеет связь с представлением, в котором он был объявлен
     this.view.destroy();
   }
 });
 ```
 
-And onto the `Tooltip` behavior.
+И также создадим поведение `Tooltip`.
 
 ```js
 var ToolTip = Marionette.Behavior.extend({
@@ -116,8 +119,8 @@ var ToolTip = Marionette.Behavior.extend({
 });
 ```
 
-Finally, the user must define a location for where their `behaviors` are stored.
-A simple example of this would look like this:
+Кроме того, пользователь должен определить место, где будут храниться `поведения`.
+Простой пример для этого выглядит следующим образом:
 
 ```js
   Marionette.Behaviors.behaviorsLookup = function() {
@@ -125,14 +128,16 @@ A simple example of this would look like this:
   }
 ```
 
-In this example you would then store your behaviors like this:
+В этом примере ваши поведения будут сохранены следующим образом:
 
 ```js
 window.Behaviors.ToolTip = ToolTip;
 window.Behaviors.DestroyWarn = DestroyWarn;
 ```
 
-Note than in addition to extending a `View` with `Behavior`, a `Behavior` can itself use other behaviors. The syntax is identical to that used for a `View`:
+Заметим, что в дополнение к расширению `View` с помощью `Behavior`, 
+`Behavior` может быть сам использован в других поведениях.
+Синтаксис для объявления этого, идентичен тому, что используется для `View`:
 
 ```js
 var Modal = Marionette.Behavior.extend({
@@ -144,7 +149,7 @@ var Modal = Marionette.Behavior.extend({
 });
 ```
 
-Nested behaviors act as if they were direct behaviors of the parent behavior's view instance.
+Вложенные поведения действуют так, как будто они были напрямую определены в экземпляре представления.
 
 ## API
 
