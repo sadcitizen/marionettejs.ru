@@ -1,9 +1,11 @@
-`Behavior` это изолированный набор взаимодействий пользователя с DOM, который может быть добавлен к любому `View`.
-`Behaviors` allow you to blackbox `View` specific interactions into портативные логические куски, сохраняя ваше `views` простым, а код недублированным.
+`Behavior` это изолированный набор взаимодействий пользователя с DOM, 
+который может быть добавлен к любому `View`. `Behaviors` позволяют вынести сложные куски кода 
+со специфическим взаимодействием из `View` в портативные логические куски, 
+сохраняя ваше `views` простым, а код недублированным.
 
 ## Documentation Index
 
-* [Motivation](#the-motivation)
+* [Причина появления](#the-motivation)
 * [Using Behaviors](#using)
 * [API](#api)
   * [Event proxy](#the-event-proxy)
@@ -15,11 +17,13 @@
   * [Defaults](#defaults)
   * [View](#view)
 
-## The Motivation
+## Причина появления
 
-As you build more and more complex views, you will find that your `view` becomes less about displaying model data, and more about interactions.
+Когда вы пишете более и более сложные представления, вы замечаете, что ваше `view` все меньше 
+используется для отображения данных модели, а все более для поддержки взаимодействий с пользователем.
 
-These interactions tend to be chunks of logic that you want to use in multiple views.
+Эти взаимодействия, как правило, представляются отдельными кусками логики, которую вы, скорее всего,
+захотите использовать в других представлениях.
 
 ## Using
 
