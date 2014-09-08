@@ -8,7 +8,7 @@
 * [Причина появления](#the-motivation)
 * [Использование Behaviors](#using)
 * [API](#api)
-  * [Event proxy](#the-event-proxy)
+  * [Проксирование событий](#the-event-proxy)
   * [Model Events](#model-events)
   * [Collection Events](#model-events)
   * [Grouped Behaviors](#grouped-behaviors)
@@ -153,14 +153,20 @@ var Modal = Marionette.Behavior.extend({
 
 ## API
 
-### the event proxy
+### Проксирование событий
 
-Behaviors are powered by an event proxy. What this means is that any events that are triggered by the view's `triggerMethod` function are passed to each Behavior on the view as well.
+Поведения используют для взаимодействия прокси события. Это значит, что любые события,
+которые генерируются функцией представления `triggerMethod`, передаются каждому `Behavior`
+этого представления.
 
-As a real world example, whenever in your `view` you would have `onShow`, your behavior can also have this `onShow` method defined. The same follows for `modelEvents` and `collectionEvents`. Think of your behavior as a receiver for all of the events on your view instance.
+Примером из жизни может служить ситуация, когда в вашем `представлении` используется метод `onShow`, то
+ваше поведение может также определить метод `onShow`. То же самое относится для `modelEvents` и `collectionEvents`.
+Думайте о вашем поведении как о приемнике всех событий экземпляра вашего представления.
 
-This concept also allows for a nice decoupled method to communicate to behaviors from your view instance.
-You can just call from within your view `this.triggerMethod("SomeEvent", {some: "data"})`. then your `behavior` class would look like this:
+Эта концепция также позволяет хорошо разделять методы взаимодействия поведений 
+от методов экземпляра вашего представления. Вы можете просто вызвать в вашем представлении
+`this.triggerMethod("SomeEvent", {some: "data"})`, что вызовет соответствующий соглашению метод у вашего
+`behavior` класса, выглядит это следующим образом: 
 
 ```js
 Marionette.Behavior.extend({
