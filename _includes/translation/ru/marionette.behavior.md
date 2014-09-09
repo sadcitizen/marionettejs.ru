@@ -9,13 +9,13 @@
 * [Использование Behaviors](#using)
 * [API](#api)
   * [Проксирование событий](#the-event-proxy)
-  * [Model Events](#model-events)
-  * [Collection Events](#model-events)
-  * [Grouped Behaviors](#grouped-behaviors)
+  * [События модели](#model-events)
+  * [События коллекции](#model-events)
+  * [Группировка поведений](#grouped-behaviors)
   * [$](#$)
-  * [$el and el](#$el-and-el)
-  * [Defaults](#defaults)
-  * [View](#view)
+  * [$el и el](#$el-and-el)
+  * [Свойство defaults](#defaults)
+  * [Свойcтво view](#view)
 
 ## Причина появления
 
@@ -176,9 +176,9 @@ Marionette.Behavior.extend({
 });
 ```
 
-### Model Events
+### События модели
 
-`modelEvents` will respond to the view's model events.
+Указыв `modelEvents`, позволит прослушивать и реагировать на события модели представления.
 
 ```js
   Marionette.Behavior.extend({
@@ -187,14 +187,14 @@ Marionette.Behavior.extend({
     },
 
     onDogeChange: function() {
-      // buy more doge...
+      // купить больше doge...
     }
   });
 ```
 
-### Collection Events
+### События коллекции
 
-`collectionEvents` will respond to the view's collection events.
+Указав `collectionEvents`, позволит прослушивать и реагировать на события коллекции представления.
 
 ```js
   Marionette.Behavior.extend({
@@ -207,8 +207,9 @@ Marionette.Behavior.extend({
   });
 ```
 
-### Grouped Behaviors
-Then `behaviors` key allows a behavior to group multiple behaviors together.
+### Группировка поведений
+
+Ключи в свойстве `behaviors` поведения, позволяют группировать различные поведения вместе.
 
 ```js
   Marionette.Behavior.extend({
@@ -220,7 +221,7 @@ Then `behaviors` key allows a behavior to group multiple behaviors together.
 
 ### $
 
-`$` is a direct proxy of the views `$` lookup method.
+Метод `$` в поведении является прямым прокси на метод `$` из представления.
 
 ```js
   Marionette.Behavior.extend({
@@ -230,10 +231,11 @@ Then `behaviors` key allows a behavior to group multiple behaviors together.
   });
 ```
 
-### $el and el
+### $el и el
 
-`el` is a direct proxy of the view's `el`.
-Similarly, `$el` is a direct proxy of the view's `el` cached as a jQuery selector.
+Свойство `el` в поведении является прямым прокси на свойство `el` из представления.
+Аналогично и свойство `$el` является прямым прокси на свойство `$el` из представления,
+это свойство является кэшированным `el` jQuery-селектором.
 
 ```js
 Marionette.Behavior.extend({
@@ -243,10 +245,12 @@ Marionette.Behavior.extend({
 });
 ```
 
-### defaults
+### Свойство defaults
 
-`defaults` can be a `hash` or `function` to define the default options for your behavior.
-The default options will be overridden depending on what you set as the options per behavior (this works just like a `backbone.model`).
+Свойство `defaults` может быть `хэшом` или `функцией`, которое определяет значения для опции по умолчанию
+для вашего поведения. Опции по умолчанию из `defaults` будут переопределенны в зависимости от того, 
+что вы установили в качестве опций в поведении (это работает анологично опциям по умолчанию из
+`backbone.model`).
 
 ```js
 Marionette.Behavior.extend({
@@ -267,9 +271,9 @@ Marionette.Behavior.extend({
 });
 ```
 
-### view
+### Свойство view
 
-The `view` is a reference to the view instance that the `behavior` is on.
+Свойство `view` это ссылка на экземпляр представления, в котором добавлено `поведение`.
 
 ```js
 Marionette.Behavior.extend({
