@@ -9,7 +9,7 @@
 * [Использование Behaviors](#using)
 * [API](#api)
   * [Проксирование событий](#the-event-proxy)
-  * [Triggers](#triggers)
+  * [Триггеры](#triggers)
   * [События модели](#model-events)
   * [События коллекции](#model-events)
   * [Группированные поведения](#grouped-behaviors)
@@ -177,10 +177,9 @@ Marionette.Behavior.extend({
 });
 ```
 
-### Triggers
+### Триггеры
 
-Any `triggers` you define on the `Behavior` will be triggered in response to the
-appropriate event on the view.
+Любой указанный в `triggers` триггер будет срабатывать в ответ на соответствующие событие в представлении.
 
 ```js
 Marionette.Behavior.extend({
