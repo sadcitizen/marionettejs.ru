@@ -371,14 +371,18 @@ MyApp.someRegion.attachView(myView);
 
 ### Events raised during `show`:
 
-A region will raise a few events when showing and destroying views:
+A region will raise a few events when showing
+and destroying views:
 
 * "before:show" / `onBeforeShow` - Called on the view instance after the view has been rendered, but before its been displayed.
 * "before:show" / `onBeforeShow` - Called on the region instance after the view has been rendered, but before its been displayed.
 * "show" / `onShow` - Called on the view instance when the view has been rendered and displayed.
 * "show" / `onShow` - Called on the region instance when the view has been rendered and displayed.
 * "before:swap" / `onBeforeSwap` - Called on the region instance before a new view is shown. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* "before:swapOut" / `onBeforeSwapOut` - Called on the region instance before a new view swapped in. NOTE: this will only be called when a view is being swapped, not when the region is empty.
 * "swap" / `onSwap` - Called on the region instance when a new view is `show`n. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* "swapOut" / `onSwapOut` - Called on the region instance when a new view swapped in to replace the currently shown view. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+
 * "before:empty" / `onBeforeEmpty` - Called on the region instance before the view has been emptied.
 * "empty" / `onEmpty` - Called when the view has been emptied.
 

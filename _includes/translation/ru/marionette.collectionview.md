@@ -137,13 +137,13 @@ literal. This will be passed to the constructor of your childView as part
 of the `options`.
 
 ```js
-var ChildView = Backbone.Marionette.ItemView({
+var ChildView = Backbone.Marionette.ItemView.extend({
   initialize: function(options) {
     console.log(options.foo); // => "bar"
   }
 });
 
-var CollectionView = Backbone.Marionette.CollectionView({
+var CollectionView = Backbone.Marionette.CollectionView.extend({
   childView: ChildView,
 
   childViewOptions: {
@@ -159,7 +159,7 @@ the function should you need access to it when calculating
 of the object will be copied to the `childView` instance's options.
 
 ```js
-var CollectionView = Backbone.Marionette.CollectionView({
+var CollectionView = Backbone.Marionette.CollectionView.extend({
   childViewOptions: function(model, index) {
     // do some calculations based on the model
     return {
@@ -623,7 +623,8 @@ myCollection.add(myModel);
 
 // get the collection view in place
 var colView = new CollectionView({
-  collection: myCollection
+  collection: myCollection,
+  childView: MyItemView
 });
 colView.render();
 
@@ -711,11 +712,11 @@ Backbone.Marionette.CollectionView.extend({
   },
 
   // Called after all children have been appended into the elBuffer
-  appendHtml: function(collectionView, buffer) {
+  attachBuffer: function(collectionView, buffer) {
     collectionView.$el.append(buffer);
   },
 
-  // called on initialize and after appendHtml is called
+  // called on initialize and after attachBuffer is called
   initRenderBuffer: function() {
     this.elBuffer = document.createDocumentFragment();
   }

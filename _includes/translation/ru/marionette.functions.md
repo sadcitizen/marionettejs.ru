@@ -2,17 +2,19 @@ Marionette содержит набор утилит / функций-хелпе�
 рамках всего фреймворка. Эти функции могут быть полезны тем, кто разрабатывает приложения на основе Marionette, так как 
 они позволяют получить те же поведения и конвенции (соглашения) в вашем собственном коде.
 
-## Documentation Index
+## Содержание
 
 * [Marionette.extend](#marionetteextend)
 * [Marionette.getOption](#marionettegetoption)
 * [Marionette.proxyGetOption](#marionetteproxygetoption)
 * [Marionette.triggerMethod](#marionettetriggermethod)
 * [Marionette.bindEntityEvents](#marionettebindentityevents)
+* [Marionette.triggerMethodOn](#marionettetriggermethodon)
 * [Marionette.unbindEntityEvents](#marionetteunbindentityevents)
 * [Marionette.proxyBindEntityEvents](#marionetteproxybindentityevents)
 * [Marionette.normalizeMethods](#marionettenormalizemethods)
 * [Marionette.normalizeUIKeys](#marionettenormalizeuikeys)
+* [Marionette.normalizeUIValues](#marionettenormalizeuivalues)
 * [Marionette.actAsCollection](#marionetteactascollection)
 
 ## Marionette.extend
@@ -51,7 +53,8 @@ var b = new Bar();
 var M = Backbone.Model.extend({
   foo: "bar",
 
-  initialize: function(){
+  initialize: function(attributes, options){
+    this.options = options;
     var f = Marionette.getOption(this, "foo");
     console.log(f);
   }
@@ -126,6 +129,19 @@ _.extend(Pagination.prototype, {
 Обратите внимание, что `triggerMethod` может быть вызван на объектах, к которым не был примешан объект `Backbone.Events`.
 Эти объекты не будут иметь метода `trigger` и не будет никакой попытки вызова `.trigger()`. При этом все методы `on{Name}` 
 будут вызываться по-прежнему.
+
+## Marionette.triggerMethodOn
+
+Вызывает метод `triggerMethod` с указаным контекстом.
+
+Этот метод полезен в случае, когда точно неизвестно имеет ли объект метод `triggerMethod`. 
+Например, `Marionette.View` имеет метод `triggerMethod`, а `Backbone.View` нет.
+
+```js
+Marionette.triggerMethodOn(ctx, "foo", bar);
+// вызовет `onFoo: function(bar){...})`
+// вызоввет метод "foo" в контексте ctx
+```
 
 ## Marionette.bindEntityEvents
 
@@ -249,6 +265,24 @@ var ui = {
 var newHash = Marionette.normalizeUIKeys(hash, ui);
 ```
 
+## Marionette.normalizeUIValues
+
+Этот метод позволяет использовать синтаксис `@ui.` внутри указанного значения хэша (например, в хэшах региона). 
+Метод меняет местами ссылку `@ui.` и соответствующий селектор.
+
+```js
+var hash = {
+  'foo': '@ui.bar'
+};
+
+var ui = {
+  'bar': '.quux'
+};
+
+// В результате ключ 'foo' станет '.quux' в объекте newHash
+var newHash = Marionette.normalizeUIValues(hash, ui);
+```
+
 ## Marionette.actAsCollection
 
 Это утилита предназначена для добавления поведения коллекций из Underscore к объекту.
@@ -257,6 +291,7 @@ var newHash = Marionette.normalizeUIKeys(hash, ui);
 объект может делегировать вызовы коллекции к своему свойству `list`.  
 
 #### Литерал объекта
+
 ```js
 var obj = {
   list: [1, 2, 3]
@@ -269,6 +304,7 @@ console.log(obj.map(double)); // [2, 4, 6]
 ```
 
 #### Прототип функции
+
 ```js
 var Func = function(list) {
   this.list = list;
