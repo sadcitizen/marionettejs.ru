@@ -1,19 +1,22 @@
-'Marionette.Behaviors' is a utility class that takes care of glueing your `behavior` instances to their given `View`.
-The most important part of this class is that you **MUST** override the class level `behaviorsLookup` method or set the option `behaviorClass` for things to work properly.
+Класс `Marionette.Behaviors` является вспомогательным классом, который берет на себя задачу присоединить экземпляры ваших `поведений` к нужным `View`.
+Наиболее важной частью этого класса является то, что вы **должны** переопределить метод класса `behaviorsLookup` или
+установить свойство `behaviorClass` для корректной работы.
 
-## Documentation Index
+## Содержание
 * [API](#api)
-  * [Behaviors Lookup](#behaviorslookup)
-  * [getBehaviorClass](#getbehaviorclass)
-  * [behaviorClass](#behaviorclass)
+  * [Метод behaviorsLookup](#behaviorslookup)
+  * [Метод getBehaviorClass](#getbehaviorclass)
+  * [Свойство behaviorClass](#behaviorclass)
 
 ## API
 
-There are two class level methods that you can override on the `Behaviors` class. The rest of the class is tied to under the hood implementation details of views.
+Есть два метода класса, которые вы можете переопределить в классе `Behaviors`. Остальная часть класса связана
+с деталями реализации представлений.
 
-### behaviorsLookup
+### Метод behaviorsLookup
 
-This method defines where your behavior classes are stored. A simple implementation might look something like this.
+Этот метод определяет место, где хранятся классы ваших поведений. Самая простая реализация может выглядит
+следующим образом.
 
 ```js
 Marionette.Behaviors.behaviorsLookup = function() {
@@ -21,9 +24,10 @@ Marionette.Behaviors.behaviorsLookup = function() {
 }
 ```
 
-By default the behaviors are looked up by their key value in a given views behavior hash.
+По умолчанию поведения ищутся по значению ключа из behaviors-хэша определенного в представлениях.
 
-In this sample (using the default `getBehaviorClass` implementation) your code will expect the following behaviors to be present in `window.Behaviors.CloseWarn` and `window.Behaviors.ToolTip`
+В данном примере (с использованием реализации метода `getBehaviorClass` по умолчанию) ваш код будет ожидать, что
+следующие поведения будут находиться в `window.Behaviors.CloseWarn` и `window.Behaviors.ToolTip`
 
 ```js
 var MyView = Marionette.ItemView.extend({
@@ -38,9 +42,10 @@ var MyView = Marionette.ItemView.extend({
 });
 ```
 
-### getBehaviorClass
+### Метод getBehaviorClass
 
-This method has a default implementation that is simple to override. It is responsible for the lookup of single behavior from within the `Behaviors.behaviorsLookup` or elsewhere.
+Этот метод имеет реализацию по умолчанию, которую можно легко переопределить. Он отвечает за поиск нужного
+поведения в месте указанном в `Behaviors.behaviorsLookup` или другом месте.
 
 ```js
 getBehaviorClass: function(options, key) {
@@ -52,9 +57,9 @@ getBehaviorClass: function(options, key) {
 }
 ```
 
-### behaviorClass
+### Свойство behaviorClass
 
-This property lets you pass a `class` in for the `behavior` to use (bypassing the normal key based lookup). This is nice to have when the behavior is a dependency of the view in [requirejs](http://requirejs.org/). Properties passed in this way will be used in `getBehaviorClass`.
+Это свойство позволяет вам передавать `класс`, который будет использоваться как класс `поведения` (в обход нормальному поиску по ключу). Это полезно, когда поведение является зависимостью (dependency) представления через [requirejs](http://requirejs.org/). Свойства, переданные этим способом, будут использованы в методе `getBehaviorClass`.
 
 ```js
 define(['marionette', 'lib/tooltip'], function(Marionette, Tooltip) {
