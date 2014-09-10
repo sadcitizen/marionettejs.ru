@@ -31,10 +31,10 @@ var MyApp = new Backbone.Marionette.Application();
   * [Удаление регионов](#removing-regions)
 * [Application.getOption](#applicationgetoption)
 
-### Initialize
+### <a name="initialize"></a> Initialize
 
-Initialize is called immediately after the Application has been instantiated,
-and is invoked with the same arguments that the constructor received.
+Метод `initialize` вызывается сразу же после того, как был создан экземпляр `Application`. 
+При этом этот метод будет вызван с теми же аргументами, которые получил конструктор `Application`.
 
 ```js
 var MyApp = Marionette.Application.extend({
