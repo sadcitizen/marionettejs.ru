@@ -9,6 +9,7 @@
 * [Использование Behaviors](#using)
 * [API](#api)
   * [Проксирование событий](#the-event-proxy)
+  * [Triggers](#triggers)
   * [События модели](#model-events)
   * [События коллекции](#model-events)
   * [Группированные поведения](#grouped-behaviors)
@@ -172,6 +173,19 @@ var Modal = Marionette.Behavior.extend({
 Marionette.Behavior.extend({
   onSomeEvent: function(data) {
     console.log("wow such data", data);
+  }
+});
+```
+
+### Triggers
+
+Any `triggers` you define on the `Behavior` will be triggered in response to the
+appropriate event on the view.
+
+```js
+Marionette.Behavior.extend({
+  triggers: {
+    'click .label': 'click:label'
   }
 });
 ```
