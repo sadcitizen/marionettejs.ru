@@ -1,3 +1,5 @@
+## [View the new docs](http://marionettejs.com/docs/marionette.layoutview.html)
+
 # Marionette.LayoutView
 
 A `LayoutView` is a hybrid of an `ItemView` and a collection of `Region` objects. They
@@ -111,7 +113,7 @@ Marionette.LayoutView.extend({
 });
 ```
 
-Note that the function recieves the view's `options` arguments that
+Note that the function receives the view's `options` arguments that
 were passed in to the view's constructor. `this.options` is not yet
 available when the regions are first initialized, so the options
 must be accessed through this parameter.
@@ -180,7 +182,7 @@ Therefore, it is suggested that you avoid re-rendering the entire
 layoutView unless absolutely necessary. Instead, if you are binding the
 layoutView's template to a model and need to update portions of the layoutView,
 you should listen to the model's "change" events and only update the
-neccesary DOM elements.
+necessary DOM elements.
 
 ## Nested LayoutViews And Views
 
