@@ -132,14 +132,15 @@ _.extend(Pagination.prototype, {
 
 ## Marionette.triggerMethodOn
 
-Invoke `triggerMethod` on a specific context.
+Вызывает метод `triggerMethod` с указаным контекстом.
 
-This is useful when it's not clear that the object has `triggerMethod` defined. In the case of views, `Marionette.View` defines `triggerMethod`, but `Backbone.View` does not.
+Этот метод полезен в случае, когда точно неизвестно имеет ли объект метод `triggerMethod`. 
+Например, `Marionette.View` имеет метод `triggerMethod`, а `Backbone.View` нет.
 
 ```js
 Marionette.triggerMethodOn(ctx, "foo", bar);
-// will invoke `onFoo: function(bar){...})`
-// will trigger "foo" on ctx
+// вызовет `onFoo: function(bar){...})`
+// вызоввет метод "foo" в контексте ctx
 ```
 
 ## Marionette.bindEntityEvents
@@ -266,8 +267,8 @@ var newHash = Marionette.normalizeUIKeys(hash, ui);
 
 ## Marionette.normalizeUIValues
 
-This method allows you to use the `@ui.` syntax within a given hash value (for example region hashes). It
-swaps the `@ui.` reference with the associated selector.
+Этот метод позволяет использовать синтаксис `@ui.` внутри указанного значения хэша (например, в хэшах региона). 
+Метод меняет местами ссылку `@ui.` и соответствующий селектор.
 
 ```js
 var hash = {
@@ -278,7 +279,7 @@ var ui = {
   'bar': '.quux'
 };
 
-// This sets 'foo' to be '.quux' in the newHash object
+// В результате ключ 'foo' станет '.quux' в объекте newHash
 var newHash = Marionette.normalizeUIValues(hash, ui);
 ```
 
