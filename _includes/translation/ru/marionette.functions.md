@@ -10,7 +10,6 @@ Marionette содержит набор утилит / функций-хелпе�
 * [Marionette.triggerMethod](#marionettetriggermethod)
 * [Marionette.bindEntityEvents](#marionettebindentityevents)
 * [Marionette.triggerMethodOn](#marionettetriggermethodon)
-* [Marionette.bindEntityEvent](#marionettebindentityevents)
 * [Marionette.unbindEntityEvents](#marionetteunbindentityevents)
 * [Marionette.proxyBindEntityEvents](#marionetteproxybindentityevents)
 * [Marionette.normalizeMethods](#marionettenormalizemethods)
