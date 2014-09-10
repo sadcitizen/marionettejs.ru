@@ -12,6 +12,7 @@ var MyApp = new Backbone.Marionette.Application();
 
 ## Содержание
 
+* [Метод initialize](#initialize)
 * [Добавление инициализаторов](#adding-initializers)
 * [События иницализации приложения](#application-event)
 * [Запуск приложения](#starting-an-application)
@@ -29,6 +30,21 @@ var MyApp = new Backbone.Marionette.Application();
   * [Получение региона по его имени](#get-region-by-name)
   * [Удаление регионов](#removing-regions)
 * [Application.getOption](#applicationgetoption)
+
+### Initialize
+
+Initialize is called immediately after the Application has been instantiated,
+and is invoked with the same arguments that the constructor received.
+
+```js
+var MyApp = Marionette.Application.extend({
+  initialize: function(options) {
+    console.log(options.container);
+  }
+});
+
+var myApp = new MyApp({container: '#app'});
+```
 
 ## <a name="adding-initializers"></a> Добавление инициализаторов
 
