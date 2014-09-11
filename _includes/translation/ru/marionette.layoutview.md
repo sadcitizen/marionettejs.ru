@@ -1,17 +1,14 @@
-A `LayoutView` is a hybrid of an `ItemView` and a collection of `Region` objects. They
-are ideal for rendering application layouts with multiple sub-regions
-managed by specified region managers.
+Класс `LayoutView` является смесью класса `ItemView` и коллекции объектов класса `Region`. Это хорошее решение для 
+рендеринга макетов приложения с несколькими подрегионами, которые управляются указанными менеджерами регионов.
 
-A layoutView can also act as a composite-view to aggregate multiple
-views and sub-application areas of the screen allowing applications to
-attach multiple region managers to dynamically rendered HTML.
+`LayoutView` также может использоваться как составное представление, которое объединяет несколько представлений и областей 
+экрана с вложенными приложениями, позволяя приложениями добавлять несколько менеджеров регионов к динамически созданному HTML.
 
-You can create complex views by nesting layoutView managers within `Regions`.
+Вы можете создавать сложные представления, помещая объекты класса `LayoutView` внутрь объектов класса `Regions`.
 
-For a more in-depth discussion on LayoutViews, see the blog post
-[Manage Layouts And Nested Views With Backbone.Marionette](http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/)
+Для более подробного обсуждения `LayoutView` прочитайте пост [Manage Layouts And Nested Views With Backbone.Marionette](http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/)
 
-Please see [the Marionette.ItemView documentation](../itemview/) for more information on available features and functionality.
+Пожалуйста, познакомьтесь с [документацией по ItemView](../itemview/) для более полной информации по доступной функциональности.
 
 Additionally, interactions with Marionette.Region will provide features such as `onShow` callbacks, etc. Please see
 [the Region documentation](../region/) for more information.
