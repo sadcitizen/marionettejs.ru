@@ -9,15 +9,17 @@ Marionette.js имеет несколько глобально настраив�
 
 ## <a name="deferred"></a> Marionette.Deferred
 
-By default, Marionette makes use of `Backbone.$.Deferred` to create
-thenable objects.
+По умолчанию, в Marionette используется `Backbone.$.Deferred` для создания объектов
+с определенным методом `then` (thenable objects).
 
-### Overriding Marionette.Deferred
+### Переопределение Marionette.Deferred
 
-If you are using Marionette without jquery you must first shim `Backbone.$.Deferred` with a following object that adherses to these properties:
+Если вы используете `Marionette` без `jQuery`, то вам, первым делом, понадобится объект `Backbone.$.Deferred` 
+для поддержки совместимости (shim). `Backbone.$.Deferred` предоставляет объект, который поддерживает
+следующие свойства:
 
-1. `promise`: a Promises/A+ thenable, or a function that returns one
-2. `resolve`: a function that resolves the provided promise with a value
+1. `promise`: объект спецификации `Promises/A+` с определенным методом `then` или функция, которая возвращает промис объект 
+2. `resolve`: функция, которая переводит промис объект в состояние «выполнено». Можно установить значение, которое будет передано в качестве аргумента в функцию обратного вызова метода then.
 
 Например:
 
@@ -28,10 +30,10 @@ _.result(deferred, 'promise').then(function (target) {
     console.log("Hello, " + target + "!");
 });
 
-deferred.resolve("world"); // asynchronous "Hello, world!"
+deferred.resolve("world"); // асинхронный "Hello, world!"
 ```
 
-Если вы хотите использовать иную библиотеку для промисов, то переопределите значение по умолчанию::
+Если вы хотите использовать иную библиотеку для промисов, то переопределите значение по умолчанию:
 
 ```js
 Marionette.Deferred = myDeferredLib;
