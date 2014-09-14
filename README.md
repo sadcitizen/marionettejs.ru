@@ -10,3 +10,7 @@
 * [boilerplate code](http://en.wikipedia.org/wiki/Boilerplate_code) - повторяющийся код
 * route - роут
 * behavior - поведение
+* [thenable object](http://promisesaplus.com/) - объект с определенным методом then
+* [shim](http://en.wikipedia.org/wiki/Shim_(computing)) - решение (код, библиотека, приложение) для поддержки совместимости
+* promise - промис
+* [Promises/A+](http://promisesaplus.com/) - спецификация для промис объектов
