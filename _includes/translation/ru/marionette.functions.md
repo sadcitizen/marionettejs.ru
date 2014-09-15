@@ -12,6 +12,7 @@ Marionette содержит набор утилит / функций-хелпе�
 * [Marionette.triggerMethodOn](#marionettetriggermethodon)
 * [Marionette.unbindEntityEvents](#marionetteunbindentityevents)
 * [Marionette.proxyBindEntityEvents](#marionetteproxybindentityevents)
+* [Marionette.proxyUnbindEntityEvents](#marionetteproxyunbindentityevents)
 * [Marionette.normalizeMethods](#marionettenormalizemethods)
 * [Marionette.normalizeUIKeys](#marionettenormalizeuikeys)
 * [Marionette.normalizeUIValues](#marionettenormalizeuivalues)
@@ -219,6 +220,33 @@ _.extend(Pagination.prototype, {
    },
 
    bindEntityEvents: Marionette.proxyBindEntityEvents
+
+});
+```
+
+## Marionette.proxyUnbindEntityEvents
+
+Этот метод замещает `Marionette.unbindEntityEvents` таким образом, что `Marionette.unbindEntityEvents` может быть легко добавлен к объекту.
+
+Этот метод протиположен методу `proxyBindEntityEvents`, описанному выше. Следовательно, API обоих методов идентичны.
+
+Если вы хотите, что бы ваш собственный класс Pagination имел возможность отвязки обработчиков событий от 
+некоторых событий, то с помощью `proxyUnbindEntityEvents` вы легко можете предоставить этому классу функцию `unbindEntityEvents`.
+
+```js
+_.extend(Pagination.prototype, {
+
+   bindSomething: function() {
+     this.bindEntityEvents(this.something, this.somethingEvents)
+   },
+   
+   unbindSomething: function() {
+     this.unbindEntityEvents(this.something, this.somethingEvents)
+   },
+
+   bindEntityEvents: Marionette.proxyBindEntityEvents,
+   
+   unbindEntityEvents: Marionette.proxyUnbindEntityEvents
 
 });
 ```
