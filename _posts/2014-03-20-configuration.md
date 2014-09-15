@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Marionette.Configuration
-translated: false
+translated: true
 ---
 
 {% include translation/ru/marionette.configuration.md %}
