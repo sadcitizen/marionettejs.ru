@@ -14,3 +14,5 @@
 * [shim](http://en.wikipedia.org/wiki/Shim_(computing)) - решение (код, библиотека, приложение) для поддержки совместимости
 * promise - промис
 * [Promises/A+](http://promisesaplus.com/) - спецификация для промис объектов
+* object literal - литерал объекта
+* mix-and-match - смешивание и комбинирование
