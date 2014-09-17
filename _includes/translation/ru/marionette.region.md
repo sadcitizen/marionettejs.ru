@@ -1,13 +1,13 @@
-Regions provide consistent methods to manage, show and destroy
-views in your applications and layouts. They use a jQuery selector
-to show your views in the correct place.
+Регионы предоставляют методы для согласованного управления, показа и уничтожения представлений
+в ваших приложениях и макетах. Они используют jQuery-селекторы, чтобы показать ваши представления
+в правильном месте.
 
 С помощью класса `LayoutView` вы можете создавать вложенные регионы.
 
-## Documentation Index
+## Содержание
 
-* [Defining An Application Region](#defining-an-application-region)
-  * [Region Configuration Types](#region-configuration-types)
+* [Определение регионов приложения](#defining-an-application-region)
+  * [Типы конфигурирования регионов](#region-configuration-types)
 * [Initialize A Region With An `el`](#initialize-a-region-with-an-el)
 * [Basic Use](#basic-use)
 * [Showing a view](#showing-a-view)
@@ -23,13 +23,13 @@ to show your views in the correct place.
   * [Attaching Custom Region Classes](#attaching-custom-region-classes)
   * [Instantiate Your Own Region](#instantiate-your-own-region)
 
-## Defining An Application Region
+## Определение регионов приложения
 
-You can add regions to your applications by calling the `addRegions` method on
-your application instance. This method expects a single hash parameter, with
-named regions and either jQuery selectors or `Region` objects. You may
-call this method as many times as you like, and it will continue adding regions
-to the app.
+Вы можете добавить регионы в ваших приложениях, вызвав метод `addRegions` 
+у экземпляра вашего приложения. Этот метод ожидает один параметр в виде хэша. 
+В хэше заданы имена регионов и либо jQuery-селектор, либо объект `Region`.
+Вы можете вызвать этот метод столько раз, сколько вам нужно, и он будет продолжать
+добавлять регионы в приложение.
 
 ```js
 MyApp.addRegions({
@@ -38,13 +38,12 @@ MyApp.addRegions({
 });
 ```
 
-As soon as you call `addRegions`, your regions are available on your
-app object. In the above, example `MyApp.mainRegion` and `MyApp.navigationRegion`
-would be available for use immediately.
+Вскоре после вызова `addRegions`, ваши регионы станут доступны у объекта вашего приложения.
+В приведенном выше примере `MyApp.mainRegion` и `MyApp.navigationRegion` немедленно доступны для использования.
 
-If you specify the same region name twice, the last one in wins.
+Если вы укажете одно и то же имя для региона дважды, будет использовано последнее определение.
 
-You can also add regions via `LayoutView`s:
+Вы можете также добавить регионы через `LayoutView`:
 
 ```js
 var AppLayoutView = Backbone.Marionette.LayoutView.extend({
@@ -93,19 +92,17 @@ App.addRegions({
 
 #### Литерал объекта
 
-Finally, you can define regions with an object literal. Object
-literal definitions normally expect a `selector` or `el`
-property.  The `selector` property is a selector string, and
-the `el` property can be a selector string, a jQuery object,
-or an HTML node.
+Наконец, вы можете определить регионы в виде литерал объекта. 
+Определения в виде литерал объекта обычно содержит определенное `selector` или `el` свойство. 
+Свойство `selector` это селектор в виде строки, а свойство `el` может быть 
+как селектором в виде строки, так и Query-объектом или HTML-узлом.
 
-You may also supply a `regionClass` property for a custom region
-class. If your `regionClass` already has `el` set, then you do
-not need to supply a `selector` or `el` property on the object
-literal.
+Вы можете также задать свойство `regionClass` для собственного класса региона.
+Если ваш `regionClass` уже имеет установленное свойство `el`, то вам не нужно
+определять `selector` или `el` свойство в литерал объекте.
 
-Any other properties you set on the object literal will be
-used as options passed to the region instance.
+Любые другие свойства, заданные вами в литерал объекте, будут использоваться к качестве
+параметров, которые будут переданы в экземпляр региона.
 
 ```js
 var MyRegion      = Marionette.Region.extend();
@@ -122,8 +119,8 @@ App.addRegions({
     el: '#navigation',
     regionClass: MyOtherRegion,
 
-    // Options passed to instance of `MyOtherRegion` for
-    // the `navigationRegion` on `App`
+    // Параметры, которые будут переданы в экземпляр `MyOtherRegion` для
+    // `navigationRegion` в `App`
     navigationOption: 42,
     anotherNavigationOption: 'foo'
   },
@@ -134,10 +131,9 @@ App.addRegions({
 });
 ```
 
-Take note that one of the primary benefits of using `regionClass`
-with an `el` already set is to also provide options to the region
-instance. This isn't possible when using the region class directly
-like earlier.
+Обратите внимание, что одним из основных преимуществ использования `regionClass` с уже
+установленным `el` является возможность предоставления параметров для экземпляра региона.
+Это невозможно, когда используется непосредственно класс региона, как в способах ранее.
 
 ```js
 var MyRegion = Marionette.Region.extend({
@@ -153,9 +149,9 @@ App.addRegions({
 });
 ```
 
-#### Mix-and-match
+#### Смешивание и комбинирование
 
-Of course you can mix-and-match the region configuration types.
+Конечно вы можете смешивать и комбинировать различные типы конфигурирования регионов.
 
 ```js
 var MyRegion = Marionette.Region.extend({
