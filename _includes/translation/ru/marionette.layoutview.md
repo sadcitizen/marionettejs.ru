@@ -1,40 +1,34 @@
-A `LayoutView` is a hybrid of an `ItemView` and a collection of `Region` objects. They
-are ideal for rendering application layouts with multiple sub-regions
-managed by specified region managers.
+Класс `LayoutView` является смесью класса `ItemView` и коллекции объектов класса `Region`. Это хорошее решение для 
+рендеринга макетов приложения с несколькими подрегионами, которые управляются указанными менеджерами регионов.
 
-A layoutView can also act as a composite-view to aggregate multiple
-views and sub-application areas of the screen allowing applications to
-attach multiple region managers to dynamically rendered HTML.
+`LayoutView` также может использоваться как составное представление, которое объединяет несколько представлений и областей 
+экрана с вложенными приложениями, позволяя приложениями добавлять несколько менеджеров регионов к динамически созданному HTML.
 
-You can create complex views by nesting layoutView managers within `Regions`.
+Вы можете создавать сложные представления, помещая объекты класса `LayoutView` внутрь объектов класса `Regions`.
 
-For a more in-depth discussion on LayoutViews, see the blog post
-[Manage Layouts And Nested Views With Backbone.Marionette](http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/)
+Для более подробного обсуждения `LayoutView` прочитайте пост [Manage Layouts And Nested Views With Backbone.Marionette](http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/)
 
-Please see
-[the Marionette.ItemView documentation](marionette.itemview.md)
-for more information on available features and functionality.
+Пожалуйста, познакомьтесь с [документацией по ItemView](../itemview/) для более полной информации по доступной функциональности.
 
-Additionally, interactions with Marionette.Region
-will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](marionette.region.md) for more information.
+Additionally, interactions with Marionette.Region will provide features such as `onShow` callbacks, etc. Please see
+[the Region documentation](../region/) for more information.
 
-## Documentation Index
+## Содержание
 
-* [Basic Usage](#basic-usage)
+* [Основное применение](#basic-usage)
 * [Region Options](#region-options)
-* [Specifying Regions As A Function](#specifying-regions-as-a-function)
-* [Overriding the default RegionManager](#overriding-the-default-regionmanager)
-* [Region Availability](#region-availability)
-* [Re-Rendering A LayoutView](#re-rendering-a-layoutview)
-  * [Avoid Re-Rendering The Entire LayoutView](#avoid-re-rendering-the-entire-layoutview)
-* [Nested LayoutViews And Views](#nested-layoutviews-and-views)
-* [Destroying A LayoutView](#destroying-a-layoutview)
-* [Custom Region Class](#custom-region-class)
-* [Adding And Removing Regions](#adding-and-removing-regions)
-* [Region Naming](#region-naming)
+* [Указание регионов с помощью функции](#specifying-regions-as-a-function)
+* [Переопределение RegionManager, заданного по умолчанию](#overriding-the-default-regionmanager)
+* [Доступность региона](#region-availability)
+* [Повторный рендеринг LayoutView](#re-rendering-a-layoutview)
+  * [Избегайте повторного рендеринга всего LayoutView](#avoid-re-rendering-the-entire-layoutview)
+* [Вложенные LayoutViews и Views](#nested-layoutviews-and-views)
+* [Удаление LayoutView](#destroying-a-layoutview)
+* [Собственный класс региона](#custom-region-class)
+* [Добавление и удаление регионов](#adding-and-removing-regions)
+* [Именование регионов](#region-naming)
 
-## Basic Usage
+## <a name="basic-usage"></a> Основное применение
 
 The `LayoutView` extends directly from `ItemView` and adds the ability
 to specify `regions` which become `Region` instances that are attached
@@ -72,8 +66,7 @@ layoutView.menu.show(new MenuView());
 layoutView.content.show(new MainContentView());
 ```
 
-
-### Region Options
+### <a name="region-options"></a> Region Options
 
 A `LayoutView` can take a `regions` hash that allows you to specify regions per `LayoutView` instance.
 
@@ -89,7 +82,7 @@ new Marionette.LayoutView({
 })
 ```
 
-### Specifying Regions As A Function
+### <a name="specifying-regions-as-a-function"></a> Указание регионов с помощью функции
 
 Regions can be specified on a LayoutView using a function that returns
 an object with the region definitions. The returned object follow the
@@ -114,7 +107,7 @@ were passed in to the view's constructor. `this.options` is not yet
 available when the regions are first initialized, so the options
 must be accessed through this parameter.
 
-### Overriding the default `RegionManager`
+### <a name="overriding-the-default-regionmanager"></a> Переопределение `RegionManager`, заданного по умолчанию
 
 If you need the `RegionManager`'s class chosen dynamically, specify `getRegionManager`:
 
@@ -131,7 +124,7 @@ Marionette.LayoutView.extend({
 This can be useful if you want to attach `LayoutView`'s regions to your own instance of
 `RegionManager`.
 
-## Region Availability
+## <a name="region-availability"></a> Доступность региона
 
 Any defined regions within a layoutView will be available to the
 View or any calling code immediately after instantiating the
@@ -146,7 +139,7 @@ regions may not be able to find the element that you've
 specified for them to manage. In that scenario, using the
 region will result in no changes to the DOM.
 
-## Re-Rendering A LayoutView
+## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг LayoutView
 
 A layoutView can be rendered as many times as needed, but renders
 after the first one behave differently than the initial render.
@@ -167,7 +160,7 @@ Then after the layoutView is finished re-rendering itself,
 showing a view in the layoutView's regions will cause the regions to attach
 themselves to the new elements in the layoutView.
 
-### Avoid Re-Rendering The Entire LayoutView
+### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего LayoutView
 
 There are times when re-rendering the entire layoutView is necessary. However,
 due to the behavior described above, this can cause a large amount of
@@ -180,7 +173,7 @@ layoutView's template to a model and need to update portions of the layoutView,
 you should listen to the model's "change" events and only update the
 necessary DOM elements.
 
-## Nested LayoutViews And Views
+## <a name="nested-layoutviews-and-views"></a> Вложенные LayoutViews и Views
 
 Since the `LayoutView` extends directly from `ItemView`, it
 has all of the core functionality of an item view. This includes
@@ -226,7 +219,7 @@ MyApp.mainRegion.show(new Layout1())
   .currentView.myRegion2.show(new Layout3());
 ```
 
-## Destroying A LayoutView
+## <a name="destroying-a-layoutview"></a> Удаление LayoutView
 
 When you are finished with a layoutView, you can call the
 `destroy` method on it. This will ensure that all of the region managers
@@ -240,7 +233,7 @@ one, the same it will destroy a view.
 All of this ensures that layoutViews and the views that they
 contain are cleaned up correctly.
 
-## Custom Region Class
+## <a name="custom-region-class"></a> Собственный класс региона
 
 If you have the need to replace the `Region` with a region class of
 your own implementation, you can specify an alternate class to use
@@ -273,7 +266,7 @@ var AppLayoutView = Backbone.Marionette.LayoutView.extend({
 });
 ```
 
-## Adding And Removing Regions
+## <a name="adding-and-removing-regions"></a> Добавление и удаление регионов
 
 Regions can be added and removed as needed, in a
 LayoutView instance. Use the following methods:
@@ -333,7 +326,7 @@ or added later.
 For more information on using these methods, see
 the `regionManager` documentation.
 
-## Region Naming
+## <a name="region-naming"></a> Именование регионов
 
 A LayoutViews' Regions are attached directly to the LayoutView instance with the name of the region
 as the key and the region itself as the value. Because of this, you need to be careful
