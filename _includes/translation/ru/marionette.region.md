@@ -8,9 +8,9 @@
 
 * [Определение регионов приложения](#defining-an-application-region)
   * [Типы конфигурирования регионов](#region-configuration-types)
-* [Initialize A Region With An `el`](#initialize-a-region-with-an-el)
-* [Basic Use](#basic-use)
-* [Showing a view](#showing-a-view)
+* [Инициализация региона с помощью `el`](#initialize-a-region-with-an-el)
+* [Основное применение](#basic-use)
+* [Отображение представления](#showing-a-view)
 * [Checking whether a region is showing a view](#checking-whether-a-region-is-showing-a-view)
 * [`reset` A Region](#reset-a-region)
 * [Set How View's `el` Is Attached](#set-how-views-el-is-attached)
@@ -172,10 +172,9 @@ App.addRegions({
 });
 ```
 
-## Initialize A Region With An `el`
+## Инициализация региона с помощью `el`
 
-You can specify an `el` for the region to manage at the time
-that the region is instantiated:
+Вы можете указать `el` для региона, чтобы управлять местом, где будет создан экземпляр регион:
 
 ```js
 var mgr = new Backbone.Marionette.Region({
@@ -183,7 +182,7 @@ var mgr = new Backbone.Marionette.Region({
 });
 ```
 
-The `el` option can also be a raw DOM node reference:
+Опция `el` может также быть ссылкой на DOM-узел:
 
 ```js
 var mgr = new Backbone.Marionette.Region({
@@ -191,7 +190,7 @@ var mgr = new Backbone.Marionette.Region({
 });
 ```
 
-Or the `el` can also be a `jQuery` wrapped DOM node:
+Также `el` может быть `jQuery`-оберткой для DOM-узла:
 
 ```js
 var mgr = new Backbone.Marionette.Region({
@@ -199,7 +198,7 @@ var mgr = new Backbone.Marionette.Region({
 });
 ```
 
-## Basic Use
+## Основное применение
 
 ### Отображение представления
 
@@ -215,43 +214,43 @@ MyApp.mainRegion.show(myView);
 MyApp.mainRegion.empty();
 ```
 
-#### preventDestroy
-If you replace the current view with a new view by calling `show`,
-by default it will automatically destroy the previous view.
-You can prevent this behavior by passing `{preventDestroy: true}` in the options
-parameter. Several events will also be triggered on the views; see
-[Region Events And Callbacks](#region-events-and-callbacks) for details.
+#### опция preventDestroy
+
+Если вы хотите заменить текущее представление на новое представлние, вы можете вызвать метод `show`,
+этот метод, по умолчанию, автоматически уничтожит предыдущее представление. Вы можете предотвратить
+это поведение передав опцию `{preventDestroy: true}` в параметрах метода; больше информации можно
+прочитать в [События и коллбэки региона](#region-events-and-callbacks).
 
 ```js
-// Show the first view.
+// Отобразим первое представление.
 var myView = new MyView();
 MyApp.mainRegion.show(myView);
 
-// Replace the view with another. The
-// `destroy` method is called for you
+// Заменим представление на другое.
+// Метод `destroy` будет вызван для вас автоматически
 var anotherView = new AnotherView();
 MyApp.mainRegion.show(anotherView);
 
-// Replace the view with another.
-// Prevent `destroy` from being called
+// Заменим представление на другое.
+// Предотвращием вызов метода `destroy`
 var anotherView2 = new AnotherView();
 MyApp.mainRegion.show(anotherView2, { preventDestroy: true });
 ```
 
-NOTE: When using `preventDestroy: true` you must be careful to cleanup your old views
-manually to prevent memory leaks.
+ПРИМЕЧАНИЕ: При использовании `preventDestroy: true` вы должны быть осторожны, необходимо помнить,
+что ваши старые представления должны быть удалены вручную, чтобы предотвратить утечку памяти.
 
+#### опция forceShow
 
-#### forceShow
-If you re-call `show` with the same view, by default nothing will happen
-because the view is already in the region. You can force the view to be re-shown
-by passing in `{forceShow: true}` in the options parameter.
+Если вы повторно вызовите метод `show` с тем же представлением, то по умолчанию ничего
+не произойдет, потому что представление уже в регионе. Вы можете заставить представление
+переотобразиться (re-shown), для этого нужно передать опцию `{forceShow: true}` в параметрах метода. 
 
 ```js
 var myView = new MyView();
 MyApp.mainRegion.show(myView);
 
-// the second show call will re-show the view
+// сейчас повторный вызов метода `show` переотобразит представление
 MyApp.mainRegion.show(myView, {forceShow: true});
 ```
 
