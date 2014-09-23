@@ -19,7 +19,7 @@
     * [Вызов `attachView` в регионе](#call-attachview-on-region)
 * [События и коллбэки региона](#region-events-and-callbacks)
   * [События, которые вызываются в течение `отображения`](#events-raised-during-show)
-* [Custom Region Classes](#custom-region-classes)
+* [Собственные классы регионов](#custom-region-classes)
   * [Attaching Custom Region Classes](#attaching-custom-region-classes)
   * [Instantiate Your Own Region](#instantiate-your-own-region)
 
@@ -374,7 +374,7 @@ MyApp.someRegion.attachView(myView);
 * "before:swap" / `onBeforeSwap` - Вызывается у экземпляра региона до того, как новое представление будет отображено. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось (swapped), но не когда регион пустой.
 * "before:swapOut" / `onBeforeSwapOut` - Вызывается у экземпляра региона до того, как новое представление начинает сменяться. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
 * "swap" / `onSwap` - Вызывается у экземпляра региона тогда, когда новое представление `отображено`. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
-* "swapOut" / `onSwapOut` - Вызывается у экземпляра региона тогда, когда новое представление сменилось и начинает заменять отображаемое представление. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
+* "swapOut" / `onSwapOut` - Вызывается у экземпляра региона тогда, когда новое представление сменилось и собирается быть выполнено замещение отображаемого представления новым представлением. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
 * "before:empty" / `onBeforeEmpty` - Вызывается у экземпляра региона до того, как представление будет очищено/уничтожено.
 * "empty" / `onEmpty` - Вызывается тогда, когда представление было очищено/уничтожено.
 
@@ -382,48 +382,48 @@ MyApp.someRegion.attachView(myView);
 
 ```js
 MyApp.mainRegion.on("before:show", function(view){
-  // manipulate the `view` or do something extra
-  // with the region via `this`
+  // манипулирование представлением через `view` или 
+  // сделать что-то дополнительное с регионом через указатель `this`
 });
 
 MyApp.mainRegion.on("show", function(view){
-  // manipulate the `view` or do something extra
-  // with the region via `this`
+  // манипулирование представлением через `view` или
+  // сделать что-то дополнительное с регионом через указатель `this`
 });
 
 MyApp.mainRegion.on("before:swap", function(view){
-  // manipulate the `view` or do something extra
-  // with the region via `this`
+  // анипулирование представлением через `view` или
+  // сделать что-то дополнительное с регионом через указатель `this`
 });
 
 MyApp.mainRegion.on("swap", function(view){
-  // manipulate the `view` or do something extra
-  // with the region via `this`
+  // анипулирование представлением через `view` или
+  // сделать что-то дополнительное с регионом через указатель `this`
 });
 
 MyApp.mainRegion.on("empty", function(view){
-  // manipulate the `view` or do something extra
-  // with the region via `this`
+  // анипулирование представлением через `view` или
+  // сделать что-то дополнительное с регионом через указатель `this`
 });
 
 var MyRegion = Backbone.Marionette.Region.extend({
   // ...
 
   onBeforeShow: function(view) {
-    // the `view` has not been shown yet
+    // `представление` еще не отображено
   },
 
   onShow: function(view){
-    // the `view` has been shown
+    // `представление` уже отображено
   }
 });
 
 var MyView = Marionette.ItemView.extend({
   onBeforeShow: function() {
-    // called before the view has been shown
+    // вызывается до того, как представление было отображено
   },
   onShow: function(){
-    // called when the view has been shown
+    // вызывается тогда, когда представление было отображено
   }
 });
 
@@ -431,20 +431,20 @@ var MyRegion = Backbone.Marionette.Region.extend({
   // ...
 
   onBeforeSwap: function(view) {
-    // the `view` has not been swapped yet
+    // `представление еще не сменилось (заменилось)
   },
 
   onSwap: function(view){
-    // the `view` has been swapped
+    // `представление` уже сменилось
   }
 });
 ```
 
 ## Собственные классы регионов
 
-You can define a custom region by extending from
-`Region`. This allows you to create new functionality,
-or provide a base set of functionality for your app.
+Вы можете определить свой собственный регион, наследуясь от класса `Region`.
+Это позволяет вам создавать новую функциональность и обеспечивает базовый 
+набор функциональных возможностей для вашего приложения.
 
 ### Attaching Custom Region Classes
 
