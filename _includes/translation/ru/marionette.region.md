@@ -17,8 +17,8 @@
   * [Добавление существующего представления](#attach-existing-view)
     * [Установка `currentView` при инициализации](#set-currentview-on-initialization)
     * [Вызов `attachView` в регионе](#call-attachview-on-region)
-* [Region Events And Callbacks](#region-events-and-callbacks)
-  * [Events raised during `show`](#events-raised-during-show)
+* [События и коллбэки региона](#region-events-and-callbacks)
+  * [События, которые вызываются в течение `отображения`](#events-raised-during-show)
 * [Custom Region Classes](#custom-region-classes)
   * [Attaching Custom Region Classes](#attaching-custom-region-classes)
   * [Instantiate Your Own Region](#instantiate-your-own-region)
@@ -362,25 +362,23 @@ MyApp.someRegion.attachView(myView);
 
 ## События и коллбэки региона
 
-### Events raised during `show`:
+### События, которые вызываются в течение `отображения`:
 
-A region will raise a few events when showing
-and destroying views:
+Регион будет вызывать некоторые события при отображении и
+уничтожении представления:
 
-* "before:show" / `onBeforeShow` - Called on the view instance after the view has been rendered, but before its been displayed.
-* "before:show" / `onBeforeShow` - Called on the region instance after the view has been rendered, but before its been displayed.
-* "show" / `onShow` - Called on the view instance when the view has been rendered and displayed.
-* "show" / `onShow` - Called on the region instance when the view has been rendered and displayed.
-* "before:swap" / `onBeforeSwap` - Called on the region instance before a new view is shown. NOTE: this will only be called when a view is being swapped, not when the region is empty.
-* "before:swapOut" / `onBeforeSwapOut` - Called on the region instance before a new view swapped in. NOTE: this will only be called when a view is being swapped, not when the region is empty.
-* "swap" / `onSwap` - Called on the region instance when a new view is `show`n. NOTE: this will only be called when a view is being swapped, not when the region is empty.
-* "swapOut" / `onSwapOut` - Called on the region instance when a new view swapped in to replace the currently shown view. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* "before:show" / `onBeforeShow` - Вызывается у экземпляра представления после того, как представление было отрисовано (rendered), но до его отображения (показа).
+* "before:show" / `onBeforeShow` - Вызывается у экземпляра региона после того, как представление было отрисовано, но до его отображения.
+* "show" / `onShow` - Вызывается у экземпляра представления, когда представление было отрисовано и отображено.
+* "show" / `onShow` - Вызывается у экземпляра региона, когда представление было отрисовано и отображено.
+* "before:swap" / `onBeforeSwap` - Вызывается у экземпляра региона до того, как новое представление будет отображено. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось (swapped), но не когда регион пустой.
+* "before:swapOut" / `onBeforeSwapOut` - Вызывается у экземпляра региона до того, как новое представление начинает сменяться. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
+* "swap" / `onSwap` - Вызывается у экземпляра региона тогда, когда новое представление `отображено`. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
+* "swapOut" / `onSwapOut` - Вызывается у экземпляра региона тогда, когда новое представление сменилось и начинает заменять отображаемое представление. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
+* "before:empty" / `onBeforeEmpty` - Вызывается у экземпляра региона до того, как представление будет очищено/уничтожено.
+* "empty" / `onEmpty` - Вызывается тогда, когда представление было очищено/уничтожено.
 
-* "before:empty" / `onBeforeEmpty` - Called on the region instance before the view has been emptied.
-* "empty" / `onEmpty` - Called when the view has been emptied.
-
-These events can be used to run code when your region
-opens and destroys views.
+Эти события могут быть использованы для запуска кода, когда ваш регион открывает и/или уничтожает представления.
 
 ```js
 MyApp.mainRegion.on("before:show", function(view){
