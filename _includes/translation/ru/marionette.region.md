@@ -20,7 +20,7 @@
 * [События и коллбэки региона](#region-events-and-callbacks)
   * [События, которые вызываются в течение `отображения`](#events-raised-during-show)
 * [Собственные классы регионов](#custom-region-classes)
-  * [Добавление собстенных классов регионов](#attaching-custom-region-classes)
+  * [Добавление собственных классов регионов](#attaching-custom-region-classes)
   * [Создание экземпляра вашего собственного региона](#instantiate-your-own-region)
 
 ## Определение регионов приложения
