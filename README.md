@@ -18,3 +18,4 @@
 * mix-and-match - смешивание и комбинирование
 * [accessibility](http://www.w3.org/WAI/intro/accessibility.php) - универсальный доступ/доступность для пользователей с ограниченными возможностями
 * [progressive enhancement](http://en.wikipedia.org/wiki/Progressive_enhancement) - прогрессивное улучшение
+* swapped - смена/замена
