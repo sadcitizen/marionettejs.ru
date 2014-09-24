@@ -21,7 +21,7 @@
   * [События, которые вызываются в течение `отображения`](#events-raised-during-show)
 * [Собственные классы регионов](#custom-region-classes)
   * [Добавление собстенных классов регионов](#attaching-custom-region-classes)
-  * [Instantiate Your Own Region](#instantiate-your-own-region)
+  * [Создание экземпляра вашего собственного региона](#instantiate-your-own-region)
 
 ## Определение регионов приложения
 
@@ -446,7 +446,7 @@ var MyRegion = Backbone.Marionette.Region.extend({
 Это позволяет вам создавать новую функциональность и обеспечивает базовый 
 набор функциональных возможностей для вашего приложения.
 
-### Добавление собстенных классов регионов
+### Добавление собственных классов регионов
 
 После того, как вы определите класс регион, вы можете использовать его для конфигурирования регионов в приложении.
 Для этого, вы должны добавить новый класс регион в качестве значения для регион класса.
@@ -463,7 +463,7 @@ MyApp.addRegions({
 });
 ```
 
-Вы можете также указать селектор для региона используя литерал объекта для конфигурирования региона. 
+Вы можете также указать селектор для региона, используя литерал объекта для конфигурирования региона. 
 
 ```js
 var FooterRegion = Backbone.Marionette.Region.extend({
@@ -479,22 +479,22 @@ MyApp.addRegions({
 ```
 
 Обратите внимание, что регион должен иметь элемент, с которым он будет связан.
-Если вы не указали селектор, когда добавляли экземпляр региона в ваше приложении или `LayoutView`,
+Если вы не указали селектор, когда добавляли экземпляр региона в ваше приложение или `LayoutView`,
 то `el` региона должно быть указано либо при его определении, либо в опциях конструктора.
 
-### Instantiate Your Own Region
+### Создание экземпляра вашего собственного региона
 
-There may be times when you want to add a region to your
-application after your app is up and running. To do this, you'll
-need to extend from `Region` as shown above and then use
-that constructor function on your own:
+Бывают ситуации, когда вы хотите добавить регион в ваше приложение
+после того, как ваше приложение запустилось и работает. Что бы сделать это,
+вам нужно наследоваться от класса `Region`, как показано выше, и затем использовать эту
+функцию конструктора по вашему усмотрению:
 
 ```js
 var SomeRegion = Backbone.Marionette.Region.extend({
   el: "#some-div",
 
   initialize: function(options){
-    // your init code, here
+    // ваш код инициализации должен быть здесь
   }
 });
 
@@ -503,7 +503,7 @@ MyApp.someRegion = new SomeRegion();
 MyApp.someRegion.show(someView);
 ```
 
-You can optionally add an `initialize` function to your Region
-definition as shown in this example. It receives the `options`
-that were passed to the constructor of the Region, similar to
-a Backbone.View.
+При желании, вы можете добавить функцию `initialize` при определении
+вашего класса региона, как показано в примере выше. Эта функция принимает
+`options`, которые были переданы в конструктор региона, аналогично тому, как это 
+происходит у `Backbone.View`.
