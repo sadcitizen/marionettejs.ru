@@ -20,7 +20,7 @@
 * [События и коллбэки региона](#region-events-and-callbacks)
   * [События, которые вызываются в течение `отображения`](#events-raised-during-show)
 * [Собственные классы регионов](#custom-region-classes)
-  * [Attaching Custom Region Classes](#attaching-custom-region-classes)
+  * [Добавление собстенных классов регионов](#attaching-custom-region-classes)
   * [Instantiate Your Own Region](#instantiate-your-own-region)
 
 ## Определение регионов приложения
@@ -81,7 +81,7 @@ App.addRegions({
 **Внимание:** Убедитесь, что класс региона имеет свойство `el`, в противном случае регион создать не получится.
 
 ```js
-var MyRegion = Marionette.Region.extend({
+var MyRegion = Backbone.Marionette.Region.extend({
   el: '#main-nav'
 });
 
@@ -105,9 +105,9 @@ App.addRegions({
 параметров, которые будут переданы в экземпляр региона.
 
 ```js
-var MyRegion      = Marionette.Region.extend();
-var MyOtherRegion = Marionette.Region.extend();
-var MyElRegion    = Marionette.Region.extend({ el: '#footer' });
+var MyRegion      = Backbone.Marionette.Region.extend();
+var MyOtherRegion = Backbone.Marionette.Region.extend();
+var MyElRegion    = Backbone.Marionette.Region.extend({ el: '#footer' });
 
 App.addRegions({
   contentRegion: {
@@ -136,7 +136,7 @@ App.addRegions({
 Это невозможно, когда используется непосредственно класс региона, как в способах ранее.
 
 ```js
-var MyRegion = Marionette.Region.extend({
+var MyRegion = Backbone.Marionette.Region.extend({
   el: '#content',
 });
 
@@ -154,11 +154,11 @@ App.addRegions({
 Конечно вы можете смешивать и комбинировать различные типы конфигурирования регионов.
 
 ```js
-var MyRegion = Marionette.Region.extend({
+var MyRegion = Backbone.Marionette.Region.extend({
   el: '#content'
 });
 
-var MyOtherRegion = Marionette.Region.extend();
+var MyOtherRegion = Backbone.Marionette.Region.extend();
 
 App.addRegions({
   contentRegion: MyRegion,
@@ -281,7 +281,7 @@ myRegion.reset();
 По умолчанию, реализация метода `attachHtml` является следующей:
 
 ```js
-Marionette.Region.prototype.attachHtml = function(view){
+Backbone.Marionette.Region.prototype.attachHtml = function(view){
   this.$el.empty().append(view.el);
 }
 ```
@@ -291,7 +291,7 @@ Marionette.Region.prototype.attachHtml = function(view){
 или чего-то еще.  
 
 ```js
-Marionette.Region.prototype.attachHtml = function(view){
+Backbone.Marionette.Region.prototype.attachHtml = function(view){
   this.$el.hide();
   this.$el.html(view.el);
   this.$el.slideDown("fast");
@@ -305,7 +305,7 @@ Marionette.Region.prototype.attachHtml = function(view){
 а не просто появление в нужном месте:
 
 ```js
-var ModalRegion = Marionette.Region.extend({
+var ModalRegion = Backbone.Marionette.Region.extend({
   attachHtml: function(view){
     // Некоторый эффект отображения представления:
     this.$el.empty().append(view.el);
@@ -418,7 +418,7 @@ var MyRegion = Backbone.Marionette.Region.extend({
   }
 });
 
-var MyView = Marionette.ItemView.extend({
+var MyView = Backbone.Marionette.ItemView.extend({
   onBeforeShow: function() {
     // вызывается до того, как представление было отображено
   },
@@ -446,11 +446,12 @@ var MyRegion = Backbone.Marionette.Region.extend({
 Это позволяет вам создавать новую функциональность и обеспечивает базовый 
 набор функциональных возможностей для вашего приложения.
 
-### Attaching Custom Region Classes
+### Добавление собстенных классов регионов
 
-Once you define a region class, you can attach the
-new region class by specifying the region class as the
-value. In this case, `addRegions` expects the constructor itself, not an instance.
+После того, как вы определите класс регион, вы можете использовать его для конфигурирования регионов в приложении.
+Для этого, вы должны добавить новый класс регион в качестве значения для регион класса.
+В случае использования `addRegions`, указывается непосредственно сам конструктор класса регион, 
+а не экземпляр класса регион.
 
 ```js
 var FooterRegion = Backbone.Marionette.Region.extend({
@@ -462,8 +463,7 @@ MyApp.addRegions({
 });
 ```
 
-You can also specify a selector for the region by using
-an object literal for the configuration.
+Вы можете также указать селектор для региона используя литерал объекта для конфигурирования региона. 
 
 ```js
 var FooterRegion = Backbone.Marionette.Region.extend({
@@ -478,10 +478,9 @@ MyApp.addRegions({
 });
 ```
 
-Note that a region must have an element to attach itself to. If you
-do not specify a selector when attaching the region instance to your
-Application or LayoutView, the region must provide an `el` either in its
-definition or constructor options.
+Обратите внимание, что регион должен иметь элемент, с которым он будет связан.
+Если вы не указали селектор, когда добавляли экземпляр региона в ваше приложении или `LayoutView`,
+то `el` региона должно быть указано либо при его определении, либо в опциях конструктора.
 
 ### Instantiate Your Own Region
 
