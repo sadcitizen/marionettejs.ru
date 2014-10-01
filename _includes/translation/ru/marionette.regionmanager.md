@@ -10,7 +10,7 @@
 * [Основное применение](#basic-use)
 * [RegionManager.addRegion](#regionmanageraddregion)
 * [RegionManager.addRegions](#regionmanageraddregions)
-  * [addRegions default options](#addregions-default-options)
+  * [Параметры по умолчанию в addRegions](#addregions-default-options)
 * [RegionManager.get](#regionmanagerget)
 * [RegionManager.getRegions](#regionmanagergetregions)
 * [RegionManager.removeRegion](#regionmanagerremoveregion)
@@ -58,23 +58,21 @@ var region = rm.addRegion("foo", "#bar");
 В этом примере, регион названый "foo" будет добавлен в экземпляр менеджера регионов `RegionManager`.
 Регион определен как jQuery-cелектор, который будет искать по `#bar` соответствующий элемент в DOM.
 
-Существует много других способов определить регион, в том числе
-литерал объект с различными опциями, а также экземпляр объекта `Region`.
+Существует много других способов определить регион, в том числе в виде
+литерал объекта с различными опциями, а также экземпляр объекта `Region`.
 Больше информации об этом можно узнать в документации по [Marionette.Region](../region/).
 
 ## RegionManager.addRegions
 
-Regions can also be added en-masse through the use
-of the `addRegions` method. This method takes an object
-literal or a function that returns an object literal.
-The object literal must contain region names as keys
-and region definitions as values. The return value
-is an object literal with all the created regions.
+Регионы также могут быть добавлены пачкой (en-masse) с помощью метода `addRegions`.
+Этот метод принимает литерал объекта или функцию, которая возвращает литерал объекта.
+Литерал объекта должен содержать названия регионов как ключи и определения регионов как значения.
+Метод `addRegions` возвращает литерал объекта со всеми созданными регионами.
 
 ```js
 var rm = new Marionette.RegionManager();
 
-// With an object literal
+// С помощью литерал объекта
 var regions = rm.addRegions({
   main: '#main-content',
   navigation: {
@@ -83,21 +81,21 @@ var regions = rm.addRegions({
   }
 });
 
-// With a function
+// С помощью функции
 var otherRegions = rm.addRegions(function(regionDefinition) {
   return {
     footer: '#footer'
   };
 });
 
-regions.main;        //=> 'main' region instance
-regions.navigation;  //=> 'navigation' region instance
-otherRegions.footer; //=> 'footer' region instance
+regions.main;        //=> 'main' экземпляр региона
+regions.navigation;  //=> 'navigation' экземпляр региона
+otherRegions.footer; //=> 'footer' экземпляр региона
 ```
 
-If you supply a function to `addRegions`, it will be
-called with the `RegionManager` instance context and
-all the arguments passed to `addRegions`.
+Если вы передаете функцию в `addRegions`, то она будет вызвана
+с контекстом экземпляра объекта `RegionManager` и со всеми аргументами,
+переданными в `addRegions`.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -107,22 +105,21 @@ var regionDefaults = {
 };
 
 rm.addRegions(function(regionDefinition, defaults) {
-  console.log(this);             // `rm` instance of `RegionManager`
-  console.log(regionDefinition); // the region definition function
-  console.log(defaults);         // `{ regionClass: MyRegionClass }`
+  console.log(this);             // `rm` экземпляр объекта `RegionManager`
+  console.log(regionDefinition); // функция определения регионов
+  console.log(defaults);         // объект `{ regionClass: MyRegionClass }`
 
-  // ...return the region definiton object literal
+  // ...возвращает определение регионов в виде литерал объекта
 }, regionDefaults);
 ```
 
-### addRegions default options
+### Параметры по умолчанию в addRegions
 
-When adding multiple regions it may be useful to
-provide a set of defaults that get applied to all
-of the regions being added. This can be done through
-the use of a `defaults` parameter. Specify this
-parameter as an object literal with `key: value`
-pairs that will be applied to every region added.
+При добавлении множества регионов может быть полезным
+возможность задать параметры по умолчанию, которые будут передаваться
+всем добавляемым регионам. Это может быть сделано с помощью
+параметра `defaults`. Задается этот параметр в виде литерал объекта
+с парами `ключ: значение`, которые будут передаваться в каждый добавляемый регион.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -139,8 +136,7 @@ var regions = {
 rm.addRegions(regions, defaults);
 ```
 
-In this example, all regions will be added as
-instances of `MyRegionClass`.
+В этом примере, все регионы будут добавлены как экземпляры объекта `MyRegionClass`.
 
 ## RegionManager.get
 
