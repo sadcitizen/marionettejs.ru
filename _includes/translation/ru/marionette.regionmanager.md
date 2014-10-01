@@ -1,15 +1,13 @@
-Region managers provide a consistent way to manage
-a number of Marionette.Region objects within an
-application. The RegionManager is intended to be
-used by other objects, to facilitate the addition,
-storage, retrieval, and removal of regions from
-that object. For examples of how it can be used,
-see the [Marionette.Application](../application/) and [Marionette.LayoutView](../layoutview/)
-objects.
+Менеджеры регионов предоставляют согласованный способ управления
+несколькими объектами `Marionette.Region` в приложении.
+`RegionManager` предназначен для использования в других объектах,
+он облегчает добавление, хранение, поиск и удаление регионов из этих объектов.
+Для примера того, как менеджер регионов может быть использован, можно посмотреть реализацию
+объектов [Marionette.Application](../application/) и [Marionette.LayoutView](../layoutview/).
 
-## Documentation Index
+## Содержание
 
-* [Basic Use](#basic-use)
+* [Основное применение](#basic-use)
 * [RegionManager.addRegion](#regionmanageraddregion)
 * [RegionManager.addRegions](#regionmanageraddregions)
   * [addRegions default options](#addregions-default-options)
@@ -26,10 +24,10 @@ objects.
   * [remove:region event](#removeregion-event)
 * [RegionManager Iterators](#regionmanager-iterators)
 
-## Basic Use
+## Основное применение
 
-RegionManagers can be instantiated directly, and can
-have regions added and removed via several methods:
+Экземпляр `RegionManager`-а может быть создан напрямую, а для добавления
+и удаления регионов используются специальные методы:
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -48,9 +46,8 @@ rm.removeRegion("foo");
 
 ## RegionManager.addRegion
 
-Regions can be added individually using the `addRegion`
-method. This method takes two parameters: the region name
-and the region definition.
+Регионы могут добавляться по отдельности с помощью метода `addRegion`.
+Этот метод принимает два параметра: название региона и определение региона.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -58,15 +55,12 @@ var rm = new Marionette.RegionManager();
 var region = rm.addRegion("foo", "#bar");
 ```
 
-In this example, a region named "foo" will be added
-to the RegionManager instance. It is defined as a
-jQuery selector that will search for the `#bar`
-element in the DOM.
+В этом примере, регион названый "foo" будет добавлен в экземпляр менеджера регионов `RegionManager`.
+Регион определен как jQuery-cелектор, который будет искать по `#bar` соответствующий элемент в DOM.
 
-There are a lot of other ways to define a region,
-including object literals with various options, and
-instances of Region objects. For more information
-on this, see the Region documentation.
+Существует много других способов определить регион, в том числе
+литерал объект с различными опциями, а также экземпляр объекта `Region`.
+Больше информации об этом можно узнать в документации по [Marionette.Region](../region/).
 
 ## RegionManager.addRegions
 
