@@ -106,7 +106,7 @@ var Selections = Marionette.Object.extend({
     this.selections[key] = item;
   },
 
-  deselect: function (argument) {
+  deselect: function (key, item) {
     this.triggerMethod("deselect", key, item);
     delete this.selections[key];
   }
@@ -122,5 +122,5 @@ selections.listenTo(selections, "select", function(key, item){
   console.log(item);
 });
 
-selections.select(toyTruck);
+selections.select('toy', Truck);
 ```
