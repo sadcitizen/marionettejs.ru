@@ -140,9 +140,8 @@ rm.addRegions(regions, defaults);
 
 ## RegionManager.get
 
-A region instance can be retrieved from the
-RegionManager instance using the `get` method and
-passing in the name of the region.
+Экземпляр региона может быть получен у экземпляра объекта `RegionManager`
+через вызов метода `get` и передачей в этот метод названия региона.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -153,9 +152,8 @@ var region = rm.get("foo");
 
 ## RegionManager.getRegions
 
-Get all the regions from the region manager.
-Returns an object literal with named regions
-as attributes.
+Метод `getRegions` позволяет получить все регионы у менеджера регионов.
+Этот метод возвращает литерал объекта с названиями регионов в качестве атрибутов.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -164,14 +162,13 @@ rm.addRegion("bar", "#bar");
 
 var regions = rm.getRegions();
 
-regions.foo; //=> foo region
-regions.bar; //=> bar region
+regions.foo; //=> foo регион
+regions.bar; //=> bar регион
 ```
 
 ## RegionManager.removeRegion
 
-A region can be removed by calling the `removeRegion`
-method and passing in the name of the region.
+Регион можно удалить, вызвав метод `removeRegion` и передав в этот метод название региона.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -180,15 +177,14 @@ rm.addRegion("foo", "#bar");
 rm.removeRegion("foo");
 ```
 
-A region will have its `empty` method called before
-it is removed from the RegionManager instance and
-`stopListening` is called.
+Регион имеет метод `empty`, который будет вызван прежде, чем
+регион будет удален из экземпляра объекта `RegionManager`, а также перед вызовом
+метода `stopListening`.
 
 ## RegionManager.removeRegions
 
-You can quickly remove all regions from the
-RegionManager instance by calling the `removeRegions`
-method.
+Вы можете быстро удалить все регионы из экземпляра объекта `RegionManager`,
+вызвав метод `removeRegions`.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -201,12 +197,12 @@ rm.addRegions({
 rm.removeRegions();
 ```
 
-This will empty all regions, and remove them.
+Этот метод очистит все регионы и удалит их.
 
 ## RegionManager.emptyRegions
 
-You can quickly empty all regions from the RegionManager
-instance by calling the `emptyRegions` method.
+Вы можете быстро очистить все регионы у экземпляра объекта `RegionManager`,
+вызвав метод `emptyRegions`.
 
 ```js
 var rm = new Marionette.RegionManager();
@@ -219,14 +215,13 @@ rm.addRegions({
 rm.emptyRegions();
 ```
 
-This will empty the regions without removing them
-from the RegionManager instance.
+Этот метод очистит регионы без удаления их из экземпляра объекта `RegionManager`.
 
 ## RegionManager.destroy
 
-A RegionManager instance can be destroyd entirely by
-calling the `destroy` method. This will both destroy
-and remove all regions from the RegionManager instance.
+Экземпляр объекта `RegionManager` может быть полностью уничтожен вызовом метода `destroy`.
+Этот метод уничтожит экземпляр объекта `RegionManager` и 
+удалит все регионы из этого экземпляра объекта `RegionManager`.
 
 ```js
 var rm = new Marionette.RegionManager();
