@@ -32,14 +32,14 @@
 добавлять регионы в приложение.
 
 ```js
-MyApp.addRegions({
+myApp.addRegions({
   mainRegion: "#main-content",
   navigationRegion: "#navigation"
 });
 ```
 
 Вскоре после вызова `addRegions`, ваши регионы станут доступны у объекта вашего приложения.
-В приведенном выше примере `MyApp.mainRegion` и `MyApp.navigationRegion` немедленно доступны для использования.
+В приведенном выше примере `myApp.mainRegion` и `myApp.navigationRegion` немедленно доступны для использования.
 
 Если вы укажете одно и то же имя для региона дважды, будет использовано последнее определение.
 
@@ -69,7 +69,7 @@ Marionette поддреживает несколько способов опре
 Для определения региона вы можете использовать jQuery-селектор в виде строки.
 
 ```js
-App.addRegions({
+myApp.addRegions({
   mainRegion: '#main'
 });
 ```
@@ -85,7 +85,7 @@ var MyRegion = Backbone.Marionette.Region.extend({
   el: '#main-nav'
 });
 
-App.addRegions({
+myApp.addRegions({
   navigationRegion: MyRegion
 });
 ```
@@ -109,7 +109,7 @@ var MyRegion = Backbone.Marionette.Region.extend();
 var MyOtherRegion = Backbone.Marionette.Region.extend();
 var MyElRegion = Backbone.Marionette.Region.extend({ el: '#footer' });
 
-App.addRegions({
+myApp.addRegions({
   contentRegion: {
     el: '#content',
     regionClass: MyRegion
@@ -140,7 +140,7 @@ var MyRegion = Backbone.Marionette.Region.extend({
   el: '#content',
 });
 
-App.addRegions({
+myApp.addRegions({
   contentRegion: {
     regionClass: MyRegion,
     myRegionOption: 'bar',
@@ -160,7 +160,7 @@ var MyRegion = Backbone.Marionette.Region.extend({
 
 var MyOtherRegion = Backbone.Marionette.Region.extend();
 
-App.addRegions({
+myApp.addRegions({
   contentRegion: MyRegion,
 
   navigationRegion: '#navigation',
@@ -177,7 +177,7 @@ App.addRegions({
 Вы можете указать `el` для региона, чтобы управлять местом, где будет создан экземпляр регион:
 
 ```js
-var mgr = new Backbone.Marionette.Region({
+var myRegion = new Marionette.Region({
   el: "#someElement"
 });
 ```
@@ -185,7 +185,7 @@ var mgr = new Backbone.Marionette.Region({
 Опция `el` может также быть ссылкой на DOM-узел:
 
 ```js
-var mgr = new Backbone.Marionette.Region({
+var myRegion = new Marionette.Region({
   el: document.querySelector("body")
 });
 ```
@@ -193,7 +193,7 @@ var mgr = new Backbone.Marionette.Region({
 Также `el` может быть `jQuery`-оберткой для DOM-узла:
 
 ```js
-var mgr = new Backbone.Marionette.Region({
+var myRegion = new Marionette.Region({
   el: $("body")
 });
 ```
@@ -208,10 +208,10 @@ var mgr = new Backbone.Marionette.Region({
 var myView = new MyView();
 
 // Рендеринг и отобрабражение представления
-MyApp.mainRegion.show(myView);
+myApp.mainRegion.show(myView);
 
 // Удаление текущего представления
-MyApp.mainRegion.empty();
+myApp.mainRegion.empty();
 ```
 
 #### опция preventDestroy
@@ -224,17 +224,17 @@ MyApp.mainRegion.empty();
 ```js
 // Отобразим первое представление.
 var myView = new MyView();
-MyApp.mainRegion.show(myView);
+myApp.mainRegion.show(myView);
 
 // Заменим представление на другое.
 // Метод `destroy` будет вызван для вас автоматически
 var anotherView = new AnotherView();
-MyApp.mainRegion.show(anotherView);
+myApp.mainRegion.show(anotherView);
 
 // Заменим представление на другое.
 // Предотвращием вызов метода `destroy`
 var anotherView2 = new AnotherView();
-MyApp.mainRegion.show(anotherView2, { preventDestroy: true });
+myApp.mainRegion.show(anotherView2, { preventDestroy: true });
 ```
 
 ПРИМЕЧАНИЕ: При использовании `preventDestroy: true` вы должны быть осторожны, необходимо помнить,
@@ -248,10 +248,10 @@ MyApp.mainRegion.show(anotherView2, { preventDestroy: true });
 
 ```js
 var myView = new MyView();
-MyApp.mainRegion.show(myView);
+myApp.mainRegion.show(myView);
 
 // сейчас повторный вызов метода `show` переотобразит представление
-MyApp.mainRegion.show(myView, {forceShow: true});
+myApp.mainRegion.show(myView, {forceShow: true});
 ```
 
 ### <a name="checking-whether-a-region-is-showing-a-view"></a> Проверка отображено ли представление в регионе
@@ -281,7 +281,7 @@ myRegion.reset();
 По умолчанию, реализация метода `attachHtml` является следующей:
 
 ```js
-Backbone.Marionette.Region.prototype.attachHtml = function(view){
+Marionette.Region.prototype.attachHtml = function(view){
   this.$el.empty().append(view.el);
 }
 ```
@@ -291,7 +291,7 @@ Backbone.Marionette.Region.prototype.attachHtml = function(view){
 или чего-то еще.  
 
 ```js
-Backbone.Marionette.Region.prototype.attachHtml = function(view){
+Marionette.Region.prototype.attachHtml = function(view){
   this.$el.hide();
   this.$el.html(view.el);
   this.$el.slideDown("fast");
@@ -305,7 +305,7 @@ Backbone.Marionette.Region.prototype.attachHtml = function(view){
 а не просто появление в нужном месте:
 
 ```js
-var ModalRegion = Backbone.Marionette.Region.extend({
+var ModalRegion = Marionette.Region.extend({
   attachHtml: function(view){
     // Некоторый эффект отображения представления:
     this.$el.empty().append(view.el);
@@ -313,7 +313,7 @@ var ModalRegion = Backbone.Marionette.Region.extend({
   }
 })
 
-MyApp.addRegions({
+myApp.addRegions({
   mainRegion: '#main-region',
   modalRegion: {
     regionClass: ModalRegion,
@@ -340,7 +340,7 @@ var myView = new MyView({
   el: $("#existing-view-stuff")
 });
 
-var region = new Backbone.Marionette.Region({
+var myRegion = new Backbone.Marionette.Region({
   el: "#content",
   currentView: myView
 });
@@ -349,7 +349,7 @@ var region = new Backbone.Marionette.Region({
 #### <a name="call-attachview-on-region"></a> Вызов `attachView` в регионе
 
 ```js
-MyApp.addRegions({
+myApp.addRegions({
   someRegion: "#content"
 });
 
@@ -357,7 +357,7 @@ var myView = new MyView({
   el: $("#existing-view-stuff")
 });
 
-MyApp.someRegion.attachView(myView);
+myApp.someRegion.attachView(myView);
 ```
 
 ## <a name="region-events-and-callbacks"></a> События и коллбэки региона
@@ -381,27 +381,27 @@ MyApp.someRegion.attachView(myView);
 Эти события могут быть использованы для запуска кода, когда ваш регион открывает и/или уничтожает представления.
 
 ```js
-MyApp.mainRegion.on("before:show", function(view){
+myApp.mainRegion.on("before:show", function(view){
   // манипулирование представлением через `view` или 
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-MyApp.mainRegion.on("show", function(view){
+myApp.mainRegion.on("show", function(view){
   // манипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-MyApp.mainRegion.on("before:swap", function(view){
+myApp.mainRegion.on("before:swap", function(view){
   // анипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-MyApp.mainRegion.on("swap", function(view){
+myApp.mainRegion.on("swap", function(view){
   // анипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-MyApp.mainRegion.on("empty", function(view){
+myApp.mainRegion.on("empty", function(view){
   // анипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
@@ -458,7 +458,7 @@ var FooterRegion = Backbone.Marionette.Region.extend({
   el: "#footer"
 });
 
-MyApp.addRegions({
+myApp.addRegions({
   footerRegion: FooterRegion
 });
 ```
@@ -470,7 +470,7 @@ var FooterRegion = Backbone.Marionette.Region.extend({
   el: "#footer"
 });
 
-MyApp.addRegions({
+myApp.addRegions({
   footerRegion: {
     selector: "#footer",
     regionClass: FooterRegion
@@ -490,7 +490,7 @@ MyApp.addRegions({
 функцию конструктора по вашему усмотрению:
 
 ```js
-var SomeRegion = Backbone.Marionette.Region.extend({
+var SomeRegion = Marionette.Region.extend({
   el: "#some-div",
 
   initialize: function(options){
@@ -498,9 +498,9 @@ var SomeRegion = Backbone.Marionette.Region.extend({
   }
 });
 
-MyApp.someRegion = new SomeRegion();
+myApp.someRegion = new SomeRegion();
 
-MyApp.someRegion.show(someView);
+myApp.someRegion.show(someView);
 ```
 
 При желании, вы можете добавить функцию `initialize` при определении
