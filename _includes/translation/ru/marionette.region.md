@@ -281,7 +281,7 @@ myRegion.reset();
 По умолчанию, реализация метода `attachHtml` является следующей:
 
 ```js
-Marionette.Region.prototype.attachHtml = function(view){
+Marionette.Region.prototype.attachHtml = function(view) {
   this.$el.empty().append(view.el);
 }
 ```
@@ -291,7 +291,7 @@ Marionette.Region.prototype.attachHtml = function(view){
 или чего-то еще.  
 
 ```js
-Marionette.Region.prototype.attachHtml = function(view){
+Marionette.Region.prototype.attachHtml = function(view) {
   this.$el.hide();
   this.$el.html(view.el);
   this.$el.slideDown("fast");
@@ -306,7 +306,7 @@ Marionette.Region.prototype.attachHtml = function(view){
 
 ```js
 var ModalRegion = Marionette.Region.extend({
-  attachHtml: function(view){
+  attachHtml: function(view) {
     // Некоторый эффект отображения представления:
     this.$el.empty().append(view.el);
     this.$el.hide().slideDown('fast');
@@ -381,27 +381,27 @@ myApp.someRegion.attachView(myView);
 Эти события могут быть использованы для запуска кода, когда ваш регион открывает и/или уничтожает представления.
 
 ```js
-myApp.mainRegion.on("before:show", function(view){
+myApp.mainRegion.on("before:show", function(view) {
   // манипулирование представлением через `view` или 
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-myApp.mainRegion.on("show", function(view){
+myApp.mainRegion.on("show", function(view) {
   // манипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-myApp.mainRegion.on("before:swap", function(view){
+myApp.mainRegion.on("before:swap", function(view) {
   // анипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-myApp.mainRegion.on("swap", function(view){
+myApp.mainRegion.on("swap", function(view) {
   // анипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
 
-myApp.mainRegion.on("empty", function(view){
+myApp.mainRegion.on("empty", function(view) {
   // анипулирование представлением через `view` или
   // сделать что-то дополнительное с регионом через указатель `this`
 });
@@ -413,12 +413,12 @@ var MyRegion = Backbone.Marionette.Region.extend({
     // `представление` еще не отображено
   },
 
-  onShow: function(view){
+  onShow: function(view) {
     // `представление` уже отображено
   }
 });
 
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   onBeforeShow: function() {
     // вызывается до того, как представление было отображено
   },
@@ -427,7 +427,7 @@ var MyView = Backbone.Marionette.ItemView.extend({
   }
 });
 
-var MyRegion = Backbone.Marionette.Region.extend({
+var MyRegion = Marionette.Region.extend({
   // ...
 
   onBeforeSwap: function(view) {
@@ -454,7 +454,7 @@ var MyRegion = Backbone.Marionette.Region.extend({
 а не экземпляр класса регион.
 
 ```js
-var FooterRegion = Backbone.Marionette.Region.extend({
+var FooterRegion = Marionette.Region.extend({
   el: "#footer"
 });
 
@@ -466,7 +466,7 @@ myApp.addRegions({
 Вы можете также указать селектор для региона, используя литерал объекта для конфигурирования региона. 
 
 ```js
-var FooterRegion = Backbone.Marionette.Region.extend({
+var FooterRegion = Marionette.Region.extend({
   el: "#footer"
 });
 

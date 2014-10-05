@@ -49,7 +49,7 @@ Marionette.ItemView.extend({
 переопределить используемый шаблонизатор, то измените метод `render` по своему усмотрению:
 
 ```js
-Marionette.Renderer.render = function(template, data){
+Marionette.Renderer.render = function(template, data) {
   return $(template).tmpl(data);
 });
 ```
@@ -61,7 +61,7 @@ Marionette.Renderer.render = function(template, data){
 необходимый для получения шаблона из кэша: 
 
 ```js
-Marionette.Renderer.render = function(template, data){
+Marionette.Renderer.render = function(template, data) {
   var template = Marionette.TemplateCache.get(template);
   // Какие-то действия с шаблоном
 };
@@ -75,7 +75,7 @@ Marionette.Renderer.render = function(template, data){
 Чтобы сделать это, просто переопределите метод `render` на метод, который вернет исполняемый шаблон с данными.
 
 ```js
-Marionette.Renderer.render = function(template, data){
+Marionette.Renderer.render = function(template, data) {
   return template(data);
 };
 ```

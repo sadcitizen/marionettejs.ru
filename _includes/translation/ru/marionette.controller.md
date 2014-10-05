@@ -21,10 +21,11 @@
 ```js
 // объявление контроллера
 var MyController = Marionette.Controller.extend({
-  initialize: function(options){
+  initialize: function(options) {
     this.stuff = options.stuff;
   },
-  doStuff: function(){
+  
+  doStuff: function() {
     this.trigger("stuff:done", this.stuff);
   }
 });
@@ -35,7 +36,7 @@ var myController = new MyController({
 });
 
 // использование встроенного EventBinder
-myController.listenTo(c, "stuff:done", function(stuff){
+myController.listenTo(c, "stuff:done", function(stuff) {
   console.log(stuff);
 });
 
@@ -62,7 +63,6 @@ myController.doStuff();
 ```js
 // объявление контроллера с методом onDestroy
 var MyController = Marionette.Controller.extend({
-
   onBeforeDestroy: function(arg1, arg2){
     // код в этом месте будет выполнен до выключения контроллера
   }
@@ -70,7 +70,6 @@ var MyController = Marionette.Controller.extend({
   onDestroy: function(arg1, arg2){
     // код в этом месте будет обрабатывать выключение контроллера
   }
-
 });
 
 // создание нового экземпляра контроллера

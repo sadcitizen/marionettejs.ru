@@ -52,7 +52,7 @@ Marionette.TemplateCache.get("#this-template");
 Marionette.TemplateCache.get("#that-template");
 
 // удаление 2 из 3 шаблонов из кэша
-Backbone.Marionette.TemplateCache.clear("#my-template", "#this-template");
+Marionette.TemplateCache.clear("#my-template", "#this-template");
 ```
 
 ## <a name="customizing-template-access"></a> Настройка способа доступа к шаблонам
@@ -71,7 +71,7 @@ Backbone.Marionette.TemplateCache.clear("#my-template", "#this-template");
 способа получения шаблона следует переопределить метод `loadTemplate` объекта `TemplateCache`:
 
 ```js
-Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
+Marionette.TemplateCache.prototype.loadTemplate = function(templateId) {
   // загрузка шаблона, возврат данных, которые требуются методу compileTemplate
   // Например, ваша собственная функция которая создает шаблон на основании
   // значения параметра templateId

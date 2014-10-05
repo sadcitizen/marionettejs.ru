@@ -59,6 +59,7 @@ myApp.addInitializer(function(options){
   var myView = new MyView({
     model: options.someModel
   });
+  
   myApp.mainRegion.show(myView);
 });
 
@@ -274,7 +275,6 @@ myApp.addRegions(function() {
 var MyCustomRegion = Marionette.Region.extend({});
 
 myApp.addRegions({
-
   someRegion: {
     selector: "#foo",
     regionType: MyCustomRegion
@@ -284,7 +284,6 @@ myApp.addRegions({
     selector: "#bar",
     regionType: MyCustomRegion
   }
-
 });
 ```
 

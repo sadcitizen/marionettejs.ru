@@ -35,6 +35,7 @@ var MyView = Marionette.ItemView.extend({
     CloseWarn: {
       message: "you are closing all your data is now gone!"
     },
+    
     ToolTip: {
       text: "what a nice mouse you have"
     }
@@ -59,7 +60,9 @@ getBehaviorClass: function(options, key) {
 
 ### Свойство behaviorClass
 
-Это свойство позволяет вам передавать `класс`, который будет использоваться как класс `поведения` (в обход нормальному поиску по ключу). Это полезно, когда поведение является зависимостью (dependency) представления через [requirejs](http://requirejs.org/). Свойства, переданные этим способом, будут использованы в методе `getBehaviorClass`.
+Это свойство позволяет вам передавать `класс`, который будет использоваться как класс `поведения` (в обход нормальному поиску по ключу). 
+Это полезно, когда поведение является зависимостью (dependency) представления через [requirejs](http://requirejs.org/). 
+Свойства, переданные этим способом, будут использованы в методе `getBehaviorClass`.
 
 ```js
 define(['marionette', 'lib/tooltip'], function(Marionette, Tooltip) {

@@ -35,16 +35,14 @@ Marionette имеет базовый класс `Marionette.View`,
 
 ```js
 var MyView = Marionette.ItemView.extend({
-  initialize: function(){
+  initialize: function() {
     this.listenTo(this.model, "change:foo", this.modelChanged);
     this.listenTo(this.collection, "add", this.modelAdded);
   },
 
-  modelChanged: function(model, value){
-  },
+  modelChanged: function(model, value) {},
 
-  modelAdded: function(model){
-  }
+  modelAdded: function(model){}
 });
 ```
 
@@ -68,7 +66,7 @@ this.listenTo(this.collection, "add", _.bind(this.reconcileCollection, this.coll
 
 ```js
 Marionette.ItemView.extend({
-  onShow: function(){
+  onShow: function() {
     // вызывается, когда представление было отображено
   }
 });
@@ -110,7 +108,7 @@ var LayoutView = Marionette.LayoutView.extend({
 
 ```js
 var MyView = Marionette.ItemView.extend({
-  onDestroy: function(arg1, arg2){
+  onDestroy: function(arg1, arg2) {
     // свой код очистки или уничтожения, должен быть здесь
   }
 });
@@ -134,7 +132,7 @@ myView.destroy(arg1, arg2);
 
 ```js
 Marionette.ItemView.extend({
-  onDomRefresh: function(){
+  onDomRefresh: function() {
     // Манипуляции с `el` нужно делать здесь. Оно (`el`) уже было
     // сформировано, и HTML представления готов для использования.
   }
@@ -185,7 +183,7 @@ var MyView = Marionette.ItemView.extend({
 var myView = new MyView();
 myView.render();
 
-myView.on("something:do:it", function(args){
+myView.on("something:do:it", function(args) {
   alert("I DID IT!");
 });
 
@@ -217,7 +215,7 @@ Marionette.CompositeView.extend({
 
 ```js
 Marionette.CompositeView.extend({
-  triggers: function(){
+  triggers: function() {
     return {
       "click .that-thing": "that:i:sent:you"
     };
@@ -253,7 +251,7 @@ Marionette.ItemView.extend({
 которое вызвало событие.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   // ...
 
   triggers: {
@@ -263,7 +261,7 @@ var MyView = Backbone.Marionette.ItemView.extend({
 
 var myView = new MyView();
 
-myView.on("some:event", function(args){
+myView.on("some:event", function(args) {
   args.view; // => экземпляр представления, которое вызвало событие
   args.model; // => модель из представления - view.model, если модель была установлена в прдедставлении
   args.collection; // => коллекция из представления - view.collection, если коллекция была установлена в прдедставлении
@@ -282,7 +280,6 @@ myView.on("some:event", function(args){
 
 ```js
 Marionette.CompositeView.extend({
-
   modelEvents: {
     "change:name": "nameChanged" // эквивалентно - view.listenTo(view.model, "change:name", view.nameChanged, view)
   },
@@ -294,7 +291,6 @@ Marionette.CompositeView.extend({
   // ... методы обработчики событий
   nameChanged: function(){ /* ... */ },
   itemAdded: function(){ /* ... */ },
-
 })
 ```
 
@@ -315,14 +311,13 @@ Marionette.CompositeView.extend({
 
 ```js
 Marionette.CompositeView.extend({
-
   modelEvents: {
     "change:name": "nameChanged thatThing"
   },
 
-  nameChanged: function(){ },
+  nameChanged: function() {},
 
-  thatThing: function(){ },
+  thatThing: function() {},
 });
 ```
 
@@ -335,13 +330,11 @@ Marionette.CompositeView.extend({
 
 ```js
 Marionette.CompositeView.extend({
-
   modelEvents: {
-    "change:name": function(){
+    "change:name": function() {
       // обработка события изменения имени будет здесь
     }
   }
-
 });
 ```
 
@@ -354,11 +347,9 @@ Marionette.CompositeView.extend({
 
 ```js
 Marionette.CompositeView.extend({
-
-  modelEvents: function(){
+  modelEvents: function() {
     return { "change:name": "someFunc" };
   }
-
 });
 ```
 
@@ -425,9 +416,9 @@ jQuery-селектором. После этого вы можете получ�
 var MyView = Marionette.ItemView.extend({
   template: "#my-template",
 
-  templateHelpers: function () {
+  templateHelpers: function() {
     return {
-      showMessage: function(){
+      showMessage: function() {
         return this.name + " is the coolest!";
       },
 
@@ -458,7 +449,7 @@ var MyView = Marionette.ItemView.extend({
 
 new MyView({
   templateHelpers: {
-    doFoo: function(){ /* ... */ }
+    doFoo: function() { /* ... */ }
   }
 });
 ```
@@ -472,7 +463,7 @@ new MyView({
 
 ```js
 templateHelpers: {
-  something: function(){
+  something: function() {
     return "Do stuff with " + this.name + " because it's awesome.";
   }
 }
@@ -489,7 +480,7 @@ templateHelpers: {
 
 ```js
 Marionette.ItemView.extend({
-  templateHelpers: function(){
+  templateHelpers: function() {
     return {
       foo: function(){ /* ... */ }
     }
@@ -507,8 +498,8 @@ Marionette.ItemView.extend({
 
 ```js
 var MyView = Marionette.ItemView.extend({
-  getTemplate: function(){
-    if (this.model.get("foo")){
+  getTemplate: function() {
+    if (this.model.get("foo")) {
       return "#some-template";
     } else {
       return "#a-different-template";

@@ -26,10 +26,10 @@ var MyRouter = Backbone.Marionette.AppRouter.extend({
   routes : {
     "some/otherRoute" : "someOtherMethod"
   },
+
   someOtherMethod : function(){
     // тело метода
   }
-
 });
 ```
 
@@ -43,6 +43,7 @@ var MyRouter = Backbone.Marionette.AppRouter.extend({
 ```js
 var myRouter = new Marionette.AppRouter({
   controller: myController,
+
   appRoutes: {
     "foo": "doFoo",
     "bar/:id": "doBar"
@@ -88,7 +89,7 @@ router.processAppRoutes(myController, {
 который может быть указан при определении роутера:
 
 ```js
-someController = {
+var someController = {
   someMethod: function(){ /*...*/ }
 };
 
@@ -100,7 +101,7 @@ Marionette.AppRouter.extend({
 ... или в качестве параметра конструктора:
 
 ```js
-myObj = {
+var myObj = {
   someMethod: function(){ /*...*/ }
 };
 

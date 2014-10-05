@@ -22,7 +22,7 @@
 ```js
 var callbacks = new Marionette.Callbacks();
 
-callbacks.add(function(options){
+callbacks.add(function(options) {
   alert("I'm a callback with " + options.value + "!");
 });
 
@@ -42,7 +42,7 @@ options!". Контекст вызова для каждого из коллбэ
 ```js
 var callbacks = new Marionette.Callbacks();
 
-callbacks.add(function(options){
+callbacks.add(function(options) {
   alert("I'm a callback with " + options.value + "!");
 
   // в качестве второго параметра укажем контекст для коллбэка

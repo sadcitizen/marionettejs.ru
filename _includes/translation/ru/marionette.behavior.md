@@ -124,9 +124,9 @@ var ToolTip = Marionette.Behavior.extend({
 Простой пример для этого выглядит следующим образом:
 
 ```js
-  Marionette.Behaviors.behaviorsLookup = function() {
-    return window.Behaviors;
-  }
+Marionette.Behaviors.behaviorsLookup = function() {
+  return window.Behaviors;
+}
 ```
 
 В этом примере ваши поведения будут сохранены следующим образом:
@@ -194,15 +194,15 @@ Marionette.Behavior.extend({
 Указав `modelEvents`, позволит прослушивать и реагировать на события модели представления.
 
 ```js
-  Marionette.Behavior.extend({
-    modelEvents: {
-      "change:doge": "onDogeChange"
-    },
+Marionette.Behavior.extend({
+  modelEvents: {
+    "change:doge": "onDogeChange"
+  },
 
-    onDogeChange: function() {
-      // купить больше doge...
-    }
-  });
+  onDogeChange: function() {
+    // купить больше doge...
+  }
+});
 ```
 
 ### События коллекции
@@ -210,14 +210,13 @@ Marionette.Behavior.extend({
 Указав `collectionEvents`, позволит прослушивать и реагировать на события коллекции представления.
 
 ```js
-  Marionette.Behavior.extend({
-    collectionEvents: {
-      add: "onCollectionAdd"
-    },
+Marionette.Behavior.extend({
+  collectionEvents: {
+    add: "onCollectionAdd"
+  },
 
-    onCollectionAdd: function() {
-    }
-  });
+  onCollectionAdd: function() {}
+});
 ```
 
 ### Группированные поведения
@@ -225,11 +224,11 @@ Marionette.Behavior.extend({
 Ключи в свойстве `behaviors` поведения позволяют группировать различные поведения вместе.
 
 ```js
-  Marionette.Behavior.extend({
-    behaviors: {
-      SomeBehavior: {}
-    }
-  });
+Marionette.Behavior.extend({
+  behaviors: {
+    SomeBehavior: {}
+  }
+});
 ```
 
 ### $
@@ -237,11 +236,11 @@ Marionette.Behavior.extend({
 Метод `$` в поведении является прямым прокси на метод `$` из представления.
 
 ```js
-  Marionette.Behavior.extend({
-    onShow: function() {
-      this.$('.zerg')
-    }
-  });
+Marionette.Behavior.extend({
+  onShow: function() {
+    this.$('.zerg')
+  }
+});
 ```
 
 ### $el и el
