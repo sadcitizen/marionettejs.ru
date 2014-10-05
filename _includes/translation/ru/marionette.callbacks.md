@@ -20,7 +20,7 @@
 ## Основное применение
 
 ```js
-var callbacks = new Backbone.Marionette.Callbacks();
+var callbacks = new Marionette.Callbacks();
 
 callbacks.add(function(options){
   alert("I'm a callback with " + options.value + "!");
@@ -40,7 +40,7 @@ options!". Контекст вызова для каждого из коллбэ
 в момент добавления коллбэка:
 
 ```js
-var callbacks = new Backbone.Marionette.Callbacks();
+var callbacks = new Marionette.Callbacks();
 
 callbacks.add(function(options){
   alert("I'm a callback with " + options.value + "!");
