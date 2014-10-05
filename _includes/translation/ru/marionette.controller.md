@@ -30,17 +30,17 @@ var MyController = Marionette.Controller.extend({
 });
 
 // создание экземпляра
-var c = new MyController({
+var myController = new MyController({
   stuff: "some stuff"
 });
 
 // использование встроенного EventBinder
-c.listenTo(c, "stuff:done", function(stuff){
+myController.listenTo(c, "stuff:done", function(stuff){
   console.log(stuff);
 });
 
 // вызов некоего функционала
-c.doStuff();
+myController.doStuff();
 ```
 
 ## <a name="get-option"></a> Метод `getOption`
@@ -74,16 +74,16 @@ var MyController = Marionette.Controller.extend({
 });
 
 // создание нового экземпляра контроллера
-var contr = new MyController();
+var myController = new MyController();
 
 // добавление нескольких обработчиков событий
-contr.on("before:destroy", function(arg1, arg2){ ... });
-contr.on("destroy", function(arg1, arg2){ ... });
-contr.listenTo(something, "bar", function(){...});
+myController.on("before:destroy", function(arg1, arg2){ ... });
+myController.on("destroy", function(arg1, arg2){ ... });
+myController.listenTo(something, "bar", function(){...});
 
 // выключение контроллера: отписываемся от всех событий,
 // вызов события "destroy" и метода onDestroy
-contr.destroy(arg1, arg2);
+myController.destroy(arg1, arg2);
 ```
 
 ## <a name="on-the-name-controller"></a> Термин 'Controller'
