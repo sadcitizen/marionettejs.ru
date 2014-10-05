@@ -41,7 +41,7 @@ var MyRouter = Backbone.Marionette.AppRouter.extend({
 Для этого констуктору нужно передать объект `appRoutes`.
 
 ```js
-var MyRouter = new Marionette.AppRouter({
+var myRouter = new Marionette.AppRouter({
   controller: myController,
   appRoutes: {
     "foo": "doFoo",
@@ -92,7 +92,7 @@ someController = {
   someMethod: function(){ /*...*/ }
 };
 
-Backbone.Marionette.AppRouter.extend({
+Marionette.AppRouter.extend({
   controller: someController
 });
 ```
