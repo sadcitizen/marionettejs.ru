@@ -290,8 +290,8 @@ Marionette.Behavior.extend({
 
 ```js
 Marionette.Behavior.extend({
-	handleDestroyClick: function() {
-		this.view.destroy();
-	}
+  handleDestroyClick: function() {
+    this.view.destroy();
+  }
 });
 ```
