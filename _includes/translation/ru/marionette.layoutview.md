@@ -271,39 +271,36 @@ var AppLayoutView = Backbone.Marionette.LayoutView.extend({
 
 ## <a name="adding-and-removing-regions"></a> Добавление и удаление регионов
 
-Regions can be added and removed as needed, in a
-LayoutView instance. Use the following methods:
+Если требуется, то регионы могут быть добавлены или удаленя из экземпляра `LayoutView`. 
+Для этого используются следующие методы:
 
 * `addRegion`
 * `addRegions`
 * `removeRegion`
 
-addRegion:
+Метод addRegion:
 
 ```js
 var layoutView = new MyLayoutView();
-
 // ...
 
 layoutView.addRegion("foo", "#foo");
 layoutView.foo.show(new someView());
 ```
 
-addRegions:
+Метод addRegions:
 
 ```js
 var layoutView = new MyLayoutView();
-
 // ...
 
-
-// Object literal
+// Литерал объекта
 layoutView.addRegions({
   foo: "#foo",
   bar: "#bar"
 });
 
-// Or, function that returns an object literal
+// Функция, которая возвращает литерал объекта
 layoutView.addRegions(function() {
   return {
     baz: "#baz",
@@ -312,22 +309,18 @@ layoutView.addRegions(function() {
 });
 ```
 
-removeRegions:
+Метод removeRegions:
 
 ```js
 var layoutView = new MyLayoutView();
-
 // ...
 
 layoutView.removeRegion("foo");
 ```
 
-Any region can be removed, whether it was defined
-in the `regions` attribute of the region definition,
-or added later.
+Любой регион может быть удален вне зависимости от того как он был задан.
 
-For more information on using these methods, see
-the `regionManager` documentation.
+За более полной информацией об этих методах следует обратиться к [документации](../regionmanager/) по `RegionManager`.
 
 ## <a name="region-naming"></a> Именование регионов
 
@@ -335,7 +328,7 @@ A LayoutViews' Regions are attached directly to the LayoutView instance with the
 as the key and the region itself as the value. Because of this, you need to be careful
 to avoid conflicts with existing properties on the LayoutView when you name your Region.
 
-The prototype chain of LayoutViews is:
+Цепочка прототипов для `LayoutViews` выглядит следующим образом:
 
 `Backbone.View > Marionette.View > Marionette.ItemView > Marionette.LayoutView`
 
