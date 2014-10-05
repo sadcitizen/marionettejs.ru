@@ -68,7 +68,8 @@ layoutView.content.show(new MainContentView());
 
 ### <a name="region-options"></a> Region Options
 
-A `LayoutView` can take a `regions` hash that allows you to specify regions per `LayoutView` instance.
+Конструктор `LayoutView` может принимать хэш `regions`, который позволяет указать список регионов 
+для каждого экземпляра `LayoutView`.
 
 ```js
 new Marionette.LayoutView({
@@ -84,9 +85,8 @@ new Marionette.LayoutView({
 
 ### <a name="specifying-regions-as-a-function"></a> Указание регионов с помощью функции
 
-Regions can be specified on a LayoutView using a function that returns
-an object with the region definitions. The returned object follow the
-same rules for defining a region, as outlined above.
+Регионы могут быть указаны для `LayoutView` с помощью функции, которая возвращает объект с описаниями регионов. 
+Возвращаемый объект должен следовать тем же правилам для описания региона, которые были указаны выше. 
 
 ```js
 Marionette.LayoutView.extend({
