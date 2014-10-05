@@ -180,7 +180,7 @@ has all of the core functionality of an item view. This includes
 the methods necessary to be shown within an existing region manager.
 
 ```js
-var myApp = new Backbone.Marionette.Application();
+var myApp = new Marionette.Application();
 
 myApp.addRegions({
   mainRegion: "#main"
@@ -243,15 +243,15 @@ your own implementation, you can specify an alternate class to use
 with the `regionClass` property of the `LayoutView`.
 
 ```js
-var MyLayoutView = Backbone.Marionette.LayoutView.extend({
+var MyLayoutView = Marionette.LayoutView.extend({
   regionClass: SomeCustomRegion
 });
 ```
 
-You can also specify custom `Region` classes for each `region`:
+Так же вы можете указать собственнный класс `Region` для каждого вашего региона:
 
 ```js
-var AppLayoutView = Backbone.Marionette.LayoutView.extend({
+var AppLayoutView = Marionette.LayoutView.extend({
   template: "#layout-view-template",
 
   regionClass: SomeDefaultCustomRegion,
