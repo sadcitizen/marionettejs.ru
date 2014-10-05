@@ -17,7 +17,7 @@
 хранить новый экземпляр. Метод `get` вернет скомпилированный шаблон в виде функции.
 
 ```js
-var template = Backbone.Marionette.TemplateCache.get("#my-template");
+var template = Marionette.TemplateCache.get("#my-template");
 // использование шаблона
 template({param1:'value1', paramN:'valueN'});
 ```
@@ -36,20 +36,20 @@ template({param1:'value1', paramN:'valueN'});
 Если метод `clear` вызывается без параметров, то будут удалены все записи кэша шаблонов:
 
 ```js
-Backbone.Marionette.TemplateCache.get("#my-template");
-Backbone.Marionette.TemplateCache.get("#this-template");
-Backbone.Marionette.TemplateCache.get("#that-template");
+Marionette.TemplateCache.get("#my-template");
+Marionette.TemplateCache.get("#this-template");
+Marionette.TemplateCache.get("#that-template");
 
 // удаление всех шаблонов из кэша
-Backbone.Marionette.TemplateCache.clear()
+Marionette.TemplateCache.clear()
 ```
 
 Если вы укажете один и более параметров, то они будут трактоваться как `templateId`, который используется при загрузке / кэшировании шаблонов:
 
 ```js
-Backbone.Marionette.TemplateCache.get("#my-template");
-Backbone.Marionette.TemplateCache.get("#this-template");
-Backbone.Marionette.TemplateCache.get("#that-template");
+Marionette.TemplateCache.get("#my-template");
+Marionette.TemplateCache.get("#this-template");
+Marionette.TemplateCache.get("#that-template");
 
 // удаление 2 из 3 шаблонов из кэша
 Backbone.Marionette.TemplateCache.clear("#my-template", "#this-template");
@@ -71,7 +71,7 @@ Backbone.Marionette.TemplateCache.clear("#my-template", "#this-template");
 способа получения шаблона следует переопределить метод `loadTemplate` объекта `TemplateCache`:
 
 ```js
-Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
+Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
   // загрузка шаблона, возврат данных, которые требуются методу compileTemplate
   // Например, ваша собственная функция которая создает шаблон на основании
   // значения параметра templateId
@@ -90,7 +90,7 @@ Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
 параметров принимает объект с данными шаблона и возвращает HTML-разметку в виде строки.
 
 ```js
-Backbone.Marionette.TemplateCache.prototype.compileTemplate = function(rawTemplate) {
+Marionette.TemplateCache.prototype.compileTemplate = function(rawTemplate) {
   // использование Handlebars.js для компиляции шаблона
   return Handlebars.compile(rawTemplate);
 }
