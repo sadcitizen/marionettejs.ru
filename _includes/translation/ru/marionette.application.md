@@ -7,7 +7,7 @@ script или непосредственно JavaScript-файлов, если �
 добавив свою собственную функциональность.
 
 ```js
-var MyApp = new Marionette.Application();
+var myApp = new Marionette.Application();
 ```
 
 ## Содержание
