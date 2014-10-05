@@ -44,7 +44,7 @@ to the layoutView.
 ```
 
 ```js
-var AppLayoutView = Backbone.Marionette.LayoutView.extend({
+var AppLayoutView = Marionette.LayoutView.extend({
   template: "#layout-view-template",
 
   regions: {
@@ -92,7 +92,7 @@ same rules for defining a region, as outlined above.
 Marionette.LayoutView.extend({
   // ...
 
-  regions: function(options){
+  regions: function(options) {
     return {
       fooRegion: "#foo-element"
     };
@@ -180,13 +180,14 @@ has all of the core functionality of an item view. This includes
 the methods necessary to be shown within an existing region manager.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
-MyApp.addRegions({
+var myApp = new Backbone.Marionette.Application();
+
+myApp.addRegions({
   mainRegion: "#main"
 });
 
 var layoutView = new AppLayout();
-MyApp.mainRegion.show(layoutView);
+myApp.mainRegion.show(layoutView);
 
 layoutView.show(new MenuView());
 ```
@@ -200,21 +201,23 @@ For example, to nest 3 layouts (all of these are equivalent):
 var layout1 = new Layout1();
 var layout2 = new Layout2();
 var layout3 = new Layout3();
-MyApp.mainRegion.show(layout1);
+
+myApp.mainRegion.show(layout1);
+
 layout1.region1.show(layout2);
 layout2.region2.show(layout3);
 ```
 
 ```js
-MyApp.mainRegion.show(new Layout1());
-MyApp.mainRegion.currentView.myRegion1.show(new Layout2());
-MyApp.mainRegion.currentView.myRegion1.currentView.myRegion2.show(new Layout3());
+myApp.mainRegion.show(new Layout1());
+myApp.mainRegion.currentView.myRegion1.show(new Layout2());
+myApp.mainRegion.currentView.myRegion1.currentView.myRegion2.show(new Layout3());
 ```
 
 Or if you like chaining:
 
 ```js
-MyApp.mainRegion.show(new Layout1())
+myApp.mainRegion.show(new Layout1())
   .currentView.myRegion1.show(new Layout2())
   .currentView.myRegion2.show(new Layout3());
 ```
