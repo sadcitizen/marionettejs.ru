@@ -7,7 +7,7 @@ script или непосредственно JavaScript-файлов, если �
 добавив свою собственную функциональность.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var MyApp = new Marionette.Application();
 ```
 
 ## Содержание
@@ -54,15 +54,15 @@ var myApp = new MyApp({container: '#app'});
 функиции обратного вызова инициализатора.
 
 ```js
-MyApp.addInitializer(function(options){
+myApp.addInitializer(function(options){
   // do useful stuff here
   var myView = new MyView({
     model: options.someModel
   });
-  MyApp.mainRegion.show(myView);
+  myApp.mainRegion.show(myView);
 });
 
-MyApp.addInitializer(function(options){
+myApp.addInitializer(function(options){
   new MyAppRouter();
   Backbone.history.start();
 });
@@ -94,11 +94,11 @@ MyApp.addInitializer(function(options){
 * **"start" / `onStart`**: вызывается после запуска `Application` и после исполнения инициализаторов.
 
 ```js
-MyApp.on("before:start", function(options){
+myApp.on("before:start", function(options){
   options.moreData = "Yo dawg, I heard you like options so I put some options in your options!"
 });
 
-MyApp.on("start", function(options){
+myApp.on("start", function(options){
   if (Backbone.history){
     Backbone.history.start();
   }
@@ -123,7 +123,7 @@ var options = {
   another: "#some-selector"
 };
 
-MyApp.start(options);
+myApp.start(options);
 ```
 
 ## Система обмена сообщениями
@@ -138,7 +138,7 @@ MyApp.start(options);
 быть сконфигурирован.
 
 ```js
-var MyApp = new Marionette.Application({ channelName: 'appChannel' });
+var myApp = new Marionette.Application({ channelName: 'appChannel' });
 ```
 
 Здесь будет дан только краткий обзор системы обмена сообщениями, более подробное описание вы можете
@@ -150,18 +150,18 @@ var MyApp = new Marionette.Application({ channelName: 'appChannel' });
 между различными частями вашего приложения, используя генерацию событий.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var myApp = new Marionette.Application();
 
 // Предупреждает пользователя (вызывается функция alert) 
 // при наступлении события  'minutePassed'
-MyApp.vent.on("minutePassed", function(someData){
+myApp.vent.on("minutePassed", function(someData){
   alert("Received", someData);
 });
 
 // Здесь будет генерироваться событие и 
 // передаваться значение window.someData каждую минуту
 window.setInterval(function() {
-  MyApp.vent.trigger("minutePassed", window.someData);
+  myApp.vent.trigger("minutePassed", window.someData);
 }, 1000 * 60);
 ```
 
@@ -172,18 +172,18 @@ window.setInterval(function() {
 доступен у экземпляра объекта `Application` через свойство `reqres`. 
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var myApp = new Marionette.Application();
 
 // Устанавливаем обработчик, который возвращает todoList в зависимости от значения type
-MyApp.reqres.setHandler("todoList", function(type){
+myApp.reqres.setHandler("todoList", function(type){
   return this.todoLists[type];
 });
 
 // Делаем запрос для получения списка покупок
-var groceryList = MyApp.reqres.request("todoList", "groceries");
+var groceryList = myApp.reqres.request("todoList", "groceries");
 
 // Метод запроса можно также получить непосредственно из экземпляра объекта Application
-var groceryList = MyApp.request("todoList", "groceries");
+var groceryList = myApp.request("todoList", "groceries");
 ```
 
 ### Команды
@@ -195,20 +195,20 @@ var groceryList = MyApp.request("todoList", "groceries");
 Следует обратить внимание, что функция обратного вызова команды не предназначена для возврата значения.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var myApp = new Marionette.Application();
 
-MyApp.model = new Backbone.Model();
+myApp.model = new Backbone.Model();
 
 // Устанавливаем обработчик, который вызывает считывание модели с сервера
-MyApp.commands.setHandler("fetchData", function(reset){
+myApp.commands.setHandler("fetchData", function(reset){
   MyApp.model.fetch({reset: reset});
 });
 
 // Исполнение запроса на считывание данных
-MyApp.commands.execute("fetchData", true);
+myApp.commands.execute("fetchData", true);
 
 // Метод исполнения запроса можно также получить непосредственно из экземпляра объекта Application
-MyApp.execute("fetchData", true);
+myApp.execute("fetchData", true);
 ```
 
 ### Доступ к системе обмена сообщениями
@@ -244,7 +244,7 @@ window.app.vent;
 Первый способ - это определение jQuery-селектора как значения для имени региона. В этом случае будет создан экземпляр `Region` и ему будет назначен jQuery-селектор:
 
 ```js
-MyApp.addRegions({
+myApp.addRegions({
   someRegion: "#some-div",
   anotherRegion: "#another-div"
 });
@@ -259,7 +259,7 @@ var MyCustomRegion = Marionette.Region.extend({
   el: "#foo"
 });
 
-MyApp.addRegions(function() {
+myApp.addRegions(function() {
   return {
     someRegion: MyCustomRegion
   };
@@ -273,7 +273,7 @@ MyApp.addRegions(function() {
 ```js
 var MyCustomRegion = Marionette.Region.extend({});
 
-MyApp.addRegions({
+myApp.addRegions({
 
   someRegion: {
     selector: "#foo",
@@ -323,12 +323,12 @@ Marionette.Application.extend({
 Ссылку на регион можно получить по его имени с помощью метода `getRegion`:
 
 ```js
-var app = new Marionette.Application();
-app.addRegions({ r1: "#region1" });
+var myApp = new Marionette.Application();
+myApp.addRegions({ r1: "#region1" });
 
 // r1 === r1Again; true
-var r1 = app.getRegion("r1");
-var r1Again = app.r1;
+var r1 = myApp.getRegion("r1");
+var r1Again = myApp.r1;
 ```
 
 Доступ к региону через точечнную нотацию как к свойству объекта приложения эквивалентен доступу через метод `getRegion`.
@@ -338,7 +338,7 @@ var r1Again = app.r1;
 Регионы могут быть удалены с помощью метода `removeRegion`, который принимает в виде строки имя удаляемого региона:
 
 ```js
-MyApp.removeRegion('someRegion');
+myApp.removeRegion('someRegion');
 ```
 
 Перед тем как регион будет удален из объекта приложения, для него будут вызваны специальные методы, 
