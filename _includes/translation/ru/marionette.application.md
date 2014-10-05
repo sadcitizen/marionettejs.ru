@@ -31,7 +31,7 @@ var myApp = new Marionette.Application();
   * [Удаление регионов](#removing-regions)
 * [Application.getOption](#applicationgetoption)
 
-### <a name="initialize"></a> Initialize
+### <a name="initialize"></a> Метод initialize
 
 Метод `initialize` вызывается сразу же после того, как был создан экземпляр `Application`. 
 При этом этот метод будет вызван с теми же аргументами, которые получил конструктор `Application`.
