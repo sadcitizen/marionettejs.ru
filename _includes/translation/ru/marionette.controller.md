@@ -21,26 +21,27 @@
 ```js
 // объявление контроллера
 var MyController = Marionette.Controller.extend({
-  initialize: function(options){
+  initialize: function(options) {
     this.stuff = options.stuff;
   },
-  doStuff: function(){
+  
+  doStuff: function() {
     this.trigger("stuff:done", this.stuff);
   }
 });
 
 // создание экземпляра
-var c = new MyController({
+var myController = new MyController({
   stuff: "some stuff"
 });
 
 // использование встроенного EventBinder
-c.listenTo(c, "stuff:done", function(stuff){
+myController.listenTo(c, "stuff:done", function(stuff) {
   console.log(stuff);
 });
 
 // вызов некоего функционала
-c.doStuff();
+myController.doStuff();
 ```
 
 ## <a name="get-option"></a> Метод `getOption`
@@ -62,7 +63,6 @@ c.doStuff();
 ```js
 // объявление контроллера с методом onDestroy
 var MyController = Marionette.Controller.extend({
-
   onBeforeDestroy: function(arg1, arg2){
     // код в этом месте будет выполнен до выключения контроллера
   }
@@ -70,20 +70,19 @@ var MyController = Marionette.Controller.extend({
   onDestroy: function(arg1, arg2){
     // код в этом месте будет обрабатывать выключение контроллера
   }
-
 });
 
 // создание нового экземпляра контроллера
-var contr = new MyController();
+var myController = new MyController();
 
 // добавление нескольких обработчиков событий
-contr.on("before:destroy", function(arg1, arg2){ ... });
-contr.on("destroy", function(arg1, arg2){ ... });
-contr.listenTo(something, "bar", function(){...});
+myController.on("before:destroy", function(arg1, arg2){ ... });
+myController.on("destroy", function(arg1, arg2){ ... });
+myController.listenTo(something, "bar", function(){...});
 
 // выключение контроллера: отписываемся от всех событий,
 // вызов события "destroy" и метода onDestroy
-contr.destroy(arg1, arg2);
+myController.destroy(arg1, arg2);
 ```
 
 ## <a name="on-the-name-controller"></a> Термин 'Controller'

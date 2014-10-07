@@ -34,17 +34,15 @@ Marionette имеет базовый класс `Marionette.View`,
 прослушивания событий (привязки к событиям) модели, коллекции или других событий от объектов Backbone и Marionette.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
-  initialize: function(){
+var MyView = Marionette.ItemView.extend({
+  initialize: function() {
     this.listenTo(this.model, "change:foo", this.modelChanged);
     this.listenTo(this.collection, "add", this.modelAdded);
   },
 
-  modelChanged: function(model, value){
-  },
+  modelChanged: function(model, value) {},
 
-  modelAdded: function(model){
-  }
+  modelAdded: function(model){}
 });
 ```
 
@@ -67,8 +65,8 @@ this.listenTo(this.collection, "add", _.bind(this.reconcileCollection, this.coll
 в частности `ItemView`, `CollectionView`, `CompositeView`, и `LayoutView`.
 
 ```js
-Backbone.Marionette.ItemView.extend({
-  onShow: function(){
+Marionette.ItemView.extend({
+  onShow: function() {
     // вызывается, когда представление было отображено
   }
 });
@@ -77,7 +75,7 @@ Backbone.Marionette.ItemView.extend({
 Часто используемая ситуация для метода `onShow` это его использование для добавления дочерних представлений.
 
 ```js
-var LayoutView = Backbone.Marionette.LayoutView.extend({
+var LayoutView = Marionette.LayoutView.extend({
    regions: {
      Header: 'header',
      Section: 'section'
@@ -109,14 +107,14 @@ var LayoutView = Backbone.Marionette.LayoutView.extend({
 дополнительный код по очистке без необходимости переопределения метода `destroy`.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
-  onDestroy: function(arg1, arg2){
+var MyView = Marionette.ItemView.extend({
+  onDestroy: function(arg1, arg2) {
     // свой код очистки или уничтожения, должен быть здесь
   }
 });
 
-var v = new MyView();
-v.destroy(arg1, arg2);
+var myView = new MyView();
+myView.destroy(arg1, arg2);
 ```
 
 ## Метод onBeforeDestroy
@@ -133,8 +131,8 @@ v.destroy(arg1, arg2);
 [DOM-зависимыми UI плагинами](http://lostechies.com/derickbailey/2012/02/20/using-jquery-plugins-and-ui-controls-with-backbone/) таких как [jQueryUI](http://jqueryui.com/) или [KendoUI](http://kendoui.com).
 
 ```js
-Backbone.Marionette.ItemView.extend({
-  onDomRefresh: function(){
+Marionette.ItemView.extend({
+  onDomRefresh: function() {
     // Манипуляции с `el` нужно делать здесь. Оно (`el`) уже было
     // сформировано, и HTML представления готов для использования.
   }
@@ -152,7 +150,7 @@ Backbone.Marionette.ItemView.extend({
 Некоторый синтаксический сахар добавляется от возможности использования хеша `ui`.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   // ...
 
   ui: {
@@ -174,7 +172,7 @@ var MyView = Backbone.Marionette.ItemView.extend({
 справой же стороны хеша определяются события представления, которые вы хотите вызвать у представления.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   // ...
 
   triggers: {
@@ -182,16 +180,16 @@ var MyView = Backbone.Marionette.ItemView.extend({
   }
 });
 
-var view = new MyView();
-view.render();
+var myView = new MyView();
+myView.render();
 
-view.on("something:do:it", function(args){
+myView.on("something:do:it", function(args) {
   alert("I DID IT!");
 });
 
 // нажатие ("click") на 'do-something' DOM-элемент
 // демонстрирует преобразование DOM-события
-view.$(".do-something").trigger("click");
+myView.$(".do-something").trigger("click");
 ```
 
 В результате выполнения этого кода, появится окно предупрежедения с текстом "I DID IT!".
@@ -202,7 +200,7 @@ view.$(".do-something").trigger("click");
 с помощью только метода `preventDefault`.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
   triggers: {
     "click .do-something": {
       event: "something:do:it",
@@ -216,8 +214,8 @@ Backbone.Marionette.CompositeView.extend({
 Вы также можете указать `triggers` как функцию, которая возвращает хеш сконфигурированных тригеров.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
-  triggers: function(){
+Marionette.CompositeView.extend({
+  triggers: function() {
     return {
       "click .that-thing": "that:i:sent:you"
     };
@@ -228,7 +226,7 @@ Backbone.Marionette.CompositeView.extend({
 Селекторы в триггере могут быть указаны через ситнаксический сахар от использования хеша ```ui```.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   ui: {
      'monkey': '.guybrush'
   },
@@ -253,7 +251,7 @@ Backbone.Marionette.ItemView.extend({
 которое вызвало событие.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   // ...
 
   triggers: {
@@ -261,9 +259,9 @@ var MyView = Backbone.Marionette.ItemView.extend({
   }
 });
 
-var view = new MyView();
+var myView = new MyView();
 
-view.on("some:event", function(args){
+myView.on("some:event", function(args) {
   args.view; // => экземпляр представления, которое вызвало событие
   args.model; // => модель из представления - view.model, если модель была установлена в прдедставлении
   args.collection; // => коллекция из представления - view.collection, если коллекция была установлена в прдедставлении
@@ -281,8 +279,7 @@ view.on("some:event", function(args){
 который будет методом обратного вызова.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
-
+Marionette.CompositeView.extend({
   modelEvents: {
     "change:name": "nameChanged" // эквивалентно - view.listenTo(view.model, "change:name", view.nameChanged, view)
   },
@@ -294,7 +291,6 @@ Backbone.Marionette.CompositeView.extend({
   // ... методы обработчики событий
   nameChanged: function(){ /* ... */ },
   itemAdded: function(){ /* ... */ },
-
 })
 ```
 
@@ -314,15 +310,14 @@ Backbone.Marionette.CompositeView.extend({
 разделяя их между собой пробелом.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
-
+Marionette.CompositeView.extend({
   modelEvents: {
     "change:name": "nameChanged thatThing"
   },
 
-  nameChanged: function(){ },
+  nameChanged: function() {},
 
-  thatThing: function(){ },
+  thatThing: function() {},
 });
 ```
 
@@ -334,14 +329,12 @@ Backbone.Marionette.CompositeView.extend({
 в виде строкового название метода.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
-
+Marionette.CompositeView.extend({
   modelEvents: {
-    "change:name": function(){
+    "change:name": function() {
       // обработка события изменения имени будет здесь
     }
   }
-
 });
 ```
 
@@ -353,12 +346,10 @@ Backbone.Marionette.CompositeView.extend({
 который должен соответствовать виду указанному выше, т.е. иметь корректные вышеуказаные параметры.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
-
-  modelEvents: function(){
+Marionette.CompositeView.extend({
+  modelEvents: function() {
     return { "change:name": "someFunc" };
   }
-
 });
 ```
 
@@ -422,12 +413,12 @@ jQuery-селектором. После этого вы можете получ�
 ```
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   template: "#my-template",
 
-  templateHelpers: function () {
+  templateHelpers: function() {
     return {
-      showMessage: function(){
+      showMessage: function() {
         return this.name + " is the coolest!";
       },
 
@@ -440,11 +431,12 @@ var model = new Backbone.Model({
   name: "Backbone.Marionette",
   decimal: 1
 });
-var view = new MyView({
+
+var myView = new MyView({
   model: model
 });
 
-view.render(); //=> "I 100% think that Backbone.Marionette is the coolest!";
+myView.render(); //=> "I 100% think that Backbone.Marionette is the coolest!";
 ```
 
 Атрибут `templateHelpers` может быть передан как параметр в конструктор любого Marionette-класса,
@@ -457,7 +449,7 @@ var MyView = Marionette.ItemView.extend({
 
 new MyView({
   templateHelpers: {
-    doFoo: function(){ /* ... */ }
+    doFoo: function() { /* ... */ }
   }
 });
 ```
@@ -471,7 +463,7 @@ new MyView({
 
 ```js
 templateHelpers: {
-  something: function(){
+  something: function() {
     return "Do stuff with " + this.name + " because it's awesome.";
   }
 }
@@ -487,8 +479,8 @@ templateHelpers: {
 к данным представления.
 
 ```js
-Backbone.Marionette.ItemView.extend({
-  templateHelpers: function(){
+Marionette.ItemView.extend({
+  templateHelpers: function() {
     return {
       foo: function(){ /* ... */ }
     }
@@ -505,9 +497,9 @@ Backbone.Marionette.ItemView.extend({
 вашего представления и использовать ее для возвращения нужного вам шаблона.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
-  getTemplate: function(){
-    if (this.model.get("foo")){
+var MyView = Marionette.ItemView.extend({
+  getTemplate: function() {
+    if (this.model.get("foo")) {
       return "#some-template";
     } else {
       return "#a-different-template";

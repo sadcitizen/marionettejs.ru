@@ -44,7 +44,7 @@ to the layoutView.
 ```
 
 ```js
-var AppLayoutView = Backbone.Marionette.LayoutView.extend({
+var AppLayoutView = Marionette.LayoutView.extend({
   template: "#layout-view-template",
 
   regions: {
@@ -68,7 +68,8 @@ layoutView.content.show(new MainContentView());
 
 ### <a name="region-options"></a> Region Options
 
-A `LayoutView` can take a `regions` hash that allows you to specify regions per `LayoutView` instance.
+Конструктор `LayoutView` может принимать хэш `regions`, который позволяет указать список регионов 
+для каждого экземпляра `LayoutView`.
 
 ```js
 new Marionette.LayoutView({
@@ -84,15 +85,14 @@ new Marionette.LayoutView({
 
 ### <a name="specifying-regions-as-a-function"></a> Указание регионов с помощью функции
 
-Regions can be specified on a LayoutView using a function that returns
-an object with the region definitions. The returned object follow the
-same rules for defining a region, as outlined above.
+Регионы могут быть указаны для `LayoutView` с помощью функции, которая возвращает объект с описаниями регионов. 
+Возвращаемый объект должен следовать тем же правилам для описания региона, которые были указаны выше. 
 
 ```js
 Marionette.LayoutView.extend({
   // ...
 
-  regions: function(options){
+  regions: function(options) {
     return {
       fooRegion: "#foo-element"
     };
@@ -180,13 +180,14 @@ has all of the core functionality of an item view. This includes
 the methods necessary to be shown within an existing region manager.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
-MyApp.addRegions({
+var myApp = new Marionette.Application();
+
+myApp.addRegions({
   mainRegion: "#main"
 });
 
 var layoutView = new AppLayout();
-MyApp.mainRegion.show(layoutView);
+myApp.mainRegion.show(layoutView);
 
 layoutView.show(new MenuView());
 ```
@@ -200,21 +201,23 @@ For example, to nest 3 layouts (all of these are equivalent):
 var layout1 = new Layout1();
 var layout2 = new Layout2();
 var layout3 = new Layout3();
-MyApp.mainRegion.show(layout1);
+
+myApp.mainRegion.show(layout1);
+
 layout1.region1.show(layout2);
 layout2.region2.show(layout3);
 ```
 
 ```js
-MyApp.mainRegion.show(new Layout1());
-MyApp.mainRegion.currentView.myRegion1.show(new Layout2());
-MyApp.mainRegion.currentView.myRegion1.currentView.myRegion2.show(new Layout3());
+myApp.mainRegion.show(new Layout1());
+myApp.mainRegion.currentView.myRegion1.show(new Layout2());
+myApp.mainRegion.currentView.myRegion1.currentView.myRegion2.show(new Layout3());
 ```
 
 Or if you like chaining:
 
 ```js
-MyApp.mainRegion.show(new Layout1())
+myApp.mainRegion.show(new Layout1())
   .currentView.myRegion1.show(new Layout2())
   .currentView.myRegion2.show(new Layout3());
 ```
@@ -240,15 +243,15 @@ your own implementation, you can specify an alternate class to use
 with the `regionClass` property of the `LayoutView`.
 
 ```js
-var MyLayoutView = Backbone.Marionette.LayoutView.extend({
+var MyLayoutView = Marionette.LayoutView.extend({
   regionClass: SomeCustomRegion
 });
 ```
 
-You can also specify custom `Region` classes for each `region`:
+Так же вы можете указать собственнный класс `Region` для каждого вашего региона:
 
 ```js
-var AppLayoutView = Backbone.Marionette.LayoutView.extend({
+var AppLayoutView = Marionette.LayoutView.extend({
   template: "#layout-view-template",
 
   regionClass: SomeDefaultCustomRegion,
@@ -268,39 +271,36 @@ var AppLayoutView = Backbone.Marionette.LayoutView.extend({
 
 ## <a name="adding-and-removing-regions"></a> Добавление и удаление регионов
 
-Regions can be added and removed as needed, in a
-LayoutView instance. Use the following methods:
+Если требуется, то регионы могут быть добавлены или удаленя из экземпляра `LayoutView`. 
+Для этого используются следующие методы:
 
 * `addRegion`
 * `addRegions`
 * `removeRegion`
 
-addRegion:
+Метод addRegion:
 
 ```js
 var layoutView = new MyLayoutView();
-
 // ...
 
 layoutView.addRegion("foo", "#foo");
 layoutView.foo.show(new someView());
 ```
 
-addRegions:
+Метод addRegions:
 
 ```js
 var layoutView = new MyLayoutView();
-
 // ...
 
-
-// Object literal
+// Литерал объекта
 layoutView.addRegions({
   foo: "#foo",
   bar: "#bar"
 });
 
-// Or, function that returns an object literal
+// Функция, которая возвращает литерал объекта
 layoutView.addRegions(function() {
   return {
     baz: "#baz",
@@ -309,22 +309,18 @@ layoutView.addRegions(function() {
 });
 ```
 
-removeRegions:
+Метод removeRegions:
 
 ```js
 var layoutView = new MyLayoutView();
-
 // ...
 
 layoutView.removeRegion("foo");
 ```
 
-Any region can be removed, whether it was defined
-in the `regions` attribute of the region definition,
-or added later.
+Любой регион может быть удален вне зависимости от того как он был задан.
 
-For more information on using these methods, see
-the `regionManager` documentation.
+За более полной информацией об этих методах следует обратиться к [документации](../regionmanager/) по `RegionManager`.
 
 ## <a name="region-naming"></a> Именование регионов
 
@@ -332,7 +328,7 @@ A LayoutViews' Regions are attached directly to the LayoutView instance with the
 as the key and the region itself as the value. Because of this, you need to be careful
 to avoid conflicts with existing properties on the LayoutView when you name your Region.
 
-The prototype chain of LayoutViews is:
+Цепочка прототипов для `LayoutViews` выглядит следующим образом:
 
 `Backbone.View > Marionette.View > Marionette.ItemView > Marionette.LayoutView`
 

@@ -11,14 +11,14 @@
   * [Проксирование событий](#the-event-proxy)
   * [Триггеры](#triggers)
   * [События модели](#model-events)
-  * [События коллекции](#model-events)
+  * [События коллекции](#collection-events)
   * [Группированные поведения](#grouped-behaviors)
   * [$](#$)
   * [$el и el](#$el-and-el)
   * [Свойство defaults](#defaults)
   * [Свойство view](#view)
 
-## Причина появления
+## <a name="the-motivation"></a> Причина появления
 
 Когда вы пишете более и более сложные представления, вы замечаете, что ваше `view` все меньше 
 используется для отображения данных модели, а все более для поддержки взаимодействий с пользователем.
@@ -26,7 +26,7 @@
 Эти взаимодействия, как правило, представляются отдельными кусками логики, которую вы, скорее всего,
 захотите использовать в других представлениях.
 
-## Использование
+## <a name="using"></a> Использование
 
 Приведем пример простого `itemView`. Давайте попробуем упростить его и абстрагируем поведение от него.
 
@@ -124,9 +124,9 @@ var ToolTip = Marionette.Behavior.extend({
 Простой пример для этого выглядит следующим образом:
 
 ```js
-  Marionette.Behaviors.behaviorsLookup = function() {
-    return window.Behaviors;
-  }
+Marionette.Behaviors.behaviorsLookup = function() {
+  return window.Behaviors;
+}
 ```
 
 В этом примере ваши поведения будут сохранены следующим образом:
@@ -152,9 +152,9 @@ var Modal = Marionette.Behavior.extend({
 
 Вложенные поведения действуют так, как будто они были напрямую определены в экземпляре представления.
 
-## API
+## <a name="api"></a> API
 
-### Проксирование событий
+### <a name="the-event-proxy"></a> Проксирование событий
 
 Поведения используют для взаимодействия прокси события. Это значит, что любые события,
 которые генерируются функцией представления `triggerMethod`, передаются каждому `Behavior`
@@ -177,7 +177,7 @@ Marionette.Behavior.extend({
 });
 ```
 
-### Триггеры
+### <a name="triggers"></a> Триггеры
 
 Любой указанный в `triggers` триггер будет срабатывать в ответ на соответствующие событие в представлении.
 
@@ -189,62 +189,61 @@ Marionette.Behavior.extend({
 });
 ```
 
-### События модели
+### <a name="model-events"></a> События модели
 
 Указав `modelEvents`, позволит прослушивать и реагировать на события модели представления.
 
 ```js
-  Marionette.Behavior.extend({
-    modelEvents: {
-      "change:doge": "onDogeChange"
-    },
+Marionette.Behavior.extend({
+  modelEvents: {
+    "change:doge": "onDogeChange"
+  },
 
-    onDogeChange: function() {
-      // купить больше doge...
-    }
-  });
+  onDogeChange: function() {
+    // купить больше doge...
+  }
+});
 ```
 
-### События коллекции
+### <a name="collection-events"></a> События коллекции
 
 Указав `collectionEvents`, позволит прослушивать и реагировать на события коллекции представления.
 
 ```js
-  Marionette.Behavior.extend({
-    collectionEvents: {
-      add: "onCollectionAdd"
-    },
+Marionette.Behavior.extend({
+  collectionEvents: {
+    add: "onCollectionAdd"
+  },
 
-    onCollectionAdd: function() {
-    }
-  });
+  onCollectionAdd: function() {}
+});
 ```
 
-### Группированные поведения
+### <a name="grouped-behaviors"></a> Группированные поведения
 
 Ключи в свойстве `behaviors` поведения позволяют группировать различные поведения вместе.
 
 ```js
-  Marionette.Behavior.extend({
-    behaviors: {
-      SomeBehavior: {}
-    }
-  });
+Marionette.Behavior.extend({
+  behaviors: {
+    SomeBehavior: {}
+  }
+});
 ```
 
-### $
+### <a name="$"></a> $
 
 Метод `$` в поведении является прямым прокси на метод `$` из представления.
 
 ```js
-  Marionette.Behavior.extend({
-    onShow: function() {
-      this.$('.zerg')
-    }
-  });
+Marionette.Behavior.extend({
+  onShow: function() {
+    this.$('.zerg')
+  }
+});
 ```
 
-### $el и el
+### <a name="$el-and-el"></a> $el и el
 
 Свойство `el` в поведении является прямым прокси на свойство `el` из представления.
 Аналогично и свойство `$el` является прямым прокси на свойство `$el` из представления,
@@ -258,7 +257,7 @@ Marionette.Behavior.extend({
 });
 ```
 
-### Свойство defaults
+### <a name="defaults"></a> Свойство defaults
 
 Свойство `defaults` может быть `хэшом` или `функцией`, которое определяет значения для опции по умолчанию
 для вашего поведения. Опции по умолчанию из `defaults` будут переопределенны в зависимости от того, 
@@ -284,14 +283,14 @@ Marionette.Behavior.extend({
 });
 ```
 
-### Свойство view
+### <a name="view"></a> Свойство view
 
 Свойство `view` это ссылка на экземпляр представления, в котором добавлено `поведение`.
 
 ```js
 Marionette.Behavior.extend({
-	handleDestroyClick: function() {
-		this.view.destroy();
-	}
+  handleDestroyClick: function() {
+    this.view.destroy();
+  }
 });
 ```

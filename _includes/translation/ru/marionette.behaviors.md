@@ -8,12 +8,12 @@
   * [Метод getBehaviorClass](#getbehaviorclass)
   * [Свойство behaviorClass](#behaviorclass)
 
-## API
+## <a name="api"></a> API
 
 Есть два метода класса, которые вы можете переопределить в классе `Behaviors`. Остальная часть класса связана
 с деталями реализации представлений.
 
-### Метод behaviorsLookup
+### <a name="behaviorslookup"></a> Метод behaviorsLookup
 
 Этот метод определяет место, где хранятся классы ваших поведений. Самая простая реализация может выглядит
 следующим образом.
@@ -35,6 +35,7 @@ var MyView = Marionette.ItemView.extend({
     CloseWarn: {
       message: "you are closing all your data is now gone!"
     },
+    
     ToolTip: {
       text: "what a nice mouse you have"
     }
@@ -42,7 +43,7 @@ var MyView = Marionette.ItemView.extend({
 });
 ```
 
-### Метод getBehaviorClass
+### <a name="getbehaviorclass"></a> Метод getBehaviorClass
 
 Этот метод имеет реализацию по умолчанию, которую можно легко переопределить. Он отвечает за поиск нужного
 поведения в месте указанном в `Behaviors.behaviorsLookup` или другом месте.
@@ -57,9 +58,11 @@ getBehaviorClass: function(options, key) {
 }
 ```
 
-### Свойство behaviorClass
+### <a name="behaviorclass"></a> Свойство behaviorClass
 
-Это свойство позволяет вам передавать `класс`, который будет использоваться как класс `поведения` (в обход нормальному поиску по ключу). Это полезно, когда поведение является зависимостью (dependency) представления через [requirejs](http://requirejs.org/). Свойства, переданные этим способом, будут использованы в методе `getBehaviorClass`.
+Это свойство позволяет вам передавать `класс`, который будет использоваться как класс `поведения` (в обход нормальному поиску по ключу). 
+Это полезно, когда поведение является зависимостью (dependency) представления через [requirejs](http://requirejs.org/). 
+Свойства, переданные этим способом, будут использованы в методе `getBehaviorClass`.
 
 ```js
 define(['marionette', 'lib/tooltip'], function(Marionette, Tooltip) {

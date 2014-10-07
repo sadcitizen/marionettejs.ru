@@ -17,12 +17,12 @@
 * [Определение контекста для каждого коллбэка](#specify-context-per-callback)
 * [Продвинутое / асинхронное использование](#advanced--async-use)
 
-## Основное применение
+## <a name="basic-usage"></a> Основное применение
 
 ```js
-var callbacks = new Backbone.Marionette.Callbacks();
+var callbacks = new Marionette.Callbacks();
 
-callbacks.add(function(options){
+callbacks.add(function(options) {
   alert("I'm a callback with " + options.value + "!");
 });
 
@@ -34,15 +34,15 @@ options!". Контекст вызова для каждого из коллбэ
 объект `someContext`, который является опциональным параметром и может быть
 любым валидным JavaScript-объектом.
 
-## Указание контекста для каждого коллбека
+## <a name="specify-context-per-callback"></a> Указание контекста для каждого коллбека
 
 Дополнительно вы можете указать требуемый контекст для каждого из коллбэков
 в момент добавления коллбэка:
 
 ```js
-var callbacks = new Backbone.Marionette.Callbacks();
+var callbacks = new Marionette.Callbacks();
 
-callbacks.add(function(options){
+callbacks.add(function(options) {
   alert("I'm a callback with " + options.value + "!");
 
   // в качестве второго параметра укажем контекст для коллбэка
@@ -55,7 +55,7 @@ callbacks.run({value: "options"}, someContext);
 В этом случае в запущенном коллбэке `this` будет указывать на объект `myContext`,
 а не на `someContext`.
 
-## Продвинутое / Асинхронное использование
+## <a name="advanced--async-use"></a> Продвинутое / Асинхронное использование
 
 `Callbacks` выполняет каждый коллбэк способом, похожим на асинхронный,
 и может быть использовать для облегчения работы с асинхронными обратными вызовами (коллбэками).

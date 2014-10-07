@@ -10,6 +10,7 @@ Marionette содержит набор утилит / функций-хелпе�
 * [Marionette.triggerMethod](#marionettetriggermethod)
 * [Marionette.bindEntityEvents](#marionettebindentityevents)
 * [Marionette.triggerMethodOn](#marionettetriggermethodon)
+* [Marionette.bindEntityEvent](#marionettebindentityevents)
 * [Marionette.unbindEntityEvents](#marionetteunbindentityevents)
 * [Marionette.proxyBindEntityEvents](#marionetteproxybindentityevents)
 * [Marionette.proxyUnbindEntityEvents](#marionetteproxyunbindentityevents)
@@ -26,7 +27,7 @@ Marionette содержит набор утилит / функций-хелпе�
 из какой сущности получить эту функцию, будь то Backbone.View, Backbone.Model или другой объект из Backbone.
 
 ```js
-var Foo = function(){};
+var Foo = function() {};
 
 // Используем Marionette.extend чтобы сделать Foo расширяемой  
 // точно так же как и другие объекты Backbone и Marionette
@@ -34,8 +35,7 @@ Foo.extend = Marionette.extend;
 
 // Теперь Foo может быть расширена для создания нового класса с методами
 var Bar = Foo.extend({
-
-  someMethod: function(){ ... }
+  someMethod: function() { ... }
 
   // ...
 });
@@ -54,7 +54,7 @@ var b = new Bar();
 var M = Backbone.Model.extend({
   foo: "bar",
 
-  initialize: function(attributes, options){
+  initialize: function(attributes, options) {
     this.options = options;
     var f = Marionette.getOption(this, "foo");
     console.log(f);
@@ -81,7 +81,7 @@ new M({}, { foo: "quux" }); // => "quux"
 var M = Backbone.Model.extend({
   foo: "bar",
 
-  initialize: function(){
+  initialize: function() {
     var f = Marionette.getOption(this, "foo");
     console.log(f);
   }
@@ -105,8 +105,7 @@ new M({}, { foo: f }); // => "bar"
 
 ```js
 _.extend(Pagination.prototype, {
-
-  getFoo: function(){
+  getFoo: function() {
     return this.getOption("foo");
   },
 
@@ -150,22 +149,20 @@ Marionette.triggerMethodOn(ctx, "foo", bar);
 
 ```js
 Backbone.View.extend({
-
   modelEvents: {
     "change:foo": "doSomething"
   },
 
-  initialize: function(){
+  initialize: function() {
     Marionette.bindEntityEvents(this, this.model, this.modelEvents);
   },
 
-  doSomething: function(){
+  doSomething: function() {
     // Событие "change:foo" было поймано от model
     
     // Сюда можно поместить код, который будет реагировать 
     // на это событие соответствующим образом
   }
-
 });
 ```
 
@@ -182,16 +179,15 @@ Backbone.View.extend({
 // Точно так же, как и в примере выше, мы привязываем события к модели.
 // Одноко, в этом случае, мы отвяжем их при закрытии.
 Backbone.View.extend({
-
   modelEvents: {
     "change:foo": "doSomething"
   },
 
-  initialize: function(){
+  initialize: function() {
     Marionette.bindEntityEvents(this, this.model, this.modelEvents);
   },
 
-  doSomething: function(){
+  doSomething: function() {
     // Событие "change:foo" было поймано от model
         
     // Сюда можно поместить код, который будет реагировать 
@@ -201,7 +197,6 @@ Backbone.View.extend({
   onClose: function() {
     Marionette.unbindEntityEvents(this, this.model, this.modelEvents);
   }
-
 });
 ```
 
@@ -214,13 +209,11 @@ Backbone.View.extend({
 
 ```js
 _.extend(Pagination.prototype, {
+  bindSomething: function() {
+    this.bindEntityEvents(this.something, this.somethingEvents)
+  },
 
-   bindSomething: function() {
-     this.bindEntityEvents(this.something, this.somethingEvents)
-   },
-
-   bindEntityEvents: Marionette.proxyBindEntityEvents
-
+  bindEntityEvents: Marionette.proxyBindEntityEvents
 });
 ```
 
@@ -235,19 +228,17 @@ _.extend(Pagination.prototype, {
 
 ```js
 _.extend(Pagination.prototype, {
-
-   bindSomething: function() {
-     this.bindEntityEvents(this.something, this.somethingEvents)
-   },
+  bindSomething: function() {
+    this.bindEntityEvents(this.something, this.somethingEvents)
+  },
    
-   unbindSomething: function() {
-     this.unbindEntityEvents(this.something, this.somethingEvents)
-   },
+  unbindSomething: function() {
+    this.unbindEntityEvents(this.something, this.somethingEvents)
+  },
 
-   bindEntityEvents: Marionette.proxyBindEntityEvents,
+  bindEntityEvents: Marionette.proxyBindEntityEvents,
    
-   unbindEntityEvents: Marionette.proxyUnbindEntityEvents
-
+  unbindEntityEvents: Marionette.proxyUnbindEntityEvents
 });
 ```
 
@@ -261,17 +252,17 @@ view-классами, то есть `ItemView`, `LayoutView` и др. (так �
 
 ```js
 var View = Marionette.ItemView.extend({
-
   initialize: function() {
     this.someFn = function() {};
     this.someOtherFn = function() {};
+
     var hash = {
       eventOne: "someFn", // Станет ссылкой на `this.someFn`
       eventTwo: this.someOtherFn
     };
+
     this.normalizedHash = this.normalizeMethods(hash);
   }
-
 });
 ```
 

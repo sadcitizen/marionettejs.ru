@@ -18,7 +18,7 @@
 
 ```js
 var Friend = Marionette.Object.extend({
-  initialize: function(options){
+  initialize: function(options) {
     console.log(options.name);
   }
 });
@@ -68,12 +68,10 @@ john.graduate();
 ```js
 // Объявляем объект с методом onDestroy
 var MyObject = Marionette.Object.extend({
-
-  onBeforeDestroy: function(arg1, arg2){
+  onBeforeDestroy: function(arg1, arg2) {
     // Сюда можно поместить собственный 
     // код, который уничтожит этот объект
   }
-
 });
 
 // Создаем экземпляр объекта
@@ -96,21 +94,19 @@ obj.destroy(arg1, arg2);
 
 ```js
 var Selections = Marionette.Object.extend({
-
-  initialize: function(options){
+  initialize: function(options) {
     this.selections = {};
   },
 
-  select: function(key, item){
+  select: function(key, item) {
     this.triggerMethod("select", key, item);
     this.selections[key] = item;
   },
 
-  deselect: function (argument) {
+  deselect: function(key, item) {
     this.triggerMethod("deselect", key, item);
     delete this.selections[key];
   }
-
 });
 
 var selections = new Selections({
@@ -122,5 +118,5 @@ selections.listenTo(selections, "select", function(key, item){
   console.log(item);
 });
 
-selections.select(toyTruck);
+selections.select('toy', Truck);
 ```

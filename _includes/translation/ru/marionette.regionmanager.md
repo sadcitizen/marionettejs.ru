@@ -248,7 +248,7 @@ allows you to perform some actions on the region before it is added.
 ```js
 var rm = new Marionette.RegionManager();
 
-rm.on("before:add:region", function(name, region){
+rm.on("before:add:region", function(name, region) {
   // do something with the region instance
 });
 
@@ -266,7 +266,7 @@ reference to it:
 ```js
 var rm = new Marionette.RegionManager();
 
-rm.on("add:region", function(name, region){
+rm.on("add:region", function(name, region) {
 
   // add the region instance to an object
   myObject[name] = region;
@@ -285,7 +285,7 @@ This allows you to perform any cleanup operations before the region is removed.
 ```js
 var rm = new Marionette.RegionManager();
 
-rm.on("before:remove:region", function(name, region){
+rm.on("before:remove:region", function(name, region) {
   // do something with the region instance here
 });
 
@@ -305,7 +305,7 @@ reference to it:
 ```js
 var rm = new Marionette.RegionManager();
 
-rm.on("remove:region", function(name, region){
+rm.on("remove:region", function(name, region) {
   // add the region instance to an object
   delete myObject[name];
 });
@@ -327,7 +327,7 @@ the `each` method:
 ```js
 var rm = new Marionette.RegionManager();
 
-rm.each(function(region){
+rm.each(function(region) {
   // do stuff w/ the region instance here
 });
 ```

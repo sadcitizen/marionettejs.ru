@@ -16,7 +16,7 @@
 ```js
 var template = "#some-template";
 var data = {foo: "bar"};
-var html = Backbone.Marionette.Renderer.render(template, data);
+var html = Marionette.Renderer.render(template, data);
 
 // какие-то манипуляции с HTML
 ```
@@ -31,7 +31,7 @@ var html = Backbone.Marionette.Renderer.render(template, data);
 
 ```js
 var myTemplate = _.template("<div>foo</div>");
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   template: myTemplate
 });
 ```
@@ -49,7 +49,7 @@ Backbone.Marionette.ItemView.extend({
 переопределить используемый шаблонизатор, то измените метод `render` по своему усмотрению:
 
 ```js
-Backbone.Marionette.Renderer.render = function(template, data){
+Marionette.Renderer.render = function(template, data) {
   return $(template).tmpl(data);
 });
 ```
@@ -61,7 +61,7 @@ Backbone.Marionette.Renderer.render = function(template, data){
 необходимый для получения шаблона из кэша: 
 
 ```js
-Backbone.Marionette.Renderer.render = function(template, data){
+Marionette.Renderer.render = function(template, data) {
   var template = Marionette.TemplateCache.get(template);
   // Какие-то действия с шаблоном
 };
@@ -75,7 +75,7 @@ Backbone.Marionette.Renderer.render = function(template, data){
 Чтобы сделать это, просто переопределите метод `render` на метод, который вернет исполняемый шаблон с данными.
 
 ```js
-Backbone.Marionette.Renderer.render = function(template, data){
+Marionette.Renderer.render = function(template, data) {
   return template(data);
 };
 ```
@@ -86,7 +86,7 @@ Backbone.Marionette.Renderer.render = function(template, data){
 ```js
 var myPrecompiledTemplate = _.template("<div>some template</div>");
 
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   template: myPrecompiledTemplate
 });
 ```
