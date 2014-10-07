@@ -248,7 +248,7 @@ rm.destroy();
 var rm = new Marionette.RegionManager();
 
 rm.on("before:add:region", function(name, region) {
-  // что-то делает с экземпляром региона
+  // что-то делаем с экземпляром региона
 });
 
 rm.addRegion("foo", "#bar");
