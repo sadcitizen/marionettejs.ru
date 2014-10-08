@@ -22,7 +22,7 @@
   * [Событие add:region](#addregion-event)
   * [Событие before:remove:region](#beforeremoveregion-event)
   * [Событие remove:region](#removeregion-event)
-* [RegionManager Iterators](#regionmanager-iterators)
+* [Итераторы RegionManager-а](#regionmanager-iterators)
 
 ## Основное применение
 
@@ -311,24 +311,23 @@ rm.addRegion("foo", "#bar");
 rm.removeRegion("foo");
 ```
 
-## RegionManager Iterators
+## Итераторы RegionManager-а
 
-The RegionManager has several methods for iteration
-attached to it, from underscore.js. This works in the
-same way as the Backbone.Collection methods that have
-been imported. For example, you can easily iterate over
-the entire collection of region instances by calling
-the `each` method:
+`RegionManager` имеет несколько методов для итерирования,
+которые добавлены к нему от `underscore.js`. Они работают также,
+как и импортированные методы в `Backbone.Collection`. Например,
+вы можете легко перебрать всю коллекцию экземпляров регионов,
+вызвав метод `each`:
 
 ```js
 var rm = new Marionette.RegionManager();
 
 rm.each(function(region) {
-  // do stuff w/ the region instance here
+  // здесь код, который делает что-то с экземпляром региона
 });
 ```
 
-The list of underscore methods includes:
+Доступен следующий спиок underscore-методов:
 
 * forEach
 * each
