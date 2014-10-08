@@ -17,11 +17,11 @@
 * [RegionManager.removeRegions](#regionmanagerremoveregions)
 * [RegionManager.emptyRegions](#regionmanageremptyregions)
 * [RegionManager.destroy](#regionmanagerdestroy)
-* [RegionManager Events](#regionmanager-events)
-  * [before:add:region event](#beforeaddregion-event)
-  * [add:region event](#addregion-event)
-  * [before:remove:region event](#beforeremoveregion-event)
-  * [remove:region event](#removeregion-event)
+* [События RegionManager-а](#regionmanager-events)
+  * [Событие before:add:region](#beforeaddregion-event)
+  * [Событие add:region](#addregion-event)
+  * [Событие before:remove:region](#beforeremoveregion-event)
+  * [Событие remove:region](#removeregion-event)
 * [RegionManager Iterators](#regionmanager-iterators)
 
 ## Основное применение
@@ -234,41 +234,38 @@ rm.addRegions({
 rm.destroy();
 ```
 
-## RegionManager Events
+## События RegionManager-а
 
-A RegionManager will trigger various events as it
-is being used.
+`RegionManager` генерирует различные события в процессе своего использования.
 
-### before:add:region event
+### Событие before:add:region
 
-The `RegionManager` will trigger a "before:add:region"
-event before a region is added to the manager. This
-allows you to perform some actions on the region before it is added.
+`RegionManager` генерирует событие "before:add:region" перед тем,
+как регион будет добавлен в менеджер регионов. Это позволяет вам 
+добавить выполнение некоторого действия для региона перед его добавлением.
 
 ```js
 var rm = new Marionette.RegionManager();
 
 rm.on("before:add:region", function(name, region) {
-  // do something with the region instance
+  // что-то делаем с экземпляром региона
 });
 
 rm.addRegion("foo", "#bar");
 ```
 
-### add:region event
+### Событие add:region
 
-The RegionManager will trigger a "add:region"
-event when a region is added to the manager. This
-allows you to use the region instance immediately,
-or attach the region to an object that needs a
-reference to it:
+`RegionManager` генерирует событие "add:region", когда регион
+добавлен в менеджер регионов. Это событие позволяет вам сразу использовать
+экземпляр региона или добавить регион в объект, который нуждается в ссылке на него:
 
 ```js
 var rm = new Marionette.RegionManager();
 
 rm.on("add:region", function(name, region) {
 
-  // add the region instance to an object
+  // добавляем экземпляр региона в объект
   myObject[name] = region;
 
 });
@@ -276,17 +273,17 @@ rm.on("add:region", function(name, region) {
 rm.addRegion("foo", "#bar");
 ```
 
-### before:remove:region event
+### Событие before:remove:region
 
-The `RegionManager` will trigger a "before:remove:region"
-event before a region is removed from the manager.
-This allows you to perform any cleanup operations before the region is removed.
+`RegionManager` генерирует событие "before:remove:region" перед тем, как
+регион будет удален из менеджера регионов. Это событие позволяет вам выполнить
+любые операции очистки перед тем, как регион удалится.
 
 ```js
 var rm = new Marionette.RegionManager();
 
 rm.on("before:remove:region", function(name, region) {
-  // do something with the region instance here
+  // сделать что-то с экземпляром региона
 });
 
 rm.addRegion("foo", "#bar");
@@ -294,19 +291,18 @@ rm.addRegion("foo", "#bar");
 rm.removeRegion("foo");
 ```
 
-### remove:region event
+### Событие remove:region
 
-The RegionManager will trigger a "remove:region"
-event when a region is removed from the manager.
-This allows you to use the region instance one last
-time, or remove the region from an object that has a
-reference to it:
+`RegionManager` генерирует событие "remove:region", когда регион 
+удален из менеджера регионов. Это событие позволяет вам использовать
+экземпляр региона в последний раз или удалить регион из объекта, 
+который имеет на него ссылку:
 
 ```js
 var rm = new Marionette.RegionManager();
 
 rm.on("remove:region", function(name, region) {
-  // add the region instance to an object
+  // удаляем экземпляр региона из объекта
   delete myObject[name];
 });
 
