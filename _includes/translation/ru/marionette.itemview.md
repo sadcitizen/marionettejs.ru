@@ -1,16 +1,16 @@
-An `ItemView` is a view that represents a single item. That item may be a
-`Backbone.Model` or may be a `Backbone.Collection`. Whichever it is though, it
-will be treated as a single item.
+`ItemView` является представлением, которое изображает единичный элемент.
+Этот элемент может быть `Backbone.Model` или может быть `Backbone.Collection`.
+Каким бы не был этот элемент, он будет рассматриваться как единичный элемент. 
 
-ItemView extends directly from Marionette.View. Please see
-[the Marionette.View documentation](marionette.view.md)
-for more information on available features and functionality.
+`ItemView` наследован напрямую от `Marionette.View`. Пожалуйста, ознакомтесь с 
+[документацией по Marionette.View](marionette.view.md) для более полной информации 
+по доступным функциям и доступной функциональности.
 
-Additionally, interactions with Marionette.Region
-will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](marionette.region.md) for more information.
+Кроме того, взаимодействие с `Marionette.Region` предоставляет
+такие функции как коллбэк `onShow` и т.д. Пожалуйста, ознакомтесь с 
+[документацией по Region](marionette.region.md) для более полной информации.
 
-## Documentation Index
+## Содержание
 
 * [ItemView render](#itemview-render)
 * [Rendering A Collection In An ItemView](#rendering-a-collection-in-an-itemview)
