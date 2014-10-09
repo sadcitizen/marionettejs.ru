@@ -13,7 +13,7 @@
 ## Содержание
 
 * [Метод render](#itemview-render)
-* [Rendering A Collection In An ItemView](#rendering-a-collection-in-an-itemview)
+* [Отображение коллекций в ItemView](#rendering-a-collection-in-an-itemview)
 * [Template-less ItemView](#template-less-itemview)
 * [Events and Callback Methods](#events-and-callback-methods)
   * ["before:render" / onBeforeRender event](#beforerender--onbeforerender-event)
@@ -75,14 +75,14 @@ new MyView().render();
 
 Более подробную информацию о функции `_.template` можно узнать в [документации по Underscore](http://underscorejs.org/#template).
 
-## Rendering A Collection In An ItemView
+## Отображение коллекций в ItemView
 
-While the most common way to render a Backbone.Collection is to use
-a `CollectionView` or `CompositeView`, if you just need to render a
-simple list that does not need a lot of interaction, it does not
-always make sense to use these. A Backbone.Collection can be
-rendered with a simple ItemView, using the templates to iterate
-over an `items` array.
+В то время, как наиболее общий способ для отображения `Backbone.Collection`
+является использование `CollectionView` или `CompositeView`, иногда вам просто
+нужно отобразить простой список, которому не нужно много интерактивности,
+в этом случае нет смысла в использовании этих представлений. `Backbone.Collection`
+может быть отображена с помощью простого `ItemView`. Для этого в шаблонах
+можно использовать массив `items` для перебора элементов коллекции.
 
 ```js
 <script id="some-template" type="text/html">
