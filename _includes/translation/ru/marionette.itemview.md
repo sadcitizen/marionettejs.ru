@@ -12,7 +12,7 @@
 
 ## Содержание
 
-* [ItemView render](#itemview-render)
+* [Метод render](#itemview-render)
 * [Rendering A Collection In An ItemView](#rendering-a-collection-in-an-itemview)
 * [Template-less ItemView](#template-less-itemview)
 * [Events and Callback Methods](#events-and-callback-methods)
@@ -24,23 +24,25 @@
 * [Organizing ui elements](#organizing-ui-elements)
 * [modelEvents and collectionEvents](#modelevents-and-collectionevents)
 
-## ItemView render
+## Метод render
 
-Unlike Backbone Views, all Marionette views come with a powerful render method.
-In fact, the primary differences between the views are the differences in their
-render methods. It goes without saying that it is unwise to override the `render`
-method of any Marionette view. Instead, you should use the [`onBeforeRender` and `onRender` callbacks](#events-and-callback-methods)
-to layer in additional functionality to the rendering of your view.
+В отличие от `Backbone.Views`, все Marionette-представления оснащены мощным
+методом `render`. Фактически, основные различия между представлениями являются
+различия в их методах `render`. Бесусловно, что переопределение метода `render`
+у любого Marionette-представления является неразумным. Вместо этого, вы должны
+использовать [`onBeforeRender` и `onRender` коллбэки](#events-and-callback-methods)
+для добавления дополнительной функциональности в процесс отображения вашего
+представления.
 
-The `ItemView` defers to the `Marionette.Renderer` object to do the actual
-rendering of the template.
+`ItemView` передает объекту `Marionette.Renderer` сделать фактическое отображение
+шаблона.
 
-The item view instance is passed as the third argument to the
-`Renderer` object's `render` method, which is useful in custom
-`Renderer` implementations.
+Экземпляр `ItemView` передается как третий аргумент в метод `render`
+объекта `Marionette.Renderer`. Этот аргумент может быть полезен при
+собстенной реализации `Marionette.Renderer`.
 
-You should provide a `template` attribute on the item view, which
-will be either a jQuery selector:
+Вы должны определить атрибут `template` в `ItemView`. Этот атрибут
+может быть либо JQuery-селектором:
 
 ```js
 var MyView = Backbone.Marionette.ItemView.extend({
@@ -50,7 +52,7 @@ var MyView = Backbone.Marionette.ItemView.extend({
 new MyView().render();
 ```
 
-.. or a function taking a single argument: the object returned by [ItemView.serializeData](#itemview-serializedata):
+.. либо финкцией, принимающей один аргумент: объект, возвращаемый [ItemView.serializeData](#itemview-serializedata):
 
 ```js
 var my_template_html = '<div><%= args.name %></div>'
@@ -67,9 +69,11 @@ var MyView = Backbone.Marionette.ItemView.extend({
 new MyView().render();
 ```
 
-Note that using a template function allows passing custom arguments into the _.template function and allows for more control over how the _.template function is called.
+Обратите внимание, что использование `template` в виде функции позволяет 
+передавать собственные аргументы в функцию `_.template` и позволяет
+получить больший контроль над процессом вызова функции `_.template`.
 
-For more information on the _.template function see the [Underscore docs](http://underscorejs.org/#template).
+Более подробную информацию о функции `_.template` можно узнать в [документации по Underscore](http://underscorejs.org/#template).
 
 ## Rendering A Collection In An ItemView
 
