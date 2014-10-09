@@ -6,6 +6,7 @@
 * layout - макет
 * template - шаблон
 * view - представление
+* rendering - отображение/рендеринг
 * binding - привязка
 * [boilerplate code](http://en.wikipedia.org/wiki/Boilerplate_code) - повторяющийся код
 * route - роут
