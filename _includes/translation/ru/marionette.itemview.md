@@ -13,13 +13,13 @@
 ## Содержание
 
 * [Метод render](#itemview-render)
-* [Отображение коллекций в ItemView](#rendering-a-collection-in-an-itemview)
-* [Template-less ItemView](#template-less-itemview)
-* [Events and Callback Methods](#events-and-callback-methods)
-  * ["before:render" / onBeforeRender event](#beforerender--onbeforerender-event)
-  * ["render" / onRender event](#render--onrender-event)
-  * ["before:destroy" / onBeforeDestroy event](#beforedestroy--onbeforedestroy-event)
-  * ["destroy" / onDestroy event](#destroy--ondestroy-event)
+* [Отрисовка коллекций в ItemView](#rendering-a-collection-in-an-itemview)
+* [Безшаблонный ItemView](#template-less-itemview)
+* [События и Коллбеки](#events-and-callback-methods)
+  * [событие "before:render" / коллбек onBeforeRender](#beforerender--onbeforerender-event)
+  * [событие "render" / коллбек onRender](#render--onrender-event)
+  * [событие "before:destroy" / коллбек onBeforeDestroy](#beforedestroy--onbeforedestroy-event)
+  * [событие "destroy" / коллбек onDestroy](#destroy--ondestroy-event)  * 
 * [ItemView serializeData](#itemview-serializedata)
 * [Organizing ui elements](#organizing-ui-elements)
 * [modelEvents and collectionEvents](#modelevents-and-collectionevents)
@@ -30,12 +30,11 @@
 методом `render`. Фактически, основные различия между представлениями являются
 различия в их методах `render`. Бесусловно, что переопределение метода `render`
 у любого Marionette-представления является неразумным. Вместо этого, вы должны
-использовать [`onBeforeRender` и `onRender` коллбэки](#events-and-callback-methods)
-для добавления дополнительной функциональности в процесс отображения вашего
+использовать [`onBeforeRender` и `onRender` коллбеки](#events-and-callback-methods)
+для добавления дополнительной функциональности в процесс отрисовки вашего
 представления.
 
-`ItemView` передает объекту `Marionette.Renderer` сделать фактическое отображение
-шаблона.
+`ItemView` передает объекту `Marionette.Renderer` сделать фактическую отрисовку шаблона.
 
 Экземпляр `ItemView` передается как третий аргумент в метод `render`
 объекта `Marionette.Renderer`. Этот аргумент может быть полезен при
@@ -75,13 +74,13 @@ new MyView().render();
 
 Более подробную информацию о функции `_.template` можно узнать в [документации по Underscore](http://underscorejs.org/#template).
 
-## Отображение коллекций в ItemView
+## Отрисовка коллекций в ItemView
 
-В то время, как наиболее общий способ для отображения `Backbone.Collection`
+В то время, как наиболее общий способ для отрисовки `Backbone.Collection`
 является использование `CollectionView` или `CompositeView`, иногда вам просто
 нужно отобразить простой список, которому не нужно много интерактивности,
 в этом случае нет смысла в использовании этих представлений. `Backbone.Collection`
-может быть отображена с помощью простого `ItemView`. Для этого в шаблонах
+может быть отрисована с помощью простого `ItemView`. Для этого в шаблонах
 можно использовать массив `items` для перебора элементов коллекции.
 
 ```js
@@ -94,12 +93,11 @@ new MyView().render();
 </script>
 ```
 
-The important thing to note here, is the use of `items` as the
-variable to iterate in the `_.each` call. This will always be the
-name of the variable that contains your collection's items.
+Здесь важно отметить, что `items` используется как переменная для перебора (итерирования)
+в вызове `_.each`. В переменной `items` будут всегда содержаться элементы вашей коллекции.
 
-Then, from JavaScript, you can define and use an ItemView with this
-template, like this:
+Таким образом, в JavaScript вы можете определить и использовать
+`ItemView` с шаблоном из примера выше, следующим образом:
 
 ```js
 var MyItemsView = Marionette.ItemView.extend({
@@ -110,20 +108,24 @@ var view = new MyItemsView({
   collection: someCollection
 });
 
-// show the view via a region or calling the .render method directly
+// отобразить представление, используя регион, или вызвать метод .render у представления
 ```
 
-Rendering this view will convert the `someCollection` collection in to
-the `items` array for your template to use.
+При отрисовки этого представления коллекция `someCollection` будет преобразована
+в массив `items` для использования его в шаблоне.
 
-For more information on when you would want to do this, and what options
-you have for retrieving an individual item that was clicked or
-otherwise interacted with, see the blog post on
-[Getting The Model For A Clicked Element](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/).
+Для получения дополнительной информации о том, 
+когда вам может понадобится использовать такой подход,
+какие параметры вы имеете для получения отдельного элемента, когда происходит событие `click`
+или другое взаимодействие с отдельным элементом, вы можете прочитать в статье 
+[Получение модели при клике на  элемент](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/). 
 
-## Template-less ItemView
+## Безшабланный ItemView
 
-An `ItemView` can be attached to existing elements as well. The primary benefit of this is to attach behavior and events to static content that has been rendered by your server (typically for SEO purposes). To set up a template-less `ItemView`, your `template` attribute must be `false`.
+`ItemView` можно без особых проблем связать с существующими элементам. Основное приемущество этого,
+это возможность добавить поведение или события к статическому контенту, который был отрисован на сервере 
+(как правило, для целей SEO). Что бы создать безшаблонный `ItemView`, вам нужно установить 
+атрибуту `template` значение `false`.  
 
 ```html
 <div id="my-element">
@@ -155,22 +157,25 @@ var MyView = Marionette.ItemView.extend({
 var view = new MyView();
 view.render();
 
-view.ui.paragraph.text();        // returns 'Hello World'
-view.ui.button.trigger('click'); // logs 'I clicked the button!'
+view.ui.paragraph.text();        // возвращает 'Hello World'
+view.ui.button.trigger('click'); // в логе будет сообщение 'I clicked the button!'
 ```
 
-Another use case is when you want to attach a `Marionette.ItemView` to a SVG graphic or canvas element, to provide a uniform view layer interface to non-standard DOM nodes. By not having a template this allows you to also use a view on pre-rendered DOM nodes, such as complex graphic elements.
+Другой вариант использования, это когда вы хотите связать `Marionette.ItemView` с SVG-графикой или
+canvas-элементом, для создания единого интерфейса в виде слоя представления к нестандартным DOM-узлам.
+`ItemView` без шаблона позволяет вам также использовать представление для предварительно отрисованных
+DOM-узлов, таких как сложные грфические элементы.
 
-## Events and Callback Methods
+## События и Коллбеки
 
 There are several events and callback methods that are called
 for an ItemView. These events and methods are triggered with the
 [Marionette.triggerMethod](./marionette.functions.md) function, which
 triggers the event and a corresponding "on{EventName}" method.
 
-### "before:render" / onBeforeRender event
+### событие "before:render" / коллбек onBeforeRender
 
-Triggered before an ItemView is rendered.
+Генерируется до того, как `ItemView` будет отрисовано.
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -180,7 +185,7 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "render" / onRender event
+### событие "render" / коллбек onRender
 
 Triggered after the view has been rendered.
 You can implement this in your view to provide custom code for dealing
@@ -196,7 +201,7 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "before:destroy" / onBeforeDestroy event
+### событие "before:destroy" / коллбек onBeforeDestroy
 
 Triggered just prior to destroying the view, when the view's `destroy()`
 method has been called.
@@ -211,9 +216,9 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-### "destroy" / onDestroy event
+### событие "destroy" / коллбек onDestroy
 
-Triggered just after the view has been destroyed.
+Генерируется только после того, как предствление было уничтожено.
 
 ```js
 Backbone.Marionette.ItemView.extend({
