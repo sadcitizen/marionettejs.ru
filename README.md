@@ -19,5 +19,6 @@
 * swapped - смена/замена
 * template - шаблон
 * [thenable object](http://promisesaplus.com/) - объект с определенным методом then
+* trigger - инициировать/сгенерировать
 * up and running - запущено и работает
 * view - представление
