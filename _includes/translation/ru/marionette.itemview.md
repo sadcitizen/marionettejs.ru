@@ -20,7 +20,7 @@
   * [событие "render" / коллбек onRender](#render--onrender-event)
   * [событие "before:destroy" / коллбек onBeforeDestroy](#beforedestroy--onbeforedestroy-event)
   * [событие "destroy" / коллбек onDestroy](#destroy--ondestroy-event)
-* [ItemView serializeData](#itemview-serializedata)
+* [Метод serializeData](#itemview-serializedata)
 * [Organizing ui elements](#organizing-ui-elements)
 * [modelEvents and collectionEvents](#modelevents-and-collectionevents)
 
@@ -227,15 +227,14 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-## ItemView serializeData
+## Метод serializeData
 
-Item views will serialize a model or collection, by default, by
-calling `.toJSON` on either the model or collection. If both a model
-and collection are attached to an item view, the model will be used
-as the data source. The results of the data serialization will be passed to the template
-that is rendered.
+`ItemView` будет сериализовывать модель или коллекцию. По умолчанию, вызывается
+метод `.toJSON` у модели или коллекции. Если `ItemView` содержит одновременно
+модель и коллекцию, то только модель будет использоваться как источник данных для представления.
+Результат сериализации будет передан в шаблон, который отрисовывается.
 
-If the serialization is a model, the results are passed in directly:
+Если сериализуется модель, то результат сериализации передается непосредственно:
 
 ```js
 var myModel = new MyModel({foo: "bar"});
@@ -254,8 +253,7 @@ MyItemView.render();
 </script>
 ```
 
-If the serialization is a collection, the results are passed in as an
-`items` array:
+Если сериализуется коллекция, то результат сериализации передается в виде массива `items`:
 
 ```js
 var myCollection = new MyCollection([{foo: "bar"}, {foo: "baz"}]);
@@ -276,9 +274,10 @@ MyItemView.render();
 </script>
 ```
 
-If you need custom serialization for your data, you can provide a
-`serializeData` method on your view. It must return a valid JSON
-object, as if you had called `.toJSON` on a model or collection.
+Если вам нужен собственный способ сериализации ваших данных,
+то вы можете переопределить метод `serializeData` в вашем представлении.
+Метод должен возвращать корректный JSON-объект, как если бы вы вызвали метод
+`.toJSON` у модели или коллекции.
 
 ```js
 Backbone.Marionette.ItemView.extend({
