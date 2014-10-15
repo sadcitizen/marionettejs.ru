@@ -19,7 +19,7 @@
   * [событие "before:render" / коллбек onBeforeRender](#beforerender--onbeforerender-event)
   * [событие "render" / коллбек onRender](#render--onrender-event)
   * [событие "before:destroy" / коллбек onBeforeDestroy](#beforedestroy--onbeforedestroy-event)
-  * [событие "destroy" / коллбек onDestroy](#destroy--ondestroy-event)  * 
+  * [событие "destroy" / коллбек onDestroy](#destroy--ondestroy-event)
 * [ItemView serializeData](#itemview-serializedata)
 * [Organizing ui elements](#organizing-ui-elements)
 * [modelEvents and collectionEvents](#modelevents-and-collectionevents)
@@ -168,62 +168,61 @@ DOM-узлов, таких как сложные грфические элеме
 
 ## События и Коллбеки
 
-There are several events and callback methods that are called
-for an ItemView. These events and methods are triggered with the
-[Marionette.triggerMethod](./marionette.functions.md) function, which
-triggers the event and a corresponding "on{EventName}" method.
+Есть несколько событий и коллбеков, которые вызываются у `ItemView`.
+Эти события/коллбеки инициируются/вызываются с помощью функции 
+[Marionette.triggerMethod](./marionette.functions.md),
+которая инициирует событие и вызывает соответствующий метод "on{ИмяСобытия}".
 
 ### событие "before:render" / коллбек onBeforeRender
 
-Генерируется до того, как `ItemView` будет отрисовано.
+Инициируется до того, как `ItemView` будет отрисовано.
 
 ```js
 Backbone.Marionette.ItemView.extend({
   onBeforeRender: function(){
-    // set up final bits just before rendering the view's `el`
+    // последние действия перед тем, как сгенерируется `el` представления
   }
 });
 ```
 
 ### событие "render" / коллбек onRender
 
-Triggered after the view has been rendered.
-You can implement this in your view to provide custom code for dealing
-with the view's `el` after it has been rendered.
+Инициируется после того, как представление было отрисовано.
+Вы можете сами реализовать этот метод в вашем представлении
+для того, чтобы добавить собственный код для работы с `el` представления
+после того, как `el` было сгенерировано.
 
 ```js
 Backbone.Marionette.ItemView.extend({
   onRender: function(){
-    // manipulate the `el` here. it's already
-    // been rendered, and is full of the view's
-    // HTML, ready to go.
+    // здесь манипулируем `el`. Оно уже было сгенерировано и
+    // содержит готовый для работы HTML представления.
   }
 });
 ```
 
 ### событие "before:destroy" / коллбек onBeforeDestroy
 
-Triggered just prior to destroying the view, when the view's `destroy()`
-method has been called.
+Инициируется только перед тем, как представление собирается уничтожаться, в момент,
+когда метод `destroy()` представление был вызван
 
 ```js
 Backbone.Marionette.ItemView.extend({
   onBeforeDestroy: function(){
-    // manipulate the `el` here. it's already
-    // been rendered, and is full of the view's
-    // HTML, ready to go.
+    // здесь манипулируем `el`. Оно уже было сгенерировано и
+    // содержит готовый для работы HTML представления.
   }
 });
 ```
 
 ### событие "destroy" / коллбек onDestroy
 
-Генерируется только после того, как предствление было уничтожено.
+Инициируется только после того, как предствление было уничтожено.
 
 ```js
 Backbone.Marionette.ItemView.extend({
   onDestroy: function(){
-    // custom destroying and cleanup goes here
+    // здесь размещается собственный код для уничтожения и очистки
   }
 });
 ```
