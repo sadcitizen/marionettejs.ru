@@ -21,8 +21,8 @@
   * [событие "before:destroy" / коллбек onBeforeDestroy](#beforedestroy--onbeforedestroy-event)
   * [событие "destroy" / коллбек onDestroy](#destroy--ondestroy-event)
 * [Метод serializeData](#itemview-serializedata)
-* [Organizing ui elements](#organizing-ui-elements)
-* [modelEvents and collectionEvents](#modelevents-and-collectionevents)
+* [Организация элементов UI](#organizing-ui-elements)
+* [modelEvents и collectionEvents](#modelevents-and-collectionevents)
 
 ## Метод render
 
@@ -289,15 +289,16 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-## Organizing UI Elements
+## Организация элементов UI
 
-As documented in [Marionette.View](./marionette.view.md), you can specify a `ui` hash in your `view` that
-maps UI elements by their jQuery selectors. This is especially useful if you access the
-same UI element more than once in your view's code. Instead of
-duplicating the selector, you can simply reference it by
-`this.ui.elementName`:
+Как говорилось в документации по [Marionette.View](./marionette.view.md), вы можете
+указать хеш `ui` в вашем `представлении`. В хеше `ui` сопоставляются 
+элементы UI с их jQuery-селекторами. Это особенно полезно, если вы хотите получать доступ 
+к одному и тому же UI элементу несколько раз в вашем коде. Вместо того, чтобы дублировать селектор, 
+вы можете просто ссылаться на него при помощи `this.ui.elementName`.
 
-You can also use the ui hash values from within events and trigger keys using the ```"@ui.elementName"```: syntax
+Вы можете также использовать значения хеша `ui` в ключах хешей `events` и `trigger`,
+используя следующий синтакс: ```"@ui.elementName"```
 
 ```js
 Backbone.Marionette.ItemView.extend({
@@ -315,10 +316,10 @@ Backbone.Marionette.ItemView.extend({
 });
 ```
 
-## modelEvents and collectionEvents
+## modelEvents и collectionEvents
 
-ItemViews can bind directly to model events and collection events
-in a declarative manner:
+`ItemView` может напрямую осуществлять привязку к событиям модели и событиям коллекции,
+используя для этого хеши `modelEvents` и `collectionEvents` соответственно:
 
 ```js
 Marionette.ItemView.extend({
@@ -332,4 +333,4 @@ Marionette.ItemView.extend({
 });
 ```
 
-For more information, see the [Marionette.View](./marionette.view.md) documentation.
+Больше информации можно прочитать в документации по [Marionette.View](./marionette.view.md).
