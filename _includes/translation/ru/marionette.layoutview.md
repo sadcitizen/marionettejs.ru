@@ -10,13 +10,14 @@
 
 Пожалуйста, познакомьтесь с [документацией по ItemView](../itemview/) для более полной информации по доступной функциональности.
 
-Additionally, interactions with Marionette.Region will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](../region/) for more information.
+Кроме того, взаимодействие с `Marionette.Region` предоставляет такие возможности, как
+коллбек `onShow` и т.д. Пожалуйста, познакомьтесь с [документацией по Region](../region/)
+для получения более полной информации.
 
 ## Содержание
 
 * [Основное применение](#basic-usage)
-* [Region Options](#region-options)
+* [Опции для региона](#region-options)
 * [Указание регионов с помощью функции](#specifying-regions-as-a-function)
 * [Переопределение RegionManager, заданного по умолчанию](#overriding-the-default-regionmanager)
 * [Доступность региона](#region-availability)
@@ -30,9 +31,9 @@ Additionally, interactions with Marionette.Region will provide features such as 
 
 ## <a name="basic-usage"></a> Основное применение
 
-The `LayoutView` extends directly from `ItemView` and adds the ability
-to specify `regions` which become `Region` instances that are attached
-to the layoutView.
+`LayoutView` напрямую расширяет (наследуется от) `ItemView` и к нему добавлена
+возможность указать `regions`, которые становятся экземплярами объекта `Region`,
+которые прикрепляются к `LayoutView`.
 
 ```html
 <script id="layout-view-template" type="text/template">
@@ -57,8 +58,8 @@ var layoutView = new AppLayoutView();
 layoutView.render();
 ```
 
-Once you've rendered the layoutView, you now have direct access
-to all of the specified regions as region managers.
+После того, как вы отрендерили `layoutView`, у вас есть прямой доступ
+ко всем указанным регионам, как к менеджерам регионов.
 
 ```js
 layoutView.menu.show(new MenuView());
@@ -66,7 +67,7 @@ layoutView.menu.show(new MenuView());
 layoutView.content.show(new MainContentView());
 ```
 
-### <a name="region-options"></a> Region Options
+### <a name="region-options"></a> Опции для региона
 
 Конструктор `LayoutView` может принимать хэш `regions`, который позволяет указать список регионов 
 для каждого экземпляра `LayoutView`.
@@ -102,27 +103,28 @@ Marionette.LayoutView.extend({
 });
 ```
 
-Note that the function receives the view's `options` arguments that
-were passed in to the view's constructor. `this.options` is not yet
-available when the regions are first initialized, so the options
-must be accessed through this parameter.
+Обратите внимание, что функция принимает аргумент `options` представления,
+это параметры, которые были переданы в конструктор представления.
+`this.options` еще не доступен, когда регионы инициализируются, поэтому
+опции должны быть доступны через этот параметр.
 
 ### <a name="overriding-the-default-regionmanager"></a> Переопределение `RegionManager`, заданного по умолчанию
 
-If you need the `RegionManager`'s class chosen dynamically, specify `getRegionManager`:
+Если вам нужен класс `RegionManager`-а, выбираемый динамически, вы можете
+определить `getRegionManager`:
 
 ```js
 Marionette.LayoutView.extend({
   // ...
 
   getRegionManager: function() {
-    // custom logic
+    // собственная логика
     return new MyRegionManager();
   }
 ```
 
-This can be useful if you want to attach `LayoutView`'s regions to your own instance of
-`RegionManager`.
+Это может быть полезно, если вы хотите связать регионы `LayoutView` с вашим
+собственным экземпляром `RegionManager`-а.
 
 ## <a name="region-availability"></a> Доступность региона
 
