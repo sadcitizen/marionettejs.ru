@@ -128,18 +128,17 @@ Marionette.LayoutView.extend({
 
 ## <a name="region-availability"></a> Доступность региона
 
-Any defined regions within a layoutView will be available to the
-View or any calling code immediately after instantiating the
-View. This allows a View to be attached to an existing
-DOM element in an HTML page, without the need to call a render
-method or anything else, to create the regions.
+Любые указанные регионы в `LayoutView` будут доступны в представлении
+или в любом вызываемом коде сразу после создания экземпляра представления.
+Это позволяет представлению присоединяться к существующему DOM-элементу
+на HTML-странице без необходимости вызова метода `render` или
+чего-нибудь еще, чтобы создать регионы.
 
-However, a region will only be able to populate itself if the
-View has access to the elements specified within the region
-definitions. That is, if your view has not yet rendered, your
-regions may not be able to find the element that you've
-specified for them to manage. In that scenario, using the
-region will result in no changes to the DOM.
+Однако, у региона появится возможность заполнить себя, если представление
+имеет доступ к элементу, указанному в определении региона. То есть,
+если ваше представление еще не отрендерино, то ваши регионы могут не иметь
+возможность найти элемент, который вы указали ему для управления.
+При таком сценарии, использование региона не приведет к изменению DOM.
 
 ## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг LayoutView
 
