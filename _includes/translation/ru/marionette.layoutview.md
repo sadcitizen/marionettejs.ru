@@ -58,7 +58,7 @@ var layoutView = new AppLayoutView();
 layoutView.render();
 ```
 
-После того, как вы отрендерили `layoutView`, у вас есть прямой доступ
+После того как вы отрендерили `layoutView`, у вас есть прямой доступ
 ко всем указанным регионам, как к менеджерам регионов.
 
 ```js
@@ -142,24 +142,24 @@ Marionette.LayoutView.extend({
 
 ## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг LayoutView
 
-A layoutView can be rendered as many times as needed, but renders
-after the first one behave differently than the initial render.
+`LayoutView` может быть отрендерин столько раз, сколько необходимо,
+но рендеринг после первого раза ведет себя иначе, чем первый рендеринг.
 
-The first time a layoutView is rendered, nothing special happens. It just
-delegates to the `ItemView` prototype to do the render. After the
-first render has happened, though, the render function is modified to
-account for re-rendering with regions in the layoutView.
+При первом рендеринге `LayoutView` ничего особенного не происходит.
+Выполнение рендеринга делегируется прототипу `ItemView`. После того как
+первый рендеринг произошел, функция `render` модифицируется для учета
+повторного рендеринга регионов в `LayoutView`.
 
-After the first render, all subsequent renders will force every
-region to be emptied by calling the `empty` method on them. This will
-force every view in the region, and sub-views if any, to be destroyed
-as well. Once the regions are emptied, the regions will also be
-reset so that they are no longer referencing the element of the previous
-layoutView render.
+После первого рендеринга, все последующие рендеринги будут насильно
+очищать каждый регион, вызывая у каждого региона метод `empty`.
+Это заставит каждое представление в регионе, а также вложенные представления, 
+если они есть, вызвать операцию уничтожения. После того, как регионы очистятся,
+они также будут переустановленны (сброшены), так как они не должны
+больше ссылаться на элемент предыдущего отрендеринного `LayoutView`.
 
-Then after the layoutView is finished re-rendering itself,
-showing a view in the layoutView's regions will cause the regions to attach
-themselves to the new elements in the layoutView.
+После того как `LayoutView` закончит себя перерендывать, отображение
+представлений в регионах `LayoutView` будет присоединять регионы
+к новым элементам в отрендеринном `LayoutView`.
 
 ### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего LayoutView
 
