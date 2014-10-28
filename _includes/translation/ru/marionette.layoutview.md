@@ -163,16 +163,16 @@ Marionette.LayoutView.extend({
 
 ### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего LayoutView
 
-There are times when re-rendering the entire layoutView is necessary. However,
-due to the behavior described above, this can cause a large amount of
-work to be needed in order to fully restore the layoutView and all of the
-views that the layoutView is displaying.
+Есть моменты, когда повторный рендеринг всего `LayoutView` необходим.
+Однако, в связи с поведением описанным выше, это может привести к 
+большому объему работы, которая будет происходить для того, чтобы
+полностью восстановить `LayoutView` и все представления, которые необходимо
+показать.
 
-Therefore, it is suggested that you avoid re-rendering the entire
-layoutView unless absolutely necessary. Instead, if you are binding the
-layoutView's template to a model and need to update portions of the layoutView,
-you should listen to the model's "change" events and only update the
-necessary DOM elements.
+Таким образом, предполагается, что вы избегаете повторного рендеринга всего `LayoutView`,
+кроме случаев крайней необходимости. Вместо этого, если вы связываете шаблон `LayoutView` с моделью и
+вам нужно обновить часть `LayoutView`, то вы должны прослушивать события `change` модели
+и обновлять только необходимые DOM-элементы.
 
 ## <a name="nested-layoutviews-and-views"></a> Вложенные LayoutViews и Views
 
