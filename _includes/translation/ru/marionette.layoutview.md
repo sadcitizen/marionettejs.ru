@@ -226,17 +226,17 @@ myApp.mainRegion.show(new Layout1())
 
 ## <a name="destroying-a-layoutview"></a> Удаление LayoutView
 
-When you are finished with a layoutView, you can call the
-`destroy` method on it. This will ensure that all of the region managers
-within the layoutView are destroyed correctly, which in turn
-ensures all of the views shown within the regions are destroyed correctly.
+Когда вы закончите работать с `LayoutView`, вы можете вызвать у него
+метод `destroy`. Это гарантирует, что все менеджеры регионов в `LayoutView`
+будут правильно удалены (уничтожены), что в свою очередь гарантирует,
+что все представления, показанные в регионах, будут правильно удалены (уничтожены).
 
-If you are showing a layoutView within a parent region manager, replacing
-the layoutView with another view or another layoutView will destroy the current
-one, the same it will destroy a view.
+Если вы показываете `LayoutView` в родительском менеджере региона,
+заменив `LayoutView` другим представлением или другим `LayoutView`,
+регион удалит текущий `LayoutView` также, как он удаляет представление.
 
-All of this ensures that layoutViews and the views that they
-contain are cleaned up correctly.
+Все это гарантирует, что `LayoutView`-ы и представления, которые они
+содержат, будут правильно очищены.
 
 ## <a name="custom-region-class"></a> Собственный класс региона
 
