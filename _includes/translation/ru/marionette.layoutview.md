@@ -176,9 +176,9 @@ Marionette.LayoutView.extend({
 
 ## <a name="nested-layoutviews-and-views"></a> Вложенные LayoutViews и Views
 
-Since the `LayoutView` extends directly from `ItemView`, it
-has all of the core functionality of an item view. This includes
-the methods necessary to be shown within an existing region manager.
+Поскольку `LayoutView` напрямую расширяет (наследуется от) `ItemView`,
+оно имеет все основные функциональные возможности `ItemView`. Эти возможности
+включают в себя методы необходимые для показа в существующем менеджере региона.
 
 ```js
 var myApp = new Marionette.Application();
@@ -190,13 +190,14 @@ myApp.addRegions({
 var layoutView = new AppLayout();
 myApp.mainRegion.show(layoutView);
 
-layoutView.show(new MenuView());
+layoutView.menu.show(new MenuView());
 ```
 
-You can nest layoutViews into region managers as deeply as you want.
-This provides for a well organized, nested view structure.
+Вы можете вкладывать `LayoutView` в менеждеры регионов так глубоко,
+как вы хотите. Это позволяет обеспечить хорошую структурную организацию,
+вкладываемых представлений.
 
-For example, to nest 3 layouts (all of these are equivalent):
+Например, вложим 3 `LayoutView` (все они эквивалентны):
 
 ```js
 var layout1 = new Layout1();
@@ -215,7 +216,7 @@ myApp.mainRegion.currentView.myRegion1.show(new Layout2());
 myApp.mainRegion.currentView.myRegion1.currentView.myRegion2.show(new Layout3());
 ```
 
-Or if you like chaining:
+или, если вам нравятся цепочки команд:
 
 ```js
 myApp.mainRegion.show(new Layout1())
