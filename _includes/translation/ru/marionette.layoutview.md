@@ -240,9 +240,9 @@ myApp.mainRegion.show(new Layout1())
 
 ## <a name="custom-region-class"></a> Собственный класс региона
 
-If you have the need to replace the `Region` with a region class of
-your own implementation, you can specify an alternate class to use
-with the `regionClass` property of the `LayoutView`.
+Если вам необходимо заменить `Region` регион классом с вашей собственной реализацией,
+вы можете указать альтернативный класс для использования в свойстве `regionClass`
+в `LayoutView`.
 
 ```js
 var MyLayoutView = Marionette.LayoutView.extend({
