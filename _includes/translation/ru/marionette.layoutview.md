@@ -58,7 +58,7 @@ var layoutView = new AppLayoutView();
 layoutView.render();
 ```
 
-После того, как вы отрендерили `layoutView`, у вас есть прямой доступ
+После того как вы отрендерили `layoutView`, у вас есть прямой доступ
 ко всем указанным регионам, как к менеджерам регионов.
 
 ```js
@@ -128,58 +128,57 @@ Marionette.LayoutView.extend({
 
 ## <a name="region-availability"></a> Доступность региона
 
-Any defined regions within a layoutView will be available to the
-View or any calling code immediately after instantiating the
-View. This allows a View to be attached to an existing
-DOM element in an HTML page, without the need to call a render
-method or anything else, to create the regions.
+Любые указанные регионы в `LayoutView` будут доступны в представлении
+или в любом вызываемом коде сразу после создания экземпляра представления.
+Это позволяет представлению присоединяться к существующему DOM-элементу
+на HTML-странице без необходимости вызова метода `render` или
+чего-нибудь еще, чтобы создать регионы.
 
-However, a region will only be able to populate itself if the
-View has access to the elements specified within the region
-definitions. That is, if your view has not yet rendered, your
-regions may not be able to find the element that you've
-specified for them to manage. In that scenario, using the
-region will result in no changes to the DOM.
+Однако, у региона появится возможность заполнить себя, если представление
+имеет доступ к элементу, указанному в определении региона. То есть,
+если ваше представление еще не отрендерино, то ваши регионы могут не иметь
+возможность найти элемент, который вы указали ему для управления.
+При таком сценарии, использование региона не приведет к изменению DOM.
 
 ## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг LayoutView
 
-A layoutView can be rendered as many times as needed, but renders
-after the first one behave differently than the initial render.
+`LayoutView` может быть отрендерин столько раз, сколько необходимо,
+но рендеринг после первого раза ведет себя иначе, чем первый рендеринг.
 
-The first time a layoutView is rendered, nothing special happens. It just
-delegates to the `ItemView` prototype to do the render. After the
-first render has happened, though, the render function is modified to
-account for re-rendering with regions in the layoutView.
+При первом рендеринге `LayoutView` ничего особенного не происходит.
+Выполнение рендеринга делегируется прототипу `ItemView`. После того как
+первый рендеринг произошел, функция `render` модифицируется для учета
+повторного рендеринга регионов в `LayoutView`.
 
-After the first render, all subsequent renders will force every
-region to be emptied by calling the `empty` method on them. This will
-force every view in the region, and sub-views if any, to be destroyed
-as well. Once the regions are emptied, the regions will also be
-reset so that they are no longer referencing the element of the previous
-layoutView render.
+После первого рендеринга, все последующие рендеринги будут насильно
+очищать каждый регион, вызывая у каждого региона метод `empty`.
+Это заставит каждое представление в регионе, а также вложенные представления, 
+если они есть, вызвать операцию уничтожения. После того, как регионы очистятся,
+они также будут переустановленны (сброшены), так как они не должны
+больше ссылаться на элемент предыдущего отрендеринного `LayoutView`.
 
-Then after the layoutView is finished re-rendering itself,
-showing a view in the layoutView's regions will cause the regions to attach
-themselves to the new elements in the layoutView.
+После того как `LayoutView` закончит себя перерендывать, отображение
+представлений в регионах `LayoutView` будет присоединять регионы
+к новым элементам в отрендеринном `LayoutView`.
 
 ### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего LayoutView
 
-There are times when re-rendering the entire layoutView is necessary. However,
-due to the behavior described above, this can cause a large amount of
-work to be needed in order to fully restore the layoutView and all of the
-views that the layoutView is displaying.
+Есть моменты, когда повторный рендеринг всего `LayoutView` необходим.
+Однако, в связи с поведением описанным выше, это может привести к 
+большому объему работы, которая будет происходить для того, чтобы
+полностью восстановить `LayoutView` и все представления, которые необходимо
+показать.
 
-Therefore, it is suggested that you avoid re-rendering the entire
-layoutView unless absolutely necessary. Instead, if you are binding the
-layoutView's template to a model and need to update portions of the layoutView,
-you should listen to the model's "change" events and only update the
-necessary DOM elements.
+Таким образом, предполагается, что вы избегаете повторного рендеринга всего `LayoutView`,
+кроме случаев крайней необходимости. Вместо этого, если вы связываете шаблон `LayoutView` с моделью и
+вам нужно обновить часть `LayoutView`, то вы должны прослушивать события `change` модели
+и обновлять только необходимые DOM-элементы.
 
 ## <a name="nested-layoutviews-and-views"></a> Вложенные LayoutViews и Views
 
-Since the `LayoutView` extends directly from `ItemView`, it
-has all of the core functionality of an item view. This includes
-the methods necessary to be shown within an existing region manager.
+Поскольку `LayoutView` напрямую расширяет (наследуется от) `ItemView`,
+оно имеет все основные функциональные возможности `ItemView`. Эти возможности
+включают в себя методы необходимые для показа в существующем менеджере региона.
 
 ```js
 var myApp = new Marionette.Application();
@@ -191,13 +190,14 @@ myApp.addRegions({
 var layoutView = new AppLayout();
 myApp.mainRegion.show(layoutView);
 
-layoutView.show(new MenuView());
+layoutView.menu.show(new MenuView());
 ```
 
-You can nest layoutViews into region managers as deeply as you want.
-This provides for a well organized, nested view structure.
+Вы можете вкладывать `LayoutView` в менеждеры регионов так глубоко,
+как вы хотите. Это позволяет обеспечить хорошую структурную организацию,
+вкладываемых представлений.
 
-For example, to nest 3 layouts (all of these are equivalent):
+Например, вложим 3 `LayoutView` (все они эквивалентны):
 
 ```js
 var layout1 = new Layout1();
@@ -216,7 +216,7 @@ myApp.mainRegion.currentView.myRegion1.show(new Layout2());
 myApp.mainRegion.currentView.myRegion1.currentView.myRegion2.show(new Layout3());
 ```
 
-Or if you like chaining:
+или, если вам нравятся цепочки команд:
 
 ```js
 myApp.mainRegion.show(new Layout1())
@@ -226,23 +226,23 @@ myApp.mainRegion.show(new Layout1())
 
 ## <a name="destroying-a-layoutview"></a> Удаление LayoutView
 
-When you are finished with a layoutView, you can call the
-`destroy` method on it. This will ensure that all of the region managers
-within the layoutView are destroyed correctly, which in turn
-ensures all of the views shown within the regions are destroyed correctly.
+Когда вы закончите работать с `LayoutView`, вы можете вызвать у него
+метод `destroy`. Это гарантирует, что все менеджеры регионов в `LayoutView`
+будут правильно удалены (уничтожены), что в свою очередь гарантирует,
+что все представления, показанные в регионах, будут правильно удалены (уничтожены).
 
-If you are showing a layoutView within a parent region manager, replacing
-the layoutView with another view or another layoutView will destroy the current
-one, the same it will destroy a view.
+Если вы показываете `LayoutView` в родительском менеджере региона,
+заменив `LayoutView` другим представлением или другим `LayoutView`,
+регион удалит текущий `LayoutView` также, как он удаляет представление.
 
-All of this ensures that layoutViews and the views that they
-contain are cleaned up correctly.
+Все это гарантирует, что `LayoutView`-ы и представления, которые они
+содержат, будут правильно очищены.
 
 ## <a name="custom-region-class"></a> Собственный класс региона
 
-If you have the need to replace the `Region` with a region class of
-your own implementation, you can specify an alternate class to use
-with the `regionClass` property of the `LayoutView`.
+Если вам необходимо заменить `Region` регион классом с вашей собственной реализацией,
+вы можете указать альтернативный класс для использования в свойстве `regionClass`
+в `LayoutView`.
 
 ```js
 var MyLayoutView = Marionette.LayoutView.extend({
@@ -287,7 +287,7 @@ var layoutView = new MyLayoutView();
 // ...
 
 layoutView.addRegion("foo", "#foo");
-layoutView.foo.show(new someView());
+layoutView.foo.show(new SomeView());
 ```
 
 Метод addRegions:
@@ -326,20 +326,21 @@ layoutView.removeRegion("foo");
 
 ## <a name="region-naming"></a> Именование регионов
 
-A LayoutViews' Regions are attached directly to the LayoutView instance with the name of the region
-as the key and the region itself as the value. Because of this, you need to be careful
-to avoid conflicts with existing properties on the LayoutView when you name your Region.
+Регионы `LayoutView` прикрепляются напрямую к экземпляру `LayoutView` с именем региона
+в качестве ключа и самим регионом в качестве значения. Поэтому вы должны быть осторожны,
+чтобы избежать конфликтов с существующими свойствами в `LayoutView`, когда вы называете ваш регион.
 
 Цепочка прототипов для `LayoutViews` выглядит следующим образом:
 
 `Backbone.View > Marionette.View > Marionette.ItemView > Marionette.LayoutView`
 
-Consequently, every property on each of those Classes must be avoided as Region names. The most
-common issue people run into is trying to name their Region *"attributes"*. Be aware
-that you are **not** able to do this.
+Следовательно, каждое свойство у каждого из этих классов не должно совпадать с именем региона.
+Наиболее распространненная ошибка людей, работающих с `LayoutViews`, это попытка назвать
+свой регион *"attributes"*. Знайте, что вы **не** в состоянии сделать это.
 
-The following is an abbreviated list of other names that can't be used as Region names. For a more
-complete list refer to the API documentation for each Class on the prototype chain:
+Следующий неполный список наименований не может быть использован в качестве имени региона.
+Более полный список наименований вы можете найти в документации по API для каждого класса в
+цепочке прототипов:
 
 * attributes
 * constructor
@@ -350,4 +351,4 @@ complete list refer to the API documentation for each Class on the prototype cha
 * addRegions
 * removeRegion
 
-*Note: this is a known issue that is flagged for being fixed in v2*
+*Примечание: это известная проблема, ее исправление будет в v2*
