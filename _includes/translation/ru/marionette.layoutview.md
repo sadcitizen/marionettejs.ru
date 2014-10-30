@@ -287,7 +287,7 @@ var layoutView = new MyLayoutView();
 // ...
 
 layoutView.addRegion("foo", "#foo");
-layoutView.foo.show(new someView());
+layoutView.foo.show(new SomeView());
 ```
 
 Метод addRegions:
@@ -326,20 +326,21 @@ layoutView.removeRegion("foo");
 
 ## <a name="region-naming"></a> Именование регионов
 
-A LayoutViews' Regions are attached directly to the LayoutView instance with the name of the region
-as the key and the region itself as the value. Because of this, you need to be careful
-to avoid conflicts with existing properties on the LayoutView when you name your Region.
+Регионы `LayoutView` прикрепляются напрямую к экземпляру `LayoutView` с именем региона
+в качестве ключа и самим регионом в качестве значения. Поэтому вы должны быть осторожны,
+чтобы избежать конфликтов с существующими свойствами в `LayoutView`, когда вы называете ваш регион.
 
 Цепочка прототипов для `LayoutViews` выглядит следующим образом:
 
 `Backbone.View > Marionette.View > Marionette.ItemView > Marionette.LayoutView`
 
-Consequently, every property on each of those Classes must be avoided as Region names. The most
-common issue people run into is trying to name their Region *"attributes"*. Be aware
-that you are **not** able to do this.
+Следовательно, каждое свойство у каждого из этих классов не должно совпадать с именем региона.
+Наиболее распространненная ошибка людей, работающих с `LayoutViews`, это попытка назвать
+свой регион *"attributes"*. Знайте, что вы **не** в состоянии сделать это.
 
-The following is an abbreviated list of other names that can't be used as Region names. For a more
-complete list refer to the API documentation for each Class on the prototype chain:
+Следующий неполный список наименований не может быть использован в качестве имени региона.
+Более полный список наименований вы можете найти в документации по API для каждого класса в
+цепочке прототипов:
 
 * attributes
 * constructor
@@ -350,4 +351,4 @@ complete list refer to the API documentation for each Class on the prototype cha
 * addRegions
 * removeRegion
 
-*Note: this is a known issue that is flagged for being fixed in v2*
+*Примечание: это известная проблема, ее исправление будет в v2*
