@@ -24,6 +24,8 @@
 * [Повторный рендеринг LayoutView](#re-rendering-a-layoutview)
   * [Избегайте повторного рендеринга всего LayoutView](#avoid-re-rendering-the-entire-layoutview)
 * [Вложенные LayoutViews и Views](#nested-layoutviews-and-views)
+  * [Efficient Nested View Structures](#efficient-nested-view-structures)
+    * [Use of the `attach` Event](#use-of-the-attach-event)
 * [Удаление LayoutView](#destroying-a-layoutview)
 * [Собственный класс региона](#custom-region-class)
 * [Добавление и удаление регионов](#adding-and-removing-regions)
@@ -62,9 +64,9 @@ layoutView.render();
 ко всем указанным регионам, как к менеджерам регионов.
 
 ```js
-layoutView.menu.show(new MenuView());
+layoutView.getRegion('menu').show(new MenuView());
 
-layoutView.content.show(new MainContentView());
+layoutView.getRegion('content').show(new MainContentView());
 ```
 
 ### <a name="region-options"></a> Опции для региона
@@ -181,48 +183,75 @@ Since the `LayoutView` extends directly from `ItemView`, it
 has all of the core functionality of an item view. This includes
 the methods necessary to be shown within an existing region manager.
 
+In the following example, we will use the Application's Regions
+as the base of a deeply nested view structure.
+
 ```js
+// Create an Application
 var myApp = new Marionette.Application();
 
+// Add a region
 myApp.addRegions({
   mainRegion: "#main"
 });
 
-var layoutView = new AppLayout();
-myApp.mainRegion.show(layoutView);
+// Create a new LayoutView
+var layoutView = new Marionette.LayoutView();
 
-layoutView.show(new MenuView());
+// Lastly, show the LayoutView in the App's mainRegion
+MyApp.getRegion('main').show(layoutView);
 ```
 
-You can nest layoutViews into region managers as deeply as you want.
-This provides for a well organized, nested view structure.
+You can nest LayoutViews as deeply as you want. This provides for a well organized,
+nested view structure.
 
-For example, to nest 3 layouts (all of these are equivalent):
+For example, to nest 3 layouts:
 
 ```js
 var layout1 = new Layout1();
 var layout2 = new Layout2();
 var layout3 = new Layout3();
 
-myApp.mainRegion.show(layout1);
+MyApp.getRegion('main').show(layout1);
 
-layout1.region1.show(layout2);
-layout2.region2.show(layout3);
+layout1.getRegion('region1').show(layout2);
+layout2.getRegion('region2').show(layout3);
 ```
+
+### Efficient Nested View Structures
+
+The above example works great, but it causes three separate paints: one for each layout that's being
+shown. Marionette provides a simple mechanism to infinitely nest views in a single paint: just render all
+of the children in the `onBeforeShow` callback.
 
 ```js
-myApp.mainRegion.show(new Layout1());
-myApp.mainRegion.currentView.myRegion1.show(new Layout2());
-myApp.mainRegion.currentView.myRegion1.currentView.myRegion2.show(new Layout3());
+var ParentLayout = Marionette.LayoutView.extend({
+  onBeforeShow: function() {
+    this.getRegion('header').show(new HeaderView());
+    this.getRegion('footer').show(new FooterView());
+  }
+});
+
+myRegion.show(new ParentLayout());
 ```
 
-Or if you like chaining:
+In this example, the doubly-nested view structure will be rendered in a single paint.
 
-```js
-myApp.mainRegion.show(new Layout1())
-  .currentView.myRegion1.show(new Layout2())
-  .currentView.myRegion2.show(new Layout3());
-```
+This system is recursive, so it works for any deeply nested structure. The child views
+you show can render their *own* child views within their `onBeforeShow` callbacks!
+
+#### Use of the `attach` event
+
+Often times you need to know when your views in the view tree have been attached to the `document`,
+like when using certain jQuery plugins. The `attach` event, and associated `onAttach` callback, are perfect for this
+use case. Start with a Region that's a child of the `document` and show any LayoutView in it: every view in the tree
+(including the parent LayoutView) will have the `attach` event triggered on it when they have been
+attached to the `document`.
+
+Note that inefficient tree rendering will cause the `attach` event to be fired multiple times. This
+situation can occur if you render the children views *after* the parent has been rendered, such as using
+`onShow` to render children. As a rule of thumb, most of the time you'll want to render any nested views in
+the `onBeforeShow` callback.
 
 ## <a name="destroying-a-layoutview"></a> Удаление LayoutView
 
@@ -287,7 +316,7 @@ var layoutView = new MyLayoutView();
 // ...
 
 layoutView.addRegion("foo", "#foo");
-layoutView.foo.show(new someView());
+layoutView.getRegion('foo').show(new someView());
 ```
 
 Метод addRegions:
