@@ -14,11 +14,13 @@ Marionette имеет базовый класс `Marionette.View`,
 * [Метод onShow](#view-onshow)
 * [Метод destroy](#view-destroy)
 * [Метод onBeforeDestroy](#view-onbeforedestroy)
+* [Событие "attach" / onAttach](#view-attach--onattach-event)
+* [Событие "before:attach" / onBeforeAttach](#view-beforeattach--onbeforeattach-event)
 * [Событие "dom:refresh" / метод onDomRefresh](#view-domrefresh--ondomrefresh-event)
 * [События представления](#viewevents)
 * [Триггеры представления](#viewtriggers)
 * [События модели в modelEvents и события коллекции в collectionEvents](#viewmodelevents-and-viewcollectionevents)
-* [Метод serializeData](#viewserializedata)
+* [Метод serializeModel](#viewserializemodel)
 * [Метод bindUIElements](#viewbinduielements)
 * [Метод getOption](#viewgetoption)
 * [Метод bindEntityEvents](#viewbindentityevents)
@@ -122,6 +124,28 @@ myView.destroy(arg1, arg2);
 Когда запускается процесс уничтожения представления, то вызывается метод `onBeforeDestroy`, если этот
 метод представлен. Метод `onBeforeDestroy` вызывается перед уничтожением представления. Он будет вызван
 с аргументами, с которыми был вызван метод `destroy`.
+
+### Событие "attach" / onAttach
+
+Every view in Marionette has a special event called "attach," which is triggered anytime that showing
+the view in a Region causes it to be attached to the `document`. Like other Marionette events, it also
+executes a callback method, `onAttach`, if you've specified one. The `"attach"` event is great for jQuery
+plugins or other logic that must be executed *after* the view is attached to the `document`.
+
+Because the `attach` event is only fired when the view is a child of the `document`, it is a requirement
+that the Region you're showing it in be a child of the `document` at the time that you call `show`.
+
+This event is unique in that it propagates down the view tree. For instance, when a CollectionView's
+`attach` event is fired, all of its children views will have the `attach` event fired as well. In
+addition, deeply nested Layout View structures will all have their `attach` event fired at the proper
+time, too.
+
+For more on efficient, deeply-nested view structures, refer to the LayoutView docs.
+
+### Событие "before:attach" / onBeforeAttach
+
+This is just like the attach event described above, but it's triggered right before the view is
+attached to the document.
 
 ### Событие "dom:refresh" / метод onDomRefresh
 
@@ -355,11 +379,9 @@ Marionette.CompositeView.extend({
 
 Это работает для обоих  `modelEvents` и `collectionEvents`.
 
-## Метод serializeData
+## Метод serializeModel
 
-Метод `serializeData` сериализует модель или коллекцию представления - 
-приоритет отдается коллекциям. То есть, если у вас в представлении используются
-коллекция и модель, то вызов метода `serializeData` вернет сериализованную коллекцию. 
+Метод `serializeModel` сериализует модель, которая была передана аргументом. 
 
 ## Метод bindUIElements
 
