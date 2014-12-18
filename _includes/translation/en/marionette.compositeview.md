@@ -64,6 +64,19 @@ new MyComp({
 });
 ```
 
+The `collection` option is not passed to the template context by
+default. If your `template` needs access to the collection, you'll
+need to pass it via `templateHelpers`:
+
+```js
+new MyComp({
+  template: "#some-template",
+  templateHelpers: function() {
+    return { items: this.collection.toJSON() };
+  }
+})
+```
+
 ## CompositeView's `childView`
 
 Each childView will be rendered using the `childView`'s template. The `CompositeView`'s
@@ -183,6 +196,11 @@ case, you can override the `attachHtml` method with your own implementation.
 
 For more information on this method, see the [CollectionView's documentation](http://marionettejs.com/docs/marionette.collectionview.html).
 
+## CompositeView's `childView` container selection
+
+
+The `getChildViewContainer` method is passed a second `childView` parameter which, when overridden, allows for a finer tuned container selection by being able to access the `childView` which is about to be appended to the `containerView` returned by `getChildViewContainer`.
+
 
 ## Recursive By Default
 
@@ -260,4 +278,4 @@ Marionette.CompositeView.extend({
 });
 ```
 
-For more information, see the [Marionette.View](./marionette.view.md) documentation.
+For more information, see the [Marionette.View](./marionette.view.html) documentation.
