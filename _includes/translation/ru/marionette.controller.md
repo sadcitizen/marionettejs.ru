@@ -1,53 +1,39 @@
-`Controller` это объект общего назначения в Marionette. Не смотря на свое название,
-этот объект не имеет ничего общего с контроллером из паттерна MVC. В данном случае под
-контроллером лучше понимать некий базовый объект.
-
-Контроллеры следует использовать в случае, когда требуется объект, который будет выполнять
-какую-либо конкретную задачу, для которой не подходит ни одни из классов Marionette.js.
+`Marionette.Controller` это объект, который используется в `Marionette.Router`. Контроллер хранит методы-обработчик роутов.
 
 ## Содержание
 
 * [Основное применение](#basic-use)
 * [Выключение контроллера](#destroying-a-controller)
 * [Метод `getOption`](#get-option)
-* [Термин 'Controller'](#on-the-name-controller)
+* [Преимущественное использование](#prior-usage)
 
 ## <a name="basic-use"></a> Основное применение
 
-Объект `Marionette.Controller` может быть унаследован так же как и объекты `Backbone` и `Marionette`.
-Он поддерживет стандартный метод `initialize`, обладает встроенным `EventBinder`
-и может самостоятельно вызывать события.
+`Marionette.Controller` предназначен исключительно для использования в роутере.
 
 ```js
-// объявление контроллера
+// Создаем контроллер и указываем обработчики для роутера.
 var MyController = Marionette.Controller.extend({
-  initialize: function(options) {
-    this.stuff = options.stuff;
-  },
-  
-  doStuff: function() {
-    this.trigger("stuff:done", this.stuff);
+  home: function() {},
+  profile: function() {}
+});
+
+// Создаем экземпляр контроллера
+var myController = new MyController();
+
+// Передаем экземпляр в конструктор роутера
+var myRouter = new Marionette.AppRouter({
+  controller: myController,
+  appRoutes: {
+    "home": "home",
+    "profile": "profile"
   }
 });
-
-// создание экземпляра
-var myController = new MyController({
-  stuff: "some stuff"
-});
-
-// использование встроенного EventBinder
-myController.listenTo(c, "stuff:done", function(stuff) {
-  console.log(stuff);
-});
-
-// вызов некоего функционала
-myController.doStuff();
 ```
 
 ## <a name="get-option"></a> Метод `getOption`
 
-Метод позволяет получить значение свойства контроллера. Это свойство может принадлежать как самому контроллеру непосредственно, так и 
-быть вложенным в свойстве `this.options` контроллера. Если запрашиваемое свойство сущестует и в контроллере и в `this.options`, то метод вернет значение из `this.options`.
+Метод позволяет получить значение свойства контроллера. Это свойство может принадлежать как самому контроллеру непосредственно, так и быть вложенным в свойстве `this.options` контроллера. Если запрашиваемое свойство сущестует и в контроллере и в `this.options`, то метод вернет значение из `this.options`.
 Для более полной информации ознакомьтесь с [getOption](../functions/).
 
 ## <a name="closing-a-controller"></a> Выключение контроллера
@@ -61,7 +47,7 @@ myController.doStuff();
 аргументы, с которыми был вызван метод `destroy`:
 
 ```js
-// объявление контроллера с методом onDestroy
+// Объявляем контроллер с методом onDestroy
 var MyController = Marionette.Controller.extend({
   onBeforeDestroy: function(arg1, arg2){
     // код в этом месте будет выполнен до выключения контроллера
@@ -72,16 +58,16 @@ var MyController = Marionette.Controller.extend({
   }
 });
 
-// создание нового экземпляра контроллера
+// Создаем экземпляр контроллера
 var myController = new MyController();
 
-// добавление нескольких обработчиков событий
+// Добавляем несколько обработчиков событий
 myController.on("before:destroy", function(arg1, arg2){ ... });
 myController.on("destroy", function(arg1, arg2){ ... });
 myController.listenTo(something, "bar", function(){...});
 
-// выключение контроллера: отписываемся от всех событий,
-// вызов события "destroy" и метода onDestroy
+// Выключаем контроллер: отписываемся от всех событий,
+// вызываем событие "destroy" и метод onDestroy
 myController.destroy(arg1, arg2);
 ```
 
