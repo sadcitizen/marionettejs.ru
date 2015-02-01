@@ -12,7 +12,9 @@ title: Документация
                 {% if post.translated == false %}
                     <small>(В процессе перевода)</small>
                 {% else %}
-                    <small>(Вычитка)</small>
+                    {% if post.proofread == false %}
+                      <small>(Вычитка)</small>
+                    {% endif %}
                 {% endif %}
             </li>
         {% endfor %}
