@@ -23,16 +23,16 @@
 ## Содержание
 
 * [Основное применение](#basic-usage)
-* [Опции для региона](#region-options)
+* [Параметры региона](#region-options)
 * [Указание регионов с помощью функции](#specifying-regions-as-a-function)
 * [Переопределение RegionManager, заданного по умолчанию](#overriding-the-default-regionmanager)
 * [Доступность региона](#region-availability)
-* [Повторный рендеринг LayoutView](#re-rendering-a-layoutview)
-  * [Избегайте повторного рендеринга всего LayoutView](#avoid-re-rendering-the-entire-layoutview)
-* [Вложенные LayoutViews и Views](#nested-layoutviews-and-views)
+* [Повторный рендеринг макета](#re-rendering-a-layoutview)
+  * [Избегайте повторного рендеринга всего макета](#avoid-re-rendering-the-entire-layoutview)
+* [Вложенные макеты и представления](#nested-layoutviews-and-views)
   * [Efficient Nested View Structures](#efficient-nested-view-structures)
     * [Use of the `attach` Event](#use-of-the-attach-event)
-* [Удаление LayoutView](#destroying-a-layoutview)
+* [Удаление макета](#destroying-a-layoutview)
 * [Собственный класс региона](#custom-region-class)
 * [Добавление и удаление регионов](#adding-and-removing-regions)
 * [Именование регионов](#region-naming)
@@ -128,8 +128,8 @@ Marionette.LayoutView.extend({
 
 ### <a name="overriding-the-default-regionmanager"></a> Переопределение `RegionManager`, заданного по умолчанию
 
-Если вам нужен класс `RegionManager`-а, выбираемый динамически, вы можете
-определить `getRegionManager`:
+Если вам необходимо динамически задавать класс менеджера регионов, то
+вы можете воспользоваться методом `getRegionManager`:
 
 ```js
 Marionette.LayoutView.extend({
@@ -142,8 +142,8 @@ Marionette.LayoutView.extend({
 });
 ```
 
-Это может быть полезно, если вы хотите связать регионы `LayoutView` с вашим
-собственным экземпляром `RegionManager`-а.
+Этот метод позволяет прикреплять регионы к `LayoutView` с помощью экземпляра
+вашего собственного класса `RegionManager`.
 
 ## <a name="region-availability"></a> Доступность региона
 
@@ -160,28 +160,25 @@ regions may not be able to find the element that you've
 specified for them to manage. In that scenario, using the
 region will result in no changes to the DOM.
 
-## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг LayoutView
+## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг макета
 
-A layoutView can be rendered as many times as needed, but renders
-after the first one behave differently than the initial render.
+`LayoutView` может быть отрендерен столько раз, сколько потребуется, но первый
+рендеринг будет отличаться от последующих.
 
-The first time a layoutView is rendered, nothing special happens. It just
-delegates to the `ItemView` prototype to do the render. After the
-first render has happened, though, the render function is modified to
-account for re-rendering with regions in the layoutView.
+При первом рендеринге `LayoutView` не происходит ничего особенного. Просто
+вызывается метод `render` из прототипа `ItemView`. При последующих рендерингах
+метод `render` будет учитывать повторную инициализацию регионов.
 
-After the first render, all subsequent renders will force every
-region to be emptied by calling the `empty` method on them. This will
-force every view in the region, and sub-views if any, to be destroyed
-as well. Once the regions are emptied, the regions will also be
-reset so that they are no longer referencing the element of the previous
-layoutView render.
+При всех последующих рендерингах принудительно будет очищаться каждый регион с
+помощью вызова метода `empty`. Это принудительно удалит любое, даже вложенное, представление из региона. После очистки каждый регион будет сброшен, то есть он
+не будет ссылаться на DOM-элемент разметки, полученной предыдущим рендерингом
+макета.
 
 Then after the layoutView is finished re-rendering itself,
 showing a view in the layoutView's regions will cause the regions to attach
 themselves to the new elements in the layoutView.
 
-### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего LayoutView
+### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего макета
 
 There are times when re-rendering the entire layoutView is necessary. However,
 due to the behavior described above, this can cause a large amount of
