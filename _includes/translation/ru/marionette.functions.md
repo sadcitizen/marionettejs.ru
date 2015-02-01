@@ -5,6 +5,7 @@ Marionette содержит набор утилит / функций-хелпе�
 ## Содержание
 
 * [Marionette.extend](#marionetteextend)
+* [Marionette.isNodeAttached](#marionetteisnodeattached)
 * [Marionette.getOption](#marionettegetoption)
 * [Marionette.proxyGetOption](#marionetteproxygetoption)
 * [Marionette.triggerMethod](#marionettetriggermethod)
@@ -42,6 +43,20 @@ var Bar = Foo.extend({
 
 // Создаем экземпляр Bar
 var b = new Bar();
+```
+
+## Marionette.isNodeAttached
+
+Determines whether the passed-in node is a child of the `document` or not.
+
+```js
+var div = document.createElement('div');
+Marionette.isNodeAttached(div);
+// => false
+
+$('body').append(div);
+Marionette.isNodeAttached(div);
+// => true
 ```
 
 ## Marionette.getOption

@@ -92,8 +92,8 @@ myApp.addRegions({
 
 #### Литерал объекта
 
-Наконец, вы можете определить регионы в виде литерал объекта. 
-Определения в виде литерал объекта обычно содержит определенное `selector` или `el` свойство. 
+Наконец, вы можете определить регионы в виде литерала объекта. 
+Определения в виде литерала объекта обычно содержит определенное `selector` или `el` свойство. 
 Свойство `selector` это селектор в виде строки, а свойство `el` может быть 
 как селектором в виде строки, так и Query-объектом или HTML-узлом.
 
@@ -101,13 +101,20 @@ myApp.addRegions({
 Если ваш `regionClass` уже имеет установленное свойство `el`, то вам не нужно
 определять `selector` или `el` свойство в литерал объекте.
 
-Любые другие свойства, заданные вами в литерал объекте, будут использоваться к качестве
-параметров, которые будут переданы в экземпляр региона.
+Любые другие свойства, заданные вами в литерале объекта, будут использоваться в качестве параметров, которые будут переданы в экземпляр региона, включая `allowMissingEl`.
+
+Ordinarily regions enforce the presence of a backing DOM element.
+In some instances it may be desirable to allow regions to be
+instantiated and used without an element, such as when regions
+defined by a parent `LayoutView` class are used by only some of its
+subclasses. In these instances, the region can be defined with the
+`allowMissingEl` option, suppressing the missing element error and
+causing `show` calls to the region to be treated as no-ops.
 
 ```js
-var MyRegion = Backbone.Marionette.Region.extend();
-var MyOtherRegion = Backbone.Marionette.Region.extend();
-var MyElRegion = Backbone.Marionette.Region.extend({ el: '#footer' });
+var MyRegion = Marionette.Region.extend();
+var MyOtherRegion = Marionette.Region.extend();
+var MyElRegion = Marionette.Region.extend({ el: '#footer' });
 
 myApp.addRegions({
   contentRegion: {
@@ -136,7 +143,7 @@ myApp.addRegions({
 Это невозможно, когда используется непосредственно класс региона, как в способах ранее.
 
 ```js
-var MyRegion = Backbone.Marionette.Region.extend({
+var MyRegion = Marionette.Region.extend({
   el: '#content',
 });
 
@@ -154,11 +161,11 @@ myApp.addRegions({
 Конечно вы можете смешивать и комбинировать различные типы конфигурирования регионов.
 
 ```js
-var MyRegion = Backbone.Marionette.Region.extend({
+var MyRegion = Marionette.Region.extend({
   el: '#content'
 });
 
-var MyOtherRegion = Backbone.Marionette.Region.extend();
+var MyOtherRegion = Marionette.Region.extend();
 
 myApp.addRegions({
   contentRegion: MyRegion,
@@ -252,6 +259,31 @@ myApp.mainRegion.show(myView);
 
 // сейчас повторный вызов метода `show` переотобразит представление
 myApp.mainRegion.show(myView, {forceShow: true});
+```
+
+#### onBeforeAttach & onAttach
+
+Regions that are attached to the document when you execute `show` are special in that the
+views that they show will also become attached to the document. These regions fire a pair of triggerMethods on *all*
+of the views that are about to be attached – even the nested ones. This can cause a performance issue if you're
+rendering hundreds or thousands of views at once.
+
+If you think these events might be causing some lag in your app, you can selectively turn them off
+with the `triggerBeforeAttach` and `triggerAttach` properties.
+
+```js
+// No longer trigger attach
+myRegion.triggerAttach = false;
+```
+
+You can override this on a per-show basis by passing it in as an option to show.
+
+```js
+// This region won't trigger beforeAttach...
+myRegion.triggerBeforeAttach = false;
+
+// Unless we tell it to
+myRegion.show(myView, {triggerBeforeAttach: true});
 ```
 
 ### <a name="checking-whether-a-region-is-showing-a-view"></a> Проверка отображено ли представление в регионе
@@ -381,61 +413,86 @@ myApp.someRegion.attachView(myView);
 Эти события могут быть использованы для запуска кода, когда ваш регион открывает и/или уничтожает представления.
 
 ```js
-myApp.mainRegion.on("before:show", function(view) {
-  // манипулирование представлением через `view` или 
-  // сделать что-то дополнительное с регионом через указатель `this`
+myApp.mainRegion.on("before:show", function(view, region, options){
+  // manipulate the `view` or do something extra
+  // with the `region`
+  // you also have access to the `options` that were passed to the Region.show call
 });
 
-myApp.mainRegion.on("show", function(view) {
-  // манипулирование представлением через `view` или
-  // сделать что-то дополнительное с регионом через указатель `this`
+myApp.mainRegion.on("show", function(view, region, options){
+  // manipulate the `view` or do something extra
+  // with the `region`
+  // you also have access to the `options` that were passed to the Region.show call
 });
 
-myApp.mainRegion.on("before:swap", function(view) {
-  // анипулирование представлением через `view` или
-  // сделать что-то дополнительное с регионом через указатель `this`
+myApp.mainRegion.on("before:swap", function(view, region, options){
+  // manipulate the `view` or do something extra
+  // with the `region`
+  // you also have access to the `options` that were passed to the Region.show call
 });
 
-myApp.mainRegion.on("swap", function(view) {
-  // анипулирование представлением через `view` или
-  // сделать что-то дополнительное с регионом через указатель `this`
+myApp.mainRegion.on("swap", function(view, region, options){
+  // manipulate the `view` or do something extra
+  // with the `region`
+  // you also have access to the `options` that were passed to the Region.show call
 });
 
-myApp.mainRegion.on("empty", function(view) {
-  // анипулирование представлением через `view` или
-  // сделать что-то дополнительное с регионом через указатель `this`
+myApp.mainRegion.on("before:swapOut", function(view, region, options){
+  // manipulate the `view` or do something extra
+  // with the `region`
+  // you also have access to the `options` that were passed to the Region.show call
 });
 
-var MyRegion = Backbone.Marionette.Region.extend({
-  // ...
-
-  onBeforeShow: function(view) {
-    // `представление` еще не отображено
-  },
-
-  onShow: function(view) {
-    // `представление` уже отображено
-  }
+myApp.mainRegion.on("swapOut", function(view, region, options){
+  // manipulate the `view` or do something extra
+  // with the `region`
+  // you also have access to the `options` that were passed to the Region.show call
 });
 
-var MyView = Marionette.ItemView.extend({
-  onBeforeShow: function() {
-    // вызывается до того, как представление было отображено
-  },
-  onShow: function(){
-    // вызывается тогда, когда представление было отображено
-  }
+myApp.mainRegion.on("empty", function(view, region, options){
+  // manipulate the `view` or do something extra
+  // with the `region`
+  // you also have access to the `options` that were passed to the Region.show call
 });
 
 var MyRegion = Marionette.Region.extend({
   // ...
 
-  onBeforeSwap: function(view) {
-    // `представление еще не сменилось (заменилось)
+  onBeforeShow: function(view, region, options) {
+    // the `view` has not been shown yet
   },
 
-  onSwap: function(view){
-    // `представление` уже сменилось
+  onShow: function(view, region, options){
+    // the `view` has been shown
+  }
+});
+
+var MyView = Marionette.ItemView.extend({
+  onBeforeShow: function(view, region, options) {
+    // called before the `view` has been shown
+  },
+  onShow: function(view, region, options){
+    // called when the `view` has been shown
+  }
+});
+
+var MyRegion = Backbone.Marionette.Region.extend({
+  // ...
+
+  onBeforeSwap: function(view, region, options) {
+    // the `view` has not been swapped yet
+  },
+
+  onSwap: function(view, region, options){
+    // the `view` has been swapped
+  },
+
+  onBeforeSwapOut: function(view, region, options) {
+    // the `view` has not been swapped out yet
+  },
+
+  onSwapOut: function(view, region, options){
+    // the `view` has been swapped out
   }
 });
 ```
