@@ -174,9 +174,10 @@ region will result in no changes to the DOM.
 не будет ссылаться на DOM-элемент разметки, полученной предыдущим рендерингом
 макета.
 
-Then after the layoutView is finished re-rendering itself,
-showing a view in the layoutView's regions will cause the regions to attach
-themselves to the new elements in the layoutView.
+После того, как повторный рендеринг макета будет закончен, регионы макета будут
+инициализированы уже на новых DOM-элементах макета, а затем в этих регионах будут
+инициализированы представления. Таким образом, `LayoutView` каскадно обновит
+себя и вложенные регионы, представления и другие макеты.
 
 ### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего макета
 
@@ -316,8 +317,7 @@ var AppLayoutView = Marionette.LayoutView.extend({
 
 ## <a name="adding-and-removing-regions"></a> Добавление и удаление регионов
 
-Если требуется, то регионы могут быть добавлены или удаленя из экземпляра `LayoutView`.
-Для этого используются следующие методы:
+Если требуется, то регионы могут быть добавлены или удалены из экземпляра `LayoutView`. Для этого используются следующие методы:
 
 * `addRegion`
 * `addRegions`
