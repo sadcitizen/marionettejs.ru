@@ -98,7 +98,203 @@ var MyApp = Marionette.Application.extend({
 var myApp = new MyApp({container: '#app'});
 ```
 
+## События класса `Application`
+
+Объект `Application` вызывает несколько событий в течение своего жизненного цикла,
+для этого используется функция [Marionette.triggerMethod](../functions/).
+Эти события могут использоваться для того, чтобы сделать дополнительную обработку в
+вашем приложении. Например, вы хотите предварительно обработать некоторые данные перед
+процессом инициализации приложения. Или вы хотите дождаться завершения инициализации
+приложения и запустить `Backbone.history`.
+
+Список событий, которые вызываются:
+
+* **"before:start" / `onBeforeStart`**: вызывается перед запуском `Application` и перед началом исполнения инициализаторов.
+* **"start" / `onStart`**: вызывается после запуска `Application` и после исполнения инициализаторов.
+
+```js
+myApp.on("before:start", function(options){
+  options.moreData = "Yo dawg, I heard you like options so I put some options in your options!"
+});
+
+myApp.on("start", function(options){
+  if (Backbone.history){
+    Backbone.history.start();
+  }
+});
+```
+
+Параметр `options` передается из метода `start` экземпляра объекта `Application` (см. ниже).
+
+## Запуск приложения
+
+После того, как вы сконфигурировали ваше приложение, вы можете запустить его вызвав: `myApp.start(options)`.
+
+Эта функция принимает один необязательный параметр `options`. Этот параметр будет
+передаваться в каждую определенную вами функцию инициализатора, а также в функции
+обработчика событий инициализации. Это позволяет вам производить дополнительное
+конфигурирование в различных частях вашего приложения, в таких как инициализация/запуск
+приложения, а не только при определении.
+
+```js
+var options = {
+  something: "some value",
+  another: "#some-selector"
+};
+
+myApp.start(options);
+```
+
+## Регионы и объект приложения
+
+> Warning: deprecated
+> This feature is deprecated. Instead of using the Application as the root
+> of your view tree, you should use a Layout View. To scope your Layout View to the entire
+> document, you could set its `el` to 'body'. This might look something like the following:
+>
+>
+> ```js
+> var RootView = Marionette.LayoutView.extend({
+>   el: 'body'
+> });
+> ```
+>
+> Later, you can attach an instance of the `RootView` to your Application instance.
+>
+> ```js
+> app.rootView = new RootView();
+> ```
+
+Экземпляры объекта `Application` имеют API, который позволяет вам управлять [Регионами](../region/).
+Регионы являются стандартным средством, с помощью которых ваши представления (views) добавляются в `document`.
+
+Объект `Region` может быть добавлен в приложение вызовом метода `addRegions` и передачей в функцию
+литерала объекта или функции, которая возвращает литерал объекта.
+
+Существуют три способа добавления региона в объект приложения.
+
+### jQuery-селектор
+
+Первый способ - это определение jQuery-селектора как значения для имени региона. В этом случае будет создан экземпляр `Region` и ему будет назначен jQuery-селектор:
+
+```js
+myApp.addRegions({
+  someRegion: "#some-div",
+  anotherRegion: "#another-div"
+});
+```
+
+### Собственный тип региона
+
+Второй способ - это определение собственного типа региона, которому задан селектор:
+
+```js
+var MyCustomRegion = Marionette.Region.extend({
+  el: "#foo"
+});
+
+myApp.addRegions(function() {
+  return {
+    someRegion: MyCustomRegion
+  };
+});
+```
+
+### Собственный тип региона и селектор
+
+Третий способ - это определение собственного типа региона и jQuery-селектора для него с помощью литерала объекта:
+
+```js
+var MyCustomRegion = Marionette.Region.extend({});
+
+myApp.addRegions({
+  someRegion: {
+    selector: "#foo",
+    regionType: MyCustomRegion
+  },
+
+  anotherRegion: {
+    selector: "#bar",
+    regionType: MyCustomRegion
+  }
+});
+```
+
+### Регионы как параметры ???
+
+Вы также можете указать регионы при создании экземпляра объекта `Application`.
+
+```js
+new Marionette.Application({
+  regions: {
+    fooRegion: '#foo-region'
+  }
+});
+```
+
+### Переопределение стандартного `RegionManager`-а
+
+Если вы хотите использовать класс отличный от класса `RegionManager`,
+вы можете указать его в `getRegionManager`:
+
+```js
+Marionette.Application.extend({
+  // ...
+
+  getRegionManager: function() {
+    // своя логика
+    return new MyRegionManager();
+  }
+```
+
+Это может быть полезно, если вы хотите связать регионы из `Application`
+с вашим собственным экземпляром объекта `RegionManager`.
+
+### Получение региона по его имени
+
+Ссылку на регион можно получить по его имени с помощью метода `getRegion`:
+
+```js
+var myApp = new Marionette.Application();
+myApp.addRegions({ r1: "#region1" });
+
+// r1 === r1Again; true
+var r1 = myApp.getRegion("r1");
+var r1Again = myApp.r1;
+```
+
+Доступ к региону через точечнную нотацию как к свойству объекта приложения эквивалентен доступу через метод `getRegion`.
+
+### Удаление регионов
+
+Регионы могут быть удалены с помощью метода `removeRegion`, который принимает в виде строки имя удаляемого региона:
+
+```js
+myApp.removeRegion('someRegion');
+```
+
+Перед тем как регион будет удален из объекта приложения, для него будут вызваны специальные методы,
+которые очистят его правильным образом.
+
+Для более подробной информации ознакомьтесь с [документацией по регионам](../region/).
+API, которое объект `Applications` использует для управления регионами, приходит от класса `RegionManager`,
+[документация доступна здесь](../regionmanager/).
+
+
 ## <a name="adding-initializers"></a> Добавление инициализаторов
+
+> Warning: deprecated
+>
+> This feature is deprecated, and is scheduled to be removed in version 3 of Marionette. Instead
+> of Initializers, you should use events to manage start-up logic. The `start` event is an ideal
+> substitute for Initializers.
+>
+> If you were relying on the deferred nature of Initializers in your app, you should instead
+> use Promises. This might look something like the following:
+>
+> ```js
+> doAsyncThings().then(app.start);
+> ```
 
 Ваше приложение должно выполнять полезные действия, такие как отображение контента
 в регионах, запускать роутеры и многое другое. Для того что бы достигнуть этих задач и
@@ -132,54 +328,22 @@ myApp.addInitializer(function(options){
 они буду запущены, когда будет вызван метод `start`. Если вы добавили их после запуска
 приложения, они будут запущены немедленно.
 
-## События иницализации приложения
-
-Объект `Application` вызывает несколько событий в течение своего жизненного цикла,
-для этого используется функция [Marionette.triggerMethod](../functions/).
-Эти события могут использоваться для того, чтобы сделать дополнительную обработку в
-вашем приложении. Например, вы хотите предварительно обработать некоторые данные перед
-процессом инициализации приложения. Или вы хотите дождаться завершения инициализации
-приложения и запустить `Backbone.history`.
-
-Список событий, которые вызываются:
-
-* **"before:start" / `onBeforeStart`**: вызывается перед запуском `Application` и перед началом исполнения инициализаторов.
-* **"start" / `onStart`**: вызывается после запуска `Application` и после исполнения инициализаторов.
-
-```js
-myApp.on("before:start", function(options){
-  options.moreData = "Yo dawg, I heard you like options so I put some options in your options!"
-});
-
-myApp.on("start", function(options){
-  if (Backbone.history){
-    Backbone.history.start();
-  }
-});
-```
-
-Параметр `options` передается из метода `start` экземпляра объекта `Application` (см. ниже).
-
-## Запуск приложения
-
-После того, как вы сконфигурировали ваше приложение, вы можете запустить его вызвав: `MyApp.start(options)`.
-
-Эта функция принимает один необязательный параметр `options`. Этот параметр будет
-передаваться в каждую определенную вами функцию инициализатора, а также в функции
-обработчика событий инициализации. Это позволяет вам производить дополнительное
-конфигурирование в различных частях вашего приложения, в таких как инициализация/запуск
-приложения, а не только при определении.
-
-```js
-var options = {
-  something: "some value",
-  another: "#some-selector"
-};
-
-myApp.start(options);
-```
-
 ## Система обмена сообщениями
+
+> Warning: deprecated
+>
+> This feature is deprecated, and is scheduled to be removed in the next major release of Marionette.
+> Instead of accessing Channels through the Application, you should use the Wreqr (or Radio) API.
+> By default the application's channel is named 'global'. To access this channel, you can use
+> the following code, depending on whether you're using Wreqr or Radio:
+>
+> ```js
+> // Wreqr
+> var globalCh = Backbone.Wreqr.radio.channel('global');
+>
+> // Radio
+> var globalCh = Backbone.Radio.channel('global');
+> ```
 
 Объект `Marionette Applications` включает в себя [систему обмена сообщениями](http://en.wikipedia.org/wiki/Message_passing),
 которая позволяет упростить коммуникации в вашем приложении.
@@ -281,126 +445,3 @@ globalCh.vent;
 // Этот способ не рекомендуется, поскольку он предполагает использование имени вашего приложения
 window.app.vent;
 ```
-
-## Регионы и объект приложения
-
-Экземпляры объекта `Application` имеют API, который позволяет вам управлять [Регионами](../region/).
-Регионы являются стандартным средством, с помощью которых ваши представления (views) добавляются в `document`.
-
-Объект `Region` может быть добавлен в приложение вызовом метода `addRegions` и передачей в функцию
-литерала объекта или функции, которая возвращает литерал объекта.
-
-Существуют три способа добавления региона в объект приложения.
-
-### jQuery-селектор
-
-Первый способ - это определение jQuery-селектора как значения для имени региона. В этом случае будет создан экземпляр `Region` и ему будет назначен jQuery-селектор:
-
-```js
-myApp.addRegions({
-  someRegion: "#some-div",
-  anotherRegion: "#another-div"
-});
-```
-
-### Собственный тип региона
-
-Второй способ - это определение собственного типа региона, которому задан селектор:
-
-```js
-var MyCustomRegion = Marionette.Region.extend({
-  el: "#foo"
-});
-
-myApp.addRegions(function() {
-  return {
-    someRegion: MyCustomRegion
-  };
-});
-```
-
-### Собственный тип региона и селектор
-
-Третий способ - это определение собственного типа региона и jQuery-селектора для него с помощью литерала объекта:
-
-```js
-var MyCustomRegion = Marionette.Region.extend({});
-
-myApp.addRegions({
-  someRegion: {
-    selector: "#foo",
-    regionType: MyCustomRegion
-  },
-
-  anotherRegion: {
-    selector: "#bar",
-    regionType: MyCustomRegion
-  }
-});
-```
-
-### Регионы как параметры
-
-Вы также можете указать регионы при создании экземпляра объекта `Application`.
-
-```js
-new Marionette.Application({
-  regions: {
-    fooRegion: '#foo-region'
-  }
-});
-```
-
-### Переопределение стандартного `RegionManager`-а
-
-Если вы хотите использовать класс отличный от класса `RegionManager`,
-вы можете указать его в `getRegionManager`:
-
-```js
-Marionette.Application.extend({
-  // ...
-
-  getRegionManager: function() {
-    // своя логика
-    return new MyRegionManager();
-  }
-```
-
-Это может быть полезно, если вы хотите связать регионы из `Application`
-с вашим собственным экземпляром объекта `RegionManager`.
-
-### Получение региона по его имени
-
-Ссылку на регион можно получить по его имени с помощью метода `getRegion`:
-
-```js
-var myApp = new Marionette.Application();
-myApp.addRegions({ r1: "#region1" });
-
-// r1 === r1Again; true
-var r1 = myApp.getRegion("r1");
-var r1Again = myApp.r1;
-```
-
-Доступ к региону через точечнную нотацию как к свойству объекта приложения эквивалентен доступу через метод `getRegion`.
-
-### Удаление регионов
-
-Регионы могут быть удалены с помощью метода `removeRegion`, который принимает в виде строки имя удаляемого региона:
-
-```js
-myApp.removeRegion('someRegion');
-```
-
-Перед тем как регион будет удален из объекта приложения, для него будут вызваны специальные методы,
-которые очистят его правильным образом.
-
-Для более подробной информации ознакомьтесь с [документацией по регионам](../region/).
-API, которое объект `Applications` использует для управления регионами, приходит от класса `RegionManager`,
-[документация доступна здесь](../regionmanager/).
-
-### Application.getOption
-Получить атрибут объекта можно либо напрямую от объекта, либо через `this.options`,
-использование `this.options` является предпочтительней.
-
-Больше информации про [getOption](../functions/).
