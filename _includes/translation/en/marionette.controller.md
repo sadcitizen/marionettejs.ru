@@ -2,6 +2,9 @@
 
 # Marionette.Controller
 
+> Warning: deprecated. The Controller object is deprecated. Instead of using the Controller
+> class with the AppRouter, you should specify your callbacks on a plain Javascript object.
+
 A Controller is an object used in the Marionette Router. Controllers are where you store
 your Router's callbacks.
 
@@ -9,6 +12,7 @@ your Router's callbacks.
 
 * [Basic Use](#basic-use)
 * [Destroying A Controller](#destroying-a-controller)
+* [mergeOptions](#mergeoptions)
 * [getOption](#getoption)
 * [Prior Usage](#prior-usage)
 
@@ -37,11 +41,18 @@ var myRouter = new Marionette.AppRouter({
 });
 ```
 
+## mergeOptions
+
+Merge keys from the `options` object directly onto the instance. This is the preferred way to access options
+passed into the Controller.
+
+More information at [mergeOptions](./marionette.functions.md#marionettemergeoptions)
+
 ## getOption
 
 Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
 
-More information [getOption](./marionette.functions.md)
+More information [getOption](./marionette.functions.md#marionettegetoption)
 
 ## Destroying A Controller
 

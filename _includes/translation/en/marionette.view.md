@@ -25,6 +25,7 @@ behaviors that are shared across all views.
 * [View.modelEvents and View.collectionEvents](#viewmodelevents-and-viewcollectionevents)
 * [View.serializeModel](#viewserializemodel)
 * [View.bindUIElements](#viewbinduielements)
+* [View.mergeOptions](#viewmergeoptions)
 * [View.getOption](#viewgetoption)
 * [View.bindEntityEvents](#viewbindentityevents)
 * [View.templateHelpers](#viewtemplatehelpers)
@@ -68,7 +69,7 @@ this.listenTo(this.collection, "add", _.bind(this.reconcileCollection, this.coll
 
 * "show" / `onShow` - Called on the view instance when the view has been rendered and displayed.
 
-This event can be used to react to when a view has been shown via a [region](marionette.region.md).
+This event can be used to react to when a view has been shown via a [region](./marionette.region.md).
 All `views` that inherit from the base `Marionette.View` class have this functionality, notably `ItemView`, `CollectionView`, `CompositeView`, and `LayoutView`.
 
 ```js
@@ -106,10 +107,11 @@ are performed:
 * unbind all DOM events
 * remove `this.el` from the DOM
 * unbind all `listenTo` events
+* returns the view.
 
 By providing an `onDestroy` method in your view definition, you can
 run custom code for your view that is fired after your view has been
-destroyd and cleaned up. The `onDestroy` method will be passed any arguments
+destroyed and cleaned up. The `onDestroy` method will be passed any arguments
 that `destroy` was invoked with. This lets you handle any additional clean
 up code without having to override the `destroy` method.
 
@@ -137,8 +139,7 @@ the view in a Region causes it to be attached to the `document`. Like other Mari
 executes a callback method, `onAttach`, if you've specified one. The `"attach"` event is great for jQuery
 plugins or other logic that must be executed *after* the view is attached to the `document`.
 
-Because the `attach` event is only fired when the view is a child of the `document`, it is a requirement
-that the Region you're showing it in be a child of the `document` at the time that you call `show`.
+The `attach` event is only fired when the view becomes a child of the `document`. If the Region you're showing the view in is not a child of the `document` at the time that you call `show` then the `attach` event will not fire until the Region is a child of the `document`.
 
 This event is unique in that it propagates down the view tree. For instance, when a CollectionView's
 `attach` event is fired, all of its children views will have the `attach` event fired as well. In
@@ -175,7 +176,7 @@ For more information about integration Marionette w/ KendoUI (also applicable to
 widget suites), see [this blog post on KendoUI + Backbone](http://www.kendoui.com/blogs/teamblog/posts/12-11-26/backbone_and_kendo_ui_a_beautiful_combination.aspx).
 
 ## View.events
-Since Views extend from backbone`s view class, you gain the benefits of the [events hash](http://backbonejs.org/#View-delegateEvents).
+Since Views extend from backbone's view class, you gain the benefits of the [events hash](http://backbonejs.org/#View-delegateEvents).
 
 Some preprocessing sugar is added on top to add the ability to cross utilize the ```ui``` hash.
 
@@ -414,15 +415,33 @@ Since View doesn't implement the render method, then if you directly extend
 from View you will need to invoke this method from your render method.
 In ItemView and CompositeView this is already taken care of.
 
+## View.mergeOptions
+The preferred way to manage your view's options is with `mergeOptions`. It accepts two arguments: the `options` object
+and the keys to merge onto the instance directly.
+
+```js
+var ProfileView = Marionette.ItemView.extend({
+  profileViewOptions: ['user', 'age'],
+
+  initialize: function(options) {
+    this.mergeOptions(options, this.profileViewOptions);
+
+    console.log('The merged options are:', this.user, this.age);
+  }
+});
+```
+
+More information [mergeOptions](./marionette.functions.md#marionettemergeoptions)
+
 ## View.getOption
 Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
 
-More information [getOption](./marionette.functions.md)
+More information [getOption](./marionette.functions.md#marionettegetoption)
 
 ## View.bindEntityEvents
 Helps bind a backbone "entity" to methods on a target object. bindEntityEvents is used to support `modelEvents` and `collectionEvents`.
 
-More information [bindEntityEvents](./marionette.functions.md)
+More information [bindEntityEvents](./marionette.functions.md#marionettebindentityevents)
 
 ## View.templateHelpers
 
