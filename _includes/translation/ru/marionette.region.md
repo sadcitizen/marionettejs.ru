@@ -261,6 +261,12 @@ myApp.mainRegion.show(myView);
 myApp.mainRegion.show(myView, {forceShow: true});
 ```
 
+#### Emptying a region
+
+You can empty a region of its view and contents by invoking `.empty()` on the region instance.
+If you would like to prevent the view currently shown in the region from being `destroyed` you can pass `{preventDestroy: true}` to the empty method to prevent the default destroy behavior.
+The empty method returns the region instance from the invocation of the method.
+
 #### onBeforeAttach & onAttach
 
 Regions that are attached to the document when you execute `show` are special in that the
