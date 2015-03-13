@@ -5,6 +5,7 @@
 
 * [Метод `initialize`](#initialize)
 * [События](#events)
+* [Метод `mergeOptions`](#mergeoptions)
 * [Метод `getOption`](#getoption)
 * [Метод bindEntityEvents](#bindentityevents)
 * [Удаление объекта](#destroying-a-object)
@@ -48,11 +49,18 @@ john.on('announce', function(message) {
 john.graduate();
 ```
 
+## <a name="mergeoptions"></a> mergeOptions
+
+Merge keys from the `options` object directly onto the instance. This is the preferred way to access options
+passed into the Object.
+
+More information at [mergeOptions](../functions/#marionettemergeoptions)
+
 ### <a name="getoption"></a> Метод `getOption`
 
 Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и
 быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
-Для более полной информации ознакомьтесь с [getOption](../functions/).
+Для более полной информации ознакомьтесь с [getOption](../functions/#marionettegetoption).
 
 ### <a name="bindentityevents"></a> bindEntityEvents
 
@@ -63,7 +71,7 @@ john.graduate();
 У объектов есть метод `destroy`, который отвязывает все события, которые были привязаны непосредственно к экземпляру объекта.
 
 Вызов метода `destroy` запустит событие "before:destroy" и вызовет соответствующий метод `onBeforeDestroy`.
-В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`.
+В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`. Invoking `destroy` will return the object, this can be useful for chaining.
 
 ```js
 // Объявляем объект с методом onDestroy
