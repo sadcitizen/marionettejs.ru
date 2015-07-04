@@ -314,6 +314,30 @@ Or you can leave the events on by default but disable them for a single show.
 myRegion.show(myView, {triggerBeforeAttach: false, triggerAttach: false});
 ```
 
+#### `renderView`
+
+In order to add conditional logic when rendering a view you can override the `renderView` method. This could be useful if you don't want the region to re-render views that aren't destroyed. By default this method will call `view.render`.
+
+```js
+
+var CachingRegion = Marionette.Region.extend({
+  shouldDestroyView: function(view, options) { return false; },
+  renderView: function(view, options) {
+    if (!view.isRendered) { view.render(); }
+  }
+});
+```
+
+#### `shouldDestroyView`
+
+In order to add conditional logic around whether the current view should be destroyed when showing a new one you can override the `shouldDestroyView` method. This is particularly useful as an alternative to the `preventDestroy` option when you wish to prevent destroy on all views that are shown in the region.
+
+```js
+var CachingRegion = Marionette.Region.extend({
+  shouldDestroyView: function(view, options) { return false; }
+});
+```
+
 ### Checking whether a region is showing a view
 
 If you wish to check whether a region has a view, you can use the `hasView`
@@ -498,7 +522,7 @@ var MyRegion = Marionette.Region.extend({
   }
 });
 
-var MyView = Marionette.ItemView.extend({
+var MyView = Marionette.View.extend({
   onBeforeShow: function(view, region, options) {
     // called before the `view` has been shown
   },
