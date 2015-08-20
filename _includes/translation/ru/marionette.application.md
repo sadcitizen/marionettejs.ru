@@ -56,28 +56,30 @@ is notable because it is the codebase that Backbone was abstracted from. If such
 existed, then that app would certainly be a candidate. Backbone Boilerplate is notable as perhaps the most popular library
 for bootstrapping a Backbone application. Do note that in the Backbone Boilerplate code the exported object is implicit.
 
-The pattern of creating a Javascript object is so popular because it provides you with a location to
-put the pieces of your application. For instance, attaching a Router to this object is common practice.
 
-Using a raw Javascript object is great, but Marionette provides a light wrapper for a plain Javascript object, which is the
-Application. One benefit to using the Application is that it comes with a `start` method. This can be used to accomplish
-tasks before the rest of your application begins. Let's take a quick look at an example:
+Паттерн создания Javascript объекта попоулярен тем, что предоставляет вам место, куда можно сложить "кусочки" вашего приложения.
+Например, добавление роутера приложения (Router) к этому объекту- обычная практика.
+
+Использование Javascript объекта- замечательно, но Marionette предоставляет Application, являющийся легковесной оберткой
+для обычного js-объекта. Преимущество использования Application в том, что предоставляется  `start` метод. Это позволит
+выполнить "задания-таски" перед запуском самого приложения. Простой пример:
+ 
 
 ```js
-// Create our Application
+// создаем наш Application
 var app = new Marionette.Application();
 
-// Start history when our application is ready
+// запускаем  history  когда приложение будет готово
 app.on('start', function() {
   Backbone.history.start();
 });
 
-// Load some initial data, and then start our application
+// загрузка начальных данных, и затем старт приложения
 loadInitialData().then(app.start);
 ```
 
-In the simple example above, we could have just as easily started history after our initial data had loaded. This
-pattern becomes more useful as the startup phase of your application becomes more complex.
+Пример выше показал возможность запуска `Backbone.history` именно после загрузки начальных данных. Этот паттерн особенно 
+полезен, когда фаза старта приложения становится все более сложной.
 
 ### <a name="initialize"></a> Метод initialize
 
