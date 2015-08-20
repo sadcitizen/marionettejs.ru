@@ -6,6 +6,7 @@ Marionette содержит набор утилит / функций-хелпе�
 
 * [Marionette.extend](#marionetteextend)
 * [Marionette.isNodeAttached](#marionetteisnodeattached)
+* [Marionette.mergeOptions](#marionettemergeoptions)
 * [Marionette.getOption](#marionettegetoption)
 * [Marionette.proxyGetOption](#marionetteproxygetoption)
 * [Marionette.triggerMethod](#marionettetriggermethod)
@@ -57,6 +58,26 @@ Marionette.isNodeAttached(div);
 $('body').append(div);
 Marionette.isNodeAttached(div);
 // => true
+```
+
+## Marionette.mergeOptions
+
+A handy function to pluck certain `options` and attach them directly to an instance.
+Most Marionette Classes, such as the Views, come with this method.
+
+```js
+var MyView = ItemView.extend({
+  myViewOptions: ['color', 'size', 'country'],
+
+  initialize: function(options) {
+    this.mergeOptions(options, this.myViewOptions);
+  },
+
+  onRender: function() {
+    // The merged options will be attached directly to the prototype
+    this.$el.addClass(this.color);
+  }
+});
 ```
 
 ## Marionette.getOption

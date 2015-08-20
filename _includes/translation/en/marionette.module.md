@@ -2,6 +2,11 @@
 
 # Marionette.Module
 
+> Warning: deprecated
+>
+> Marionette.Module is deprecated, and is scheduled to be removed in the next major release of the library. Instead
+> of Marionette.Module, you should use AMD/CommonJS/ES6 for modularity.  A [Marionette.Module shim](https://github.com/marionettejs/marionette.module) is available if necessary after its removal.
+
 Marionette Modules allow you to create modular encapsulated logic.
 They can be used to split apart large applications into multiple files,
 and to build individual components of your app.
@@ -31,7 +36,7 @@ A module is defined directly from an Application object. To create a module all
 you need to do is give it a name.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var MyApp = new Marionette.Application();
 
 // Creates a new module named "MyModule"
 var myModule = MyApp.module("MyModule");
@@ -44,7 +49,7 @@ calls to `module` with the same name argument will not create
 a new module, but instead return the already-created instance.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var MyApp = new Marionette.Application();
 
 // Instantiates a new Marionette.Module
 var myModule = MyApp.module("MyModule");
@@ -68,7 +73,7 @@ It will receive 6 parameters, in this order:
 * The module itself
 * The Application object
 * Backbone
-* Backbone.Marionette
+* Marionette
 * jQuery
 * Underscore
 * Any custom arguments
@@ -132,7 +137,7 @@ Sometimes a module definition can become quite long. You can split
 apart the definition by making subsequent calls to the `module`
 function.
 
-This can used to split the definition of your module
+This can be used to split the definition of your module
 across multiple files.
 
 ```js
@@ -171,7 +176,7 @@ MyApp.module("MyModule", {
 One of the more useful features of the object literal definition is specifying a custom
 module class. You can make a new class using the extend function.
 
-```
+```js
 var CustomModule = Marionette.Module.extend({
   // Custom module properties
 });
@@ -193,12 +198,12 @@ The initialize function is only available through the object literal definition 
 ```js
 MyApp.module("Foo", {
   startWithParent: false,
-  initialize: function( moduleName, app, options ) {
+  initialize: function(moduleName, app, options) {
     this.someProperty = 'someValue';
   },
   // You can still set a define function
-  define: function( Foo ) {
-    console.log( this.someProperty ); // Logs 'someValue'
+  define: function(Foo) {
+    console.log(this.someProperty); // Logs 'someValue'
   }
 });
 ```
@@ -230,13 +235,13 @@ var CustomModule = Marionette.Module.extend({
 
 Module classes can be used as an alternative to the define pattern.
 
-The extend function of a Module is identical to the extend functions on other Backbone and Marionette classes. This allows module lifecyle events like `onStart` and `onStop` to be called directly.
+The extend function of a Module is identical to the extend functions on other Backbone and Marionette classes. This allows module lifecycle events like `onStart` and `onStop` to be called directly.
 
-```
+```js
 var FooModule = Marionette.Module.extend({
   startWithParent: false,
 
-  initialize: function(options, moduleName, app) {
+  initialize: function(moduleName, app, options) {
   },
 
   onStart: function(options) {
@@ -302,7 +307,7 @@ In this example, the module will exhibit the default behavior and start automati
 with the parent application object's `start` call:
 
 ```js
-MyApp = new Backbone.Marionette.Application();
+MyApp = new Marionette.Application();
 
 MyApp.module("Foo", function(){
   // module code goes here

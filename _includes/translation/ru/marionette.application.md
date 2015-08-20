@@ -1,27 +1,23 @@
 Класс `Application` это контейнер для всего кода вашего приложения. Рекомендуется
 иметь хотя бы один экзепляр класса `Application` на приложение.
 
-By creating an Application you get three important things:
+Создавая Application  вы получаете три важных вещи:
+  
+ - Метод 'start' запускающий ваше приложение.
+   Дает  вам отличную возможность сделать что либо, перед непосредственным запуском приложения. Например,
+   начать роутинг, или, перед стартом, выполниить AJAX запрос для получения требующихся данных для приложения.
+  
+- Изоляцию пространства имен от `window`.
+  Если вы не используете модульную систему загрузки ( ES6 modules, CommonJS, или AMD), то вы можете использовать
+  пространсто имен Application для хранения Javascript объектов. И, даже, если используете эти модульные системы,
+  вы все равно можете использовать application- пространство, например, для помощи в дебаггинге.
+  
+- Интеграцию с Marionette Inspector. Marionette Inspector - инструмент облегчающий понимание и дебаггинг вашего
+  приложения. Использование Application Class автоматически связывает приложение с этим расширением.
 
-- A `start` method to kick off your application.
-  This allows you an opportunity to do things that may need to occur before, say, you
-  begin routing. An example would be making an AJAX call to request data that your app
-  needs before starting.
-
-- A namespace to keep things off of the `window`.
-  If you are not using a module loader like ES6 modules, CommonJS, or AMD, then
-  you can use the Application to store your Javascript objects. And if you are
-  using one of those module systems, then you can still attach things to the
-  application to aid in debugging.
-
-- Integration with the Marionette Inspector. The Marionette Inspector is a fantastic tool
-  that makes it easy to understand and debug your application. Using the Application Class
-  will automatically hook up your application to that extension.
-
-Note that the Application is undergoing many changes to become more lightweight. While it
-still includes many more features beyond what has been listed here, such as a Radio Channel and Regions,
-these features are now deprecated. Refer to the relevant sections below to learn what to use
-instead of these deprecated features.
+Обратите внимание, что Application подвергается многим изменениям, что бы стать более легковесным. Поэтому все еще
+содержит в себе множество фич не отображенных в cписке ниже. Например, Radio Channel и Regions, на данный момент "depricated" 
+внутри Application. Сверяйтесь с соответвующими разделами, для уточнения, что использовать вместо объявленных устаревшими фич. 
 
 ## Содержание
 
