@@ -43,7 +43,7 @@
 
 ### <a name="getting-started"></a> Getting Started
 
-A common pattern in Backbone apps is the following:
+Общий паттерн создания Backbone- приложения:
 
 ```js
 var app = {};
