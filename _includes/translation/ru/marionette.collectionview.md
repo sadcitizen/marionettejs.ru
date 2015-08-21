@@ -1,16 +1,16 @@
-The `CollectionView` will loop through all of the models in the
-specified collection, render each of them using a specified `childView`,
-then append the results of the child view's `el` to the collection view's
-`el`. By default the `CollectionView` will maintain a sorted collection's order
-in the DOM. This behavior can be disabled by specifying `{sort: false}` on initialize.
+`CollectionView` будет пробегать по всем моделям в определенной коллекции рендеря каждую, используя переданный `childView`.
+Затем, присоеденит `el` каждой отрендеренной вьюшки (child view) к родительскому (collection view) `el`. По умолчанию,   
+`CollectionView` будет отражать отсортированный порядок коллекции в DOM. Такое поведение можно отключить передачей 
+`{sort: false}` при инициализации.
 
-CollectionView extends directly from Marionette.View. Please see
+
+CollectionView экстендится напрямую от Marionette.View. Поглядите
 [the Marionette.View documentation](./marionette.view.md)
-for more information on available features and functionality.
+для уточнения информации о доступных фичах и функциональности.
 
-Additionally, interactions with Marionette.Region
-will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](./marionette.region.md) for more information.
+Дополнительно, взаимодействие с Marionette.Region
+будет обеспечивать такие  возможности как кэлбеки `onShow` и т.д. Поглядите 
+[the Region documentation](./marionette.region.md) для уточнения.
 
 ## Documentation Index
 
@@ -61,9 +61,9 @@ will provide features such as `onShow` callbacks, etc. Please see
 
 ## CollectionView's `childView`
 
-Specify a `childView` in your collection view definition. This must be
-a Backbone view object definition, not an instance. It can be any
-`Backbone.View` or be derived from `Marionette.ItemView`.
+Определяет `childView` в вашей CollectionView. Должен быть
+`Backbone.View` определением, не инстанционированным объектом. Это может быть любой
+`Backbone.View`  или  `Marionette.ItemView`.
 
 ```js
 var MyChildView = Marionette.ItemView.extend({});
@@ -73,12 +73,10 @@ Marionette.CollectionView.extend({
 });
 ```
 
-Child views must be defined before they are referenced by the
-`childView` attribute in a collection view definition. Use `getChildView`
-to lookup the definition as child views are instantiated.
+Вложенная вьюшка должна быть определена прежде, чем вы будете на нее ссылаться в описании.
+Используйте `getChildView` для получения определения класса.
 
-Alternatively, you can specify a `childView` in the options for
-the constructor:
+Другой вариант,  определить `childView` в опциях конструктора
 
 ```js
 var MyCollectionView = Marionette.CollectionView.extend({...});
@@ -88,12 +86,11 @@ new MyCollectionView({
 });
 ```
 
-If you do not specify a `childView`, an exception will be thrown
-stating that you must specify a `childView`.
+Если не определите `childView`, выбросится исключение, указывающее необходимость определения `childView`
 
 ### CollectionView's `getChildView`
-The value returned by this method is the `ChildView` class that will be instantiated when a `Model` needs to be initially rendered.
-This method also gives you the ability to customize per `Model` `ChildViews`.
+Значение, возвращаемое эти методом- класс `ChildView` инстанцируемый когда `Model` начнет рендерится. Также, этот метод позволяет
+настраивать для каждой  `Model` свой `ChildViews`.
 
 ```js
 var FooBar = Backbone.Model.extend({
@@ -111,8 +108,8 @@ var BarView = Marionette.ItemView.extend({
 
 var MyCollectionView = Marionette.CollectionView.extend({
   getChildView: function(item) {
-    // Choose which view class to render,
-    // depending on the properties of the item model
+    // Выбираем класс вложенной  вью,
+    // в зависимости от аттрибута модели 'isFoo'
     if  (item.get('isFoo')) {
       return FooView;
     }
