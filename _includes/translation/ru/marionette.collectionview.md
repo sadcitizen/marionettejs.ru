@@ -86,10 +86,10 @@ new MyCollectionView({
 });
 ```
 
-Если не определите `childView`, выбросится исключение, указывающее необходимость определения `childView`
+Если не определите `childView`, выбросится исключение, указывающее на необходимость определения `childView`
 
 ### CollectionView's `getChildView`
-Значение, возвращаемое эти методом- класс `ChildView` инстанцируемый когда `Model` начнет рендерится. Также, этот метод позволяет
+Значение, возвращаемое эти методом- класс `ChildView` инстанцируемый, когда `Model` начнет рендерится. Также, этот метод позволяет
 настраивать для каждой  `Model` свой `ChildViews`.
 
 ```js
@@ -136,11 +136,10 @@ collectionView.collection.add(bar);
 
 ### CollectionView's `childViewOptions`
 
-There may be scenarios where you need to pass data from your parent
-collection view in to each of the childView instances. To do this, provide
-a `childViewOptions` definition on your collection view as an object
-literal. This will be passed to the constructor of your childView as part
-of the `options`.
+Существует много сценариев, когда вам необходимо передать информацию от родительсуой `collection view` каждому вложенному
+`childView` инстансу. Для этого добавте определение `childViewOptions` в collection view (как литеральный объект). Оно 
+передстся в конструктор childVIewЮ как часть `options`
+
 
 ```js
 var ChildView = Marionette.ItemView.extend({
@@ -158,11 +157,9 @@ var CollectionView = Marionette.CollectionView.extend({
 });
 ```
 
-You can also specify the `childViewOptions` as a function, if you need to
-calculate the values to return at runtime. The model will be passed into
-the function should you need access to it when calculating
-`childViewOptions`. The function must return an object, and the attributes
-of the object will be copied to the `childView` instance's options.
+Можно определить `childViewOptions` как функцию, если нужно вычеслить значения в рантайме. Model передается внурь функции
+и доступна для обращения при вычеслениях. Функция должна вернуть объект, аттрибуты объекта будут скопированны в options инстанса 
+`childView` 
 
 ```js
 var CollectionView = Marionette.CollectionView.extend({
@@ -178,10 +175,8 @@ var CollectionView = Marionette.CollectionView.extend({
 
 ### CollectionView's `childViewEventPrefix`
 
-You can customize the event prefix for events that are forwarded
-through the collection view. To do this, set the `childViewEventPrefix`
-on the collection view. For more information on the `childViewEventPrefix` see
-["childview:*" event bubbling from child views](#childview-event-bubbling-from-child-views)
+Вы можете настраивать префикс событий, для событитй передающихся через `collection view`. Для этого, установите `childViewEventPrefix`.
+Для большей информации смотрите ["childview:*" event bubbling from child views](#childview-event-bubbling-from-child-views)
 
 ```js
 var CV = Marionette.CollectionView.extend({
@@ -199,18 +194,18 @@ c.on("some:prefix:render", function(){
 c.render();
 ```
 
-The `childViewEventPrefix` can be provided in the view definition or
-in the constructor function call, to get a view instance.
+`childViewEventPrefix` можно передавать в определении, либо в опциях вызова констурктора. 
 
 ### CollectionView's `childEvents`
 
-You can specify a `childEvents` hash or method which allows you to capture all bubbling childEvents without having to manually set bindings. The keys of the hash can either be a function or a string that is the name of a method on the collection view.
+Описывая `childEvents` хеш ( в определении) или метод (в инстанцировании) вы перехватываете все всплывающие childEvents события 
+без ручного биндинга. Ключи хеша могут быть либо функцией, либо строкой- именем метода в collection view. 
 
 ```js
-// childEvents can be specified as a hash...
+// childEvents может буть определен как хеш
 var MyCollectionView = Marionette.CollectionView.extend({
 
-  // This callback will be called whenever a child is rendered or emits a `render` event
+  // эта кэллбек- функция будет вызвана, когда ребенок вызовет событие `render` event
   childEvents: {
     render: function() {
       console.log("a childView has been rendered");
@@ -218,7 +213,7 @@ var MyCollectionView = Marionette.CollectionView.extend({
   }
 });
 
-// ...or as a function that returns a hash.
+// ... или как функция, возвращающая хеш
 var MyCollectionView = Marionette.CollectionView.extend({
 
   childEvents: function() {
@@ -228,10 +223,10 @@ var MyCollectionView = Marionette.CollectionView.extend({
 });
 ```
 
-This also works for custom events that you might fire on your child views.
+Так же работает для ваших кастомных событий,  которые вы можете вызывать из вложенных вьющек.
 
 ```js
-// The child view fires a custom event, `show:message`
+// Вложенная вьюшка вызывает, `show:message`
 var ChildView = new Marionette.ItemView.extend({
   events: {
     'click .button': 'showMessage'
@@ -244,7 +239,7 @@ var ChildView = new Marionette.ItemView.extend({
   }
 });
 
-// The parent uses childEvents to catch that custom event on the child view
+// Родитель использует childEvents для обработки присланного кастомного сообщения от вложенной вьюшки.
 var ParentView = new Marionette.CollectionView.extend({
   childView: ChildView,
 
@@ -258,10 +253,8 @@ var ParentView = new Marionette.CollectionView.extend({
 
 ### CollectionView's `buildChildView`
 
-When a custom view instance needs to be created for the `childView` that
-represents a child, override the `buildChildView` method. This method
-takes three parameters and returns a view instance to be used as the
-child view.
+Когда требуется кастомная `childView`, нужно переопределить `buildChildView` метод. Этот метод принимает 3 параметра и
+возращает `view instance`, который будет использован для отображения вложенных вьюшек.
 
 ```js
 buildChildView: function(child, ChildViewClass, childViewOptions){
@@ -276,7 +269,8 @@ buildChildView: function(child, ChildViewClass, childViewOptions){
 
 ### CollectionView's `addChild`
 
-The `addChild` method is responsible for rendering the `childViews` and adding them to the HTML for the `collectionView` instance. It is also responsible for triggering the events per `ChildView`. In most cases you should not override this method. However if you do want to short circuit this method, it can be accomplished via the following.
+Метод `addChild` отвечает за рендеринг `childViews` и добавления в HTML  `collectionView` инстанса. Также,он отвечает за 
+вызов событий от `ChildView`. Чаще всего, вам не нужно его переопределять. Но, если хотите, то можно. Примерно так:
 
 ```js
 Marionette.CollectionView.extend({
@@ -290,22 +284,19 @@ Marionette.CollectionView.extend({
 
 ### CollectionView's `reorderOnSort`
 
-This option is useful when you have performance issues when you resort your `CollectionView`.
-Without this option, your `CollectionView` will be completely re-rendered, which can be
-costly if you have a large number of elements or if your `ChildView`s are complex. If this option
-is activated, when you sort your `Collection`, there will be no re-rendering, only the DOM nodes
-will be reordered. This can be a problem if your `ChildView`s use their collection's index
-in their rendering. In this case, you cannot use this option as you need to re-render each
-`ChildView`.
+Эта опция полезна, когда вы выполняете пересортировку вашей коллекции. Без этой опции, ваш  `CollectionView` будет полностью
+перерендерен, что может быть очень накладно, в случае большого количества элементов или из-за сложности ваших `ChildView`.
+Если эта опция активна,  то пересортица `Collection` не будет требовать перерисовки, но только переупорядочивания  DOM узлов.
+Это может быть проблемой, если `ChildView` используют свой индекс в коллекции для рендеринга. В этом случае, вы не сможете
+использовать эту опцию. так как вам придется перерендерить каждую `ChildView`.
 
-If you combine this option with a [filter](#collectionviews-filter) that changes the views that are
-to be displayed, `reorderOnSort` will be bypassed to render new children and remove those that are rejected by the filter.
+Если скобмбинировать эту опцию с [filter](#collectionviews-filter),  `reorderOnSort` будет рендерить новые вложенные и удалять
+ те, что не прошли через `filter`.
 
 ## CollectionView's `emptyView`
 
-When a collection has no children, and you need to render a view other than
-the list of childViews, you can specify an `emptyView` attribute on your
-collection view.
+Когда коллекция не имеет детей, а вам нужно отобразить вьюху отличающуюся от обычного списка, вы  можете определить аттрибут
+`emptyView`.
 
 ```js
 var NoChildrenView = Marionette.ItemView.extend({
@@ -321,7 +312,7 @@ Marionette.CollectionView.extend({
 
 ### CollectionView's `getEmptyView`
 
-If you need the `emptyView`'s class chosen dynamically, specify `getEmptyView`:
+Если нужно `emptyView` выбрать динамически, определите `getEmptyView`:
 
 ```js
 Marionette.CollectionView.extend({
@@ -336,7 +327,7 @@ Marionette.CollectionView.extend({
 
 ### CollectionView's `isEmpty`
 
-If you want to control when the empty view is rendered, you can override
+Если нужно контролироватьЮ когда отображается пустая вью, определите
 `isEmpty`:
 
 ```js
@@ -350,9 +341,10 @@ Marionette.CollectionView.extend({
 
 ### CollectionView's `emptyViewOptions`
 
-Similar to `childView` and `childViewOptions`, there is an `emptyViewOptions` property that will be passed to the `emptyView` constructor. It can be provided as an object literal or as a function.
+Сходное с `childView` и `childViewOptions`, свойство  `emptyViewOptions` передастся в конструктор `emptyView`.
+Можно описать как литеральный объект или функцию.
 
-If `emptyViewOptions` aren't provided the CollectionView will default to passing the `childViewOptions` to the `emptyView`.
+Если `emptyViewOptions` не определено в  CollectionView, по умолчанию будет передаваться `childViewOptions` в `emptyView`.
 
 ```js
 var EmptyView = Marionette.ItemView({
@@ -377,10 +369,10 @@ There are several callback methods that can be provided on a
 view's base methods. These callback methods are intended to be
 handled within the view definition directly.
 
+
 ### onBeforeRender callback
 
-A `onBeforeRender` callback will be called just prior to rendering
-the collection view.
+`onBeforeRender` вызывается непосредственно перед рендерингом `collection view`
 
 ```js
 Marionette.CollectionView.extend({
@@ -392,9 +384,8 @@ Marionette.CollectionView.extend({
 
 ### onRender callback
 
-After the view has been rendered, a `onRender` method will be called.
-You can implement this in your view to provide custom code for dealing
-with the view's `el` after it has been rendered:
+После рендеринга вьюшки, вызовится метод  `onRender`. Можно определить этот метод, для связывания вашего кода
+с отренедеренными элементами.
 
 ```js
 Marionette.CollectionView.extend({
@@ -406,8 +397,7 @@ Marionette.CollectionView.extend({
 
 ### onBeforeReorder callback
 
-If `reorderOnSort` is set to `true`, `onBeforeReorder` will be called just
-prior to reordering the collection view.
+Если `reorderOnSort` установлен в `true`, `onBeforeReorder` будет вызван перед переупорядочиванием collectionView.
 
 ```js
 Marionette.CollectionView.extend({
@@ -419,8 +409,7 @@ Marionette.CollectionView.extend({
 
 ### onReorder callback
 
-If `reorderOnSort` is set to `true`, after the view has been reordered,
-a `onReorder` method will be called.
+Если `reorderOnSort` установлен в `true`, после переупорядочивания collectionView будет вызван  `onReorder`.
 
 ```js
 Marionette.CollectionView.extend({
@@ -432,7 +421,7 @@ Marionette.CollectionView.extend({
 
 ### onBeforeDestroy callback
 
-This method is called just before destroying the view.
+Этот метод вызывается перед удалением (разрушением) вьюшки.
 
 ```js
 Marionette.CollectionView.extend({
@@ -444,7 +433,7 @@ Marionette.CollectionView.extend({
 
 ### onDestroy callback
 
-This method is called just after destroying the view.
+Этот метод вызывается после удаления (разрушения) вьюшки.
 
 ```js
 Marionette.CollectionView.extend({
@@ -456,9 +445,8 @@ Marionette.CollectionView.extend({
 
 ### onBeforeAddChild callback
 
-This callback function allows you to know when a child / child view
-instance is about to be added to the collection view. It provides access to
-the view instance for the child that was added.
+Этот кэллбек позволит вам знать, когда добавляется вложенное представлением в collectionView. Обеспечивает доступ 
+к инстансу добавляемой вьюхи. Вызвается непосредственно перед добавлением.  
 
 ```js
 Marionette.CollectionView.extend({
@@ -470,9 +458,8 @@ Marionette.CollectionView.extend({
 
 ### onAddChild callback
 
-This callback function allows you to know when a child / child view
-instance has been added to the collection view. It provides access to
-the view instance for the child that was added.
+Этот кэллбек позволит вам знать, когда добавилось вложенное представлением в collectionView. Обеспечивает доступ 
+к инстансу добавленной вьюхи. Вызвается после добавления.
 
 ```js
 Marionette.CollectionView.extend({
@@ -484,9 +471,8 @@ Marionette.CollectionView.extend({
 
 ### onBeforeRemoveChild callback
 
-This callback function allows you to know when a `childView`
-instance is about to be removed from the `collectionView`. It provides access to
-the view instance for the child that was removed.
+Этот кэллбек позволит вам знать, когда вложенное представление удаляется из collectionView. Обеспечивает доступ 
+к инстансу удаляемой вьюхи.
 
 ```js
 Marionette.CollectionView.extend({
@@ -498,9 +484,8 @@ Marionette.CollectionView.extend({
 
 ### onRemoveChild callback
 
-This callback function allows you to know when a child / childView
-instance has been deleted or removed from the
-collection.
+Этот кэллбек позволит вам знать, когда вложенное представление удалится (уже удалено) из collectionView. Обеспечивает доступ 
+к инстансу удаленной вьюхи.
 
 ```js
 Marionette.CollectionView.extend({
