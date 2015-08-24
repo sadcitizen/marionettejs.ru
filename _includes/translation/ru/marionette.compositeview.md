@@ -1,21 +1,18 @@
-A `CompositeView` extends from `CollectionView` to be used as a
-composite view for scenarios where it should represent both a
-branch and leaf in a tree structure, or for scenarios where a
-collection needs to be rendered within a wrapper template. By default the
-`CompositeView` will maintain a sorted collection's order
-in the DOM. This behavior can be disabled by specifying `{sort: false}` on initialize.
+`CompositeView` расширяет `CollectionView` и обычно используется в сценариях где нужно отразить "ветвь и листья", или
+в сценариях, где коллекцию нужно в ставить в оборачивающий ее шаблон. По умолчанию `CompositeView` отражает сортировку коллекции в DOM. 
+Такое поведение можно отключить, определяя `{sort: false}` при инициализации
 
 Please see
-[the Marionette.CollectionView documentation](marionette.collectionview.md)
+[the Marionette.CollectionView documentation](./marionette.collectionview.md)
 for more information on available features and functionality.
 
 Additionally, interactions with Marionette.Region
 will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](marionette.region.md) for more information.
+[the Region documentation](./marionette.region.md) for more information.
 
 ## Example Usage: Tree View
 
-For example, if you're rendering a treeview control, you may
+For example, if you're rendering a tree-view control, you may
 want to render a collection view with a model and template so
 that it will show a parent child with children in the tree.
 
@@ -23,7 +20,7 @@ You can specify a `modelView` to use for the model. If you don't
 specify one, it will default to the `Marionette.ItemView`.
 
 ```js
-var CompositeView = Backbone.Marionette.CompositeView.extend({
+var CompositeView = Marionette.CompositeView.extend({
   template: "#leaf-branch-template"
 });
 
@@ -79,9 +76,9 @@ Each childView will be rendered using the `childView`'s template. The `Composite
 template is rendered and the childView's templates are added to this.
 
 ```js
-var ChildView = Backbone.Marionette.ItemView.extend({});
+var ChildView = Marionette.ItemView.extend({});
 
-var CompView = Backbone.Marionette.CompositeView.extend({
+var CompView = Marionette.CompositeView.extend({
   childView: ChildView
 });
 ```
@@ -134,12 +131,12 @@ table structure, specify an `childViewContainer` in your composite view,
 like this:
 
 ```js
-var RowView = Backbone.Marionette.ItemView.extend({
+var RowView = Marionette.ItemView.extend({
   tagName: "tr",
   template: "#row-template"
 });
 
-var TableView = Backbone.Marionette.CompositeView.extend({
+var TableView = Marionette.CompositeView.extend({
   childView: RowView,
 
   // specify a jQuery selector to put the `childView` instances into
@@ -158,11 +155,11 @@ function needs to return a jQuery selector string, or a jQuery selector
 object.
 
 ```js
-var TableView = Backbone.Marionette.CompositeView.extend({
+var TableView = Marionette.CompositeView.extend({
   // ...
 
   childViewContainer: function(){
-    return "#tbody"
+    return "#my-tbody"
   }
 });
 ```
@@ -179,18 +176,17 @@ function options:
 var myComp = new Marionette.CompositeView({
   // ...,
 
-  childViewContainer: "#tbody"
+  childViewContainer: "#my-tbody"
 });
 ```
 
 ## CompositeView's `attachHtml`
 
-
-Sometimes the `childViewContainer` configuration is insuficient for
+Sometimes the `childViewContainer` configuration is insufficient for
 specifying where the `childView` instance should be placed. If this is the
 case, you can override the `attachHtml` method with your own implementation.
 
-For more information on this method, see the [CollectionView's documentation](https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.collectionview.md).
+For more information on this method, see the [CollectionView's documentation](./marionette.collectionview.md#collectionviews-attachhtml).
 
 ## CompositeView's `childView` container selection
 
@@ -202,7 +198,6 @@ The default rendering mode for a `CompositeView` assumes a
 hierarchical, recursive structure. If you configure a composite
 view without specifying an `childView`, you'll get the same
 composite view class rendered for each child in the collection.
-
 
 ## Model And Collection Rendering
 
@@ -220,7 +215,7 @@ useful in custom `Renderer` implementations.
 ## Events And Callbacks
 
 During the course of rendering a composite, several events will
-be triggered. These events are triggered with the [Marionette.triggerMethod](./marionette.functions.md)
+be triggered. These events are triggered with the [Marionette.triggerMethod](./marionette.functions.md#marionettetriggermethod)
 function, which calls a corresponding "on{EventName}" method on the view.
 
 * "before:render:template" / `onBeforeRenderTemplate` - before the `model` has been rendered
@@ -236,7 +231,7 @@ your view to provide custom code for dealing with the view's
 `el` after it has been rendered:
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
   onRender: function(){
     // do stuff here
   }
@@ -272,4 +267,5 @@ Marionette.CompositeView.extend({
 });
 ```
 
-For more information, see the [Marionette.View](../view/) documentation.
+For more information, see the [Marionette.View](./marionette.view.md#viewmodelevents-and-viewcollectionevents)
+documentation.

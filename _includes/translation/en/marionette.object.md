@@ -11,6 +11,7 @@ like `initialize` and `Backbone.Events`.
 * [initialize](#initialize)
 * [events](#events)
 * [Destroying An Object](#destroying-a-object)
+* [mergeOptions](#mergeoptions)
 * [getOption](#getoption)
 * [bindEntityEvents](#bindentityevents)
 * [Basic Use](#basic-use)
@@ -53,13 +54,20 @@ john.on('announce', function(message) {
 john.graduate();
 ```
 
+## mergeOptions
+
+Merge keys from the `options` object directly onto the instance. This is the preferred way to access options
+passed into the Object.
+
+More information at [mergeOptions](./marionette.functions.md#marionettemergeoptions)
+
 ### getOption
 Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
 
-More information [getOption](./marionette.functions.html).
+More information [getOption](./marionette.functions.md#marionettegetoption).
 
 ### bindEntityEvents
-Helps bind a backbone "entity" to methods on a target object. More information [bindEntityEvents](./marionette.functions.md).
+Helps bind a backbone "entity" to methods on a target object. More information [bindEntityEvents](./marionette.functions.md#marionettebindentityevents).
 
 ### Destroying A Object
 
@@ -68,7 +76,7 @@ instance.
 
 Invoking the `destroy` method will trigger a "before:destroy" event and corresponding
 `onBeforeDestroy` method call. These calls will be passed any arguments `destroy`
-was invoked with.
+was invoked with. Invoking `destroy` will return the object, this can be useful for chaining.
 
 ```js
 // define a object with an onDestroy method

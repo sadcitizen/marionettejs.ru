@@ -13,20 +13,21 @@ attach multiple region managers to dynamically rendered HTML.
 You can create complex views by nesting layoutView managers within `Regions`.
 
 For a more in-depth discussion on LayoutViews, see the blog post
-[Manage Layouts And Nested Views With Backbone.Marionette](http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/)
+[Manage Layouts And Nested Views With Marionette](http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/)
 
 Please see
-[the Marionette.ItemView documentation](marionette.itemview.md)
+[the Marionette.ItemView documentation](./marionette.itemview.md)
 for more information on available features and functionality.
 
 Additionally, interactions with Marionette.Region
 will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](marionette.region.md) for more information.
+[the Region documentation](./marionette.region.md) for more information.
 
 ## Documentation Index
 
 * [Basic Usage](#basic-usage)
 * [Region Options](#region-options)
+* [LayoutView.childEvents](#layoutview-childevents)
 * [Specifying Regions As A Function](#specifying-regions-as-a-function)
 * [Overriding the default RegionManager](#overriding-the-default-regionmanager)
 * [Region Availability](#region-availability)
@@ -56,7 +57,7 @@ to the layoutView.
 ```
 
 ```js
-var AppLayoutView = Backbone.Marionette.LayoutView.extend({
+var AppLayoutView = Marionette.LayoutView.extend({
   template: "#layout-view-template",
 
   regions: {
@@ -78,6 +79,14 @@ layoutView.getRegion('menu').show(new MenuView());
 layoutView.getRegion('content').show(new MainContentView());
 ```
 
+There are also helpful shortcuts for more concise syntax.
+
+```js
+layoutView.showChildView('menu', new MenuView());
+
+layoutView.showChildView('content', new MainContentView());
+```
+
 ### Region Options
 
 A `LayoutView` can take a `regions` hash that allows you to specify regions per `LayoutView` instance.
@@ -93,6 +102,76 @@ new Marionette.LayoutView({
  }
 })
 ```
+
+### LayoutView childEvents
+
+You can specify a `childEvents` hash or method which allows you to capture all
+bubbling `childEvents` without having to manually set bindings.
+
+The keys of the hash can either be a function or a string
+that is the name of a method on the layout view.
+
+The function is called in the context of the view. The first parameter is
+the child view, which emitted the event, the remainder are the arguments
+associated with the event.
+
+```js
+// childEvents can be specified as a hash...
+var MyLayoutView = Marionette.LayoutView.extend({
+
+  // This callback will be called whenever a child is rendered or emits a `render` event
+  childEvents: {
+    render: function(childView) {
+      console.log("a childView has been rendered");
+    }
+  }
+});
+
+// ...or as a function that returns a hash.
+var MyLayoutView = Marionette.LayoutView.extend({
+
+  childEvents: function() {
+    return {
+      render: this.onChildRender
+    }
+  },
+
+  onChildRender: function(childView) {
+  }
+});
+```
+
+This also works for custom events that you might fire on your child views.
+
+```js
+  // The child view fires a custom event, `show:message`
+  var ChildView = new Marionette.ItemView.extend({
+    events: {
+      'click .button': 'showMessage'
+    },
+
+    showMessage: function (e) {
+      console.log('The button was clicked.');
+      this.triggerMethod('show:message', msg);
+    }
+  });
+
+  // The parent uses childEvents to catch that custom event on the child view
+  var ParentView = new Marionette.LayoutView.extend({
+    childEvents: {
+      'show:message': function (childView, msg) {
+        console.log('The show:message event bubbled up to the parent.');
+      }
+    },
+
+    // Alternatively we can use the trigger notation with childview: as the
+    // prefix
+    onChildviewShowMessage: function (childView, msg) {
+      console.log('The show:message event bubbled up to the parent.');
+    }
+  });
+```
+
 
 ### Specifying Regions As A Function
 
@@ -204,7 +283,14 @@ MyApp.addRegions({
 });
 
 // Create a new LayoutView
-var layoutView = new Marionette.LayoutView();
+var layoutView = new Marionette.LayoutView({
+  // This option removes the layoutView from
+  // the DOM before destroying the children
+  // preventing repaints as each option is removed.
+  // However, it makes it difficult to do close animations
+  // for a child view (false by default)
+  destroyImmediate: true
+});
 
 // Lastly, show the LayoutView in the App's mainRegion
 MyApp.getRegion('main').show(layoutView);
@@ -222,8 +308,8 @@ var layout3 = new Layout3();
 
 MyApp.getRegion('main').show(layout1);
 
-layout1.getRegion('region1').show(layout2);
-layout2.getRegion('region2').show(layout3);
+layout1.showChildView('region1', layout2);
+layout2.showChildView('region2', layout3);
 ```
 
 ### Efficient Nested View Structures
@@ -235,8 +321,8 @@ of the children in the `onBeforeShow` callback.
 ```js
 var ParentLayout = Marionette.LayoutView.extend({
   onBeforeShow: function() {
-    this.getRegion('header').show(new HeaderView());
-    this.getRegion('footer').show(new FooterView());
+    this.showChildView('header', new HeaderView());
+    this.showChildView('footer', new FooterView());
   }
 });
 
@@ -275,6 +361,9 @@ one, the same it will destroy a view.
 All of this ensures that layoutViews and the views that they
 contain are cleaned up correctly.
 
+When calling `destroy` on a layoutView, the layoutView will be returned. This can be useful for
+chaining.
+
 ## Custom Region Class
 
 If you have the need to replace the `Region` with a region class of
@@ -282,7 +371,7 @@ your own implementation, you can specify an alternate class to use
 with the `regionClass` property of the `LayoutView`.
 
 ```js
-var MyLayoutView = Backbone.Marionette.LayoutView.extend({
+var MyLayoutView = Marionette.LayoutView.extend({
   regionClass: SomeCustomRegion
 });
 ```
@@ -290,7 +379,7 @@ var MyLayoutView = Backbone.Marionette.LayoutView.extend({
 You can also specify custom `Region` classes for each `region`:
 
 ```js
-var AppLayoutView = Backbone.Marionette.LayoutView.extend({
+var AppLayoutView = Marionette.LayoutView.extend({
   template: "#layout-view-template",
 
   regionClass: SomeDefaultCustomRegion,

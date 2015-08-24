@@ -1,13 +1,13 @@
 `ItemView` является представлением, которое изображает единичный элемент.
 Этот элемент может быть `Backbone.Model` или может быть `Backbone.Collection`.
-Каким бы не был этот элемент, он будет рассматриваться как единичный элемент. 
+Каким бы не был этот элемент, он будет рассматриваться как единичный элемент.
 
-`ItemView` наследован напрямую от `Marionette.View`. Пожалуйста, ознакомтесь с 
-[документацией по Marionette.View](marionette.view.md) для более полной информации 
+`ItemView` наследован напрямую от `Marionette.View`. Пожалуйста, ознакомтесь с
+[документацией по Marionette.View](marionette.view.md) для более полной информации
 по доступным функциям и доступной функциональности.
 
 Кроме того, взаимодействие с `Marionette.Region` предоставляет
-такие функции как коллбэк `onShow` и т.д. Пожалуйста, ознакомтесь с 
+такие функции как коллбэк `onShow` и т.д. Пожалуйста, ознакомтесь с
 [документацией по Region](marionette.region.md) для более полной информации.
 
 ## Содержание
@@ -44,7 +44,7 @@
 может быть либо JQuery-селектором:
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   template: "#some-template"
 });
 
@@ -55,7 +55,7 @@ new MyView().render();
 
 ```js
 var my_template_html = '<div><%= args.name %></div>'
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   template : function(serialized_model) {
     var name = serialized_model.name;
     return _.template(my_template_html)({
@@ -68,7 +68,7 @@ var MyView = Backbone.Marionette.ItemView.extend({
 new MyView().render();
 ```
 
-Обратите внимание, что использование `template` в виде функции позволяет 
+Обратите внимание, что использование `template` в виде функции позволяет
 передавать собственные аргументы в функцию `_.template` и позволяет
 получить больший контроль над процессом вызова функции `_.template`.
 
@@ -114,17 +114,17 @@ var view = new MyItemsView({
 При отрисовки этого представления коллекция `someCollection` будет преобразована
 в массив `items` для использования его в шаблоне.
 
-Для получения дополнительной информации о том, 
+Для получения дополнительной информации о том,
 когда вам может понадобится использовать такой подход,
 какие параметры вы имеете для получения отдельного элемента, когда происходит событие `click`
-или другое взаимодействие с отдельным элементом, вы можете прочитать в статье 
-[Получение модели при клике на  элемент](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/). 
+или другое взаимодействие с отдельным элементом, вы можете прочитать в статье
+[Получение модели при клике на  элемент](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/).
 
 ## Безшаблонный ItemView
 
 `ItemView` можно без особых проблем связать с существующими элементам. Основное приемущество этого,
-это возможность добавить поведение или события к статическому контенту, который был отрисован на сервере 
-(как правило, для целей SEO). Что бы создать безшаблонный `ItemView`, вам нужно установить 
+это возможность добавить поведение или события к статическому контенту, который был отрисован на сервере
+(как правило, для целей SEO). Что бы создать безшаблонный `ItemView`, вам нужно установить
 атрибуту `template` значение `false`.  
 
 ```html
@@ -169,7 +169,7 @@ DOM-узлов, таких как сложные грфические элеме
 ## События и Коллбеки
 
 Есть несколько событий и коллбеков, которые вызываются у `ItemView`.
-Эти события/коллбеки инициируются/вызываются с помощью функции 
+Эти события/коллбеки инициируются/вызываются с помощью функции
 [Marionette.triggerMethod](./marionette.functions.md),
 которая инициирует событие и вызывает соответствующий метод "on{ИмяСобытия}".
 
@@ -178,7 +178,7 @@ DOM-узлов, таких как сложные грфические элеме
 Инициируется до того, как `ItemView` будет отрисовано.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onBeforeRender: function(){
     // последние действия перед тем, как сгенерируется `el` представления
   }
@@ -193,7 +193,7 @@ Backbone.Marionette.ItemView.extend({
 после того, как `el` было сгенерировано.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onRender: function(){
     // здесь манипулируем `el`. Оно уже было сгенерировано и
     // содержит готовый для работы HTML представления.
@@ -207,7 +207,7 @@ Backbone.Marionette.ItemView.extend({
 когда метод `destroy()` представление был вызван
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onBeforeDestroy: function(){
     // здесь манипулируем `el`. Оно уже было сгенерировано и
     // содержит готовый для работы HTML представления.
@@ -220,7 +220,7 @@ Backbone.Marionette.ItemView.extend({
 Инициируется только после того, как предствление было уничтожено.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onDestroy: function(){
     // здесь размещается собственный код для уничтожения и очистки
   }
@@ -280,7 +280,7 @@ MyItemView.render();
 `.toJSON` у модели или коллекции.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   serializeData: function(){
     return {
       "some attribute": "some value"
@@ -292,16 +292,16 @@ Backbone.Marionette.ItemView.extend({
 ## Организация элементов UI
 
 Как говорилось в документации по [Marionette.View](./marionette.view.md), вы можете
-указать хеш `ui` в вашем `представлении`. В хеше `ui` сопоставляются 
-элементы UI с их jQuery-селекторами. Это особенно полезно, если вы хотите получать доступ 
-к одному и тому же UI элементу несколько раз в вашем коде. Вместо того, чтобы дублировать селектор, 
+указать хеш `ui` в вашем `представлении`. В хеше `ui` сопоставляются
+элементы UI с их jQuery-селекторами. Это особенно полезно, если вы хотите получать доступ
+к одному и тому же UI элементу несколько раз в вашем коде. Вместо того, чтобы дублировать селектор,
 вы можете просто ссылаться на него при помощи `this.ui.elementName`.
 
 Вы можете также использовать значения хеша `ui` в ключах хешей `events` и `trigger`,
 используя следующий синтакс: ```"@ui.elementName"```
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   tagName: "tr",
 
   ui: {

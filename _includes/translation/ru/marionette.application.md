@@ -1,27 +1,23 @@
 Класс `Application` это контейнер для всего кода вашего приложения. Рекомендуется
 иметь хотя бы один экзепляр класса `Application` на приложение.
 
-By creating an Application you get three important things:
+Создавая Application  вы получаете три важных вещи:
+  
+ - Метод 'start' запускающий ваше приложение.
+   Дает  вам отличную возможность сделать что либо, перед непосредственным запуском приложения. Например,
+   начать роутинг, или, перед стартом, выполниить AJAX запрос для получения требующихся данных для приложения.
+  
+- Изоляцию пространства имен от `window`.
+  Если вы не используете модульную систему загрузки ( ES6 modules, CommonJS, или AMD), то вы можете использовать
+  пространсто имен Application для хранения Javascript объектов. И, даже, если используете эти модульные системы,
+  вы все равно можете использовать application- пространство, например, для помощи в дебаггинге.
+  
+- Интеграцию с Marionette Inspector. Marionette Inspector - инструмент облегчающий понимание и дебаггинг вашего
+  приложения. Использование Application Class автоматически связывает приложение с этим расширением.
 
-- A `start` method to kick off your application.
-  This allows you an opportunity to do things that may need to occur before, say, you
-  begin routing. An example would be making an AJAX call to request data that your app
-  needs before starting.
-
-- A namespace to keep things off of the `window`.
-  If you are not using a module loader like ES6 modules, CommonJS, or AMD, then
-  you can use the Application to store your Javascript objects. And if you are
-  using one of those module systems, then you can still attach things to the
-  application to aid in debugging.
-
-- Integration with the Marionette Inspector. The Marionette Inspector is a fantastic tool
-  that makes it easy to understand and debug your application. Using the Application Class
-  will automatically hook up your application to that extension.
-
-Note that the Application is undergoing many changes to become more lightweight. While it
-still includes many more features beyond what has been listed here, such as a Radio Channel and Regions,
-these features are now deprecated. Refer to the relevant sections below to learn what to use
-instead of these deprecated features.
+Обратите внимание, что Application подвергается многим изменениям, что бы стать более легковесным. Поэтому все еще
+содержит в себе множество фич не отображенных в cписке ниже. Например, Radio Channel и Regions, на данный момент "depricated" 
+внутри Application. Сверяйтесь с соответвующими разделами, для уточнения, что использовать вместо объявленных устаревшими фич. 
 
 ## Содержание
 
@@ -47,7 +43,7 @@ instead of these deprecated features.
 
 ### <a name="getting-started"></a> Getting Started
 
-A common pattern in Backbone apps is the following:
+Общий паттерн создания Backbone- приложения:
 
 ```js
 var app = {};
@@ -60,28 +56,30 @@ is notable because it is the codebase that Backbone was abstracted from. If such
 existed, then that app would certainly be a candidate. Backbone Boilerplate is notable as perhaps the most popular library
 for bootstrapping a Backbone application. Do note that in the Backbone Boilerplate code the exported object is implicit.
 
-The pattern of creating a Javascript object is so popular because it provides you with a location to
-put the pieces of your application. For instance, attaching a Router to this object is common practice.
 
-Using a raw Javascript object is great, but Marionette provides a light wrapper for a plain Javascript object, which is the
-Application. One benefit to using the Application is that it comes with a `start` method. This can be used to accomplish
-tasks before the rest of your application begins. Let's take a quick look at an example:
+Паттерн создания Javascript объекта попоулярен тем, что предоставляет вам место, куда можно сложить "кусочки" вашего приложения.
+Например, добавление роутера приложения (Router) к этому объекту- обычная практика.
+
+Использование Javascript объекта- замечательно, но Marionette предоставляет Application, являющийся легковесной оберткой
+для обычного js-объекта. Преимущество использования Application в том, что предоставляется  `start` метод. Это позволит
+выполнить "задания-таски" перед запуском самого приложения. Простой пример:
+ 
 
 ```js
-// Create our Application
+// создаем наш Application
 var app = new Marionette.Application();
 
-// Start history when our application is ready
+// запускаем  history  когда приложение будет готово
 app.on('start', function() {
   Backbone.history.start();
 });
 
-// Load some initial data, and then start our application
+// загрузка начальных данных, и затем старт приложения
 loadInitialData().then(app.start);
 ```
 
-In the simple example above, we could have just as easily started history after our initial data had loaded. This
-pattern becomes more useful as the startup phase of your application becomes more complex.
+Пример выше показал возможность запуска `Backbone.history` именно после загрузки начальных данных. Этот паттерн особенно 
+полезен, когда фаза старта приложения становится все более сложной.
 
 ### <a name="initialize"></a> Метод initialize
 
