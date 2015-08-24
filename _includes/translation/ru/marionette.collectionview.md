@@ -896,11 +896,6 @@ CollectionView реализвет метод `destroy`, вызываемя ме�
 * вызывает `onDestroy` на представлении, если  оно определено
 * возвращает`CollectionView` 
 
-By providing an `onDestroy` event in your view definition, you can
-run custom code for your view that is fired after your view has been
-destroyed and cleaned up. This lets you handle any additional clean up
-code without having to override the `destroy` method.
-
 Обрабатвая `onDestroy` событие, вы можете выполнить необходимый код после того, как представление уничтожится и 
 пройдет процесс очистки. Это дает возможность выполнить дополнительные процедуры очистки без лишнего переопределения метода `destroy`
 
