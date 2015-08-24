@@ -1,9 +1,6 @@
-A `CompositeView` extends from `CollectionView` to be used as a
-composite view for scenarios where it should represent both a
-branch and leaf in a tree structure, or for scenarios where a
-collection needs to be rendered within a wrapper template. By default the
-`CompositeView` will maintain a sorted collection's order
-in the DOM. This behavior can be disabled by specifying `{sort: false}` on initialize.
+`CompositeView` расширяет `CollectionView` и обычно используется в сценариях где нужно отразить "ветвь и листья", или
+в сценариях, где коллекцию нужно в ставить в оборачивающий ее шаблон. По умолчанию `CompositeView` отражает сортировку коллекции в DOM. 
+Такое поведение можно отключить, определяя `{sort: false}` при инициализации
 
 Please see
 [the Marionette.CollectionView documentation](./marionette.collectionview.md)
