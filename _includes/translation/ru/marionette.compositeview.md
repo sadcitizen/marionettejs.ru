@@ -1,26 +1,21 @@
-A `CompositeView` extends from `CollectionView` to be used as a
-composite view for scenarios where it should represent both a
-branch and leaf in a tree structure, or for scenarios where a
-collection needs to be rendered within a wrapper template. By default the
-`CompositeView` will maintain a sorted collection's order
-in the DOM. This behavior can be disabled by specifying `{sort: false}` on initialize.
+`CompositeView` расширяет `CollectionView` и обычно используется в сценариях где нужно отразить "ветвь и листья", или
+в сценариях, где коллекцию нужно вставить в оборачивающий ее шаблон. По умолчанию `CompositeView` отражает сортировку коллекции в DOM. 
+Такое поведение можно отключить, определяя `{sort: false}` при инициализации
 
-Please see
+Подробнее можно поглядеть здесь
 [the Marionette.CollectionView documentation](./marionette.collectionview.md)
-for more information on available features and functionality.
 
-Additionally, interactions with Marionette.Region
-will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](./marionette.region.md) for more information.
+Дополнительно,  взаимодействие с Marionette.Region даст возможность использовать различные кэллбеки, например `onShow`.
+Подробнее можно поглядеть тут
+[the Region documentation](./marionette.region.md).
 
-## Example Usage: Tree View
+## Пример: Tree View
 
-For example, if you're rendering a tree-view control, you may
-want to render a collection view with a model and template so
-that it will show a parent child with children in the tree.
+Для примера, вы рендерите древовидный контрол. Возможно, вы хотите рендерить collection view с моделью и шаблоном.
+Именно для ренедринга более сложных представлений ( чем просто список колеекции) и служит CompositeView.
 
-You can specify a `modelView` to use for the model. If you don't
-specify one, it will default to the `Marionette.ItemView`.
+Вы можете определить `modelView` для использования  в отрисовке каждой модели. Если не определяете, будет использоваться
+дефолтный `Marionette.ItemView`.
 
 ```js
 var CompositeView = Marionette.CompositeView.extend({
@@ -33,7 +28,7 @@ new CompositeView({
 });
 ```
 
-For more examples, see my blog post on
+Дополнитлеьные примеры
 [using the composite view.](http://lostechies.com/derickbailey/2012/04/05/composite-views-tree-structures-tables-and-more/)
 
 ## Documentation Index
@@ -50,9 +45,8 @@ For more examples, see my blog post on
 
 ## Composite Model `template`
 
-When a `CompositeView` is rendered, the `model` will be rendered
-with the `template` that the view is configured with. You can
-override the template by passing it in as a constructor option:
+Когда `CompositeView` рендерится, каждая `model` будет рендериться с шаблоном `template` определенным в представлении.
+Вы можете переопределить шаблон, передавая его конструктору в опциях.
 
 ```js
 new MyComp({
@@ -60,9 +54,8 @@ new MyComp({
 });
 ```
 
-The `collection` option is not passed to the template context by
-default. If your `template` needs access to the collection, you'll
-need to pass it via `templateHelpers`:
+Опция `collection` не передается в контекст шаблона по умолчанию. Если  в шаблоне требуется доступ к коллекции, 
+вам нужно будет передавать ее используя `templateHelpers`. 
 
 ```js
 new MyComp({
@@ -75,8 +68,8 @@ new MyComp({
 
 ## CompositeView's `childView`
 
-Each childView will be rendered using the `childView`'s template. The `CompositeView`'s
-template is rendered and the childView's templates are added to this.
+Каждый `childView` будет рендерится используя шаблон описанный в `childView` опции. Сначала отрисуется `CompositeView` шаблон, 
+после этого, добавятся  дети с `childView` шаблонами.
 
 ```js
 var ChildView = Marionette.ItemView.extend({});
@@ -92,6 +85,7 @@ By default the composite view uses the same `attachHtml` method that the
 collection view provides. This means the view will call jQuery's `.append`
 to move the HTML contents from the child view instance in to the collection
 view's `el`.
+
 
 This is typically not very useful as a composite view will usually render
 a container DOM element in which the child views should be placed.
