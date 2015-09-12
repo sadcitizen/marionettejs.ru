@@ -26,7 +26,7 @@
 * [Организация элементов UI](#organizing-ui-elements)
 * [modelEvents и collectionEvents](#modelevents-and-collectionevents)
 
-## Метод render
+## <a name="itemview-render"></a> Метод render
 
 В отличие от `Backbone.Views`, все Marionette-представления оснащены мощным
 методом `render`. Фактически, основные различия между представлениями являются
@@ -76,7 +76,7 @@ new MyView().render();
 
 Более подробную информацию о функции `_.template` можно узнать в [документации по Underscore](http://underscorejs.org/#template).
 
-## Отрисовка коллекций в ItemView
+## <a name="rendering-a-collection-in-an-itemview"></a> Отрисовка коллекций в ItemView
 
 В то время, как наиболее общий способ для отрисовки `Backbone.Collection`
 является использование `CollectionView` или `CompositeView`, иногда вам просто
@@ -122,7 +122,7 @@ var view = new MyItemsView({
 или другое взаимодействие с отдельным элементом, вы можете прочитать в статье
 [Получение модели при клике на  элемент](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/).
 
-## Безшаблонный ItemView
+## <a name="template-less-itemview"></a> Безшаблонный ItemView
 
 `ItemView` можно без особых проблем связать с существующими элементам. Основное приемущество этого,
 это возможность добавить поведение или события к статическому контенту, который был отрисован на сервере
@@ -168,14 +168,14 @@ canvas-элементом, для создания единого интерфе
 `ItemView` без шаблона позволяет вам также использовать представление для предварительно отрисованных
 DOM-узлов, таких как сложные грфические элементы.
 
-## События и Коллбеки
+## <a name="events-and-callback-methods"></a> События и Коллбеки
 
 Есть несколько событий и коллбеков, которые вызываются у `ItemView`.
 Эти события/коллбеки инициируются/вызываются с помощью функции
 [Marionette.triggerMethod](./marionette.functions.md),
 которая инициирует событие и вызывает соответствующий метод "on{ИмяСобытия}".
 
-### событие "before:render" / коллбек onBeforeRender
+### <a name="beforerender--onbeforerender-event"></a> событие "before:render" / коллбек onBeforeRender
 
 Инициируется до того, как `ItemView` будет отрисовано.
 
@@ -187,7 +187,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-### событие "render" / коллбек onRender
+### <a name="render--onrender-event"></a> событие "render" / коллбек onRender
 
 Инициируется после того, как представление было отрисовано.
 Вы можете сами реализовать этот метод в вашем представлении
@@ -203,7 +203,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-### событие "before:destroy" / коллбек onBeforeDestroy
+### <a name="beforedestroy--onbeforedestroy-event"></a> событие "before:destroy" / коллбек onBeforeDestroy
 
 Инициируется только перед тем, как представление собирается уничтожаться, в момент,
 когда метод `destroy()` представление был вызван
@@ -217,7 +217,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-### событие "destroy" / коллбек onDestroy
+### <a name="destroy--ondestroy-event"></a> событие "destroy" / коллбек onDestroy
 
 Инициируется только после того, как предствление было уничтожено.
 
@@ -229,7 +229,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-## Метод serializeData
+## <a name="itemview-serializedata"></a> Метод serializeData
 
 `ItemView` будет сериализовывать модель или коллекцию. По умолчанию, вызывается
 метод `.toJSON` у модели или коллекции. Если `ItemView` содержит одновременно
@@ -291,7 +291,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-## Организация элементов UI
+## <a name="organizing-ui-elements"></a> Организация элементов UI
 
 Как говорилось в документации по [Marionette.View](./marionette.view.md), вы можете
 указать хеш `ui` в вашем `представлении`. В хеше `ui` сопоставляются
@@ -318,7 +318,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-## modelEvents и collectionEvents
+## <a name="modelevents-and-collectionevents"></a> modelEvents и collectionEvents
 
 `ItemView` может напрямую осуществлять привязку к событиям модели и событиям коллекции,
 используя для этого хеши `modelEvents` и `collectionEvents` соответственно:
@@ -335,4 +335,4 @@ Marionette.ItemView.extend({
 });
 ```
 
-Больше информации можно прочитать в документации по [Marionette.View](./marionette.view.md).
+Больше информации можно прочитать в документации по [Marionette.View](../view/).
