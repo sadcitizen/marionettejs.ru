@@ -7,34 +7,30 @@
 Для более полной информации о доступных функциях и функциональности ознакомьтесь с
 [документацией по Marionette.View](../view/).
 
-Кроме того, взаимодействие с `Marionette.Region` предоставляет
-такие функции как коллбэк `onShow` и т.д. 
-
+Кроме того, совместное использование `ItemView` с `Marionette.Region` позволяет использовать такие функции как коллбэк `onShow` и т.д. 
 Более полную информацию о классе `Marionette.Region` можно найти в соответствующем разделе [документации](../region/).
 
 ## Содержание
 
-* [Метод render](#itemview-render)
+* [Метод `render`](#itemview-render)
 * [Отрисовка коллекций в ItemView](#rendering-a-collection-in-an-itemview)
 * [Безшаблонный ItemView](#template-less-itemview)
 * [События и Коллбеки](#events-and-callback-methods)
-  * [событие "before:render" / коллбек onBeforeRender](#beforerender--onbeforerender-event)
-  * [событие "render" / коллбек onRender](#render--onrender-event)
-  * [событие "before:destroy" / коллбек onBeforeDestroy](#beforedestroy--onbeforedestroy-event)
-  * [событие "destroy" / коллбек onDestroy](#destroy--ondestroy-event)
-* [Метод serializeData](#itemview-serializedata)
+  * [событие `before:render` / коллбек `onBeforeRender`](#beforerender--onbeforerender-event)
+  * [событие `render` / коллбек `onRender`](#render--onrender-event)
+  * [событие `before:destroy` / коллбек `onBeforeDestroy`](#beforedestroy--onbeforedestroy-event)
+  * [событие `destroy` / коллбек `onDestroy`](#destroy--ondestroy-event)
+* [Метод `serializeData`](#itemview-serializedata)
 * [Организация элементов UI](#organizing-ui-elements)
-* [modelEvents и collectionEvents](#modelevents-and-collectionevents)
+* [События модели и коллекции](#modelevents-and-collectionevents)
 
-## <a name="itemview-render"></a> Метод render
+## <a name="itemview-render"></a> Метод `render`
 
-В отличие от `Backbone.Views`, все Marionette-представления оснащены мощным
-методом `render`. Фактически, основные различия между представлениями являются
-различия в их методах `render`. Бесусловно, что переопределение метода `render`
-у любого Marionette-представления является неразумным. Вместо этого, вы должны
+В отличие от `Backbone.Views`, все представления в Marionette обладают методом `render`. 
+Фактически, основные различия между представлениями являются различия в их методах `render`. 
+Очевидно, что переопределение метода `render` у любого представления является неразумным. Вместо этого, вы должны
 использовать [`onBeforeRender` и `onRender` коллбеки](#events-and-callback-methods)
-для добавления дополнительной функциональности в процесс отрисовки вашего
-представления.
+для добавления дополнительной функциональности в процесс отрисовки вашего представления.
 
 `ItemView` передает объекту `Marionette.Renderer` сделать фактическую отрисовку шаблона.
 
@@ -56,13 +52,14 @@ new MyView().render();
 .. либо финкцией, принимающей один аргумент: объект, возвращаемый [ItemView.serializeData](#itemview-serializedata):
 
 ```js
-var my_template_html = '<div><%= args.name %></div>'
+var myTemplateHtml = '<div><%= args.name %></div>';
+
 var MyView = Marionette.ItemView.extend({
   template : function(serialized_model) {
-    var name = serialized_model.name;
-    return _.template(my_template_html)({
+    var name = serializedModel.name;
+    return _.template(myTemplateHtml)({
         name : name,
-        some_custom_attribute : some_custom_key
+        someCustomAttribute : someCustomKey
     });
   }
 });
@@ -78,9 +75,9 @@ new MyView().render();
 
 ## <a name="rendering-a-collection-in-an-itemview"></a> Отрисовка коллекций в ItemView
 
-В то время, как наиболее общий способ для отрисовки `Backbone.Collection`
-является использование `CollectionView` или `CompositeView`, иногда вам просто
-нужно отобразить простой список, которому не нужно много интерактивности,
+Самым часто используемым способом отрисовки `Backbone.Collection`
+является использование `CollectionView` или `CompositeView`. Но иногда нужно отобразить 
+простой список, которому не требуется много интерактивности,
 в этом случае нет смысла в использовании этих представлений. `Backbone.Collection`
 может быть отрисована с помощью простого `ItemView`. Для этого в шаблонах
 можно использовать массив `items` для перебора элементов коллекции.
@@ -116,16 +113,15 @@ var view = new MyItemsView({
 При отрисовки этого представления коллекция `someCollection` будет преобразована
 в массив `items` для использования его в шаблоне.
 
-Для получения дополнительной информации о том,
-когда вам может понадобится использовать такой подход,
+Для получения дополнительной информации о том, когда вам может понадобится использовать такой подход,
 какие параметры вы имеете для получения отдельного элемента, когда происходит событие `click`
 или другое взаимодействие с отдельным элементом, вы можете прочитать в статье
-[Получение модели при клике на  элемент](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/).
+[Получение модели при клике на элемент](http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/).
 
 ## <a name="template-less-itemview"></a> Безшаблонный ItemView
 
-`ItemView` можно без особых проблем связать с существующими элементам. Основное приемущество этого,
-это возможность добавить поведение или события к статическому контенту, который был отрисован на сервере
+`ItemView` можно без особых проблем связать с существующими элементам. Основное приемущество этого заключается в 
+возможности добавить поведение или события к статическому контенту, который был отрисован на сервере
 (как правило, для целей SEO). Что бы создать безшаблонный `ItemView`, вам нужно установить
 атрибуту `template` значение `false`.  
 
@@ -172,10 +168,10 @@ DOM-узлов, таких как сложные грфические элеме
 
 Есть несколько событий и коллбеков, которые вызываются у `ItemView`.
 Эти события/коллбеки инициируются/вызываются с помощью функции
-[Marionette.triggerMethod](./marionette.functions.md),
+[Marionette.triggerMethod](../functions/),
 которая инициирует событие и вызывает соответствующий метод "on{ИмяСобытия}".
 
-### <a name="beforerender--onbeforerender-event"></a> событие "before:render" / коллбек onBeforeRender
+### <a name="beforerender--onbeforerender-event"></a> событие `before:render` / коллбек `onBeforeRender`
 
 Инициируется до того, как `ItemView` будет отрисовано.
 
@@ -187,7 +183,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-### <a name="render--onrender-event"></a> событие "render" / коллбек onRender
+### <a name="render--onrender-event"></a> событие `render` / коллбек `onRender`
 
 Инициируется после того, как представление было отрисовано.
 Вы можете сами реализовать этот метод в вашем представлении
@@ -203,10 +199,10 @@ Marionette.ItemView.extend({
 });
 ```
 
-### <a name="beforedestroy--onbeforedestroy-event"></a> событие "before:destroy" / коллбек onBeforeDestroy
+### <a name="beforedestroy--onbeforedestroy-event"></a> событие `before:destroy` / коллбек `onBeforeDestroy`
 
-Инициируется только перед тем, как представление собирается уничтожаться, в момент,
-когда метод `destroy()` представление был вызван
+Инициируется только перед тем, как представление будет уничтожено, в момент,
+когда метод `destroy()` представление был вызван.
 
 ```js
 Marionette.ItemView.extend({
@@ -217,7 +213,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-### <a name="destroy--ondestroy-event"></a> событие "destroy" / коллбек onDestroy
+### <a name="destroy--ondestroy-event"></a> событие `destroy` / коллбек `onDestroy`
 
 Инициируется только после того, как предствление было уничтожено.
 
@@ -229,7 +225,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-## <a name="itemview-serializedata"></a> Метод serializeData
+## <a name="itemview-serializedata"></a> Метод `serializeData`
 
 `ItemView` будет сериализовывать модель или коллекцию. По умолчанию, вызывается
 метод `.toJSON` у модели или коллекции. Если `ItemView` содержит одновременно
@@ -293,8 +289,8 @@ Marionette.ItemView.extend({
 
 ## <a name="organizing-ui-elements"></a> Организация элементов UI
 
-Как говорилось в документации по [Marionette.View](./marionette.view.md), вы можете
-указать хеш `ui` в вашем `представлении`. В хеше `ui` сопоставляются
+Как говорилось в документации по [Marionette.View](../view/), вы можете
+указать хеш `ui` в вашем представлении. В хеше `ui` сопоставляются
 элементы UI с их jQuery-селекторами. Это особенно полезно, если вы хотите получать доступ
 к одному и тому же UI элементу несколько раз в вашем коде. Вместо того, чтобы дублировать селектор,
 вы можете просто ссылаться на него при помощи `this.ui.elementName`.
@@ -318,7 +314,7 @@ Marionette.ItemView.extend({
 });
 ```
 
-## <a name="modelevents-and-collectionevents"></a> modelEvents и collectionEvents
+## <a name="modelevents-and-collectionevents"></a> События модели и коллекции
 
 `ItemView` может напрямую осуществлять привязку к событиям модели и событиям коллекции,
 используя для этого хеши `modelEvents` и `collectionEvents` соответственно:
