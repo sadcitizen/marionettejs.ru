@@ -49,6 +49,7 @@ CollectionView экстендится напрямую от Marionette.View. П�
   * ["childview:\*" event bubbling from child views](#childview-event-bubbling-from-child-views)
   * ["before:render:collection" event](#beforerendercollection-event)
   * ["render:collection" event](#rendercollection-event)
+* [CollectionView Child View Events](#collectionview-child-view-events)
 * [CollectionView render](#collectionview-render)
 * [CollectionView: Automatic Rendering](#collectionview-automatic-rendering)
 * [CollectionView: Re-render Collection](#collectionview-re-render-collection)
@@ -198,15 +199,18 @@ c.render();
 
 ### CollectionView's `childEvents`
 
-Описывая `childEvents` хеш ( в определении) или метод (в инстанцировании) вы перехватываете все всплывающие childEvents события 
-без ручного биндинга. Ключи хеша могут быть либо функцией, либо строкой- именем метода в collection view. 
+A `childEvents` hash or method permits handling of child view events without 
+manually setting bindings. The values of the hash can either be a function or a string method name on the collection view.
+
+> Описывая `childEvents` хеш ( в определении) или метод (в инстанцировании) вы перехватываете все всплывающие childEvents события 
+> без ручного биндинга. Ключи хеша могут быть либо функцией, либо строкой- именем метода в collection view. 
 
 ```js
-// childEvents может буть определен как хеш
+// childEvents может быть определен как хеш
 var MyCollectionView = Marionette.CollectionView.extend({
 
-  // эта кэллбек- функция будет вызвана, когда ребенок вызовет событие `render` event
   childEvents: {
+    // This callback will be called whenever a child is rendered or emits a `render` event
     render: function() {
       console.log("a childView has been rendered");
     }
@@ -220,33 +224,55 @@ var MyCollectionView = Marionette.CollectionView.extend({
     return {
       render: this.onChildRendered
     }
+  },
+
+  onChildRendered: function () {
+    console.log('A child view has been rendered.');
+  }
 });
 ```
 
-Так же работает для ваших кастомных событий,  которые вы можете вызывать из вложенных представлений.
+> Так же работает для ваших кастомных событий,  которые вы можете вызывать из вложенных представлений.
+
+`childEvents` also catches custom events fired by a child view.  Take note that the first argument to a `childEvents` handler is the child view itself.
 
 ```js
-// Вложенное представление вызывает, `show:message`
-var ChildView = new Marionette.ItemView.extend({
+// The child view fires a custom event, `show:message`
+var ChildView = Marionette.ItemView.extend({
+
+  // Events hash defines local event handlers that in turn may call `triggerMethod`.
   events: {
-    'click .button': 'showMessage'
+    'click .button': 'onClickButton'
   },
 
-  showMessage: function () {
-    console.log('The button was clicked.');
+  // Triggers hash converts DOM events directly to view events catchable on the parent.
+  triggers: {
+    'submit form': 'submit:form'
+  },
 
-    this.triggerMethod('show:message');
+  onClickButton: function () {
+    // Both `trigger` and `triggerMethod` events will be caught by parent.
+    this.trigger('show:message', 'foo');
+    this.triggerMethod('show:message', 'bar');
   }
 });
 
-// Родитель использует childEvents для обработки присланного кастомного сообщения от вложенного представления.
-var ParentView = new Marionette.CollectionView.extend({
+// The parent uses childEvents to catch the child view's custom event
+var ParentView = Marionette.CollectionView.extend({
+
   childView: ChildView,
 
   childEvents: {
-    'show:message': function () {
-      console.log('The show:message event bubbled up to the parent.');
-    }
+    'show:message': 'onChildShowMessage',
+    'submit:form': 'onChildSubmitForm'
+  },
+
+  onChildShowMessage: function (childView, message) {
+    console.log('A child view fired show:message with ' + message);
+  },
+
+  onChildSubmitForm: function (childView) {
+    console.log('A child view fired submit:form');
   }
 });
 ```
@@ -692,7 +718,28 @@ colView.render();
 ### render:collection event
 
 `render:collection` вызывается после того, как дети отрендерятся и закешируются.
-Отличается от `collectionsView  -> render` тем, что вызывается только, если  `collection` не пустая. 
+Отличается от `collectionsView -> render` тем, что вызывается только, если  `collection` не пустая. 
+
+## CollectionView Child View Events
+
+The following events are raised on child views during rendering and destruction of child views, which is consistent with the view lifecycle experienced during `Region#show`.
+
+* `before:render` / `onBeforeRender` - Called before the view is rendered.
+* `render` / `onRender` - Called after the view is rendered, but before it is attached to the DOM.
+* `before:show` / `onBeforeShow` - Called after the view has been rendered, but before it has been bound to the CollectionView.
+* `before:attach` / `onBeforeAttach` - Called before the view is attached to the DOM.  This will not fire if the CollectionView itself is not attached.
+* `attach` / `onAttach` - Called after the view is attached to the DOM.  This will not fire if the CollectionView itself is not attached.
+* `show` / `onShow` - Called when the view has been rendered and bound to the CollectionView.
+* `dom:refresh` / `onDomRefresh` - Called when the view is both rendered and shown, but only if it is attached to the DOM.  This will not fire if the CollectionView itself is not attached.
+* `before:destroy` / `onBeforeDestroy` - Called before destroying a view.
+* `destroy` / `onDestroy` - Called after destroying a view.
+
+Note: `render`, `destroy`, and `dom:refresh` are triggered on pure Backbone Views during child view rendering, but for a complete implementation of these events the Backbone View should fire `render` within `render()` and `destroy` within `remove()` as well as set the following flags:
+
+```js
+view.supportsRenderLifecycle = true;
+view.supportsDestroyLifecycle = true;
+```
 
 ## CollectionView render
 
@@ -720,7 +767,6 @@ new MyCollectionView().render();
 При добавлении модели в коллекцию, будет отрендерено представление этой модели и добавленно в коллекцию вложенным представлений.
 
 Удаление модели из колллекции, вызовет уделние  его вложеного представления.
-
 
 ## CollectionView: Re-render Collection
 
@@ -857,10 +903,9 @@ The `viewComparator` can take any of the acceptable `Backbone.Collection` [compa
 
 ## CollectionView's children
 
-
 The CollectionView испоьзует [Backbone.BabySitter](https://github.com/marionettejs/backbone.babysitter) для хранения и управления
- своими вложенными представлениями. Это позволяет вам иметь легкий доступ к представлениям внутри CollectionView, итерировать их,
- искать по индексу и т.д.
+своими вложенными представлениями. Это позволяет вам иметь легкий доступ к представлениям внутри CollectionView, итерировать их,
+искать по индексу и т.д.
 
 ```js
 var cv = new Marionette.CollectionView({
@@ -868,7 +913,6 @@ var cv = new Marionette.CollectionView({
 });
 
 cv.render();
-
 
 // retrieve a view by model
 var v = cv.children.findByModel(someModel);
