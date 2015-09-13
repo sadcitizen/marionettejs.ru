@@ -7,7 +7,7 @@
 * [События](#events)
 * [Метод `mergeOptions`](#mergeoptions)
 * [Метод `getOption`](#getoption)
-* [Метод bindEntityEvents](#bindentityevents)
+* [Метод `bindEntityEvents`](#bindentityevents)
 * [Удаление объекта](#destroying-a-object)
 * [Пример использования](#basic-use)
 
@@ -29,7 +29,7 @@ new Friend({name: 'John'});
 
 ### <a name="events"></a> События
 
-`Marionette.Object` наследует `Backbone.Events` и включает в себя метод `triggerMethod`.
+Класс `Marionette.Object` наследует `Backbone.Events` и включает в себя метод `triggerMethod`.
 Это упрощает объектам запуск событий, на которые могут быть подписаны другие объекты
 с помощью методов `on` или `listenTo`.
 
@@ -49,29 +49,29 @@ john.on('announce', function(message) {
 john.graduate();
 ```
 
-## <a name="mergeoptions"></a> mergeOptions
+## <a name="mergeoptions"></a> Метод `mergeOptions`
 
-Merge keys from the `options` object directly onto the instance. This is the preferred way to access options
-passed into the Object.
+Метод копирует ключи из объекта `options` непосредственно в сам экземпляр класса `Object`. Это наиболее предпочтительный способ доступа к параметрам, переданным в `Object`.
 
-More information at [mergeOptions](../functions/#marionettemergeoptions)
+Более подробно об этом методе читайте [тут](../functions/#marionettemergeoptions).
 
 ### <a name="getoption"></a> Метод `getOption`
 
 Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и
 быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
-Для более полной информации ознакомьтесь с [getOption](../functions/#marionettegetoption).
+Более подробно об этом методе читайте [тут](../functions/#marionettegetoption).
 
-### <a name="bindentityevents"></a> bindEntityEvents
+### <a name="bindentityevents"></a> Метод `bindEntityEvents`
 
-Помогает привязать одну из сущностей Backbone к методам целевого объекта. Для более полной информации ознакомьтесь с [bindEntityEvents](../functions/).
+Помогает привязать одну из сущностей Backbone к методам целевого объекта. Более подробно об этом методе читайте [тут](../functions/).
 
 ### <a name="destroying-a-object"></a> Удаление объекта
 
 У объектов есть метод `destroy`, который отвязывает все события, которые были привязаны непосредственно к экземпляру объекта.
 
-Вызов метода `destroy` запустит событие "before:destroy" и вызовет соответствующий метод `onBeforeDestroy`.
-В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`. Invoking `destroy` will return the object, this can be useful for chaining.
+Вызов метода `destroy` запустит событие `before:destroy` и вызовет соответствующий метод `onBeforeDestroy`.
+В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`. 
+Вызов метода `destroy` вернет ссылку на сам объект, это может быть полезно для построения цепочки вызовов (чейнинга).
 
 ```js
 // Объявляем объект с методом onDestroy
