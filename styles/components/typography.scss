@@ -21,6 +21,11 @@ a {
     h1, h2, h3, h4, h5, h6 {
         color: $color-red;
         text-rendering: optimizeLegibility;
+        
+        code {
+            font-size: 1em;
+            padding: .25em;
+        }
     }
 
     h1 {
