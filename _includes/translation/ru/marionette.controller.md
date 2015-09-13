@@ -1,5 +1,7 @@
-> Warning: deprecated. The Controller object is deprecated. Instead of using the Controller
-> class with the AppRouter, you should specify your callbacks on a plain Javascript object.
+> Внимание: не рекомендуется к использованию. 
+> 
+> Класс Controller считается устаревшим и не рекомендуется к использованию. Вместо него следует использовать простой javascript-объект, каждый метод которого
+> будет соотвествовать конкретному роуту из AppRouter.
 
 Класс `Controller` это объект, который предназначен для использования с классом `AppRouter`. Экземпляр класса `Controller` служит для хранения методов-обработчиков роутов из экземпляра класса `AppRouter`.
 
@@ -35,17 +37,16 @@ var myRouter = new Marionette.AppRouter({
 });
 ```
 
-## <a name="mergeoptions"> Метод `mergeOptions`
+## <a name="mergeoptions"></a> Метод `mergeOptions`
 
-Merge keys from the `options` object directly onto the instance. This is the preferred way to access options
-passed into the Controller.
+Метод копирует ключи из объекта `options` непосредственно в сам экземпляр класса `Controller`. Это наиболее предпочтительный способ доступа к параметрам, переданным в `Controller`.
 
-More information at [mergeOptions](../functions/#marionettemergeoptions)
+Более подробно об этом методе читайте [тут](../functions/#marionettemergeoptions).
 
 ## <a name="get-option"></a> Метод `getOption`
 
 Метод позволяет получить значение свойства контроллера. Это свойство может принадлежать как самому контроллеру непосредственно, так и быть вложенным в свойстве `this.options` контроллера. Если запрашиваемое свойство сущестует и в контроллере и в `this.options`, то метод вернет значение из `this.options`.
-Для более полной информации ознакомьтесь с [getOption](../functions/#marionettegetoption).
+Более подробно об этом методе читайте [тут](../functions/#marionettegetoption).
 
 ## <a name="destroying-a-controller"></a> Удаление контроллера
 
