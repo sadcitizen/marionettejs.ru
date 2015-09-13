@@ -18,7 +18,9 @@
     * [Установка `currentView` при инициализации](#set-currentview-on-initialization)
     * [Вызов `attachView` в регионе](#call-attachview-on-region)
 * [События и коллбэки региона](#region-events-and-callbacks)
-  * [События, которые вызываются в течение `отображения`](#events-raised-during-show)
+  * [События на регионе при выполнении метода `show`](#events-raised-on-the-region-during-show)
+  * [События на представлении при выполнении метода `show`](#events-raised-on-the-view-during-show)
+  * [Пример обработчиков событий](#example-event-handlers)
 * [Собственные классы регионов](#custom-region-classes)
   * [Добавление собственных классов регионов](#attaching-custom-region-classes)
   * [Создание экземпляра вашего собственного региона](#instantiate-your-own-region)
@@ -221,7 +223,7 @@ myApp.mainRegion.show(myView);
 myApp.mainRegion.empty();
 ```
 
-#### опция preventDestroy
+#### Опция preventDestroy
 
 Если вы хотите заменить текущее представление на новое представлние, вы можете вызвать метод `show`,
 этот метод, по умолчанию, автоматически уничтожит предыдущее представление. Вы можете предотвратить
@@ -247,7 +249,7 @@ myApp.mainRegion.show(anotherView2, { preventDestroy: true });
 ПРИМЕЧАНИЕ: При использовании `preventDestroy: true` вы должны быть осторожны, необходимо помнить,
 что ваши старые представления должны быть удалены вручную, чтобы предотвратить утечку памяти.
 
-#### опция forceShow
+#### Опция forceShow
 
 Если вы повторно вызовите метод `show` с тем же представлением, то по умолчанию ничего
 не произойдет, потому что представление уже в регионе. Вы можете заставить представление
@@ -400,23 +402,39 @@ myApp.someRegion.attachView(myView);
 
 ## <a name="region-events-and-callbacks"></a> События и коллбэки региона
 
-### <a name="events-raised-during-show"></a> События, которые вызываются в течение `отображения`:
+При отображении и уничтожении представлений регион будет запускать несколько событий на самом себе и на представлении, с которым он работает.
 
-Регион будет вызывать некоторые события при отображении и
-уничтожении представления:
+### <a name="events-raised-on-the-region-during-show"></a> События на регионе при выполнении метода `show`
 
-* "before:show" / `onBeforeShow` - Вызывается у экземпляра представления после того, как представление было отрисовано (rendered), но до его отображения (показа).
-* "before:show" / `onBeforeShow` - Вызывается у экземпляра региона после того, как представление было отрисовано, но до его отображения.
-* "show" / `onShow` - Вызывается у экземпляра представления, когда представление было отрисовано и отображено.
-* "show" / `onShow` - Вызывается у экземпляра региона, когда представление было отрисовано и отображено.
-* "before:swap" / `onBeforeSwap` - Вызывается у экземпляра региона до того, как новое представление будет отображено. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось (swapped), но не когда регион пустой.
-* "before:swapOut" / `onBeforeSwapOut` - Вызывается у экземпляра региона до того, как новое представление начинает сменяться. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
-* "swap" / `onSwap` - Вызывается у экземпляра региона тогда, когда новое представление `отображено`. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
-* "swapOut" / `onSwapOut` - Вызывается у экземпляра региона тогда, когда новое представление сменилось и собирается быть выполнено замещение отображаемого представления новым представлением. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
-* "before:empty" / `onBeforeEmpty` - Вызывается у экземпляра региона до того, как представление будет очищено/уничтожено.
-* "empty" / `onEmpty` - Вызывается тогда, когда представление было очищено/уничтожено.
+* `before:show` / `onBeforeShow` - Вызывается после того, как представление было отрендерено, но еще не отображено.
+* `show` / `onShow` - Вызывается после того, как представление отрендерено и отображено.
+* `before:swap` / `onBeforeSwap` - Called before a new view is shown. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `swap` / `onSwap` - Called when a new view is shown. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `before:swapOut` / `onBeforeSwapOut` - Called before a new view swapped in. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `swapOut` / `onSwapOut` - Called when a new view swapped in to replace the currently shown view. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `before:empty` / `onBeforeEmpty` - Вызывается перед тем, как представление будет очищено.
+* `empty` / `onEmpty` - Вызывается после того, как представление очищено.
 
-Эти события могут быть использованы для запуска кода, когда ваш регион открывает и/или уничтожает представления.
+### <a name="events-raised-on-the-view-during-show"></a> События на представлении при выполнении метода `show`
+
+* `before:render` / `onBeforeRender` - Вызывается перед тем, как представление будет отрендерено.
+* `render` / `onRender` - Вызывается после того, как представление отрендерено, но перед тем как оно будет добавлено в DOM.
+* `before:show` / `onBeforeShow` - Called after the view has been rendered, but before it has been bound to the region.
+* `before:attach` / `onBeforeAttach` - Called before the view is attached to the DOM.  This will not fire if the Region itself is not attached.
+* `attach` / `onAttach` - Called after the view is attached to the DOM.  This will not fire if the Region itself is not attached.
+* `show` / `onShow` - Called when the view has been rendered and bound to the region.
+* `dom:refresh` / `onDomRefresh` - Called when the view is both rendered and shown, but only if it is attached to the DOM.  This will not fire if the Region itself is not attached.
+* `before:destroy` / `onBeforeDestroy` - Вызывается перед уничтожением представления.
+* `destroy` / `onDestroy` - Вызывается после уничтожения представления.
+
+Note: `render`, `destroy`, and `dom:refresh` are triggered on pure Backbone Views during a show, but for a complete implementation of these events the Backbone View should fire `render` within `render()` and `destroy` within `remove()` as well as set the following flags:
+
+```js
+view.supportsRenderLifecycle = true;
+view.supportsDestroyLifecycle = true;
+```
+
+### <a name="example-event-handlers"></a> Пример обработчиков событий
 
 ```js
 myApp.mainRegion.on("before:show", function(view, region, options){
