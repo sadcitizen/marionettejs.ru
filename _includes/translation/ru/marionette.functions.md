@@ -21,7 +21,7 @@ Marionette содержит набор утилит / функций-хелпе�
 * [Marionette.normalizeUIValues](#marionettenormalizeuivalues)
 * [Marionette.actAsCollection](#marionetteactascollection)
 
-## Marionette.extend
+## <a name="marionetteextend"></a> Marionette.extend
 
 Функция `extend` из Backbone является весьма полезной и используется в разных местах в Marionette. Для того, чтобы
 сделать использование этой функции более консистентным (последовательным) для нее был создани алиас `Marionette.extend`.
@@ -46,9 +46,9 @@ var Bar = Foo.extend({
 var b = new Bar();
 ```
 
-## Marionette.isNodeAttached
+## <a name="marionetteisnodeattached"></a> Marionette.isNodeAttached
 
-Determines whether the passed-in node is a child of the `document` or not.
+Метод определяет является ли переданный узел (нода) потомком `document` или нет.
 
 ```js
 var div = document.createElement('div');
@@ -60,10 +60,10 @@ Marionette.isNodeAttached(div);
 // => true
 ```
 
-## Marionette.mergeOptions
+## <a name="marionettemergeoptions"></a> Marionette.mergeOptions
 
-A handy function to pluck certain `options` and attach them directly to an instance.
-Most Marionette Classes, such as the Views, come with this method.
+Удобный метод, который берет значения из некоторого объекта `options` и добавляет их непосредственно к экземпляру класса.
+Большинство классов из Marionette, например, классы-представления, имеют такой метод.
 
 ```js
 var MyView = ItemView.extend({
@@ -74,13 +74,13 @@ var MyView = ItemView.extend({
   },
 
   onRender: function() {
-    // The merged options will be attached directly to the prototype
+    // Объединенные параметры будут добавленный напрямую в прототип
     this.$el.addClass(this.color);
   }
 });
 ```
 
-## Marionette.getOption
+## <a name="marionettegetoption"></a> Marionette.getOption
 
 Метод позволяет получить значение параметра объекта. Этот параметр может принадлежать как самому объекту непосредственно,
 так и быть вложенным в свойстве `options` объекта. Если запрашиваемый параметр существует и в объекте и в `options`, то
@@ -132,7 +132,7 @@ new M({}, { foo: f }); // => "bar"
 В этом примере, оба раза будет получена строка "bar", так как во втором случае значение переменной `f` будет неопределено,
 то есть `undefined`.
 
-## Marionette.proxyGetOption
+## <a name="marionetteproxygetoption"></a> Marionette.proxyGetOption
 
 Этот метод замещает `Marionette.getOption` таким образом, что `Marionette.getOption` может быть легко добавлен к объекту.
 
@@ -149,7 +149,7 @@ _.extend(Pagination.prototype, {
 });
 ```
 
-## Marionette.triggerMethod
+## <a name="marionettetriggermethod"></a> Marionette.triggerMethod
 
 Инициирует событие и запускает соотвествующий метод целевого объекта.
 
@@ -166,7 +166,7 @@ _.extend(Pagination.prototype, {
 Эти объекты не будут иметь метода `trigger` и не будет никакой попытки вызова `.trigger()`. При этом все методы `on{Name}`
 будут вызываться по-прежнему.
 
-## Marionette.triggerMethodOn
+## <a name=""></a> Marionette.triggerMethodOn
 
 Вызывает метод `triggerMethod` с указаным контекстом.
 
@@ -179,7 +179,7 @@ Marionette.triggerMethodOn(ctx, "foo", bar);
 // вызоввет метод "foo" в контексте ctx
 ```
 
-## Marionette.bindEntityEvents
+## <a name="marionettebindentityevents"></a> Marionette.bindEntityEvents
 
 Этот метод используется для привязки сущностей backbone (например, collection или model) к методам целевого объекта.
 
@@ -210,7 +210,7 @@ Backbone.View.extend({
 обработчиков следует отделять пробелами. Также, вместо имени обработчика можно
 использовать функцию.
 
-## Marionette.unbindEntityEvents
+## <a name="marionetteunbindentityevents"></a> Marionette.unbindEntityEvents
 
 Метод используется для отвязки обработчиков событий от сущностей backbone
 (например, collection или model). Этот метод протиположен методу `bindEntityEvents`,
@@ -241,7 +241,7 @@ Backbone.View.extend({
 });
 ```
 
-## Marionette.proxyBindEntityEvents
+## <a name="marionetteproxybindentityevents"></a> Marionette.proxyBindEntityEvents
 
 Этот метод замещает `Marionette.bindEntityEvents` таким образом, что `Marionette.bindEntityEvents` может быть легко добавлен к объекту.
 
@@ -258,7 +258,7 @@ _.extend(Pagination.prototype, {
 });
 ```
 
-## Marionette.proxyUnbindEntityEvents
+## <a name="marionetteproxyunbindentityevents"></a> Marionette.proxyUnbindEntityEvents
 
 Этот метод замещает `Marionette.unbindEntityEvents` таким образом, что `Marionette.unbindEntityEvents` может быть легко добавлен к объекту.
 
@@ -283,7 +283,7 @@ _.extend(Pagination.prototype, {
 });
 ```
 
-## Marionette.normalizeMethods
+## <a name="marionettenormalizemethods"></a> Marionette.normalizeMethods
 
 Получает хэш, состоящий из имен событий и функций и/или имен функций, и возвращает тот же хэш, в котором имена функций
 заменены ссылками на сами функции.
@@ -307,7 +307,7 @@ var View = Marionette.ItemView.extend({
 });
 ```
 
-## Marionette.normalizeUIKeys
+## <a name="marionettenormalizeuikeys"></a> Marionette.normalizeUIKeys
 
 Этот метод позволяет использовать синтаксис `@ui.` внутри указанного ключа для хэшей триггеров и событий.  
 Метод меняет местами ссылку `@ui.` и соответствующий селектор.
@@ -325,7 +325,7 @@ var ui = {
 var newHash = Marionette.normalizeUIKeys(hash, ui);
 ```
 
-## Marionette.normalizeUIValues
+## <a name="marionettenormalizeuivalues"></a> Marionette.normalizeUIValues
 
 Этот метод позволяет использовать синтаксис `@ui.` внутри указанного значения хэша (например, в хэшах региона).
 Метод меняет местами ссылку `@ui.` и соответствующий селектор.
@@ -343,7 +343,7 @@ var ui = {
 var newHash = Marionette.normalizeUIValues(hash, ui);
 ```
 
-## Marionette.actAsCollection
+## <a name="marionetteactascollection"></a> Marionette.actAsCollection
 
 Это утилита предназначена для добавления поведения коллекций из Underscore к объекту.
 
