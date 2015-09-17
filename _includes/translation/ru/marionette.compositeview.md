@@ -1,17 +1,16 @@
 `CompositeView` расширяет `CollectionView` и обычно используется в сценариях где нужно отразить "ветвь и листья", или
-в сценариях, где коллекцию нужно вставить в оборачивающий ее шаблон. По умолчанию `CompositeView` отражает сортировку коллекции в DOM. 
-Такое поведение можно отключить, определяя `{sort: false}` при инициализации
+в сценариях, где коллекцию нужно вставить в "оборачивающий" ее шаблон.
+По умолчанию, `CompositeView` отражает сортировку коллекции в DOM. 
+Такое поведение можно отключить, определяя `{sort: false}` при инициализации.
 
-Подробнее можно поглядеть здесь
-[the Marionette.CollectionView documentation](./marionette.collectionview.md)
+Подробнее [the Marionette.CollectionView documentation](./marionette.collectionview.md)
 
-Дополнительно,  взаимодействие с Marionette.Region даст возможность использовать различные кэллбеки, например `onShow`.
-Подробнее можно поглядеть тут
-[the Region documentation](./marionette.region.md).
+Дополнительно,  взаимодействие с `Marionette.Region` даст возможность использовать различные кэллбеки, например `onShow`.
+Подробнее [the Region documentation](./marionette.region.md).
 
 ## Пример: Tree View
 
-Для примера, вы рендерите древовидный контрол. Возможно, вы хотите рендерить collection view с моделью и шаблоном.
+Для примера, вы рендерите древовидное представление. Возможно, вы хотите рендерить collection view с моделью и шаблоном.
 Именно для ренедринга более сложных представлений ( чем просто список колеекции) и служит CompositeView.
 
 Вы можете определить `modelView` для использования  в отрисовке каждой модели. Если не определяете, будет использоваться
@@ -19,7 +18,7 @@
 
 ```js
 var CompositeView = Marionette.CompositeView.extend({
-  template: "#leaf-branch-template"
+  template: "#leaf-branch-template" // шаблон всего представления
 });
 
 new CompositeView({
@@ -28,10 +27,10 @@ new CompositeView({
 });
 ```
 
-Дополнитлеьные примеры
+Дополнительные примеры
 [using the composite view.](http://lostechies.com/derickbailey/2012/04/05/composite-views-tree-structures-tables-and-more/)
 
-## Documentation Index
+## Содержание
 
 * [Composite Model `template`](#composite-model-template)
 * [CompositeView's `childView`](#compositeviews-childview)
@@ -45,12 +44,12 @@ new CompositeView({
 
 ## Composite Model `template`
 
-Когда `CompositeView` рендерится, каждая `model` будет рендериться с шаблоном `template` определенным в представлении.
-Вы можете переопределить шаблон, передавая его конструктору в опциях.
+Когда `CompositeView` рендерится, каждая `model` будет рендериться с шаблоном `template` определенным в ее ( модели)
+представлении. Вы можете переопределить шаблон для `CompositeView`, передавая его конструктору в опциях.
 
 ```js
 new MyComp({
-  template: "#some-template"
+  template: "#some-template" // шаблон CompositeView
 });
 ```
 
@@ -68,7 +67,7 @@ new MyComp({
 
 ## CompositeView's `childView`
 
-Каждый `childView` будет рендерится используя шаблон описанный в `childView` опции. Сначала отрисуется `CompositeView` шаблон, 
+Каждый `childView` будет рендерится используя класс описанный в `childView` опции. Сначала отрисуется `CompositeView` шаблон, 
 после этого, добавятся  дети с `childView` шаблонами.
 
 ```js
@@ -81,18 +80,13 @@ var CompView = Marionette.CompositeView.extend({
 
 ## CompositeView's `childViewContainer`
 
-By default the composite view uses the same `attachHtml` method that the
-collection view provides. This means the view will call jQuery's `.append`
-to move the HTML contents from the child view instance in to the collection
-view's `el`.
+По умолчанию, `CompositeView` использует `attachHtml` метод  из `СollectionView`. Это означает, 
+что представление будет вызывать jQuery метод `append` для размещения HTML содержимого из вложенных `childView` инстансов
+в `collectionView` `el`.
 
-
-This is typically not very useful as a composite view will usually render
-a container DOM element in which the child views should be placed.
-
-For example, if you are building a table view, and want to append each
-child from the collection in to the `<tbody>` of the table, you might
-do this with a template:
+Скорее всего, это не очень соответствует вашим задачам рендеринга кажого вложенного представления в необходимое место.
+Например, если вы строите табличное представление, и хотите прибавлять каждого ребенка из коллекции в `<tbody>` таблицы.
+Вероятно, вы будете использовать следующий шаблон. 
 
 ```html
 <script id="row-template" type="text/html">
@@ -111,7 +105,7 @@ do this with a template:
       </tr>
     </thead>
 
-    <!-- want to insert collection children, here -->
+    <!-- хотим вставить отображение коллекции в это место -->
     <tbody></tbody>
 
     <tfoot>
@@ -123,9 +117,7 @@ do this with a template:
 </script>
 ```
 
-To get your childView instances to render within the `<tbody>` of this
-table structure, specify an `childViewContainer` in your composite view,
-like this:
+Для рендеринга ваших `childView` инстансов внутри `<tbody>`, определите `childViewContainer` в вашем `CompositeView`.
 
 ```js
 var RowView = Marionette.ItemView.extend({
@@ -136,20 +128,18 @@ var RowView = Marionette.ItemView.extend({
 var TableView = Marionette.CompositeView.extend({
   childView: RowView,
 
-  // specify a jQuery selector to put the `childView` instances into
+  // определяем jQuery селектор, внутрь которого будем добавлять `childView` инстансы
   childViewContainer: "tbody",
 
   template: "#table-template"
 });
 ```
 
-This will put all of the `childView` instances into the `<tbody>` tag of
-the composite view's rendered template, correctly producing the table
-structure.
+Это разместит все `childView` инстасы внутри `<tbody>` тега родительского шаблона и корректно отрисует
+структуру таблицы ( в данном примере).
 
-Alternatively, you can specify a function as the `childViewContainer`. This
-function needs to return a jQuery selector string, or a jQuery selector
-object.
+Или вы можете определить функцию для опции `childViewContainer`. Функции необходиом возвращать jQuery селектор,  или 
+jQuery объект.
 
 ```js
 var TableView = Marionette.CompositeView.extend({
@@ -160,14 +150,11 @@ var TableView = Marionette.CompositeView.extend({
   }
 });
 ```
+Использование функции, позволяет добавить логику для возвората определенного селектора. Однако, только одно значение может быть
+возвращено. Первое возвращаемое  значение будет закешированно, и будет использоваться в весь период работы 
+представления.
 
-Using a function allows for logic to be used for the selector. However,
-only one value can be returned. Upon returning the first value, it will
-be cached and that value will be used for the remainder of that view
-instance' lifecycle.
-
-Alternatively, the `childViewContainer` can be supplied in the constructor
-function options:
+Также, `childViewContainer` можно передать в конструкторе класса.
 
 ```js
 var myComp = new Marionette.CompositeView({
@@ -179,78 +166,70 @@ var myComp = new Marionette.CompositeView({
 
 ## CompositeView's `attachHtml`
 
-Sometimes the `childViewContainer` configuration is insufficient for
-specifying where the `childView` instance should be placed. If this is the
-case, you can override the `attachHtml` method with your own implementation.
+Иногда, конфигурация `childViewContainer` недостаточна для специфического размещения "определенных" `childView` представлений.
+В этом случае, можно переопределить `attachHtml` метод.
 
-For more information on this method, see the [CollectionView's documentation](./marionette.collectionview.md#collectionviews-attachhtml).
+Подробнее смотреть тут [CollectionView's documentation](./marionette.collectionview.md#collectionviews-attachhtml).
 
-## CompositeView's `childView` container selection
+## CompositeView's `childView` выбор контейнера
 
-The `getChildViewContainer` method is passed a second `childView` parameter which, when overridden, allows for a finer tuned container selection by being able to access the `childView` which is about to be appended to the `containerView` returned by `getChildViewContainer`.
+Метод `getChildViewContainer` получает вторым параметром `childView`, который, если переопределен, позволит выбирать
+"специфический" контейнер (`containerView` возвращаемый методом `getChildViewContainer`)  для размещения детей.
+ 
 
-## Recursive By Default
+## Recursive по умолчанию
 
-The default rendering mode for a `CompositeView` assumes a
-hierarchical, recursive structure. If you configure a composite
-view without specifying an `childView`, you'll get the same
-composite view class rendered for each child in the collection.
+Режим рендеринга `CompositeView` предполагает (допускает) иерархическую, рекурсивную структуру данных. Если вы 
+не определяете какой либо `childView` для вашего `CompositeView`, то дети будут отрендерены одним и тем же
+методом рендеринга класса `CompositeView`. 
+ 
 
-## Model And Collection Rendering
+## Model и Collection ререндеринг
 
-The model and collection for the composite view will re-render
-themselves under the following conditions:
+Модель и коллекция для `CompositeView` будет перерисовываться при следующих условиях.
 
-* When the collection's "reset" event is fired, it will only re-render the collection within the composite, and not the wrapper template
-* When the collection has a model added to it (the "add" event is fired), it will render that one child into the list
-* When the collection has a model removed (the "remove" event is fired), it will remove that one child from the rendered list
+* Когда в коллекции происходит событие "reset". Перерендерится только коллекция внутри `Composite`, окружающий шаблон не затрагивается.
+* При добавлении модели в коллекцию (событие "add"), отрендерится только один ребенок в списке.
+* Удаление модели из коллекции (событие "remove"), удалит только одного ребенка из уже отрисованного списка
 
-As with item view instances, the composite view instance is passed as the
-third argument to the `Renderer` object's `render` method, which is
-useful in custom `Renderer` implementations.
+Как и в `ItemView`, `CompositeView` получает третьим аргументом `Renderer` объект `render` метода, удобный для
+кастомной реализации своего `Renderer`-а.
 
-## Events And Callbacks
+## События и кэлбеки
 
-During the course of rendering a composite, several events will
-be triggered. These events are triggered with the [Marionette.triggerMethod](./marionette.functions.md#marionettetriggermethod)
-function, which calls a corresponding "on{EventName}" method on the view.
+При рендеринге `compositeView` будет вызванно несколько событий. События триггерятся с помощью 
+[Marionette.triggerMethod](./marionette.functions.md#marionettetriggermethod) функции, которая вызывает соответствующие
+`on{EventName}` методы представления.
 
-* "before:render:template" / `onBeforeRenderTemplate` - before the `model` has been rendered
-* "render:template" / `onRenderTemplate` - after the `model` has been rendered
-* "before:render:collection" / `onBeforeRenderCollection` - before the collection of models is rendered
-* "render:collection" / `onRenderCollection` - after the collection of models has been rendered
-* "before:render" / `onBeforeRender` - before anything has been rendered
-* "render" / `onRender` - after everything has been rendered
+* "before:render:template" / `onBeforeRenderTemplate` - перед рендерингом `model` 
+* "render:template" / `onRenderTemplate` - после рендеринга `model`
+* "before:render:collection" / `onBeforeRenderCollection` - перед рендеригом коллекции моделей
+* "render:collection" / `onRenderCollection` - после рендеринга коллекция моделей
+* "before:render" / `onBeforeRender` - перед тем, как что нибудь будет отрендерено
+* "render" / `onRender` - после того, как что либо будет рендерится
 
-Additionally, after the composite view has been rendered, an
-`onRender` method will be called. You can implement this in
-your view to provide custom code for dealing with the view's
-`el` after it has been rendered:
+Кроме этого, после ренедринга `CompositeView`, будет вызван метод `onRender`. Вы можете определить этот метод
+в вашем представлении, и ваш код  сможет работать с `el` представления, после его (представления) "полного" рендеринга.
 
 ```js
 Marionette.CompositeView.extend({
   onRender: function(){
-    // do stuff here
+    // Шаблон compositeView и  вложенная коллекция уже отрендерены, через this.el поимеем к ним доступ  
   }
 });
 ```
 
-## Organizing UI elements
+## Организация UI элементов
 
-Similar to ItemView, you can organize the UI elements inside the
-CompositeView by specifying them in the `UI` hash. It should be
-noted that the elements that can be accessed via this hash are
-the elements that are directly rendered by the composite view
-template, not those belonging to the collection.
+Аналогично с `ItemView`, вы можете описать UI элементы внутри `CompositeView` используя `UI` хеш. Заметим, что  элементы
+из этого хеша, это элементы, отрендериваемые `CompositeView` шаблоном , а не вложенными.
 
-The UI elements will be accessible as soon as the composite view
-template is rendered (and before the collection is rendered),
-which means you can even access them in the `onBeforeRender` method.
+UI элементы будут доступны, как только шаблон `CompositeView` отрендерится (но перед рендерингом коллекции), т.е. вы сможете
+иметь к UI элементам доступ в методе  `onBeforeRender`.
 
-## modelEvents and collectionEvents
+## События модели и коллекции
 
-CompositeViews can bind directly to model events and collection events
-in a declarative manner:
+`CompositeViews` может связываться напрямую к событиям модели и коллекции в декларативном виде при определении класса.
 
 ```js
 Marionette.CompositeView.extend({
@@ -264,5 +243,4 @@ Marionette.CompositeView.extend({
 });
 ```
 
-For more information, see the [Marionette.View](./marionette.view.md#viewmodelevents-and-viewcollectionevents)
-documentation.
+Подробнее смотреть [Marionette.View](./marionette.view.md#viewmodelevents-and-viewcollectionevents)
