@@ -64,7 +64,7 @@ layoutView.content.show(new MainContentView());
 
 ### <a name="region-configuration-types"></a> Типы конфигурирования регионов
 
-Marionette поддреживает несколько способов определения регионов в вашем `Application` или `LayoutView`.
+Marionette поддерживает несколько способов определения регионов в вашем `Application` или `LayoutView`.
 
 #### Селектор в виде строки
 
@@ -103,15 +103,13 @@ myApp.addRegions({
 Если ваш `regionClass` уже имеет установленное свойство `el`, то вам не нужно
 определять `selector` или `el` свойство в литерал объекте.
 
-Любые другие свойства, заданные вами в литерале объекта, будут использоваться в качестве параметров, которые будут переданы в экземпляр региона, включая `allowMissingEl`.
+Любые другие свойства, заданные вами в литерале объекта, будут использоваться в качестве параметров, которые будут
+переданы в экземпляр региона, включая `allowMissingEl`.
 
-Ordinarily regions enforce the presence of a backing DOM element.
-In some instances it may be desirable to allow regions to be
-instantiated and used without an element, such as when regions
-defined by a parent `LayoutView` class are used by only some of its
-subclasses. In these instances, the region can be defined with the
-`allowMissingEl` option, suppressing the missing element error and
-causing `show` calls to the region to be treated as no-ops.
+Обычно, регионы ожидают установку свойства `el` ссылающегося на DOM элемент.
+Но иногда, нужно инстанцировать и использовать регион без этого элемента. Например, регионы определяются внутри 
+родительского представления `LayoutView`. В этом случае, можно передать опцию `allowMissingEl`, подавляющую ошибку
+неустановленного элемента.
 
 ```js
 var MyRegion = Marionette.Region.extend();
@@ -263,34 +261,32 @@ myApp.mainRegion.show(myView);
 myApp.mainRegion.show(myView, {forceShow: true});
 ```
 
-#### Emptying a region
+#### Очистка региона
 
-You can empty a region of its view and contents by invoking `.empty()` on the region instance.
-If you would like to prevent the view currently shown in the region from being `destroyed` you can pass `{preventDestroy: true}` to the empty method to prevent the default destroy behavior.
-The empty method returns the region instance from the invocation of the method.
+Вы можете очистить регион вызвав метод `.empty()`.  Если желаете защитить текущее  содержимое регионаот "разрушения", можете
+передать `{preventDestroy: true}` в `.empty()` метод. `Empty()` вернет инстанс региона, при своем вызове.
 
 #### onBeforeAttach & onAttach
 
-Regions that are attached to the document when you execute `show` are special in that the
-views that they show will also become attached to the document. These regions fire a pair of triggerMethods on *all*
-of the views that are about to be attached – even the nested ones. This can cause a performance issue if you're
-rendering hundreds or thousands of views at once.
+Регионы, присоединяемы к документу вызовом `show` отличаются тем, что показываемые ими представления также добавляются в документ.
+Такие регионы триггерят пару методов на всех своих вложенных представлениях, даже если вложенное представление всего одно.
+Это может привести к проблемам в производительности, если вы рендерите несколько сотен представлений за раз.
 
-If you think these events might be causing some lag in your app, you can selectively turn them off
-with the `triggerBeforeAttach` and `triggerAttach` properties.
+Если считаете, что эти события могут быть причиной некоторого лага в вашем приложении, вы можете избирательно отключить их 
+устанавливая `triggerBeforeAttach` и `triggerAttach` свойства.
 
 ```js
 // No longer trigger attach
 myRegion.triggerAttach = false;
 ```
 
-You can override this on a per-show basis by passing it in as an option to show.
+Можно передовать эту опцию, как опцию метода `.show()`
 
 ```js
-// This region won't trigger beforeAttach...
+// Этот регион не триггерит beforeAttach
 myRegion.triggerBeforeAttach = false;
 
-// Unless we tell it to
+// Пока мы не скажим ему это сделать
 myRegion.show(myView, {triggerBeforeAttach: true});
 ```
 
@@ -366,7 +362,8 @@ myApp.addRegions({
 
 Есть несколько сценариев, как желательно добавлять существующее представление в регион,
 без отрисовки или отображения представления и без замещения HTML-содержимого региона.
-Например, для SEO и [универсального доступа](http://www.w3.org/WAI/intro/accessibility.php) часто нужен HTML, который должен сгенерироваться на сервере, а также для [прогрессивного улучшения](http://en.wikipedia.org/wiki/Progressive_enhancement) HTML.
+Например, для SEO и [универсального доступа](http://www.w3.org/WAI/intro/accessibility.php) часто нужен HTML,
+ который должен сгенерироваться на сервере, а также для [прогрессивного улучшения](http://en.wikipedia.org/wiki/Progressive_enhancement) HTML.
 
 Есть два способа сделать это:
 
