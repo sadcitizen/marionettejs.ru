@@ -51,10 +51,23 @@ john.graduate();
 
 ## <a name="mergeoptions"></a> mergeOptions
 
-Merge keys from the `options` object directly onto the instance. This is the preferred way to access options
-passed into the Object.
+Присоединяет ключи из `options` объекта напрямую в инстанс. Это рекомендуемый вариант доступа к опциям переданных в `Object`
 
-More information at [mergeOptions](../functions/#marionettemergeoptions)
+```js
+var MyView = ItemView.extend({
+  myViewOptions: ['color', 'size', 'country'],
+
+  initialize: function(options) {
+    this.mergeOptions(options, this.myViewOptions);
+  },
+
+  onRender: function() {
+    // Соединяемые опции будут добавлены напрямую в объект
+    this.$el.addClass(this.color);
+  }
+});
+```
+Подробнее [mergeOptions](../functions/#marionettemergeoptions)
 
 ### <a name="getoption"></a> Метод `getOption`
 
@@ -71,7 +84,8 @@ More information at [mergeOptions](../functions/#marionettemergeoptions)
 У объектов есть метод `destroy`, который отвязывает все события, которые были привязаны непосредственно к экземпляру объекта.
 
 Вызов метода `destroy` запустит событие "before:destroy" и вызовет соответствующий метод `onBeforeDestroy`.
-В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`. Invoking `destroy` will return the object, this can be useful for chaining.
+В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`.
+Вызов `destroy` вернет текущий объект, что может быть удобно для цепочки вызовов.
 
 ```js
 // Объявляем объект с методом onDestroy
