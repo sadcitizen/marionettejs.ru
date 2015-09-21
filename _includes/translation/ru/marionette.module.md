@@ -1,6 +1,5 @@
-Marionette Modules allow you to create modular encapsulated logic.
-They can be used to split apart large applications into multiple files,
-and to build individual components of your app.
+`Module` позволяет вам разнести логику приложения по модулям. Онимогут быть использованы для разбивания большого приложения
+на несколько файлов и построить индивидальные компоненты вашего приложения.
 
 ## Documentation Index
 
@@ -21,45 +20,41 @@ and to build individual components of your app.
 * [Module Finalizers (deprecated)](#module-finalizers)
 
 
-## Basic Usage
+## Использование
 
-A module is defined directly from an Application object. To create a module all
-you need to do is give it a name.
+Модули определены непосредственно в `Application` объекте. Для создания модуля, все что нужно - дать ему имя.
 
 ```js
 var MyApp = new Marionette.Application();
 
-// Creates a new module named "MyModule"
+// создаем новый модуль с именем "MyModule"
 var myModule = MyApp.module("MyModule");
 
 myModule === MyApp.MyModule; // => true
 ```
 
-Modules cannot be overwritten once they are created. Subsequent
-calls to `module` with the same name argument will not create
-a new module, but instead return the already-created instance.
+Модули не могут быть переопределены после своего создания. Последующие вызовы `module` с одинкаовыми аргументами не создаст
+новй модуль, а вернет уже созданный.
 
 ```js
 var MyApp = new Marionette.Application();
 
-// Instantiates a new Marionette.Module
+// ИНстанцируем новый Marionette.Module
 var myModule = MyApp.module("MyModule");
 
-// Returns the module you just created
+// возращает уже созданный модуль
 var theSameModule = MyApp.module("MyModule");
 ```
 
 ## Module Definitions
 
-You can provide a definition for your module when you instantiate it.
-Definitions can either be a callback function or an object literal.
+Вы можете определить поведения модуля при инстанцировании. Оперделение может быть кэлбэк функцией или литеральным объектом.
 
 ### Callback Function Definition
 
-The callback function definition will be invoked immediately on calling
-the `module` method.
+Кэлбек функция будет вызвана сразу при вызове метода `module`
 
-It will receive 6 parameters, in this order:
+Получает 6 параметров, в следующем порядке:
 
 * The module itself
 * The Application object
@@ -69,16 +64,15 @@ It will receive 6 parameters, in this order:
 * Underscore
 * Any custom arguments
 
-Within the callback you can attach both private and public
-functions and data directly to your module.
+Внутри функции имеете доступ к приватным/публичным функциям и данным непосредственно в модуле.
 
 ```js
 MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _){
 
-  // The context of the function is also the module itself
+  // контекст функции, он же MyModule
   this === MyModule; // => true
 
-  // Private Data And Functions
+  // Приватные  функци и данные
   // --------------------------
 
   var myData = "this is private data";
@@ -88,7 +82,7 @@ MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _){
   }
 
 
-  // Public Data And Functions
+  // Публичные фукции и данные
   // -------------------------
 
   MyModule.someData = "public data";
@@ -104,13 +98,10 @@ MyApp.MyModule.someFunction(); //=> public data
 
 #### Additional Arguments
 
-You can provide additional arguments to the definition
-function, allowing you to import 3rd party libraries
-and other resources that you want to have locally scoped to
-your module.
+Можно дать дополнительне аргументы, при определении модуля, позволяющие импортировать внешние библиотеки и ресурсы для 
+возможности  локального испоьзования.
+Передайте дополнительные аргументы последними в вызове `module`.
 
-Pass the additional arguments after the
-definition itself in the call to `module`.
 
 ```js
 MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _, Lib1, Lib2, LibEtc){
@@ -124,19 +115,15 @@ MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _, L
 
 #### Splitting A Module Definition Apart
 
-Sometimes a module definition can become quite long. You can split
-apart the definition by making subsequent calls to the `module`
-function.
+Иногда определение модуля бывает очено длинное, мы можем его разделить на части вызовом `module` несколько раз.
 
-This can used to split the definition of your module
-across multiple files.
 
 ```js
 MyApp.module("MyModule", function(MyModule){
   MyModule.definition1 = true;
 });
 
-// The following could be in a separate file
+// другой параметр в другом вызове
 MyApp.module("MyModule", function(MyModule){
   MyModule.definition2 = true;
 });
@@ -147,12 +134,9 @@ MyApp.MyModule.definition2; //=> true
 
 ### Object Literal Definition
 
-The object literal definition of a module allows for more flexibility
-than the callback method. It allows you to, for instance, specify
-a custom class for your module.
-
-Through the object literal definition you can still set a definition
-function through the `define` property.
+Литеральное определение модуля  дает более гибкую возможность настройки, чем кэлбэк. Например, позволяют для инстанса
+определить свой класс для модуля.
+В свойстве `define` можно передать функцию.
 
 ```js
 MyApp.module("MyModule", {
