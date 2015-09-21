@@ -220,18 +220,13 @@ Marionette.LayoutView.extend({
 
 ## <a name="region-availability"></a> Доступность региона
 
-Any defined regions within a layoutView will be available to the
-View or any calling code immediately after instantiating the
-View. This allows a View to be attached to an existing
-DOM element in an HTML page, without the need to call a render
-method or anything else, to create the regions.
+Любые определенные регионы внутри `LayoutView` будут доступны представлению ( или внутреннему коду представления)
+немедленно после инстанцирования. Это позволяет добавлять вложенные `View` в существующий DOM страницы, без необходимости вызова
+`render` метода (или чего то другого) этих регионов.
 
-However, a region will only be able to populate itself if the
-View has access to the elements specified within the region
-definitions. That is, if your view has not yet rendered, your
-regions may not be able to find the element that you've
-specified for them to manage. In that scenario, using the
-region will result in no changes to the DOM.
+Однако, регионы будут доступны только если добавляемый `View` имеет доступ к элементу описанному внутри  определения региона.
+Поэтому, если ваше `LayoutView` представление еще не отрендерено, ваши регионы еще не могут найти "свои" корневые элементы, что вы 
+передали в определении. В этом случае, никаких изменений в DOM не произойдет.
 
 ## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг макета
 
@@ -254,53 +249,43 @@ region will result in no changes to the DOM.
 
 ### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего макета
 
-There are times when re-rendering the entire layoutView is necessary. However,
-due to the behavior described above, this can cause a large amount of
-work to be needed in order to fully restore the layoutView and all of the
-views that the layoutView is displaying.
+Временами, требуется полная перерисовка `layoutView`. Однако, такое поведение может привести в к большому количеству
+работы необходимой для полного "пересчета" `layoutView` и всех его вложенных представлений.
 
-Therefore, it is suggested that you avoid re-rendering the entire
-layoutView unless absolutely necessary. Instead, if you are binding the
-layoutView's template to a model and need to update portions of the layoutView,
-you should listen to the model's "change" events and only update the
-necessary DOM elements.
+По это причине, предполагается, что вы не станете перерендеривать всю `layoutView` (пока это не станет действительно необходимо).
+Вместо этого, если привязали шаблон к модели и вам необходимо обновить часть `layoutView`, вам стоит прослушивать событие
+`change` модели и обнавлять только требуемые элементы DOM. 
 
 ## <a name="nested-layoutviews-and-views"></a> Вложенные LayoutViews и Views
 
-Since the `LayoutView` extends directly from `ItemView`, it
-has all of the core functionality of an item view. This includes
-the methods necessary to be shown within an existing region manager.
+Так как `LayoutView` расширяет `ItemView` напрямую, он имеет всю базовую функциональность `ItemView`, включая 
+методы, требуемые для показа внутри существующего `regionManager`-а
 
-In the following example, we will use the Application's Regions
-as the base of a deeply nested view structure.
+В следующем примере, мы будем использовать  Application's Regions в которую вложим наше представление.
 
 ```js
-// Create an Application
+//  создаем Application
 var myApp = new Marionette.Application();
 
-// Add a region
+// добавляем регион
 myApp.addRegions({
   mainRegion: "#main"
 });
 
-// Create a new LayoutView
+// создаем новый LayoutView
 var layoutView = new Marionette.LayoutView({
-  // This option removes the layoutView from
-  // the DOM before destroying the children
-  // preventing repaints as each option is removed.
-  // However, it makes it difficult to do close animations
-  // for a child view (false by default)
+  // эта опция удаляет layoutView из DOM перед удалением вложенных представлений,
+  // предотвращая перерисовку при удалении детей.
+  // Однако, это ослажняет анимацию детей при закрытии.
   destroyImmediate: true
 });
 
-// Lastly, show the LayoutView in the App's mainRegion
+// показываем `LayoutView` в регионе класса App (App's mainRegion)
 MyApp.getRegion('main').show(layoutView);
 ```
+Вы можете вложить `LayoutViews` так глубоко, как хотите. Что поможет вам получить хорошо организованную структуру приложения. 
 
-You can nest LayoutViews as deeply as you want. This provides for a well organized,
-nested view structure.
-
-For example, to nest 3 layouts:
+Для примера, вложение 3-ех представлений.
 
 ```js
 var layout1 = new Layout1();
