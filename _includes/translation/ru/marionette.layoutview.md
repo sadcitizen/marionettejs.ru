@@ -2,10 +2,9 @@
 `Region`, который дает возможность рендерить сложные макеты с несколькими
 подрегионами, управляемыми указанными менеджерами регионов.
 
-`LayoutView` также может использоваться как составное представление, которое
+Класс `LayoutView` также может использоваться как составное представление, которое
 объединяет несколько представлений и областей макета с вложенными приложениями,
-позволяя приложениями добавлять несколько менеджеров регионов к динамически
-созданному HTML.
+позволяя приложениями добавлять несколько менеджеров регионов к динамически созданному HTML.
 
 Вы можете создавать сложные представления, помещая объекты класса `LayoutView`
 внутрь объектов класса `Regions`.
@@ -16,15 +15,14 @@
 функционалом класса-родителя. Подробнее о `ItemView` вы можете познакомиться в
 отдельном [разделе документации](../itemview/).
 
-Кроме того, класс `LayoutView` обладает свойствами класса `Region`, например,
-коллбеком `onShow`. Подробнее о этих свойствах вы сможете узнать из
-[раздела документации о классе Region](../region/).
+Кроме того, совместное использование `LayoutView` с `Marionette.Region` позволяет использовать такие функции как коллбэк `onShow` и т.д.
+Более полную информацию о классе `Marionette.Region` можно найти в соответствующем разделе [документации](../region/).
 
 ## Содержание
 
 * [Основное применение](#basic-usage)
 * [Параметры региона](#region-options)
-* [LayoutView.childEvents](#layoutview-childevents)
+* [Свойство `childEvents`](#layoutview-childevents)
 * [Указание регионов с помощью функции](#specifying-regions-as-a-function)
 * [Переопределение RegionManager, заданного по умолчанию](#overriding-the-default-regionmanager)
 * [Доступность региона](#region-availability)
@@ -79,7 +77,7 @@ layoutView.getRegion('menu').show(new MenuView());
 layoutView.getRegion('content').show(new MainContentView());
 ```
 
-There are also helpful shortcuts for more concise syntax.
+Прямой доступ также можно получить более лаконичным способом с помощью метода `showChildView`.
 
 ```js
 layoutView.showChildView('menu', new MenuView());
@@ -94,7 +92,7 @@ layoutView.showChildView('content', new MainContentView());
 экземпляра класса `LayoutView`.
 
 ```js
-new Marionette.LayoutView({
+var layoutView = new Marionette.LayoutView({
  regions: {
    "cat": ".doge",
    "wow": {
@@ -111,68 +109,81 @@ new Marionette.LayoutView({
 За более подробной информацией о способах определения регионов обратитесь к
 [разделу документации о классе Region](../region/).
 
-### LayoutView childEvents
+### <a name="layoutview-childevents"></a> Свойство `childEvents`
 
-Можно  определить `childEvents` хеш (или метод возвращающий хеш) позволяющий описать варианты перехвата всплывающих 
-`childEvents` от вложенных представлений без ручного биндинга.
+Свойство `childEvents` представляет собой хэш или метод, который возвращает хэш.
+Это свойство позволяет задать обработчики событий от вложенных представлений без биндинга в ручную.
 
-Ключи хеша могут быть функцией  или текстовой строкой. Функция вызывается в контексте `view`. Первым параметром получает
-`child view` (из которого приходит событие), затем следующие аргументы ассоциированные с событием. 
+Значения в хэше могут быть как функциями, так и строками имен методов самого представления.
 
 ```js
-// childEvents можно описать в виде хеша
+// childEvents может быть задан в виде хэша
 var MyLayoutView = Marionette.LayoutView.extend({
 
-  // этот кэлбэк  будет вызван когда ребенок рендерится или посылает `render` событие
+  // этот коллбэк будет вызван когда потомок отрендерится или пошлет событие `render`
   childEvents: {
-    render: function(childView) {
-      console.log("a childView has been rendered");
+    render: function() {
+      console.log('A child view has been rendered.');
     }
   }
 });
 
-// ...или функции возвращающей хэш
+// ...или функции возвращающей хэш.
 var MyLayoutView = Marionette.LayoutView.extend({
 
   childEvents: function() {
     return {
-      render: this.onChildRender
-    }
+      render: this.onChildRendered
+    };
   },
 
-  onChildRender: function(childView) {
+  onChildRendered: function() {
+    console.log('A child view has been rendered.');
   }
 });
 ```
 
-Также это работает для кастомных событий, что вы можете вызывать из вложенных `child view`.
+В `childEvents` также можно указывать кастомные события для представлений-потомков.
+
+Take note that the first argument to a `childEvents` handler is the child view itself.  
+Caution: Events triggered on the child view through `this.trigger` are not yet supported for LayoutView `childEvents`.  
+Use strictly `triggerMethod` within the child view.
 
 ```js
-  // `child view` вызывает кастомный ивент, `show:message`
-  var ChildView = new Marionette.ItemView.extend({
-    events: {
-      'click .button': 'showMessage'
-    },
+// The child view fires a custom event, `show:message`
+var ChildView = Marionette.ItemView.extend({
 
-    showMessage: function (e) {
-      console.log('The button was clicked.');
-      this.triggerMethod('show:message', msg);
-    }
-  });
+  // Events hash defines local event handlers that in turn may call `triggerMethod`.
+  events: {
+    'click .button': 'onClickButton'
+  },
 
-  // его родитель, используя настройки childEvents перехватывает кастомное событие 
-  var ParentView = new Marionette.LayoutView.extend({
-    childEvents: {
-      'show:message': function (childView, msg) {
-        console.log('The show:message event bubbled up to the parent.');
-      }
-    },
+  // Triggers hash converts DOM events directly to view events catchable on the parent.
+  triggers: {
+    'submit form': 'submit:form'
+  },
 
-    // Или можем описать перехват события используя префиксную форму нотации 
-    onChildviewShowMessage: function (childView, msg) {
-      console.log('The show:message event bubbled up to the parent.');
-    }
-  });
+  onClickButton: function () {
+    this.triggerMethod('show:message', 'foo');
+  }
+});
+
+// The parent uses childEvents to catch that custom event on the child view
+var ParentView = Marionette.LayoutView.extend({
+
+  childEvents: {
+    'show:message': 'onChildShowMessage',
+    'submit:form': 'onChildSubmitForm'
+  },
+
+  onChildShowMessage: function (childView, message) {
+    console.log('A child view fired show:message with ' + message);
+  },
+
+  onChildSubmitForm: function (childView) {
+    console.log('A child view fired submit:form');
+  }
+});
 ```
 
 ### <a name="specifying-regions-as-a-function"></a> Указание регионов с помощью функции
@@ -225,7 +236,7 @@ Marionette.LayoutView.extend({
 `render` метода (или чего то другого) этих регионов.
 
 Однако, регионы будут доступны только если добавляемый `View` имеет доступ к элементу описанному внутри  определения региона.
-Поэтому, если ваше `LayoutView` представление еще не отрендерено, ваши регионы еще не могут найти "свои" корневые элементы, что вы 
+Поэтому, если ваше `LayoutView` представление еще не отрендерено, ваши регионы еще не могут найти "свои" корневые элементы, что вы
 передали в определении. В этом случае, никаких изменений в DOM не произойдет.
 
 ## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг макета
@@ -254,11 +265,11 @@ Marionette.LayoutView.extend({
 
 По это причине, предполагается, что вы не станете перерендеривать всю `layoutView` (пока это не станет действительно необходимо).
 Вместо этого, если привязали шаблон к модели и вам необходимо обновить часть `layoutView`, вам стоит прослушивать событие
-`change` модели и обнавлять только требуемые элементы DOM. 
+`change` модели и обнавлять только требуемые элементы DOM.
 
 ## <a name="nested-layoutviews-and-views"></a> Вложенные LayoutViews и Views
 
-Так как `LayoutView` расширяет `ItemView` напрямую, он имеет всю базовую функциональность `ItemView`, включая 
+Так как `LayoutView` расширяет `ItemView` напрямую, он имеет всю базовую функциональность `ItemView`, включая
 методы, требуемые для показа внутри существующего `regionManager`-а
 
 В следующем примере, мы будем использовать  Application's Regions в которую вложим наше представление.
@@ -283,7 +294,7 @@ var layoutView = new Marionette.LayoutView({
 // показываем `LayoutView` в регионе класса App (App's mainRegion)
 MyApp.getRegion('main').show(layoutView);
 ```
-Вы можете вложить `LayoutViews` так глубоко, как хотите. Что поможет вам получить хорошо организованную структуру приложения. 
+Вы можете вложить `LayoutViews` так глубоко, как хотите. Что поможет вам получить хорошо организованную структуру приложения.
 
 Для примера, вложение 3-ех представлений.
 
@@ -300,9 +311,9 @@ layout2.showChildView('region2', layout3);
 
 ### Эффективные вложенные структуры.
 
-Пример, показаный выше, работает замечательно, но приводит к 3 процессам перерисоки, по одному на каждый макет. 
+Пример, показаный выше, работает замечательно, но приводит к 3 процессам перерисоки, по одному на каждый макет.
 Marionette предоставляет простой механизм единовремнной отрисовки всех вложенных представлений: просто рендерите все
-вложенные представления  в кэллбекек `onBeforeShow`. 
+вложенные представления  в кэллбекек `onBeforeShow`.
 
 ```js
 var ParentLayout = Marionette.LayoutView.extend({
