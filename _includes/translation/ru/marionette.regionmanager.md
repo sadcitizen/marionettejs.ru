@@ -45,9 +45,10 @@ regions.get('baz').show(myView);
 rm.removeRegion("foo");
 ```
 
-## Constructing
+## Создание экземпляра класса
 
-The RegionManager take an optional `region` option in their constructor. the regions are passed directly into `addRegions` for the region manager instance.
+`RegionManager` копирует `region` из опций конструктора в экземпляр класса. Либо, регионы можно передать
+напрямую в экземпляр, используя `addRegions` метод.
 
 ```js
 var mananger = new Marionette.RegionManager({
