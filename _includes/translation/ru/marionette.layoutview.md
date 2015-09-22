@@ -333,26 +333,19 @@ myRegion.show(new ParentLayout());
 
 ## <a name="destroying-a-layoutview"></a> Удаление LayoutView
 
-When you are finished with a layoutView, you can call the
-`destroy` method on it. This will ensure that all of the region managers
-within the layoutView are destroyed correctly, which in turn
-ensures all of the views shown within the regions are destroyed correctly.
+Когда вы завершите с `layoutView`, вы можете вызвать метод `destroy`. Это гарантирует, что все представления
+вложенных регионов удалятся корректно.
 
-If you are showing a layoutView within a parent region manager, replacing
-the layoutView with another view or another layoutView will destroy the current
-one, the same it will destroy a view.
+Если вы показываете `layoutView` внутри родительского region manager, замещение текущего `layoutView` другим, удалит
+текущий.
 
-All of this ensures that layoutViews and the views that they
-contain are cleaned up correctly.
+Все это гарантирует, что `LayoutView` и вложенные в него представления очистятся корректно.
 
-When calling `destroy` on a layoutView, the layoutView will be returned. This can be useful for
-chaining.
+Вызов `destroy` на `LayoutView` вернет  `layoutView`, что может быть удобно для вызовов по цепочке.
 
 ## <a name="custom-region-class"></a> Собственный класс региона
 
-If you have the need to replace the `Region` with a region class of
-your own implementation, you can specify an alternate class to use
-with the `regionClass` property of the `LayoutView`.
+Если  требуется заменить `Region`  своим `Region` классом, можно определить альтернативный класс в свойстве  `regionClass`
 
 ```js
 var MyLayoutView = Marionette.LayoutView.extend({
@@ -435,20 +428,17 @@ layoutView.removeRegion("foo");
 
 ## <a name="region-naming"></a> Именование регионов
 
-A LayoutViews' Regions are attached directly to the LayoutView instance with the name of the region
-as the key and the region itself as the value. Because of this, you need to be careful
-to avoid conflicts with existing properties on the LayoutView when you name your Region.
+Вложенные регионы прикрепленны напрямую к `LayoutView` инстансу с именем региона как ключом и ссылкой на регион в значении.
+Из за этого, нужно быть аккуратным с именованием своих регионов, для предотвращения конфликтов.
 
 Цепочка прототипов для `LayoutViews` выглядит следующим образом:
 
 `Backbone.View > Marionette.View > Marionette.ItemView > Marionette.LayoutView`
 
-Consequently, every property on each of those Classes must be avoided as Region names. The most
-common issue people run into is trying to name their Region *"attributes"*. Be aware
-that you are **not** able to do this.
+Соответсвенно, любое свойство каждого из этих классов не может быть использованно в качестве имени региона.
 
-The following is an abbreviated list of other names that can't be used as Region names. For a more
-complete list refer to the API documentation for each Class on the prototype chain:
+Следующий список аббриевиатур не может быть использован для именования регионов. Для более полного списка воспользуйтесь
+документацией API для каждого класса в цепочке прототипов.
 
 * attributes
 * constructor
