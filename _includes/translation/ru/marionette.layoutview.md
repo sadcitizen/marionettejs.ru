@@ -298,11 +298,11 @@ layout1.showChildView('region1', layout2);
 layout2.showChildView('region2', layout3);
 ```
 
-### Efficient Nested View Structures
+### Эффективные вложенные структуры.
 
-The above example works great, but it causes three separate paints: one for each layout that's being
-shown. Marionette provides a simple mechanism to infinitely nest views in a single paint: just render all
-of the children in the `onBeforeShow` callback.
+Пример, показаный выше, работает замечательно, но приводит к 3 процессам перерисоки, по одному на каждый макет. 
+Marionette предоставляет простой механизм единовремнной отрисовки всех вложенных представлений: просто рендерите все
+вложенные представления  в кэллбекек `onBeforeShow`. 
 
 ```js
 var ParentLayout = Marionette.LayoutView.extend({
@@ -315,23 +315,21 @@ var ParentLayout = Marionette.LayoutView.extend({
 myRegion.show(new ParentLayout());
 ```
 
-In this example, the doubly-nested view structure will be rendered in a single paint.
+В этом примере, два вложенных представления отрисуются за один проход.
 
-This system is recursive, so it works for any deeply nested structure. The child views
-you show can render their *own* child views within their `onBeforeShow` callbacks!
+Эта система рекурсивна, поэтому работает с любым уровнем вложенности. Вложенные представления, могут  рендерить своих
+вложенных детей на своем `onBeforeShow` кэлбеке.
 
-#### Use of the `attach` event
+#### Использование `attach` события
 
-Often times you need to know when your views in the view tree have been attached to the `document`,
-like when using certain jQuery plugins. The `attach` event, and associated `onAttach` callback, are perfect for this
-use case. Start with a Region that's a child of the `document` and show any LayoutView in it: every view in the tree
-(including the parent LayoutView) will have the `attach` event triggered on it when they have been
-attached to the `document`.
+Часто вам нужно знать когда ваши представления (в "дереве представлений") присоединятся к документу (`document`),
+примерно, как некоторые jQuery плагины. Событие `attach` и связанный с ним кэлбек `onAttach` отлично подходят для этого
+юзкейса. Каждое представление в дереве представлений ( включая и родиткльский `LayoutView`) сгенерирует событие `attach`
+когда они присоединяться в `document`.
 
-Note that inefficient tree rendering will cause the `attach` event to be fired multiple times. This
-situation can occur if you render the children views *after* the parent has been rendered, such as using
-`onShow` to render children. As a rule of thumb, most of the time you'll want to render any nested views in
-the `onBeforeShow` callback.
+Заметьте, неэффективный рендеринг "дерева" приведет к тому, что `attach` событие сгенерируется много раз. Это происходит
+если вы рендерите вложенные представления после того, как отрендерится родитель, например, используя `onShow` для рендеринга детей.
+Правильнее будет рендерить любые вложенные представления в кэллбеке `onBeforeShow`.
 
 ## <a name="destroying-a-layoutview"></a> Удаление LayoutView
 
