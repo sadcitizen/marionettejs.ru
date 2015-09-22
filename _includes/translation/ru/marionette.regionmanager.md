@@ -47,7 +47,8 @@ rm.removeRegion("foo");
 
 ## Constructing
 
-The RegionManager take an optional `region` option in their constructor. the regions are passed directly into `addRegions` for the region manager instance.
+`RegionManager` берет `region` из опций конструктора. Либо, регионы можно передать напрямую в инстанс, используя
+`addRegions` метод.
 
 ```js
 var mananger = new Marionette.RegionManager({
