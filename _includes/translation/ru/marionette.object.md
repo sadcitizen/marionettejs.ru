@@ -7,7 +7,7 @@
 * [События](#events)
 * [Метод `mergeOptions`](#mergeoptions)
 * [Метод `getOption`](#getoption)
-* [Метод bindEntityEvents](#bindentityevents)
+* [Метод `bindEntityEvents`](#bindentityevents)
 * [Удаление объекта](#destroying-a-object)
 * [Пример использования](#basic-use)
 
@@ -29,7 +29,7 @@ new Friend({name: 'John'});
 
 ### <a name="events"></a> События
 
-`Marionette.Object` наследует `Backbone.Events` и включает в себя метод `triggerMethod`.
+Класс `Marionette.Object` наследует `Backbone.Events` и включает в себя метод `triggerMethod`.
 Это упрощает объектам запуск событий, на которые могут быть подписаны другие объекты
 с помощью методов `on` или `listenTo`.
 
@@ -51,7 +51,7 @@ john.graduate();
 
 ## <a name="mergeoptions"></a> mergeOptions
 
-Присоединяет ключи из `options` объекта напрямую в инстанс. Это рекомендуемый вариант доступа к опциям переданных в `Object`
+Метод копирует ключи из объекта `options` непосредственно в сам экземпляр класса `Object`. Это наиболее предпочтительный способ доступа к параметрам, переданным в `Object`.
 
 ```js
 var MyView = ItemView.extend({
@@ -71,9 +71,9 @@ var MyView = ItemView.extend({
 
 ### <a name="getoption"></a> Метод `getOption`
 
-Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и
-быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
-Для более полной информации ознакомьтесь с [getOption](../functions/#marionettegetoption).
+Вызов метода `destroy` запустит событие `before:destroy` и вызовет соответствующий метод `onBeforeDestroy`.
+В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`. 
+Вызов метода `destroy` вернет ссылку на сам объект, это может быть полезно для построения цепочки вызовов (чейнинга).
 
 ### <a name="bindentityevents"></a> bindEntityEvents
 
