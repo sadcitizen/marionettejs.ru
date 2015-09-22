@@ -280,13 +280,13 @@ myApp.mainRegion.show(myView, {forceShow: true});
 myRegion.triggerAttach = false;
 ```
 
-Можно передовать эту опцию, как опцию метода `.show()`
+Можно передавать эту опцию, как опцию метода `.show()`
 
 ```js
 // Этот регион не триггерит beforeAttach
 myRegion.triggerBeforeAttach = false;
 
-// Пока мы не скажим ему это сделать
+// Пока мы не скажем ему это сделать
 myRegion.show(myView, {triggerBeforeAttach: true});
 ```
 
