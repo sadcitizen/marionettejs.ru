@@ -113,21 +113,25 @@ new Marionette.LayoutView({
 
 ### LayoutView childEvents
 
-A `childEvents` hash or method permits handling of child view events without manually setting bindings. The values of the hash can either be a function or a string method name on the collection view.
+Можно  определить `childEvents` хеш (или метод возвращающий хеш) позволяющий описать варианты перехвата всплывающих 
+`childEvents` от вложенных представлений без ручного биндинга.
+
+Ключи хеша могут быть функцией  или текстовой строкой. Функция вызывается в контексте `view`. Первым параметром получает
+`child view` (из которого приходит событие), затем следующие аргументы ассоциированные с событием. 
 
 ```js
-// childEvents can be specified as a hash...
+// childEvents можно описать в виде хеша
 var MyLayoutView = Marionette.LayoutView.extend({
 
+  // этот кэлбэк  будет вызван когда ребенок рендерится или посылает `render` событие
   childEvents: {
-    // This callback will be called whenever a child is rendered or emits a `render` event
-    render: function() {
-      console.log('A child view has been rendered.');
+    render: function(childView) {
+      console.log("a childView has been rendered");
     }
   }
 });
 
-// ...or as a function that returns a hash.
+// ...или функции возвращающей хэш
 var MyLayoutView = Marionette.LayoutView.extend({
 
   childEvents: function() {
@@ -136,49 +140,39 @@ var MyLayoutView = Marionette.LayoutView.extend({
     }
   },
 
-  onChildRendered: function () {
-    console.log('A child view has been rendered.');
+  onChildRender: function(childView) {
   }
 });
 ```
 
-`childEvents` also catches custom events fired by a child view.  Take note that the first argument to a `childEvents` handler is the child view itself.  Caution: Events triggered on the child view through `this.trigger` are not yet supported for LayoutView `childEvents`.  Use strictly `triggerMethod` within the child view.
+Также это работает для кастомных событий, что вы можете вызывать из вложенных `child view`.
 
 ```js
-// The child view fires a custom event, `show:message`
-var ChildView = Marionette.ItemView.extend({
+  // `child view` вызывает кастомный ивент, `show:message`
+  var ChildView = new Marionette.ItemView.extend({
+    events: {
+      'click .button': 'showMessage'
+    },
 
-  // Events hash defines local event handlers that in turn may call `triggerMethod`.
-  events: {
-    'click .button': 'onClickButton'
-  },
+    showMessage: function (e) {
+      console.log('The button was clicked.');
+      this.triggerMethod('show:message', msg);
+    }
+  });
 
-  // Triggers hash converts DOM events directly to view events catchable on the parent.
-  triggers: {
-    'submit form': 'submit:form'
-  },
+  // его родитель, используя настройки childEvents перехватывает кастомное событие 
+  var ParentView = new Marionette.LayoutView.extend({
+    childEvents: {
+      'show:message': function (childView, msg) {
+        console.log('The show:message event bubbled up to the parent.');
+      }
+    },
 
-  onClickButton: function () {
-    this.triggerMethod('show:message', 'foo');
-  }
-});
-
-// The parent uses childEvents to catch that custom event on the child view
-var ParentView = Marionette.LayoutView.extend({
-
-  childEvents: {
-    'show:message': 'onChildShowMessage',
-    'submit:form': 'onChildSubmitForm'
-  },
-
-  onChildShowMessage: function (childView, message) {
-    console.log('A child view fired show:message with ' + message);
-  },
-
-  onChildSubmitForm: function (childView) {
-    console.log('A child view fired submit:form');
-  }
-});
+    // Или можем описать перехват события используя префиксную форму нотации 
+    onChildviewShowMessage: function (childView, msg) {
+      console.log('The show:message event bubbled up to the parent.');
+    }
+  });
 ```
 
 ### <a name="specifying-regions-as-a-function"></a> Указание регионов с помощью функции
@@ -226,18 +220,13 @@ Marionette.LayoutView.extend({
 
 ## <a name="region-availability"></a> Доступность региона
 
-Any defined regions within a layoutView will be available to the
-View or any calling code immediately after instantiating the
-View. This allows a View to be attached to an existing
-DOM element in an HTML page, without the need to call a render
-method or anything else, to create the regions.
+Любые определенные регионы внутри `LayoutView` будут доступны представлению ( или внутреннему коду представления)
+немедленно после инстанцирования. Это позволяет добавлять вложенные `View` в существующий DOM страницы, без необходимости вызова
+`render` метода (или чего то другого) этих регионов.
 
-However, a region will only be able to populate itself if the
-View has access to the elements specified within the region
-definitions. That is, if your view has not yet rendered, your
-regions may not be able to find the element that you've
-specified for them to manage. In that scenario, using the
-region will result in no changes to the DOM.
+Однако, регионы будут доступны только если добавляемый `View` имеет доступ к элементу описанному внутри  определения региона.
+Поэтому, если ваше `LayoutView` представление еще не отрендерено, ваши регионы еще не могут найти "свои" корневые элементы, что вы 
+передали в определении. В этом случае, никаких изменений в DOM не произойдет.
 
 ## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг макета
 
@@ -260,53 +249,43 @@ region will result in no changes to the DOM.
 
 ### <a name="avoid-re-rendering-the-entire-layoutview"></a> Избегайте повторного рендеринга всего макета
 
-There are times when re-rendering the entire layoutView is necessary. However,
-due to the behavior described above, this can cause a large amount of
-work to be needed in order to fully restore the layoutView and all of the
-views that the layoutView is displaying.
+Временами, требуется полная перерисовка `layoutView`. Однако, такое поведение может привести в к большому количеству
+работы необходимой для полного "пересчета" `layoutView` и всех его вложенных представлений.
 
-Therefore, it is suggested that you avoid re-rendering the entire
-layoutView unless absolutely necessary. Instead, if you are binding the
-layoutView's template to a model and need to update portions of the layoutView,
-you should listen to the model's "change" events and only update the
-necessary DOM elements.
+По это причине, предполагается, что вы не станете перерендеривать всю `layoutView` (пока это не станет действительно необходимо).
+Вместо этого, если привязали шаблон к модели и вам необходимо обновить часть `layoutView`, вам стоит прослушивать событие
+`change` модели и обнавлять только требуемые элементы DOM. 
 
 ## <a name="nested-layoutviews-and-views"></a> Вложенные LayoutViews и Views
 
-Since the `LayoutView` extends directly from `ItemView`, it
-has all of the core functionality of an item view. This includes
-the methods necessary to be shown within an existing region manager.
+Так как `LayoutView` расширяет `ItemView` напрямую, он имеет всю базовую функциональность `ItemView`, включая 
+методы, требуемые для показа внутри существующего `regionManager`-а
 
-In the following example, we will use the Application's Regions
-as the base of a deeply nested view structure.
+В следующем примере, мы будем использовать  Application's Regions в которую вложим наше представление.
 
 ```js
-// Create an Application
+//  создаем Application
 var myApp = new Marionette.Application();
 
-// Add a region
+// добавляем регион
 myApp.addRegions({
   mainRegion: "#main"
 });
 
-// Create a new LayoutView
+// создаем новый LayoutView
 var layoutView = new Marionette.LayoutView({
-  // This option removes the layoutView from
-  // the DOM before destroying the children
-  // preventing repaints as each option is removed.
-  // However, it makes it difficult to do close animations
-  // for a child view (false by default)
+  // эта опция удаляет layoutView из DOM перед удалением вложенных представлений,
+  // предотвращая перерисовку при удалении детей.
+  // Однако, это ослажняет анимацию детей при закрытии.
   destroyImmediate: true
 });
 
-// Lastly, show the LayoutView in the App's mainRegion
+// показываем `LayoutView` в регионе класса App (App's mainRegion)
 MyApp.getRegion('main').show(layoutView);
 ```
+Вы можете вложить `LayoutViews` так глубоко, как хотите. Что поможет вам получить хорошо организованную структуру приложения. 
 
-You can nest LayoutViews as deeply as you want. This provides for a well organized,
-nested view structure.
-
-For example, to nest 3 layouts:
+Для примера, вложение 3-ех представлений.
 
 ```js
 var layout1 = new Layout1();
@@ -319,11 +298,11 @@ layout1.showChildView('region1', layout2);
 layout2.showChildView('region2', layout3);
 ```
 
-### Efficient Nested View Structures
+### Эффективные вложенные структуры.
 
-The above example works great, but it causes three separate paints: one for each layout that's being
-shown. Marionette provides a simple mechanism to infinitely nest views in a single paint: just render all
-of the children in the `onBeforeShow` callback.
+Пример, показаный выше, работает замечательно, но приводит к 3 процессам перерисоки, по одному на каждый макет. 
+Marionette предоставляет простой механизм единовремнной отрисовки всех вложенных представлений: просто рендерите все
+вложенные представления  в кэллбекек `onBeforeShow`. 
 
 ```js
 var ParentLayout = Marionette.LayoutView.extend({
@@ -336,46 +315,37 @@ var ParentLayout = Marionette.LayoutView.extend({
 myRegion.show(new ParentLayout());
 ```
 
-In this example, the doubly-nested view structure will be rendered in a single paint.
+В этом примере, два вложенных представления отрисуются за один проход.
 
-This system is recursive, so it works for any deeply nested structure. The child views
-you show can render their *own* child views within their `onBeforeShow` callbacks!
+Эта система рекурсивна, поэтому работает с любым уровнем вложенности. Вложенные представления, могут  рендерить своих
+вложенных детей на своем `onBeforeShow` кэлбеке.
 
-#### Use of the `attach` event
+#### Использование `attach` события
 
-Often times you need to know when your views in the view tree have been attached to the `document`,
-like when using certain jQuery plugins. The `attach` event, and associated `onAttach` callback, are perfect for this
-use case. Start with a Region that's a child of the `document` and show any LayoutView in it: every view in the tree
-(including the parent LayoutView) will have the `attach` event triggered on it when they have been
-attached to the `document`.
+Часто вам нужно знать когда ваши представления (в "дереве представлений") присоединятся к документу (`document`),
+примерно, как некоторые jQuery плагины. Событие `attach` и связанный с ним кэлбек `onAttach` отлично подходят для этого
+юзкейса. Каждое представление в дереве представлений ( включая и родиткльский `LayoutView`) сгенерирует событие `attach`
+когда они присоединяться в `document`.
 
-Note that inefficient tree rendering will cause the `attach` event to be fired multiple times. This
-situation can occur if you render the children views *after* the parent has been rendered, such as using
-`onShow` to render children. As a rule of thumb, most of the time you'll want to render any nested views in
-the `onBeforeShow` callback.
+Заметьте, неэффективный рендеринг "дерева" приведет к тому, что `attach` событие сгенерируется много раз. Это происходит
+если вы рендерите вложенные представления после того, как отрендерится родитель, например, используя `onShow` для рендеринга детей.
+Правильнее будет рендерить любые вложенные представления в кэллбеке `onBeforeShow`.
 
 ## <a name="destroying-a-layoutview"></a> Удаление LayoutView
 
-When you are finished with a layoutView, you can call the
-`destroy` method on it. This will ensure that all of the region managers
-within the layoutView are destroyed correctly, which in turn
-ensures all of the views shown within the regions are destroyed correctly.
+Когда вы завершите с `layoutView`, вы можете вызвать метод `destroy`. Это гарантирует, что все представления
+вложенных регионов удалятся корректно.
 
-If you are showing a layoutView within a parent region manager, replacing
-the layoutView with another view or another layoutView will destroy the current
-one, the same it will destroy a view.
+Если вы показываете `layoutView` внутри родительского region manager, замещение текущего `layoutView` другим, удалит
+текущий.
 
-All of this ensures that layoutViews and the views that they
-contain are cleaned up correctly.
+Все это гарантирует, что `LayoutView` и вложенные в него представления очистятся корректно.
 
-When calling `destroy` on a layoutView, the layoutView will be returned. This can be useful for
-chaining.
+Вызов `destroy` на `LayoutView` вернет  `layoutView`, что может быть удобно для вызовов по цепочке.
 
 ## <a name="custom-region-class"></a> Собственный класс региона
 
-If you have the need to replace the `Region` with a region class of
-your own implementation, you can specify an alternate class to use
-with the `regionClass` property of the `LayoutView`.
+Если  требуется заменить `Region`  своим `Region` классом, можно определить альтернативный класс в свойстве  `regionClass`
 
 ```js
 var MyLayoutView = Marionette.LayoutView.extend({
@@ -458,20 +428,17 @@ layoutView.removeRegion("foo");
 
 ## <a name="region-naming"></a> Именование регионов
 
-A LayoutViews' Regions are attached directly to the LayoutView instance with the name of the region
-as the key and the region itself as the value. Because of this, you need to be careful
-to avoid conflicts with existing properties on the LayoutView when you name your Region.
+Вложенные регионы прикрепленны напрямую к `LayoutView` инстансу с именем региона как ключом и ссылкой на регион в значении.
+Из за этого, нужно быть аккуратным с именованием своих регионов, для предотвращения конфликтов.
 
 Цепочка прототипов для `LayoutViews` выглядит следующим образом:
 
 `Backbone.View > Marionette.View > Marionette.ItemView > Marionette.LayoutView`
 
-Consequently, every property on each of those Classes must be avoided as Region names. The most
-common issue people run into is trying to name their Region *"attributes"*. Be aware
-that you are **not** able to do this.
+Соответсвенно, любое свойство каждого из этих классов не может быть использованно в качестве имени региона.
 
-The following is an abbreviated list of other names that can't be used as Region names. For a more
-complete list refer to the API documentation for each Class on the prototype chain:
+Следующий список аббриевиатур не может быть использован для именования регионов. Для более полного списка воспользуйтесь
+документацией API для каждого класса в цепочке прототипов.
 
 * attributes
 * constructor
