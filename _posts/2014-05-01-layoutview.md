@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Marionette.LayoutView
-translated: false
-proofread: false
+translated: true
+proofread: true
 ---
 
 {% include translation/ru/marionette.layoutview.md %}
