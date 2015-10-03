@@ -145,9 +145,9 @@ var MyLayoutView = Marionette.LayoutView.extend({
 
 В `childEvents` также можно указывать кастомные события для представлений-потомков.
 
-Take note that the first argument to a `childEvents` handler is the child view itself.  
-Caution: Events triggered on the child view through `this.trigger` are not yet supported for LayoutView `childEvents`.  
-Use strictly `triggerMethod` within the child view.
+Обратите внимание, что первый аргумент обработчика `childEvents` это ссылка на самое представление-потомок.
+**Внимание**: События, которые были запущены на представлении с помощью метода `this.trigger` нельзя обработать
+с помощью `childEvents`. В представлениях-потомках вместо `this.trigger` используйте метод `triggerMethod`.  
 
 ```js
 // The child view fires a custom event, `show:message`
@@ -231,7 +231,7 @@ Marionette.LayoutView.extend({
 
 ## <a name="region-availability"></a> Доступность региона
 
-Любые определенные регионы внутри `LayoutView` будут доступны представлению ( или внутреннему коду представления)
+Любые определенные регионы внутри `LayoutView` будут доступны представлению (или внутреннему коду представления)
 немедленно после инстанцирования. Это позволяет добавлять вложенные `View` в существующий DOM страницы, без необходимости вызова
 `render` метода (или чего то другого) этих регионов.
 
