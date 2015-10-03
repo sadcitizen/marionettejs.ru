@@ -29,8 +29,8 @@
 * [Повторный рендеринг макета](#re-rendering-a-layoutview)
   * [Избегайте повторного рендеринга всего макета](#avoid-re-rendering-the-entire-layoutview)
 * [Вложенные макеты и представления](#nested-layoutviews-and-views)
-  * [Efficient Nested View Structures](#efficient-nested-view-structures)
-    * [Use of the `attach` Event](#use-of-the-attach-event)
+  * [Эффективные структуры вложенных представлений](#efficient-nested-view-structures)
+    * [Использование события `attach`](#use-of-the-attach-event)
 * [Удаление макета](#destroying-a-layoutview)
 * [Собственный класс региона](#custom-region-class)
 * [Добавление и удаление регионов](#adding-and-removing-regions)
@@ -146,19 +146,20 @@ var MyLayoutView = Marionette.LayoutView.extend({
 В `childEvents` также можно указывать кастомные события для представлений-потомков.
 
 Обратите внимание, что первый аргумент обработчика `childEvents` это ссылка на самое представление-потомок.
-**Внимание**: События, которые были запущены на представлении с помощью метода `this.trigger` нельзя обработать
-с помощью `childEvents`. В представлениях-потомках вместо `this.trigger` используйте метод `triggerMethod`.  
+**Внимание**: События, которые были запущены на представлении с помощью метода `trigger` нельзя обработать
+с помощью `childEvents`. В представлениях-потомках вместо `trigger` используйте метод `triggerMethod`.  
 
 ```js
-// The child view fires a custom event, `show:message`
+// Представление запускает собственное событие `show:message`
 var ChildView = Marionette.ItemView.extend({
 
-  // Events hash defines local event handlers that in turn may call `triggerMethod`.
+  // Хэш событий определяет локальные обработчики событий, которые могут вызывать `triggerMethod`.
   events: {
     'click .button': 'onClickButton'
   },
 
-  // Triggers hash converts DOM events directly to view events catchable on the parent.
+  // Хэш триггеров конвертирует события DOM в события представления-потомка, которые могут быть обработаны
+  // в представлении-родителе.
   triggers: {
     'submit form': 'submit:form'
   },
@@ -168,7 +169,7 @@ var ChildView = Marionette.ItemView.extend({
   }
 });
 
-// The parent uses childEvents to catch that custom event on the child view
+// Представление-родитель использует childEvents для ловли собственного события представления-потомка
 var ParentView = Marionette.LayoutView.extend({
 
   childEvents: {
@@ -235,8 +236,10 @@ Marionette.LayoutView.extend({
 немедленно после инстанцирования. Это позволяет добавлять вложенные `View` в существующий DOM страницы, без необходимости вызова
 `render` метода (или чего то другого) этих регионов.
 
-Однако, регионы будут доступны только если добавляемый `View` имеет доступ к элементу описанному внутри  определения региона.
-Поэтому, если ваше `LayoutView` представление еще не отрендерено, ваши регионы еще не могут найти "свои" корневые элементы, что вы
+Однако, регионы будут доступны только если добавляемый `View` имеет доступ к элементу
+описанному внутри  определения региона.
+Поэтому, если ваше `LayoutView` представление еще не отрендерено, ваши регионы
+еще не могут найти "свои" корневые элементы, что вы
 передали в определении. В этом случае, никаких изменений в DOM не произойдет.
 
 ## <a name="re-rendering-a-layoutview"></a> Повторный рендеринг макета
@@ -309,7 +312,7 @@ layout1.showChildView('region1', layout2);
 layout2.showChildView('region2', layout3);
 ```
 
-### Эффективные вложенные структуры.
+### <a name="efficient-nested-view-structures"></a> Эффективные структуры вложенных представлений
 
 Пример, показаный выше, работает замечательно, но приводит к 3 процессам перерисоки, по одному на каждый макет.
 Marionette предоставляет простой механизм единовремнной отрисовки всех вложенных представлений: просто рендерите все
@@ -331,7 +334,7 @@ myRegion.show(new ParentLayout());
 Эта система рекурсивна, поэтому работает с любым уровнем вложенности. Вложенные представления, могут  рендерить своих
 вложенных детей на своем `onBeforeShow` кэлбеке.
 
-#### Использование `attach` события
+#### <a name="use-of-the-attach-event"></a> Использование события `attach`
 
 Часто вам нужно знать когда ваши представления (в "дереве представлений") присоединятся к документу (`document`),
 примерно, как некоторые jQuery плагины. Событие `attach` и связанный с ним кэлбек `onAttach` отлично подходят для этого
@@ -356,7 +359,7 @@ myRegion.show(new ParentLayout());
 
 ## <a name="custom-region-class"></a> Собственный класс региона
 
-Если  требуется заменить `Region`  своим `Region` классом, можно определить альтернативный класс в свойстве  `regionClass`
+Если  требуется заменить `Region` своим `Region` классом, можно определить альтернативный класс в свойстве  `regionClass`.
 
 ```js
 var MyLayoutView = Marionette.LayoutView.extend({
