@@ -1,27 +1,27 @@
 Класс `Application` это контейнер для всего кода вашего приложения. Рекомендуется
 иметь хотя бы один экзепляр класса `Application` на приложение.
 
-By creating an Application you get three important things:
+C cозданием экземпляра класса 'Application' вы получаете три важные вещи:
 
-- A `start` method to kick off your application.
-  This allows you an opportunity to do things that may need to occur before, say, you
-  begin routing. An example would be making an AJAX call to request data that your app
-  needs before starting.
+- Метод `start` для запуска вашего приложения.
+  Это дает вам возможность выполнить некоторые действия прежде, чем вы, скажем, начнете
+  переходить на страницы приложения. Например, можно выполнить AJAX запрос на получение 
+  данных, в которых нуждается ваше приложение, с сервера перед стартом приложения.
 
-- A namespace to keep things off of the `window`.
-  If you are not using a module loader like ES6 modules, CommonJS, or AMD, then
-  you can use the Application to store your Javascript objects. And if you are
-  using one of those module systems, then you can still attach things to the
-  application to aid in debugging.
+- Пространство имен, чтобы сохранять объекты вне глобального объекта `window`.
+  Еслы вы не используете загрузчики модулей, такие, например, как ES6 modules, CommonJS,
+  или AMD, вы можете использовать Application как хранилище Javascript объектов. Если
+  вы используете одну из этих систем, вы также можете сохранять объекты в экземпляр
+  класса Application в целях отладки.
 
-- Integration with the Marionette Inspector. The Marionette Inspector is a fantastic tool
-  that makes it easy to understand and debug your application. Using the Application Class
-  will automatically hook up your application to that extension.
+- Интеграция с Marionette Inspector. Marionette Inspector это фантастическая утилита,
+  которая делает проще понимание и отладку вашего приложения. Использование класса Application
+  автоматически настроит ваше приложение для работы с этим расширением.
 
-Note that the Application is undergoing many changes to become more lightweight. While it
-still includes many more features beyond what has been listed here, such as a Radio Channel and Regions,
-these features are now deprecated. Refer to the relevant sections below to learn what to use
-instead of these deprecated features.
+Заметьте, что класс Application претерпевает много изменений, чтобы стать более легковесным.
+Пока он поддерживает много больше функционала, чем описано выше, такие как Radio Channel и 
+Regions, но они помечены как устаревшие. Используйте актуальнцю секцию ниже для того, чтобы
+понять, что использовать вместо устаревшего функционала.
 
 ## Содержание
 
@@ -47,25 +47,25 @@ instead of these deprecated features.
 
 ### <a name="getting-started"></a> Getting Started
 
-A common pattern in Backbone apps is the following:
+Обычный паттерн для Backbone приложений подразумевает следующий код:
 
 ```js
 var app = {};
 ```
+Два примечательных примера этого паттерна:
+[DocumentCloud's source](https://github.com/documentcloud/documentcloud/blob/master/public/javascripts/application.js#L3) и
+[Backbone Boilerplate](https://github.com/backbone-boilerplate/backbone-boilerplate/blob/master/app/app.js#L1-L6).
+DocumentCloud примечателен, так как это базовый код из которого родился Backbone. 
+Если бы такая вещь как квинтэссенция применение Backbone существовала, то это приложение, конечно, было бы кандидатом.
+Backbone Boilerplate является самой популярной библиотекой для загрузки приложений Backbone. Обратите внимание, что в коде Backbone Boilerplate
+экспортируемый объект является неявным.
 
-Two notable examples of this pattern are
-[DocumentCloud's source](https://github.com/documentcloud/documentcloud/blob/master/public/javascripts/application.js#L3) and
-[Backbone Boilerplate](https://github.com/backbone-boilerplate/backbone-boilerplate/blob/master/app/app.js#L1-L6). DocumentCloud
-is notable because it is the codebase that Backbone was abstracted from. If such a thing as a quintessential Backbone application
-existed, then that app would certainly be a candidate. Backbone Boilerplate is notable as perhaps the most popular library
-for bootstrapping a Backbone application. Do note that in the Backbone Boilerplate code the exported object is implicit.
+Паттерн создания Javascript объекта так популярен, потому что он дает вам место для размещения частей 
+вашего приложения. Например, добавление роутера в этот объект это часто используемая практика.
 
-The pattern of creating a Javascript object is so popular because it provides you with a location to
-put the pieces of your application. For instance, attaching a Router to this object is common practice.
-
-Using a raw Javascript object is great, but Marionette provides a light wrapper for a plain Javascript object, which is the
-Application. One benefit to using the Application is that it comes with a `start` method. This can be used to accomplish
-tasks before the rest of your application begins. Let's take a quick look at an example:
+Использование чистого Javascript объекта удобно, но Marionette дает вм легковесный враппер для пустого объекта - класс Application.
+В качестве плюса использованя Application можно рассматривать то, что в нем определен метод `start`. Он может быть использован для того,
+чтобы выполнять задачи до того, как ваше приложение будет запущено. Бросим быстрый взгляд на пример:
 
 ```js
 // Create our Application
