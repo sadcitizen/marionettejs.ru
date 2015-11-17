@@ -7,12 +7,12 @@ An `ItemView` is a view that represents a single item. That item may be a
 will be treated as a single item.
 
 ItemView extends directly from Marionette.View. Please see
-[the Marionette.View documentation](marionette.view.md)
+[the Marionette.View documentation](./marionette.view.md)
 for more information on available features and functionality.
 
 Additionally, interactions with Marionette.Region
 will provide features such as `onShow` callbacks, etc. Please see
-[the Region documentation](marionette.region.md) for more information.
+[the Region documentation](./marionette.region.md) for more information.
 
 ## Documentation Index
 
@@ -47,7 +47,7 @@ You should provide a `template` attribute on the item view, which
 will be either a jQuery selector:
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   template: "#some-template"
 });
 
@@ -58,7 +58,7 @@ new MyView().render();
 
 ```js
 var my_template_html = '<div><%= args.name %></div>'
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   template : function(serialized_model) {
     var name = serialized_model.name;
     return _.template(my_template_html)({
@@ -165,7 +165,7 @@ Another use case is when you want to attach a `Marionette.ItemView` to a SVG gra
 
 There are several events and callback methods that are called
 for an ItemView. These events and methods are triggered with the
-[Marionette.triggerMethod](./marionette.functions.md) function, which
+[Marionette.triggerMethod](./marionette.functions.md#marionettetriggermethod) function, which
 triggers the event and a corresponding "on{EventName}" method.
 
 ### "before:render" / onBeforeRender event
@@ -173,7 +173,7 @@ triggers the event and a corresponding "on{EventName}" method.
 Triggered before an ItemView is rendered.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onBeforeRender: function(){
     // set up final bits just before rendering the view's `el`
   }
@@ -187,7 +187,7 @@ You can implement this in your view to provide custom code for dealing
 with the view's `el` after it has been rendered.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onRender: function(){
     // manipulate the `el` here. it's already
     // been rendered, and is full of the view's
@@ -202,7 +202,7 @@ Triggered just prior to destroying the view, when the view's `destroy()`
 method has been called.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onBeforeDestroy: function(){
     // manipulate the `el` here. it's already
     // been rendered, and is full of the view's
@@ -216,7 +216,7 @@ Backbone.Marionette.ItemView.extend({
 Triggered just after the view has been destroyed.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onDestroy: function(){
     // custom destroying and cleanup goes here
   }
@@ -277,7 +277,7 @@ If you need custom serialization for your data, you can provide a
 object, as if you had called `.toJSON` on a model or collection.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   serializeData: function(){
     return {
       "some attribute": "some value"
@@ -288,7 +288,7 @@ Backbone.Marionette.ItemView.extend({
 
 ## Organizing UI Elements
 
-As documented in [Marionette.View](./marionette.view.md), you can specify a `ui` hash in your `view` that
+As documented in [Marionette.View](./marionette.view.md#viewbindentityevents), you can specify a `ui` hash in your `view` that
 maps UI elements by their jQuery selectors. This is especially useful if you access the
 same UI element more than once in your view's code. Instead of
 duplicating the selector, you can simply reference it by
@@ -297,7 +297,7 @@ duplicating the selector, you can simply reference it by
 You can also use the ui hash values from within events and trigger keys using the ```"@ui.elementName"```: syntax
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   tagName: "tr",
 
   ui: {
@@ -329,4 +329,4 @@ Marionette.ItemView.extend({
 });
 ```
 
-For more information, see the [Marionette.View](./marionette.view.md) documentation.
+For more information, see the [Marionette.View](./marionette.view.md#viewmodelevents-and-viewcollectionevents) documentation.

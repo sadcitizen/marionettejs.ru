@@ -1,19 +1,20 @@
-Это базовый класс, который может быть унаследован другими классами. `Object` включает 
+Это базовый класс, который может быть унаследован другими классами. `Object` включает
 в себя набор конвенций и утилит из Backbone, например, `initialize` и `Backbone.Events`.
 
 ## Содержание
 
 * [Метод `initialize`](#initialize)
 * [События](#events)
-* [Уничтожение объекта](#destroying-a-object)
+* [Метод `mergeOptions`](#mergeoptions)
 * [Метод `getOption`](#getoption)
-* [bindEntityEvents](#bindentityevents)
+* [Метод `bindEntityEvents`](#bindentityevents)
+* [Удаление объекта](#destroying-a-object)
 * [Пример использования](#basic-use)
 
 
-### Метод `initialize`
+### <a name="initialize"></a> Метод `initialize`
 
-Метод `initialize` вызывается сразу после того, как был создан экземпляр класса `Object`. 
+Метод `initialize` вызывается сразу после того, как был создан экземпляр класса `Object`.
 Вызов метода происходит с аргументами, которые были переданы в конструктор.
 
 ```js
@@ -26,11 +27,11 @@ var Friend = Marionette.Object.extend({
 new Friend({name: 'John'});
 ```
 
-### События
+### <a name="events"></a> События
 
-`Marionette.Object` наследует `Backbone.Events` и включает в себя метод `triggerMethod`.
-Это упрощает объектам запуск событий, на которые могут быть подписаны другие объекты 
-с помощью `on` или `listenTo`.
+Класс `Marionette.Object` наследует `Backbone.Events` и включает в себя метод `triggerMethod`.
+Это упрощает объектам запуск событий, на которые могут быть подписаны другие объекты
+с помощью методов `on` или `listenTo`.
 
 ```js
 var Friend = Marionette.Object.extend({
@@ -48,28 +49,49 @@ john.on('announce', function(message) {
 john.graduate();
 ```
 
-### Метод `getOption`
+## <a name="mergeoptions"></a> mergeOptions
 
-Метод позволяет получить значение свойства объекта. Это свойство может принадлежать как самому объекту непосредственно, так и 
-быть вложенным в свойстве `this.options` объекта. Если запрашиваемое свойство сущестует и в объекте и в `this.options`, то метод вернет значение из `this.options`.
-Для более полной информации ознакомьтесь с [getOption](../functions/).
+Метод копирует ключи из объекта `options` непосредственно в сам экземпляр класса `Object`. Это наиболее предпочтительный способ доступа к параметрам, переданным в `Object`.
 
-### bindEntityEvents
+```js
+var MyView = ItemView.extend({
+  myViewOptions: ['color', 'size', 'country'],
+
+  initialize: function(options) {
+    this.mergeOptions(options, this.myViewOptions);
+  },
+
+  onRender: function() {
+    // Соединяемые опции будут добавлены напрямую в объект
+    this.$el.addClass(this.color);
+  }
+});
+```
+Подробнее [mergeOptions](../functions/#marionettemergeoptions)
+
+### <a name="getoption"></a> Метод `getOption`
+
+Вызов метода `destroy` запустит событие `before:destroy` и вызовет соответствующий метод `onBeforeDestroy`.
+В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`. 
+Вызов метода `destroy` вернет ссылку на сам объект, это может быть полезно для построения цепочки вызовов (чейнинга).
+
+### <a name="bindentityevents"></a> bindEntityEvents
 
 Помогает привязать одну из сущностей Backbone к методам целевого объекта. Для более полной информации ознакомьтесь с [bindEntityEvents](../functions/).
 
-### Уничтожение объекта
+### <a name="destroying-a-object"></a> Удаление объекта
 
 У объектов есть метод `destroy`, который отвязывает все события, которые были привязаны непосредственно к экземпляру объекта.
 
-Вызов метода `destroy` запустит событие "before:destroy" и вызовет соответствующий метод `onBeforeDestroy`. 
+Вызов метода `destroy` запустит событие "before:destroy" и вызовет соответствующий метод `onBeforeDestroy`.
 В эти вызовы будут переданы аргументы, с которыми был вызван метод `destroy`.
+Вызов `destroy` вернет текущий объект, что может быть удобно для цепочки вызовов.
 
 ```js
 // Объявляем объект с методом onDestroy
 var MyObject = Marionette.Object.extend({
   onBeforeDestroy: function(arg1, arg2) {
-    // Сюда можно поместить собственный 
+    // Сюда можно поместить собственный
     // код, который уничтожит этот объект
   }
 });
@@ -86,10 +108,10 @@ obj.listenTo(something, "bar", function(){...});
 obj.destroy(arg1, arg2);
 ```
 
-### Пример использования
+### <a name="basic-use"></a> Пример использования
 
 `Selections` - это простой объект, предназначенный для управления выбором вещей.
-Так как этот объект наследует `Object`, то он обладает методом `initialize` и умеет 
+Так как этот объект наследует `Object`, то он обладает методом `initialize` и умеет
 работать с событиями `Events`.
 
 ```js

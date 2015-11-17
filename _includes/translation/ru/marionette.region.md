@@ -18,15 +18,17 @@
     * [Установка `currentView` при инициализации](#set-currentview-on-initialization)
     * [Вызов `attachView` в регионе](#call-attachview-on-region)
 * [События и коллбэки региона](#region-events-and-callbacks)
-  * [События, которые вызываются в течение `отображения`](#events-raised-during-show)
+  * [События на регионе при выполнении метода `show`](#events-raised-on-the-region-during-show)
+  * [События на представлении при выполнении метода `show`](#events-raised-on-the-view-during-show)
+  * [Пример обработчиков событий](#example-event-handlers)
 * [Собственные классы регионов](#custom-region-classes)
   * [Добавление собственных классов регионов](#attaching-custom-region-classes)
   * [Создание экземпляра вашего собственного региона](#instantiate-your-own-region)
 
 ## <a name="defining-an-application-region"></a> Определение регионов приложения
 
-Вы можете добавить регионы в ваших приложениях, вызвав метод `addRegions` 
-у экземпляра вашего приложения. Этот метод ожидает один параметр в виде хэша. 
+Вы можете добавить регионы в ваших приложениях, вызвав метод `addRegions`
+у экземпляра вашего приложения. Этот метод ожидает один параметр в виде хэша.
 В хэше заданы имена регионов и либо jQuery-селектор, либо объект `Region`.
 Вы можете вызвать этот метод столько раз, сколько вам нужно, и он будет продолжать
 добавлять регионы в приложение.
@@ -46,7 +48,7 @@ myApp.addRegions({
 Вы можете также добавить регионы через `LayoutView`:
 
 ```js
-var AppLayoutView = Backbone.Marionette.LayoutView.extend({
+var AppLayoutView = Marionette.LayoutView.extend({
   template: "#layout-view-template",
 
   regions: {
@@ -62,7 +64,7 @@ layoutView.content.show(new MainContentView());
 
 ### <a name="region-configuration-types"></a> Типы конфигурирования регионов
 
-Marionette поддреживает несколько способов определения регионов в вашем `Application` или `LayoutView`.
+Marionette поддерживает несколько способов определения регионов в вашем `Application` или `LayoutView`.
 
 #### Селектор в виде строки
 
@@ -81,7 +83,7 @@ myApp.addRegions({
 **Внимание:** Убедитесь, что класс региона имеет свойство `el`, в противном случае регион создать не получится.
 
 ```js
-var MyRegion = Backbone.Marionette.Region.extend({
+var MyRegion = Marionette.Region.extend({
   el: '#main-nav'
 });
 
@@ -92,24 +94,22 @@ myApp.addRegions({
 
 #### Литерал объекта
 
-Наконец, вы можете определить регионы в виде литерала объекта. 
-Определения в виде литерала объекта обычно содержит определенное `selector` или `el` свойство. 
-Свойство `selector` это селектор в виде строки, а свойство `el` может быть 
+Наконец, вы можете определить регионы в виде литерала объекта.
+Определения в виде литерала объекта обычно содержит определенное `selector` или `el` свойство.
+Свойство `selector` это селектор в виде строки, а свойство `el` может быть
 как селектором в виде строки, так и Query-объектом или HTML-узлом.
 
 Вы можете также задать свойство `regionClass` для собственного класса региона.
 Если ваш `regionClass` уже имеет установленное свойство `el`, то вам не нужно
 определять `selector` или `el` свойство в литерал объекте.
 
-Любые другие свойства, заданные вами в литерале объекта, будут использоваться в качестве параметров, которые будут переданы в экземпляр региона, включая `allowMissingEl`.
+Любые другие свойства, заданные вами в литерале объекта, будут использоваться в качестве параметров, которые будут
+переданы в экземпляр региона, включая `allowMissingEl`.
 
-Ordinarily regions enforce the presence of a backing DOM element.
-In some instances it may be desirable to allow regions to be
-instantiated and used without an element, such as when regions
-defined by a parent `LayoutView` class are used by only some of its
-subclasses. In these instances, the region can be defined with the
-`allowMissingEl` option, suppressing the missing element error and
-causing `show` calls to the region to be treated as no-ops.
+Обычно, регионы ожидают установку свойства `el` ссылающегося на DOM элемент.
+Но иногда, нужно инстанцировать и использовать регион без этого элемента. Например, регионы определяются внутри 
+родительского представления `LayoutView`. В этом случае, можно передать опцию `allowMissingEl`, подавляющую ошибку
+неустановленного элемента.
 
 ```js
 var MyRegion = Marionette.Region.extend();
@@ -221,7 +221,7 @@ myApp.mainRegion.show(myView);
 myApp.mainRegion.empty();
 ```
 
-#### опция preventDestroy
+#### Опция preventDestroy
 
 Если вы хотите заменить текущее представление на новое представлние, вы можете вызвать метод `show`,
 этот метод, по умолчанию, автоматически уничтожит предыдущее представление. Вы можете предотвратить
@@ -247,11 +247,11 @@ myApp.mainRegion.show(anotherView2, { preventDestroy: true });
 ПРИМЕЧАНИЕ: При использовании `preventDestroy: true` вы должны быть осторожны, необходимо помнить,
 что ваши старые представления должны быть удалены вручную, чтобы предотвратить утечку памяти.
 
-#### опция forceShow
+#### Опция forceShow
 
 Если вы повторно вызовите метод `show` с тем же представлением, то по умолчанию ничего
 не произойдет, потому что представление уже в регионе. Вы можете заставить представление
-переотобразиться (re-shown), для этого нужно передать опцию `{forceShow: true}` в параметрах метода. 
+переотобразиться (re-shown), для этого нужно передать опцию `{forceShow: true}` в параметрах метода.
 
 ```js
 var myView = new MyView();
@@ -261,28 +261,32 @@ myApp.mainRegion.show(myView);
 myApp.mainRegion.show(myView, {forceShow: true});
 ```
 
+#### Очистка региона
+
+Вы можете очистить регион вызвав метод `.empty()`.  Если желаете защитить текущее  содержимое регионаот "разрушения", можете
+передать `{preventDestroy: true}` в `.empty()` метод. `Empty()` вернет инстанс региона, при своем вызове.
+
 #### onBeforeAttach & onAttach
 
-Regions that are attached to the document when you execute `show` are special in that the
-views that they show will also become attached to the document. These regions fire a pair of triggerMethods on *all*
-of the views that are about to be attached – even the nested ones. This can cause a performance issue if you're
-rendering hundreds or thousands of views at once.
+Регионы, присоединяемы к документу вызовом `show` отличаются тем, что показываемые ими представления также добавляются в документ.
+Такие регионы триггерят пару методов на всех своих вложенных представлениях, даже если вложенное представление всего одно.
+Это может привести к проблемам в производительности, если вы рендерите несколько сотен представлений за раз.
 
-If you think these events might be causing some lag in your app, you can selectively turn them off
-with the `triggerBeforeAttach` and `triggerAttach` properties.
+Если считаете, что эти события могут быть причиной некоторого лага в вашем приложении, вы можете избирательно отключить их 
+устанавливая `triggerBeforeAttach` и `triggerAttach` свойства.
 
 ```js
 // No longer trigger attach
 myRegion.triggerAttach = false;
 ```
 
-You can override this on a per-show basis by passing it in as an option to show.
+Можно передавать эту опцию, как опцию метода `.show()`
 
 ```js
-// This region won't trigger beforeAttach...
+// Этот регион не триггерит beforeAttach
 myRegion.triggerBeforeAttach = false;
 
-// Unless we tell it to
+// Пока мы не скажем ему это сделать
 myRegion.show(myView, {triggerBeforeAttach: true});
 ```
 
@@ -302,7 +306,7 @@ myRegion.show(myView, {triggerBeforeAttach: true});
 myRegion.reset();
 ```
 
-Это полезно, когда регионы используются повторно для экземпляров представления, 
+Это полезно, когда регионы используются повторно для экземпляров представления,
 а также в модульном тестировании.
 
 ### <a name="set-how-views-el-is-attached"></a> Настройка способа добавления `el` представления в DOM
@@ -319,7 +323,7 @@ Marionette.Region.prototype.attachHtml = function(view) {
 ```
 
 Происходит замещение содержимого региона значением/содержимым `el` представления.
-Вы можете переопределить метод `attachHtml` для создания своего эффекта перехода 
+Вы можете переопределить метод `attachHtml` для создания своего эффекта перехода
 или чего-то еще.  
 
 ```js
@@ -358,7 +362,8 @@ myApp.addRegions({
 
 Есть несколько сценариев, как желательно добавлять существующее представление в регион,
 без отрисовки или отображения представления и без замещения HTML-содержимого региона.
-Например, для SEO и [универсального доступа](http://www.w3.org/WAI/intro/accessibility.php) часто нужен HTML, который должен сгенерироваться на сервере, а также для [прогрессивного улучшения](http://en.wikipedia.org/wiki/Progressive_enhancement) HTML.
+Например, для SEO и [универсального доступа](http://www.w3.org/WAI/intro/accessibility.php) часто нужен HTML,
+ который должен сгенерироваться на сервере, а также для [прогрессивного улучшения](http://en.wikipedia.org/wiki/Progressive_enhancement) HTML.
 
 Есть два способа сделать это:
 
@@ -372,7 +377,7 @@ var myView = new MyView({
   el: $("#existing-view-stuff")
 });
 
-var myRegion = new Backbone.Marionette.Region({
+var myRegion = new Marionette.Region({
   el: "#content",
   currentView: myView
 });
@@ -394,23 +399,39 @@ myApp.someRegion.attachView(myView);
 
 ## <a name="region-events-and-callbacks"></a> События и коллбэки региона
 
-### <a name="events-raised-during-show"></a> События, которые вызываются в течение `отображения`:
+При отображении и уничтожении представлений регион будет запускать несколько событий на самом себе и на представлении, с которым он работает.
 
-Регион будет вызывать некоторые события при отображении и
-уничтожении представления:
+### <a name="events-raised-on-the-region-during-show"></a> События на регионе при выполнении метода `show`
 
-* "before:show" / `onBeforeShow` - Вызывается у экземпляра представления после того, как представление было отрисовано (rendered), но до его отображения (показа).
-* "before:show" / `onBeforeShow` - Вызывается у экземпляра региона после того, как представление было отрисовано, но до его отображения.
-* "show" / `onShow` - Вызывается у экземпляра представления, когда представление было отрисовано и отображено.
-* "show" / `onShow` - Вызывается у экземпляра региона, когда представление было отрисовано и отображено.
-* "before:swap" / `onBeforeSwap` - Вызывается у экземпляра региона до того, как новое представление будет отображено. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось (swapped), но не когда регион пустой.
-* "before:swapOut" / `onBeforeSwapOut` - Вызывается у экземпляра региона до того, как новое представление начинает сменяться. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
-* "swap" / `onSwap` - Вызывается у экземпляра региона тогда, когда новое представление `отображено`. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
-* "swapOut" / `onSwapOut` - Вызывается у экземпляра региона тогда, когда новое представление сменилось и собирается быть выполнено замещение отображаемого представления новым представлением. ЗАМЕЧАНИЕ: это событие будет вызвано только тогда, когда представление сменилось, но не когда регион пустой.
-* "before:empty" / `onBeforeEmpty` - Вызывается у экземпляра региона до того, как представление будет очищено/уничтожено.
-* "empty" / `onEmpty` - Вызывается тогда, когда представление было очищено/уничтожено.
+* `before:show` / `onBeforeShow` - Вызывается после того, как представление было отрендерено, но еще не отображено.
+* `show` / `onShow` - Вызывается после того, как представление отрендерено и отображено.
+* `before:swap` / `onBeforeSwap` - Called before a new view is shown. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `swap` / `onSwap` - Called when a new view is shown. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `before:swapOut` / `onBeforeSwapOut` - Called before a new view swapped in. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `swapOut` / `onSwapOut` - Called when a new view swapped in to replace the currently shown view. NOTE: this will only be called when a view is being swapped, not when the region is empty.
+* `before:empty` / `onBeforeEmpty` - Вызывается перед тем, как представление будет очищено.
+* `empty` / `onEmpty` - Вызывается после того, как представление очищено.
 
-Эти события могут быть использованы для запуска кода, когда ваш регион открывает и/или уничтожает представления.
+### <a name="events-raised-on-the-view-during-show"></a> События на представлении при выполнении метода `show`
+
+* `before:render` / `onBeforeRender` - Вызывается перед тем, как представление будет отрендерено.
+* `render` / `onRender` - Вызывается после того, как представление отрендерено, но перед тем как оно будет добавлено в DOM.
+* `before:show` / `onBeforeShow` - Called after the view has been rendered, but before it has been bound to the region.
+* `before:attach` / `onBeforeAttach` - Called before the view is attached to the DOM.  This will not fire if the Region itself is not attached.
+* `attach` / `onAttach` - Called after the view is attached to the DOM.  This will not fire if the Region itself is not attached.
+* `show` / `onShow` - Called when the view has been rendered and bound to the region.
+* `dom:refresh` / `onDomRefresh` - Called when the view is both rendered and shown, but only if it is attached to the DOM.  This will not fire if the Region itself is not attached.
+* `before:destroy` / `onBeforeDestroy` - Вызывается перед уничтожением представления.
+* `destroy` / `onDestroy` - Вызывается после уничтожения представления.
+
+Note: `render`, `destroy`, and `dom:refresh` are triggered on pure Backbone Views during a show, but for a complete implementation of these events the Backbone View should fire `render` within `render()` and `destroy` within `remove()` as well as set the following flags:
+
+```js
+view.supportsRenderLifecycle = true;
+view.supportsDestroyLifecycle = true;
+```
+
+### <a name="example-event-handlers"></a> Пример обработчиков событий
 
 ```js
 myApp.mainRegion.on("before:show", function(view, region, options){
@@ -476,7 +497,7 @@ var MyView = Marionette.ItemView.extend({
   }
 });
 
-var MyRegion = Backbone.Marionette.Region.extend({
+var MyRegion = Marionette.Region.extend({
   // ...
 
   onBeforeSwap: function(view, region, options) {
@@ -500,14 +521,14 @@ var MyRegion = Backbone.Marionette.Region.extend({
 ## <a name="custom-region-classes"></a> Собственные классы регионов
 
 Вы можете определить свой собственный регион, наследуясь от класса `Region`.
-Это позволяет вам создавать новую функциональность и обеспечивает базовый 
+Это позволяет вам создавать новую функциональность и обеспечивает базовый
 набор функциональных возможностей для вашего приложения.
 
 ### <a name="attaching-custom-region-classes"></a> Добавление собственных классов регионов
 
 После того, как вы определите класс регион, вы можете использовать его для конфигурирования регионов в приложении.
 Для этого, вы должны добавить новый класс регион в качестве значения для регион класса.
-В случае использования `addRegions`, указывается непосредственно сам конструктор класса регион, 
+В случае использования `addRegions`, указывается непосредственно сам конструктор класса регион,
 а не экземпляр класса регион.
 
 ```js
@@ -520,7 +541,7 @@ myApp.addRegions({
 });
 ```
 
-Вы можете также указать селектор для региона, используя литерал объекта для конфигурирования региона. 
+Вы можете также указать селектор для региона, используя литерал объекта для конфигурирования региона.
 
 ```js
 var FooterRegion = Marionette.Region.extend({
@@ -562,5 +583,5 @@ myApp.someRegion.show(someView);
 
 При желании, вы можете добавить функцию `initialize` при определении
 вашего класса региона, как показано в примере выше. Эта функция принимает
-`options`, которые были переданы в конструктор региона, аналогично тому, как это 
+`options`, которые были переданы в конструктор региона, аналогично тому, как это
 происходит у `Backbone.View`.

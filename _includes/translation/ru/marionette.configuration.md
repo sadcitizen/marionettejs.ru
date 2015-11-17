@@ -5,13 +5,12 @@ Marionette.js имеет несколько глобально настраив�
 
 ## <a name="deferred"></a> Marionette.Deferred
 
-> Warning: deprecated
+> Внимание: не рекомендуется к использованию.
 >
-> This feature is deprecated, and is scheduled to be removed in version 3 of Marionette. It is used to configure
-> `Marionette.Callbacks`, which is also deprecated and scheduled to be removed in version 3. Instead of proxying
-> the `Deferred` property on Marionette, use the native `Promise` object directly, and include a polyfill such as
-> https://github.com/jakearchibald/es6-promise if you are supporting older browsers. `$.Deferred` can also be used, but
-> it is not compliant with the ES6 Promise and is not recommended.
+> Свойство `Marionette.Deferred` считается усторевшим и не рекомендуется к использованию. В следующем мажорном релизе `Marionette.Deferred` будет удалено.
+> Это свойство используется для настройки класса `Marionette.Callbacks`, который также будет удален в следующем мажорном релизе.
+> Вместо проксирования свойства `Deferred` лучше использовать натиные промисы или полифилы (например, [es6-promise](https://github.com/jakearchibald/es6-promise))
+> если вы поддерживаете старые браузеры. Также можно использовать объект `$.Deferred`, но он не совместим с ES6 Promise, а потому тоже не рекомендован к использованию.
 
 По умолчанию, в Marionette используется `Backbone.$.Deferred` для создания объектов
 с определенным методом `then` (thenable objects).

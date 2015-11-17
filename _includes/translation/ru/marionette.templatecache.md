@@ -17,7 +17,7 @@
 хранить новый экземпляр. Метод `get` вернет скомпилированный шаблон в виде функции.
 
 ```js
-var template = Marionette.TemplateCache.get("#my-template");
+var template = Marionette.TemplateCache.get("#my-template", {some: options});
 // использование шаблона
 template({param1:'value1', paramN:'valueN'});
 ```
@@ -71,7 +71,7 @@ Marionette.TemplateCache.clear("#my-template", "#this-template");
 способа получения шаблона следует переопределить метод `loadTemplate` объекта `TemplateCache`:
 
 ```js
-Marionette.TemplateCache.prototype.loadTemplate = function(templateId) {
+Marionette.TemplateCache.prototype.loadTemplate = function(templateId, {some: options}) {
   // загрузка шаблона, возврат данных, которые требуются методу compileTemplate
   // Например, ваша собственная функция которая создает шаблон на основании
   // значения параметра templateId
@@ -90,7 +90,7 @@ Marionette.TemplateCache.prototype.loadTemplate = function(templateId) {
 параметров принимает объект с данными шаблона и возвращает HTML-разметку в виде строки.
 
 ```js
-Marionette.TemplateCache.prototype.compileTemplate = function(rawTemplate) {
+Marionette.TemplateCache.prototype.compileTemplate = function(rawTemplate, {some: options}) {
   // использование Handlebars.js для компиляции шаблона
   return Handlebars.compile(rawTemplate);
 }

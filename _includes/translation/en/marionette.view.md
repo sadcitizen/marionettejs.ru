@@ -25,6 +25,7 @@ behaviors that are shared across all views.
 * [View.modelEvents and View.collectionEvents](#viewmodelevents-and-viewcollectionevents)
 * [View.serializeModel](#viewserializemodel)
 * [View.bindUIElements](#viewbinduielements)
+* [View.mergeOptions](#viewmergeoptions)
 * [View.getOption](#viewgetoption)
 * [View.bindEntityEvents](#viewbindentityevents)
 * [View.templateHelpers](#viewtemplatehelpers)
@@ -32,6 +33,7 @@ behaviors that are shared across all views.
   * [Accessing Data Within The Helpers](#accessing-data-within-the-helpers)
   * [Object Or Function As `templateHelpers`](#object-or-function-as-templatehelpers)
 * [Change Which Template Is Rendered For A View](#change-which-template-is-rendered-for-a-view)
+* [UI Interpolation](#ui-interpolation)
 
 ## Binding To View Events
 
@@ -40,7 +42,7 @@ the `listenTo` method to bind model, collection, or other events from Backbone
 and Marionette objects.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   initialize: function(){
     this.listenTo(this.model, "change:foo", this.modelChanged);
     this.listenTo(this.collection, "add", this.modelAdded);
@@ -68,11 +70,11 @@ this.listenTo(this.collection, "add", _.bind(this.reconcileCollection, this.coll
 
 * "show" / `onShow` - Called on the view instance when the view has been rendered and displayed.
 
-This event can be used to react to when a view has been shown via a [region](marionette.region.md).
+This event can be used to react to when a view has been shown via a [region](./marionette.region.md).
 All `views` that inherit from the base `Marionette.View` class have this functionality, notably `ItemView`, `CollectionView`, `CompositeView`, and `LayoutView`.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onShow: function(){
     // react to when a view has been shown
   }
@@ -82,7 +84,7 @@ Backbone.Marionette.ItemView.extend({
 A common use case for the `onShow` method is to use it to add children views.
 
 ```js
-var LayoutView = Backbone.Marionette.LayoutView.extend({
+var LayoutView = Marionette.LayoutView.extend({
    regions: {
      Header: 'header',
      Section: 'section'
@@ -106,15 +108,16 @@ are performed:
 * unbind all DOM events
 * remove `this.el` from the DOM
 * unbind all `listenTo` events
+* returns the view.
 
 By providing an `onDestroy` method in your view definition, you can
 run custom code for your view that is fired after your view has been
-destroyd and cleaned up. The `onDestroy` method will be passed any arguments
+destroyed and cleaned up. The `onDestroy` method will be passed any arguments
 that `destroy` was invoked with. This lets you handle any additional clean
 up code without having to override the `destroy` method.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   onDestroy: function(arg1, arg2){
     // custom cleanup or destroying code, here
   }
@@ -137,8 +140,7 @@ the view in a Region causes it to be attached to the `document`. Like other Mari
 executes a callback method, `onAttach`, if you've specified one. The `"attach"` event is great for jQuery
 plugins or other logic that must be executed *after* the view is attached to the `document`.
 
-Because the `attach` event is only fired when the view is a child of the `document`, it is a requirement
-that the Region you're showing it in be a child of the `document` at the time that you call `show`.
+The `attach` event is only fired when the view becomes a child of the `document`. If the Region you're showing the view in is not a child of the `document` at the time that you call `show` then the `attach` event will not fire until the Region is a child of the `document`.
 
 This event is unique in that it propagates down the view tree. For instance, when a CollectionView's
 `attach` event is fired, all of its children views will have the `attach` event fired as well. In
@@ -162,7 +164,7 @@ This event / callback is useful for
 [jQueryUI](http://jqueryui.com/) or [KendoUI](http://kendoui.com).
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   onDomRefresh: function(){
     // manipulate the `el` here. it's already
     // been rendered, and is full of the view's
@@ -175,12 +177,12 @@ For more information about integration Marionette w/ KendoUI (also applicable to
 widget suites), see [this blog post on KendoUI + Backbone](http://www.kendoui.com/blogs/teamblog/posts/12-11-26/backbone_and_kendo_ui_a_beautiful_combination.aspx).
 
 ## View.events
-Since Views extend from backbone`s view class, you gain the benefits of the [events hash](http://backbonejs.org/#View-delegateEvents).
+Since Views extend from backbone's view class, you gain the benefits of the [events hash](http://backbonejs.org/#View-delegateEvents).
 
 Some preprocessing sugar is added on top to add the ability to cross utilize the ```ui``` hash.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   // ...
 
   ui: {
@@ -196,14 +198,15 @@ var MyView = Backbone.Marionette.ItemView.extend({
 ## View.triggers
 
 Views can define a set of `triggers` as a hash, which will
-convert a DOM event into a `view.triggerMethod` call.
+convert a DOM event into a
+[`view.triggerMethod`](./marionette.functions.md#marionettetriggermethod) call.
 
 The left side of the hash is a standard Backbone.View DOM
 event configuration, while the right side of the hash is the
 view event that you want to trigger from the view.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   // ...
 
   triggers: {
@@ -223,12 +226,16 @@ view.on("something:do:it", function(args){
 view.$(".do-something").trigger("click");
 ```
 
-The result of this is an alert box that says, "I DID IT!"
+The result of this is an alert box that says, "I DID IT!" Triggers can also be
+executed using the 'on{EventName}' attribute.
 
-By default all triggers are stopped with `preventDefault` and `stopPropagation` methods. But you can manually configure the triggers using hash instead of event name. Example below triggers an event and prevents default browser behaviour using `preventDefault` method.
+By default all triggers are stopped with `preventDefault` and
+`stopPropagation` methods. But you can manually configure the triggers using
+hash instead of event name. Example below triggers an event and prevents
+default browser behaviour using `preventDefault` method.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
   triggers: {
     "click .do-something": {
       event: "something:do:it",
@@ -243,7 +250,7 @@ You can also specify the `triggers` as a function that
 returns a hash of trigger configurations
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
   triggers: function(){
     return {
       "click .that-thing": "that:i:sent:you"
@@ -255,7 +262,7 @@ Backbone.Marionette.CompositeView.extend({
 Trigger keys can be configured to cross utilize the ```ui``` hash.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   ui: {
      'monkey': '.guybrush'
   },
@@ -280,7 +287,7 @@ includes the following:
 These properties match the `view`, `model`, and `collection` properties of the view that triggered the event.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   // ...
 
   triggers: {
@@ -310,7 +317,7 @@ the model or collection, and the right side is the name of the
 method on the view.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
 
   modelEvents: {
     "change:name": "nameChanged" // equivalent to view.listenTo(view.model, "change:name", view.nameChanged, view)
@@ -343,7 +350,7 @@ Multiple callback functions can be specified by separating them with a
 space.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
 
   modelEvents: {
     "change:name": "nameChanged thatThing"
@@ -363,7 +370,7 @@ A single function can be declared directly in-line instead of specifying a
 callback via a string method name.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
 
   modelEvents: {
     "change:name": function(){
@@ -382,7 +389,7 @@ A function can be used to declare the event configuration as long as
 that function returns a hash that fits the above configuration options.
 
 ```js
-Backbone.Marionette.CompositeView.extend({
+Marionette.CompositeView.extend({
 
   modelEvents: function(){
     return { "change:name": "someFunc" };
@@ -414,15 +421,33 @@ Since View doesn't implement the render method, then if you directly extend
 from View you will need to invoke this method from your render method.
 In ItemView and CompositeView this is already taken care of.
 
+## View.mergeOptions
+The preferred way to manage your view's options is with `mergeOptions`. It accepts two arguments: the `options` object
+and the keys to merge onto the instance directly.
+
+```js
+var ProfileView = Marionette.ItemView.extend({
+  profileViewOptions: ['user', 'age'],
+
+  initialize: function(options) {
+    this.mergeOptions(options, this.profileViewOptions);
+
+    console.log('The merged options are:', this.user, this.age);
+  }
+});
+```
+
+More information [mergeOptions](./marionette.functions.md#marionettemergeoptions)
+
 ## View.getOption
 Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
 
-More information [getOption](./marionette.functions.md)
+More information [getOption](./marionette.functions.md#marionettegetoption)
 
 ## View.bindEntityEvents
 Helps bind a backbone "entity" to methods on a target object. bindEntityEvents is used to support `modelEvents` and `collectionEvents`.
 
-More information [bindEntityEvents](./marionette.functions.md)
+More information [bindEntityEvents](./marionette.functions.md#marionettebindentityevents)
 
 ## View.templateHelpers
 
@@ -448,7 +473,7 @@ to add data not returned from `serializeData`, such as calculated values.
 ```
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   template: "#my-template",
 
   templateHelpers: function () {
@@ -463,14 +488,14 @@ var MyView = Backbone.Marionette.ItemView.extend({
 });
 
 var model = new Backbone.Model({
-  name: "Backbone.Marionette",
+  name: "Marionette",
   decimal: 1
 });
 var view = new MyView({
   model: model
 });
 
-view.render(); //=> "I 100% think that Backbone.Marionette is the coolest!";
+view.render(); //=> "I 100% think that Marionette is the coolest!";
 ```
 
 The `templateHelpers` can also be provided as a constructor parameter
@@ -514,7 +539,7 @@ function. The function must return an object that can be
 mixed in to the data for the view.
 
 ```js
-Backbone.Marionette.ItemView.extend({
+Marionette.ItemView.extend({
   templateHelpers: function(){
     return {
       foo: function(){ /* ... */ }
@@ -532,7 +557,7 @@ a `getTemplate` function on your views and use this to return the
 template that you need.
 
 ```js
-var MyView = Backbone.Marionette.ItemView.extend({
+var MyView = Marionette.ItemView.extend({
   getTemplate: function(){
     if (this.model.get("foo")){
       return "#some-template";
@@ -544,3 +569,35 @@ var MyView = Backbone.Marionette.ItemView.extend({
 ```
 
 This applies to all view classes.
+
+## UI Interpolation
+
+Marionette UI offers a convenient way to reference jQuery elements.
+UI elements can also be interpolated into event and region selectors.
+
+In this example, the buy button is referenced in a DOM event and the checkout section is referenced in the region selector.
+
+
+```js
+var MyView = Marionette.ItemView.extend({
+
+  ui: {
+    buyButton: '.buy-button',
+    checkoutSection: '.checkout-section'
+  },
+
+  events: {
+    'click @ui.buyButton': 'onClickBuyButton'
+  },
+
+  regions: {
+    checkoutSection: '@ui.checkoutSection'
+  },
+
+  onShow: function() {
+    this.getRegion('checkoutSection').show(new CheckoutSection({
+      model: this.checkoutModel
+    }));
+  }
+});
+```

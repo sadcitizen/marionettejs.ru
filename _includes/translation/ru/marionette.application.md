@@ -1,53 +1,45 @@
-Класс `Application` это контейнер для всего кода вашего приложения. Рекомендуется
-иметь хотя бы один экзепляр класса `Application` на приложение.
+Класс `Application` это контейнер для всего приложения. Рекомендуется
+иметь хотя бы один экзепляр класса `Application` на каждое приложение.
 
-By creating an Application you get three important things:
+Создавая экземпляр класса `Application`, вы получаете три важных инструмента:
 
-- A `start` method to kick off your application.
-  This allows you an opportunity to do things that may need to occur before, say, you
-  begin routing. An example would be making an AJAX call to request data that your app
-  needs before starting.
+- Метод `start`, запускающий ваше приложение.
+  Дает возможность сделать что-либо перед непосредственным запуском приложения. Например, начать роутинг или перед стартом выполнить AJAX-запрос для получения требующихся данных.
 
-- A namespace to keep things off of the `window`.
-  If you are not using a module loader like ES6 modules, CommonJS, or AMD, then
-  you can use the Application to store your Javascript objects. And if you are
-  using one of those module systems, then you can still attach things to the
-  application to aid in debugging.
+- Изоляцию пространства имен от `window`.
+  Если вы не используете модульную систему (модули ES6, CommonJS, или AMD), то можете использовать `Application` как пространсто имен для Javascript-объектов. И даже если используете эти модульные системы, вы все равно можете использовать `Application` как пространсто имен, например, для отладки.
 
-- Integration with the Marionette Inspector. The Marionette Inspector is a fantastic tool
-  that makes it easy to understand and debug your application. Using the Application Class
-  will automatically hook up your application to that extension.
+- Интеграцию с Marionette Inspector.
+  Marionette Inspector - инструмент облегчающий понимание и отладку приложения. Использование класса `Application` автоматически связывает приложение с этим расширением.
 
-Note that the Application is undergoing many changes to become more lightweight. While it
-still includes many more features beyond what has been listed here, such as a Radio Channel and Regions,
-these features are now deprecated. Refer to the relevant sections below to learn what to use
-instead of these deprecated features.
+Обратите внимание, что класс `Application` подвергается частым изменениям с целью сделать его более легковесным. Поэтому этот класс все еще содержит в себе функционал, пречисленный ниже (например, шина сообщений или регионы), который считается устаревшим. Сверяйтесь с соответвующими разделами для уточнения того, что следует использовать вместо устаревшего.
 
 ## Содержание
 
-* [Getting Started](#getting-started)
-* [Метод initialize](#initialize)
-* [Добавление инициализаторов](#adding-initializers)
-* [События иницализации приложения](#application-event)
+* [Начало работы](#getting-started)
+* [Метод `initialize`](#initialize)
+* [События класса `Application`](#application-events)
 * [Запуск приложения](#starting-an-application)
-* [Система обмена сообщениями](#the-application-channel)
-  * [Агрегатор событий](#event-aggregator)
-  * [Запрос/Ответ](#request-response)
-  * [Команды](#commands)
-  * [Доступ к системе обмена сообщениями](#accessing-the-application-channel)
-* [Регионы и объект приложения](#regions-and-the-application-object)
+* [Регионы приложения (устарело)](#application-regions)
   * [jQuery-селектор](#jquery-selector)
-  * [Собственный тип региона](#custom-region-type)
-  * [Собственный тип региона и селектор](#custom-region-type-and-selector)
-  * [Регионы как параметры](#region-options)
-  * [Переопределение стандартного RegionManager-а](#overriding-the-default-regionmanager)
-  * [Получение региона по его имени](#get-region-by-name)
+  * [Собственный класс региона](#custom-region-class)
+  * [Собственный класс региона и селектор](#custom-region-class-and-selector)
+  * [Параметры-регионы](#region-options)
+  * [Переопределения стандартного `RegionManager`](#overriding-the-default-regionmanager)
+  * [Получение ссылки на регион по его имени](#get-region-by-name)
   * [Удаление регионов](#removing-regions)
-* [Application.getOption](#applicationgetoption)
+* [Метод `mergeOptions`](#application-mergeoptions)
+* [Метод `getOption`](#application-getoption)
+* [Добавление инициализаторов (устарело)](#adding-initializers)
+* [Шина сообщений приложения (устарело)](#the-application-channel)
+  * [Агрегатор событий](#event-aggregator)
+  * [Запрос-Ответ](#request-response)
+  * [Команды](#commands)
+  * [Доступ к шине сообщений приложения](#accessing-the-application-channel)
 
-### <a name="getting-started"></a> Getting Started
+### <a name="getting-started"></a> Начало работы
 
-A common pattern in Backbone apps is the following:
+Общий паттерн создания Backbone- приложения:
 
 ```js
 var app = {};
@@ -60,30 +52,32 @@ is notable because it is the codebase that Backbone was abstracted from. If such
 existed, then that app would certainly be a candidate. Backbone Boilerplate is notable as perhaps the most popular library
 for bootstrapping a Backbone application. Do note that in the Backbone Boilerplate code the exported object is implicit.
 
-The pattern of creating a Javascript object is so popular because it provides you with a location to
-put the pieces of your application. For instance, attaching a Router to this object is common practice.
 
-Using a raw Javascript object is great, but Marionette provides a light wrapper for a plain Javascript object, which is the
-Application. One benefit to using the Application is that it comes with a `start` method. This can be used to accomplish
-tasks before the rest of your application begins. Let's take a quick look at an example:
+Паттерн создания Javascript объекта попоулярен тем, что предоставляет вам место, куда можно сложить "кусочки" вашего приложения.
+Например, добавление роутера приложения (Router) к этому объекту- обычная практика.
+
+Использование Javascript объекта- замечательно, но Marionette предоставляет Application, являющийся легковесной оберткой
+для обычного js-объекта. Преимущество использования Application в том, что предоставляется  `start` метод. Это позволит
+выполнить "задания-таски" перед запуском самого приложения. Простой пример:
+
 
 ```js
-// Create our Application
+// создаем наш Application
 var app = new Marionette.Application();
 
-// Start history when our application is ready
+// запускаем  history  когда приложение будет готово
 app.on('start', function() {
   Backbone.history.start();
 });
 
-// Load some initial data, and then start our application
+// загрузка начальных данных, и затем старт приложения
 loadInitialData().then(app.start);
 ```
 
-In the simple example above, we could have just as easily started history after our initial data had loaded. This
-pattern becomes more useful as the startup phase of your application becomes more complex.
+Пример выше показал возможность запуска `Backbone.history` именно после загрузки начальных данных. Этот паттерн особенно
+полезен, когда фаза старта приложения становится все более сложной.
 
-### <a name="initialize"></a> Метод initialize
+### <a name="initialize"></a> Метод `initialize`
 
 Метод `initialize` вызывается сразу же после того, как был создан экземпляр `Application`.
 При этом этот метод будет вызван с теми же аргументами, которые получил конструктор `Application`.
@@ -98,7 +92,7 @@ var MyApp = Marionette.Application.extend({
 var myApp = new MyApp({container: '#app'});
 ```
 
-## События класса `Application`
+## <a name="application-events"></a> События класса `Application`
 
 Объект `Application` вызывает несколько событий в течение своего жизненного цикла,
 для этого используется функция [Marionette.triggerMethod](../functions/).
@@ -126,7 +120,7 @@ myApp.on("start", function(options){
 
 Параметр `options` передается из метода `start` экземпляра объекта `Application` (см. ниже).
 
-## Запуск приложения
+## <a name="starting-an-application"></a> Запуск приложения
 
 После того, как вы сконфигурировали ваше приложение, вы можете запустить его вызвав: `myApp.start(options)`.
 
@@ -145,7 +139,7 @@ var options = {
 myApp.start(options);
 ```
 
-## Регионы и объект приложения
+## <a name="application-regions"></a> Регионы приложения
 
 > Warning: deprecated
 > This feature is deprecated. Instead of using the Application as the root
@@ -173,7 +167,7 @@ myApp.start(options);
 
 Существуют три способа добавления региона в объект приложения.
 
-### jQuery-селектор
+### <a name="jquery-selector"></a> jQuery-селектор
 
 Первый способ - это определение jQuery-селектора как значения для имени региона. В этом случае будет создан экземпляр `Region` и ему будет назначен jQuery-селектор:
 
@@ -184,7 +178,7 @@ myApp.addRegions({
 });
 ```
 
-### Собственный тип региона
+### <a name="custom-region-class"></a> Собственный класс региона
 
 Второй способ - это определение собственного типа региона, которому задан селектор:
 
@@ -200,7 +194,7 @@ myApp.addRegions(function() {
 });
 ```
 
-### Собственный тип региона и селектор
+### <a name="custom-region-class-and-selector"></a> Собственный класс региона и селектор
 
 Третий способ - это определение собственного типа региона и jQuery-селектора для него с помощью литерала объекта:
 
@@ -220,9 +214,9 @@ myApp.addRegions({
 });
 ```
 
-### Регионы как параметры ???
+### <a name="region-options"></a> Параметры-регионы
 
-Вы также можете указать регионы при создании экземпляра объекта `Application`.
+Вы также можете указать регионы при создании экземпляра класса `Application`.
 
 ```js
 new Marionette.Application({
@@ -232,7 +226,7 @@ new Marionette.Application({
 });
 ```
 
-### Переопределение стандартного `RegionManager`-а
+### <a name="overriding-the-default-regionmanager"></a> Переопределение стандартного `RegionManager`
 
 Если вы хотите использовать класс отличный от класса `RegionManager`,
 вы можете указать его в `getRegionManager`:
@@ -250,7 +244,7 @@ Marionette.Application.extend({
 Это может быть полезно, если вы хотите связать регионы из `Application`
 с вашим собственным экземпляром объекта `RegionManager`.
 
-### Получение региона по его имени
+### <a name="get-region-by-name"></a> Получение региона по его имени
 
 Ссылку на регион можно получить по его имени с помощью метода `getRegion`:
 
@@ -258,14 +252,12 @@ Marionette.Application.extend({
 var myApp = new Marionette.Application();
 myApp.addRegions({ r1: "#region1" });
 
-// r1 === r1Again; true
-var r1 = myApp.getRegion("r1");
-var r1Again = myApp.r1;
+var myRegion = app.getRegion('r1');
 ```
 
-Доступ к региону через точечнную нотацию как к свойству объекта приложения эквивалентен доступу через метод `getRegion`.
+Regions are also attached directly to the Application instance, **but this is not recommended usage**.
 
-### Удаление регионов
+### <a name="removing-regions"></a> Удаление регионов
 
 Регионы могут быть удалены с помощью метода `removeRegion`, который принимает в виде строки имя удаляемого региона:
 
@@ -280,6 +272,25 @@ myApp.removeRegion('someRegion');
 API, которое объект `Applications` использует для управления регионами, приходит от класса `RegionManager`,
 [документация доступна здесь](../regionmanager/).
 
+### <a name="application-mergeoptions"></a> Метод `mergeOptions`
+Merge keys from the `options` object directly onto the Application instance.
+
+```js
+var MyApp = Marionette.Application.extend({
+  initialize: function(options) {
+    this.mergeOptions(options, ['myOption']);
+
+    console.log('The option is:', this.myOption);
+  }
+})
+```
+
+More information at [mergeOptions](./marionette.functions.md#marionettemergeoptions)
+
+### <a name="application-getoption"></a> Метод `getOption`
+Retrieve an object's attribute either directly from the object, or from the object's this.options, with this.options taking precedence.
+
+More information [getOption](./marionette.functions.md#marionettegetoption)
 
 ## <a name="adding-initializers"></a> Добавление инициализаторов
 
@@ -328,7 +339,7 @@ myApp.addInitializer(function(options){
 они буду запущены, когда будет вызван метод `start`. Если вы добавили их после запуска
 приложения, они будут запущены немедленно.
 
-## Система обмена сообщениями
+## <a name="the-application-channel"></a> Шина сообщений приложения
 
 > Warning: deprecated
 >
@@ -361,7 +372,7 @@ var myApp = new Marionette.Application({ channelName: 'appChannel' });
 Здесь будет дан только краткий обзор системы обмена сообщениями, более подробное описание вы можете
 прочитать в [документации `Backbone.Wreqr`](https://github.com/marionettejs/backbone.wreqr).
 
-### Агрегатор событий
+### <a name="event-aggregator"></a> Агрегатор событий
 
 Агрегатор событий доступен через свойство `vent`. `vent` удобен для пассивного обмена информацией
 между различными частями вашего приложения, используя генерацию событий.
@@ -382,7 +393,7 @@ window.setInterval(function() {
 }, 1000 * 60);
 ```
 
-### Запрос/Ответ
+### <a name="request-response"></a> Запрос-Ответ
 
 Запрос/Ответ позволяет любому компоненту запросить информацию у другого компонента,
 не имея при этом явной связи между собой. Экземпляр объекта запрос/ответ (`Request Response`)
@@ -403,7 +414,7 @@ var groceryList = myApp.reqres.request("todoList", "groceries");
 var groceryList = myApp.request("todoList", "groceries");
 ```
 
-### Команды
+### <a name="commands"></a> Команды
 
 Команды используются для того, чтобы любой компонент мог сказать другому компоненту
 выполнить действие, при этом не используя явного обращения к этому компоненту.
@@ -428,7 +439,7 @@ myApp.commands.execute("fetchData", true);
 myApp.execute("fetchData", true);
 ```
 
-### Доступ к системе обмена сообщениями
+### <a name="accessing-the-application-channel"></a> Доступ к шине сообщений приложения
 
 Для того, чтобы получить доступ к системе обмена сообщениями из других объектов,
 в пределах вашего приложения, вам предлагается получить эту систему через API `Wreqr`,

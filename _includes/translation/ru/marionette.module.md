@@ -27,7 +27,7 @@ A module is defined directly from an Application object. To create a module all
 you need to do is give it a name.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var MyApp = new Marionette.Application();
 
 // Creates a new module named "MyModule"
 var myModule = MyApp.module("MyModule");
@@ -40,7 +40,7 @@ calls to `module` with the same name argument will not create
 a new module, but instead return the already-created instance.
 
 ```js
-var MyApp = new Backbone.Marionette.Application();
+var MyApp = new Marionette.Application();
 
 // Instantiates a new Marionette.Module
 var myModule = MyApp.module("MyModule");
@@ -64,7 +64,7 @@ It will receive 6 parameters, in this order:
 * The module itself
 * The Application object
 * Backbone
-* Backbone.Marionette
+* Marionette
 * jQuery
 * Underscore
 * Any custom arguments
@@ -226,7 +226,7 @@ var CustomModule = Marionette.Module.extend({
 
 Module classes can be used as an alternative to the define pattern.
 
-The extend function of a Module is identical to the extend functions on other Backbone and Marionette classes. This allows module lifecyle events like `onStart` and `onStop` to be called directly.
+The extend function of a Module is identical to the extend functions on other Backbone and Marionette classes. This allows module lifecycle events like `onStart` and `onStop` to be called directly.
 
 ```
 var FooModule = Marionette.Module.extend({
@@ -298,7 +298,7 @@ In this example, the module will exhibit the default behavior and start automati
 with the parent application object's `start` call:
 
 ```js
-MyApp = new Backbone.Marionette.Application();
+MyApp = new Marionette.Application();
 
 MyApp.module("Foo", function(){
   // module code goes here

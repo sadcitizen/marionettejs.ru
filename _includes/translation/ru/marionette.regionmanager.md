@@ -45,9 +45,10 @@ regions.get('baz').show(myView);
 rm.removeRegion("foo");
 ```
 
-## Constructing
+## Создание экземпляра класса
 
-The RegionMananger take an optional `region` option in their constructor. the regions are passed directly into `addRegions` for the region mananger instance.
+`RegionManager` копирует `region` из опций конструктора в экземпляр класса. Либо, регионы можно передать
+напрямую в экземпляр, используя `addRegions` метод.
 
 ```js
 var mananger = new Marionette.RegionManager({
@@ -56,7 +57,7 @@ var mananger = new Marionette.RegionManager({
   }
 });
 
-mananger.getRegion('aRegion').show(new MyView);
+mananger.get('aRegion').show(new MyView);
 ```
 
 ## RegionManager.addRegion
@@ -235,7 +236,7 @@ rm.emptyRegions();
 ## RegionManager.destroy
 
 Экземпляр объекта `RegionManager` может быть полностью уничтожен вызовом метода `destroy`.
-Этот метод уничтожит экземпляр объекта `RegionManager` и 
+Этот метод уничтожит экземпляр объекта `RegionManager` и
 удалит все регионы из этого экземпляра объекта `RegionManager`.
 
 ```js
@@ -256,7 +257,7 @@ rm.destroy();
 ### Событие before:add:region
 
 `RegionManager` генерирует событие "before:add:region" перед тем,
-как регион будет добавлен в менеджер регионов. Это позволяет вам 
+как регион будет добавлен в менеджер регионов. Это позволяет вам
 добавить выполнение некоторого действия для региона перед его добавлением.
 
 ```js
@@ -308,9 +309,9 @@ rm.removeRegion("foo");
 
 ### Событие remove:region
 
-`RegionManager` генерирует событие "remove:region", когда регион 
+`RegionManager` генерирует событие "remove:region", когда регион
 удален из менеджера регионов. Это событие позволяет вам использовать
-экземпляр региона в последний раз или удалить регион из объекта, 
+экземпляр региона в последний раз или удалить регион из объекта,
 который имеет на него ссылку:
 
 ```js
@@ -344,26 +345,26 @@ rm.each(function(region) {
 
 Доступен следующий спиок underscore-методов:
 
-* forEach
-* each
-* map
-* find
-* detect
-* filter
-* select
-* reject
-* every
-* all
-* some
-* any
-* include
-* contains
-* invoke
-* toArray
-* first
-* initial
-* rest
-* last
-* without
-* isEmpty
-* pluck
+* [forEach](http://underscorejs.org/#each)
+* [each](http://underscorejs.org/#each)
+* [map](http://underscorejs.org/#map)
+* [find](http://underscorejs.org/#find)
+* [detect](http://underscorejs.org/#find)
+* [filter](http://underscorejs.org/#filter)
+* [select](http://underscorejs.org/#filter)
+* [reject](http://underscorejs.org/#reject)
+* [every](http://underscorejs.org/#every)
+* [all](http://underscorejs.org/#every)
+* [some](http://underscorejs.org/#some)
+* [any](http://underscorejs.org/#some)
+* [include](http://underscorejs.org/#contains)
+* [contains](http://underscorejs.org/#contains)
+* [invoke](http://underscorejs.org/#invoke)
+* [toArray](http://underscorejs.org/#toArray)
+* [first](http://underscorejs.org/#first)
+* [initial](http://underscorejs.org/#initial)
+* [rest](http://underscorejs.org/#rest)
+* [last](http://underscorejs.org/#last)
+* [without](http://underscorejs.org/#without)
+* [isEmpty](http://underscorejs.org/#isEmpty)
+* [pluck](http://underscorejs.org/#pluck)

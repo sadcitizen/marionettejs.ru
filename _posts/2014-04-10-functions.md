@@ -2,7 +2,7 @@
 layout: page
 title: Marionette.Functions
 translated: true
-proofread: false
+proofread: true
 ---
 
 {% include translation/ru/marionette.functions.md %}

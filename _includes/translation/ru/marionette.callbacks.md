@@ -1,7 +1,7 @@
-> Warning: deprecated
+> Внимание: не рекомендуется к использованию. 
 >
-> Marionette.Callbacks are deprecated, and are scheduled to be removed in the next major release of the library. Instead
-> of Callbacks, you should use promises or events to manage asynchronous logic.
+> Класс Marionette.Callbacks устарел и не рекомендуется к использованию. Он будет удален в следующем мажорном релизе.
+> Вместо этого класса следует использовать промисы или события для управления асинхронной логикой.
 
 Объект `Callbacks` помогает управлять коллекцией коллбеков и выполнять их
 асинхронно-безопасным способом.
