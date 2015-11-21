@@ -1,9 +1,9 @@
 # Site settings
 title: "Marionette.js по-русски"
-email: instanceofpro@gmail.com
-username: instanceofpro
+email: sadcitizen@yandex.ru
+username: sadcitizen
 description: "Marionette.js по-русски."
-baseurl: /marionettejs.ru
+baseurl: /
 version: 2.4.3
 
 # Build settings
