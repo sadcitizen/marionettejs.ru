@@ -1,6 +1,6 @@
 ### Перевод документации по Backbone.Marionette
 
-По окончанию перевод будет доступен на сайте [marionettejs.ru](http://marionettejs.ru), черновую версию можно увидеть вот [тут](http://instanceofpro.github.io/marionettejs.ru/).
+Перевод доступен на сайте [marionettejs.ru](http://marionettejs.ru).
 
 Словарь:
 * [accessibility](http://www.w3.org/WAI/intro/accessibility.php) - универсальный доступ/доступность для пользователей с ограниченными возможностями
