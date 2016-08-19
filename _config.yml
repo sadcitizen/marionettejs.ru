@@ -8,6 +8,6 @@ version: 2.4.3
 
 # Build settings
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 permalink: /:title
 encoding: utf-8
